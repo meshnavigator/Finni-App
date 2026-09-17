@@ -1,7 +1,10 @@
 # Питомец Финни
 
-Стартовый Expo SDK 57 / React Native / TypeScript каркас версии 0.1.0 для команды Better Together.
-Android package: `com.meshnavigator.finni`. Ориентация: portrait. Минимальная
+Expo SDK 57 / React Native / TypeScript приложение версии 0.1.0 для команды
+Better Together. Реализована первая локальная вертикаль: знакомство, один
+сохраняемый профиль, 9 комбинаций питомца, повторная настройка и компактный
+домик поверх SQLite lifecycle. Android package: `com.meshnavigator.finni`.
+Ориентация: portrait. Минимальная
 поддерживаемая версия Android: API 26 (Android 8.0).
 
 ## Локальная проверка
