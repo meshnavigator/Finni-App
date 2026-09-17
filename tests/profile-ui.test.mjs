@@ -149,10 +149,16 @@ test('profile creation is single, update keeps identity, and restart restores a 
   await reopened.close();
 });
 
-test('compact home source keeps scroll fallback and 48 dp interaction targets', () => {
+test('compact home source keeps safe-area padding, scroll fallback and 48 dp interaction targets', () => {
   const source = readFileSync(new URL('../src/ui/AppRoot.tsx', import.meta.url), 'utf8');
+  assert.match(source, /StatusBar as NativeStatusBar/);
+  assert.match(source, /style=\{\[styles\.page, styles\.homePage\]\}/);
+  assert.match(source, /paddingTop: Platform\.OS === 'android' \? NativeStatusBar\.currentHeight \?\? 0 : 0/);
+  assert.equal(source.match(/maxFontSizeMultiplier=\{1\.2\}/g)?.length, 5);
   assert.match(source, /<ScrollView contentContainerStyle=\{styles\.homeContent\}>/);
   assert.match(source, /minHeight: 48/g);
+  assert.equal(source.match(/adjustsFontSizeToFit/g)?.length, 3);
+  assert.equal(source.match(/minimumFontScale=\{0\.75\}/g)?.length, 3);
   assert.match(source, /Доступно/);
   assert.match(source, /Копилка/);
   assert.match(source, /ТЕКУЩАЯ ЦЕЛЬ/);

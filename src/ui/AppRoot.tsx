@@ -6,6 +6,7 @@ import {
   Pressable,
   SafeAreaView,
   ScrollView,
+  StatusBar as NativeStatusBar,
   StyleSheet,
   Text,
   TextInput,
@@ -292,7 +293,7 @@ function HomeScreen(props: Readonly<{
     else props.onSection(model.action.label);
   };
   return (
-    <SafeAreaView style={styles.page}>
+    <SafeAreaView style={[styles.page, styles.homePage]}>
       <ScrollView contentContainerStyle={styles.homeContent}>
         <View style={styles.homeHeader}>
           <Pressable
@@ -302,15 +303,31 @@ function HomeScreen(props: Readonly<{
             onPress={props.onEditPet}
             style={styles.petNameButton}
           >
-            <Text numberOfLines={1} style={styles.homeName}>{model.petName}</Text>
-            <Text style={styles.caption}>О питомце</Text>
+            <Text maxFontSizeMultiplier={1.2} numberOfLines={1} style={styles.homeName}>{model.petName}</Text>
+            <Text maxFontSizeMultiplier={1.2} numberOfLines={1} style={styles.caption}>О питомце</Text>
           </Pressable>
           <View style={styles.headerActions}>
             <Pressable accessibilityRole="button" onPress={() => props.onSection('Прогресс')} style={styles.textButton}>
-              <Text style={styles.textButtonLabel}>Прогресс</Text>
+              <Text
+                adjustsFontSizeToFit
+                maxFontSizeMultiplier={1.2}
+                minimumFontScale={0.75}
+                numberOfLines={1}
+                style={styles.textButtonLabel}
+              >
+                Прогресс
+              </Text>
             </Pressable>
             <Pressable accessibilityRole="button" onPress={props.onHelp} style={styles.textButton}>
-              <Text style={styles.textButtonLabel}>Как играть</Text>
+              <Text
+                adjustsFontSizeToFit
+                maxFontSizeMultiplier={1.2}
+                minimumFontScale={0.75}
+                numberOfLines={1}
+                style={styles.textButtonLabel}
+              >
+                Как играть
+              </Text>
             </Pressable>
           </View>
         </View>
@@ -356,7 +373,15 @@ function HomeScreen(props: Readonly<{
               onPress={() => props.onSection(String(label))}
               style={[styles.navItem, !enabled && styles.navItemDisabled]}
             >
-              <Text style={[styles.navLabel, label === 'Домик' && styles.navLabelActive]}>{label}</Text>
+              <Text
+                adjustsFontSizeToFit
+                maxFontSizeMultiplier={1.2}
+                minimumFontScale={0.75}
+                numberOfLines={1}
+                style={[styles.navLabel, label === 'Домик' && styles.navLabelActive]}
+              >
+                {label}
+              </Text>
             </Pressable>
           ))}
         </View>
@@ -504,6 +529,7 @@ const colors = {
 const styles = StyleSheet.create({
   flex: { flex: 1 },
   page: { flex: 1, backgroundColor: colors.sky },
+  homePage: { paddingTop: Platform.OS === 'android' ? NativeStatusBar.currentHeight ?? 0 : 0 },
   centered: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 12, padding: 24, backgroundColor: colors.sky },
   introContent: { alignItems: 'center', gap: 10, padding: 20, paddingBottom: 28 },
   builderContent: { alignItems: 'center', gap: 8, padding: 18, paddingBottom: 36 },
@@ -551,8 +577,8 @@ const styles = StyleSheet.create({
   homeHeader: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', minHeight: 48 },
   petNameButton: { justifyContent: 'center', minHeight: 48, maxWidth: '42%' },
   homeName: { color: colors.ink, fontSize: 20, fontWeight: '900' },
-  headerActions: { flexDirection: 'row', gap: 4 },
-  textButton: { justifyContent: 'center', minHeight: 48, paddingHorizontal: 6 },
+  headerActions: { flex: 1, flexDirection: 'row', gap: 4, justifyContent: 'flex-end' },
+  textButton: { flexShrink: 1, justifyContent: 'center', minHeight: 48, paddingHorizontal: 6 },
   textButtonLabel: { color: colors.teal, fontSize: 13, fontWeight: '800' },
   dayLabel: { color: colors.muted, fontSize: 13, fontWeight: '700', marginTop: -8 },
   moneyRow: { flexDirection: 'row', gap: 8 },
