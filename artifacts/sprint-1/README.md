@@ -4,7 +4,7 @@
 неизменяемый runtime-прогон выявил перекрытие Android status bar; SHA-256:
 `066830FD54824AE9C6DC0D73167E6D4819B91FFEA8FBA165DE3E59798ABD9930`.
 
-`finni-0.1.0-s1-004-r4-release.apk` — финальный подписанный build после
+`finni-0.1.0-s1-004-r4-release.apk` — финальный локально подписанный runtime build после
 runtime-исправлений safe-area и компактных подписей. SHA-256:
 `3486DA3B6F0BFC46FC03D52CE2E2C825DF818CEE62A222D24732BF0EDD6B2804`.
 Hash хранится в соседнем `.sha256`.
@@ -13,3 +13,4 @@ Hash хранится в соседнем `.sha256`.
 force-stop/relaunch, 360×640 dp и fontScale 1/2 на AVD Android API 36. Полный
 протокол и screenshots/XML: `runtime/S1-006_RUNTIME_EVIDENCE.md`.
 Физический API 26 остаётся отдельной задачей S0-006.
+r4 использует отдельный runtime-test key, а не production-ключ владельца.
