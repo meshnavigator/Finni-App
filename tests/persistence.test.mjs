@@ -99,12 +99,14 @@ const command = ({
 
 const assertCode = (code) => (error) => error?.domain?.code === code;
 
-test('schema v1 migrates a real file transactionally and enforces CHECK/UNIQUE/FK', async () => {
+test('current schema migrates a real file transactionally and enforces CHECK/UNIQUE/FK', async () => {
   const directory = makeDirectory();
   const path = join(directory, DATABASE_FILES.normal);
   const { database, repository } = open('normal', path);
   assert.equal(await repository.initialize(), SCHEMA_VERSION);
-  assert.deepEqual(await repository.inspect('PRAGMA user_version'), [{ user_version: 1 }]);
+  assert.deepEqual(await repository.inspect('PRAGMA user_version'), [
+    { user_version: SCHEMA_VERSION },
+  ]);
   await seed(database);
 
   await assert.rejects(
@@ -219,7 +221,7 @@ test('COMMIT, durable receipt replay, conflict, induced ROLLBACK and restart sta
   await first.repository.close();
 
   const reopened = open('normal', path);
-  assert.equal(await reopened.repository.initialize(), 1);
+  assert.equal(await reopened.repository.initialize(), SCHEMA_VERSION);
   assert.deepEqual(await reopened.repository.findReceipt('income-1'), receipt);
   assert.equal(await reopened.repository.verifyLedgerProjection('profile-1'), true);
   await reopened.repository.close();

@@ -1,6 +1,6 @@
 import { AMOUNT_LIMIT } from '../domain/numeric.ts';
 
-export const SCHEMA_VERSION = 1;
+export const SCHEMA_VERSION = 2;
 
 const moneyCheck = (column: string, positive = false): string =>
   `typeof(${column}) = 'integer' AND ${column} ${positive ? '>' : '>='} 0 AND ${column} <= ${AMOUNT_LIMIT}`;
@@ -106,4 +106,44 @@ CREATE TABLE audit_event (
 ) STRICT;
 
 CREATE INDEX audit_profile_history ON audit_event(profile_id, seq);
+`;
+
+export const SCHEMA_V2 = `
+CREATE TABLE game_clock (
+  profile_id TEXT PRIMARY KEY NOT NULL REFERENCES profile(id) ON DELETE CASCADE,
+  time_zone TEXT NOT NULL,
+  virtual_date TEXT,
+  clock_generation INTEGER NOT NULL DEFAULT 0 CHECK(${counterCheck('clock_generation')}),
+  next_eligible_date TEXT,
+  max_opened_date TEXT,
+  updated_at TEXT NOT NULL
+) STRICT;
+
+INSERT INTO game_clock(
+  profile_id, time_zone, virtual_date, clock_generation,
+  next_eligible_date, max_opened_date, updated_at
+)
+SELECT
+  profile.id,
+  profile.time_zone,
+  NULL,
+  profile.clock_generation,
+  NULL,
+  (
+    SELECT MAX(period.calendar_date)
+    FROM period
+    WHERE period.profile_id = profile.id
+      AND period.clock_generation = profile.clock_generation
+  ),
+  profile.created_at
+FROM profile;
+
+ALTER TABLE period ADD COLUMN rule_bundle_json TEXT NOT NULL
+  DEFAULT '{"economyVersion":"economy-v2","catalogVersion":"bootstrap","goalsVersion":"bootstrap"}'
+  CHECK(json_valid(rule_bundle_json));
+ALTER TABLE period ADD COLUMN confirmed_plan_json TEXT
+  CHECK(confirmed_plan_json IS NULL OR json_valid(confirmed_plan_json));
+ALTER TABLE period ADD COLUMN confirmed_at TEXT;
+
+CREATE INDEX period_profile_state ON period(profile_id, state, period_index);
 `;

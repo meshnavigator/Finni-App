@@ -1,0 +1,16 @@
+{
+  "mode": "demo",
+  "initialDate": "2026-09-17",
+  "periods": [
+    { "index": 1, "calendarDate": "2026-09-17", "income": 100 },
+    { "index": 2, "calendarDate": "2026-09-18", "income": 100 },
+    { "index": 3, "calendarDate": "2026-09-19", "income": 100 },
+    { "index": 4, "calendarDate": "2026-09-20", "income": 100 },
+    { "index": 5, "calendarDate": "2026-09-21", "income": 100 }
+  ],
+  "expected": {
+    "realWaits": 0,
+    "incomeEntries": 5,
+    "available": 500
+  }
+}
