@@ -1,0 +1,7 @@
+[
+  {
+    "id": "android-api-26-release",
+    "description": "Ручная проверка установки и запуска release APK без Metro на Android API 26.",
+    "required": true
+  }
+]

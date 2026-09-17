@@ -1,0 +1,44 @@
+{
+  "name": "finni",
+  "version": "0.1.0",
+  "main": "index.ts",
+  "dependencies": {
+    "expo": "~57.0.23",
+    "expo-build-properties": "~57.0.20",
+    "expo-status-bar": "~57.0.1",
+    "react": "19.2.3",
+    "react-native": "0.86.3"
+  },
+  "devDependencies": {
+    "@types/react": "~19.2.2",
+    "eslint": "^9.39.5",
+    "eslint-config-expo": "^57.0.2",
+    "typescript": "~6.0.3"
+  },
+  "scripts": {
+    "start": "expo start",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "web": "expo start --web",
+    "lint": "eslint . --max-warnings=0",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test tests/*.test.mjs",
+    "content": "node scripts/check-content.mjs",
+    "fixtures": "node scripts/check-fixtures.mjs",
+    "verify": "npm run lint && npm run typecheck && npm run test && npm run content && npm run fixtures",
+    "android:prebuild": "expo prebuild --platform android --clean --no-install",
+    "android:release": "pwsh -NoProfile -File ./scripts/build-release.ps1"
+  },
+  "private": true,
+  "engines": {
+    "node": "22.18.0",
+    "npm": "10.9.3"
+  },
+  "expo": {
+    "doctor": {
+      "appConfigFieldsNotSyncedCheck": {
+        "enabled": false
+      }
+    }
+  }
+}
