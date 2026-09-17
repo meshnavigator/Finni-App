@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "economyVersion": "economy-v2",
+  "fivePeriods": [
+    {
+      "day": 1,
+      "income": 100,
+      "reward": 20,
+      "plan": [40, 20, 40],
+      "actual": { "need": 40, "want": 20, "deposit": 40, "claim": 0 },
+      "expensePlanOverrun": false,
+      "expected": { "available": 20, "savings": 40, "periodGrowth": 3, "lifetimeGrowth": 3, "stage": 1, "newSaving": 40 }
+    },
+    {
+      "day": 2,
+      "income": 100,
+      "reward": 20,
+      "plan": [40, 20, 40],
+      "actual": { "need": 40, "want": 90, "deposit": 0, "claim": 0 },
+      "expensePlanOverrun": true,
+      "expected": { "available": 10, "savings": 40, "periodGrowth": 1, "lifetimeGrowth": 4, "stage": 1, "newSaving": 0 }
+    },
+    {
+      "day": 3,
+      "income": 100,
+      "reward": 20,
+      "plan": [40, 20, 50],
+      "actual": { "need": 40, "want": 20, "deposit": 50, "claim": 0 },
+      "expensePlanOverrun": false,
+      "expected": { "available": 20, "savings": 90, "periodGrowth": 3, "lifetimeGrowth": 7, "stage": 2, "newSaving": 50 }
+    },
+    {
+      "day": 4,
+      "income": 100,
+      "reward": 20,
+      "plan": [40, 30, 50],
+      "actual": { "need": 40, "want": 30, "deposit": 50, "claim": 0 },
+      "expensePlanOverrun": false,
+      "expected": { "available": 20, "savings": 140, "periodGrowth": 3, "lifetimeGrowth": 10, "stage": 2, "newSaving": 50 }
+    },
+    {
+      "day": 5,
+      "income": 100,
+      "reward": 20,
+      "plan": [40, 20, 40],
+      "actual": { "need": 40, "want": 20, "deposit": 40, "claim": 150 },
+      "expensePlanOverrun": false,
+      "expected": { "available": 40, "savings": 30, "periodGrowth": 3, "lifetimeGrowth": 13, "stage": 3, "newSaving": 40 }
+    }
+  ],
+  "final": {
+    "available": 40,
+    "savings": 30,
+    "totalFunds": 70,
+    "lifetimeGrowth": 13,
+    "stage": 3,
+    "newSavingPeriods": 4
+  },
+  "counterexamples": {
+    "recovery": { "depositsAndWithdrawals": [40, -40, 40, 5], "newSaving": [40, 0, 0, 5] },
+    "negativeNetFlow": { "savingsBefore": 50, "deposit": 10, "withdrawal": 30, "savingsAfter": 30, "netSaving": -20 },
+    "sameDayRoundTrip": { "deposit": 40, "withdrawal": 40, "savingsAfter": 0, "savePoint": 0 },
+    "claim": { "savingsBefore": 180, "claim": 150, "savingsAfter": 30, "committedSaving": 180 }
+  }
+}
