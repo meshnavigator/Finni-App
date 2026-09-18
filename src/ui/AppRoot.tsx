@@ -10,11 +10,13 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  useWindowDimensions,
   View,
 } from 'react-native';
 import { AppRuntime, type AppSnapshot } from '../application/app-runtime.ts';
 import {
   errorScreenModel,
+  homeResponsiveLayout,
   homeScreenModel,
   loadingScreenModel,
   onboardingScreenModel,
@@ -287,50 +289,62 @@ function HomeScreen(props: Readonly<{
   onHelp: () => void;
   onSection: (title: string) => void;
 }>) {
+  const viewport = useWindowDimensions();
   const profile = props.snapshot.profile!;
   const lifecycle = props.snapshot.lifecycle!;
   const model = homeScreenModel(profile, lifecycle);
+  const layout = homeResponsiveLayout(viewport);
   const primary = () => {
     if (model.action.route === 'open-day') props.onOpenDay();
     else if (model.action.route === 'plan') props.onSection('План');
     else props.onSection(model.action.label);
   };
+  const primaryAction = (
+    <ActionButton
+      label={props.busy ? 'Открываем день…' : model.action.label}
+      disabled={props.busy || !model.action.enabled}
+      onPress={primary}
+    />
+  );
+  const petScene = (
+    <View
+      accessible
+      accessibilityLabel={`Финни дома. ${model.careLabel}. Настроение: спокойно`}
+      style={[styles.petScene, { minHeight: layout.sceneMinHeight }]}
+    >
+      <PetAvatar {...profile} size={layout.mode === 'ordinary' ? 112 : 92} />
+      <View style={styles.flex}>
+        <Text style={styles.cardTitle}>Финни дома</Text>
+        <Text style={styles.caption}>{model.careLabel}</Text>
+        <Text style={styles.mood}>Настроение: спокойно</Text>
+      </View>
+    </View>
+  );
   return (
     <SafeAreaView style={[styles.page, styles.homePage]}>
-      <ScrollView contentContainerStyle={styles.homeContent}>
+      <ScrollView
+        accessibilityLabel={layout.reviewConflict
+          ? 'Домик Финни. Увеличенный текст: доступен прокручиваемый вариант; одновременная видимость всех элементов требует review.'
+          : 'Домик Финни'}
+        contentContainerStyle={[styles.homeContent, layout.mode !== 'ordinary' && styles.homeContentLargeText]}
+      >
         <View style={styles.homeHeader}>
           <Pressable
             accessibilityRole="button"
-            accessibilityLabel="О питомце"
+            accessibilityLabel={`О питомце: ${model.petName}`}
             hitSlop={8}
             onPress={props.onEditPet}
             style={styles.petNameButton}
           >
-            <Text maxFontSizeMultiplier={1.2} numberOfLines={1} style={styles.homeName}>{model.petName}</Text>
-            <Text maxFontSizeMultiplier={1.2} numberOfLines={1} style={styles.caption}>О питомце</Text>
+            <Text numberOfLines={2} style={styles.homeName}>{model.petName}</Text>
+            <Text style={styles.caption}>О питомце</Text>
           </Pressable>
           <View style={styles.headerActions}>
             <Pressable accessibilityRole="button" onPress={() => props.onSection('Прогресс')} style={styles.textButton}>
-              <Text
-                adjustsFontSizeToFit
-                maxFontSizeMultiplier={1.2}
-                minimumFontScale={0.75}
-                numberOfLines={1}
-                style={styles.textButtonLabel}
-              >
-                Прогресс
-              </Text>
+              <Text style={styles.textButtonLabel}>Прогресс</Text>
             </Pressable>
             <Pressable accessibilityRole="button" onPress={props.onHelp} style={styles.textButton}>
-              <Text
-                adjustsFontSizeToFit
-                maxFontSizeMultiplier={1.2}
-                minimumFontScale={0.75}
-                numberOfLines={1}
-                style={styles.textButtonLabel}
-              >
-                Как играть
-              </Text>
+              <Text style={styles.textButtonLabel}>Как играть</Text>
             </Pressable>
           </View>
         </View>
@@ -343,25 +357,15 @@ function HomeScreen(props: Readonly<{
           <Text style={styles.summaryLabel}>ТЕКУЩАЯ ЦЕЛЬ</Text>
           <Text style={styles.summaryValue}>{model.goalLabel}</Text>
         </View>
-        <View style={styles.petScene}>
-          <PetAvatar {...profile} size={92} />
-          <View style={styles.flex}>
-            <Text style={styles.cardTitle}>Финни дома</Text>
-            <Text style={styles.caption}>{model.careLabel}</Text>
-            <Text style={styles.mood}>Настроение: спокойно</Text>
-          </View>
-        </View>
         <View style={styles.lessonCard}>
           <Text style={styles.summaryLabel}>АКТИВНОЕ ЗАНЯТИЕ</Text>
           <Text style={styles.summaryValue}>{model.lessonLabel}</Text>
         </View>
         {props.notice && <Text style={styles.notice}>{props.notice}</Text>}
-        <ActionButton
-          label={props.busy ? 'Открываем день…' : model.action.label}
-          disabled={props.busy || !model.action.enabled}
-          onPress={primary}
-        />
-        <View style={styles.nav} accessibilityRole="tablist">
+        {layout.primaryBeforeScene && primaryAction}
+        {petScene}
+        {!layout.primaryBeforeScene && primaryAction}
+        <View style={[styles.nav, layout.mode !== 'ordinary' && styles.navLargeText]} accessibilityRole="tablist">
           {[
             ['Домик', true],
             ['План', model.planAvailable],
@@ -374,28 +378,26 @@ function HomeScreen(props: Readonly<{
               accessibilityState={{ selected: label === 'Домик', disabled: !enabled }}
               disabled={!enabled}
               onPress={() => props.onSection(String(label))}
-              style={[styles.navItem, !enabled && styles.navItemDisabled]}
+              style={[styles.navItem, layout.mode !== 'ordinary' && styles.navItemLargeText, !enabled && styles.navItemDisabled]}
             >
-              <Text
-                adjustsFontSizeToFit
-                maxFontSizeMultiplier={1.2}
-                minimumFontScale={0.75}
-                numberOfLines={1}
-                style={[styles.navLabel, label === 'Домик' && styles.navLabelActive]}
-              >
+              <Text style={[styles.navLabel, label === 'Домик' && styles.navLabelActive]}>
                 {label}
               </Text>
             </Pressable>
           ))}
         </View>
-        <Pressable accessibilityRole="button" onPress={() => props.onSection('Для взрослого')} style={styles.adultButton}>
+        <Pressable
+          accessibilityHint="Открывает раздел с защитным барьером для взрослого"
+          accessibilityRole="button"
+          onPress={() => props.onSection('Для взрослого')}
+          style={styles.adultButton}
+        >
           <Text style={styles.adultLabel}>Для взрослого</Text>
         </Pressable>
       </ScrollView>
     </SafeAreaView>
   );
 }
-
 function SectionScreen(props: Readonly<{ title: string; onBack: () => void }>) {
   return (
     <SafeAreaView style={styles.centered}>
@@ -579,6 +581,7 @@ const styles = StyleSheet.create({
   introContent: { alignItems: 'center', gap: 10, padding: 20, paddingBottom: 28 },
   builderContent: { alignItems: 'center', gap: 8, padding: 18, paddingBottom: 36 },
   homeContent: { gap: 8, minHeight: '100%', paddingHorizontal: 14, paddingBottom: 8 },
+  homeContentLargeText: { paddingBottom: 24 },
   eyebrow: { color: colors.teal, fontSize: 13, fontWeight: '800', letterSpacing: 1.5 },
   title: { color: colors.ink, fontSize: 25, fontWeight: '800', textAlign: 'center' },
   body: { color: colors.muted, fontSize: 16, lineHeight: 22, maxWidth: 340, textAlign: 'center' },
@@ -620,11 +623,11 @@ const styles = StyleSheet.create({
   stripes: { flexDirection: 'row', gap: 5, position: 'absolute', top: 5 },
   stripe: { backgroundColor: '#9A5D4A', borderRadius: 3, height: 19, transform: [{ rotate: '10deg' }], width: 5 },
   homeHeader: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between', minHeight: 48 },
-  petNameButton: { justifyContent: 'center', minHeight: 48, maxWidth: '42%' },
+  petNameButton: { flexShrink: 1, justifyContent: 'center', minHeight: 48, maxWidth: '48%', paddingRight: 4 },
   homeName: { color: colors.ink, fontSize: 20, fontWeight: '900' },
   headerActions: { flex: 1, flexDirection: 'row', gap: 4, justifyContent: 'flex-end' },
-  textButton: { flexShrink: 1, justifyContent: 'center', minHeight: 48, paddingHorizontal: 6 },
-  textButtonLabel: { color: colors.teal, fontSize: 13, fontWeight: '800' },
+  textButton: { flex: 1, justifyContent: 'center', minHeight: 48, paddingHorizontal: 6 },
+  textButtonLabel: { color: colors.teal, fontSize: 13, fontWeight: '800', textAlign: 'center' },
   dayLabel: { color: colors.muted, fontSize: 13, fontWeight: '700', marginTop: -8 },
   moneyRow: { flexDirection: 'row', gap: 8 },
   metric: { backgroundColor: '#FFFFFF', borderColor: colors.line, borderRadius: 12, borderWidth: 1, flex: 1, minHeight: 54, paddingHorizontal: 11, paddingVertical: 6 },
@@ -633,12 +636,14 @@ const styles = StyleSheet.create({
   summaryCard: { backgroundColor: '#FFF8E4', borderRadius: 12, justifyContent: 'center', minHeight: 48, paddingHorizontal: 12 },
   summaryLabel: { color: colors.muted, fontSize: 11, fontWeight: '800', letterSpacing: 0.6 },
   summaryValue: { color: colors.ink, fontSize: 15, fontWeight: '800' },
-  petScene: { alignItems: 'center', backgroundColor: '#D9F0E6', borderRadius: 16, flexDirection: 'row', gap: 14, minHeight: 104, paddingHorizontal: 12 },
+  petScene: { alignItems: 'center', backgroundColor: '#D9F0E6', borderRadius: 16, flexDirection: 'row', gap: 14, paddingHorizontal: 12 },
   mood: { color: colors.teal, fontSize: 13, fontWeight: '800', marginTop: 4 },
   lessonCard: { backgroundColor: '#FFFFFF', borderColor: colors.line, borderRadius: 12, borderWidth: 1, justifyContent: 'center', minHeight: 56, paddingHorizontal: 12 },
   notice: { color: colors.coral, fontSize: 13, fontWeight: '700' },
   nav: { backgroundColor: '#FFFFFF', borderColor: colors.line, borderRadius: 14, borderWidth: 1, flexDirection: 'row', minHeight: 56 },
-  navItem: { alignItems: 'center', flex: 1, justifyContent: 'center', minHeight: 56 },
+  navLargeText: { flexWrap: 'wrap' },
+  navItem: { alignItems: 'center', flex: 1, justifyContent: 'center', minHeight: 56, paddingHorizontal: 4 },
+  navItemLargeText: { flexBasis: '24%', flexGrow: 1 },
   navItemDisabled: { opacity: 0.35 },
   navLabel: { color: colors.muted, fontSize: 12, fontWeight: '700' },
   navLabelActive: { color: colors.teal, fontWeight: '900' },
