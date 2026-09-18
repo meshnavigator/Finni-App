@@ -28,9 +28,11 @@ import {
   type PetPatternId,
   type PetShapeId,
 } from '../domain/pet-profile.ts';
+import type { Plan } from '../domain/economy.ts';
 import { openExpoDatabase } from '../persistence/expo-database.ts';
+import BudgetPlanScreen from './BudgetPlanScreen.tsx';
 
-type Screen = 'intro' | 'pet' | 'home' | 'help' | 'section';
+type Screen = 'intro' | 'pet' | 'home' | 'help' | 'plan' | 'section';
 type Phase = 'loading' | 'ready' | 'error';
 
 function ActionButton(props: Readonly<{
@@ -290,6 +292,7 @@ function HomeScreen(props: Readonly<{
   const model = homeScreenModel(profile, lifecycle);
   const primary = () => {
     if (model.action.route === 'open-day') props.onOpenDay();
+    else if (model.action.route === 'plan') props.onSection('План');
     else props.onSection(model.action.label);
   };
   return (
@@ -472,7 +475,38 @@ export default function AppRoot() {
     }
   };
 
+  const confirmBudgetPlan = async (values: Plan, acknowledgedLowNeed: boolean) => {
+    if (!runtime.current || !snapshot) return;
+    setBusy(true);
+    setMessage(null);
+    try {
+      setSnapshot(await runtime.current.confirmPlan(snapshot, values, acknowledgedLowNeed));
+    } catch {
+      setMessage('План не сохранился. Проверь суммы и попробуй ещё раз.');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const allocateIncome = async (values: Plan) => {
+    if (!runtime.current || !snapshot) return;
+    setBusy(true);
+    setMessage(null);
+    try {
+      setSnapshot(await runtime.current.allocateAdditionalIncome(snapshot, values));
+    } catch {
+      setMessage('Доход изменился. Проверь доступный остаток и подтверди ещё раз.');
+    } finally {
+      setBusy(false);
+    }
+  };
+
   const openSection = (title: string) => {
+    setMessage(null);
+    if (title === 'План') {
+      setScreen('plan');
+      return;
+    }
     setSectionTitle(title);
     setScreen('section');
   };
@@ -508,6 +542,17 @@ export default function AppRoot() {
           onHelp={() => setScreen('help')}
           onOpenDay={() => void openDay()}
           onSection={openSection}
+        />
+      )}
+      {screen === 'plan' && snapshot?.profile && snapshot.lifecycle && (
+        <BudgetPlanScreen
+          snapshot={snapshot}
+          busy={busy}
+          message={message}
+          onAllocate={(values) => void allocateIncome(values)}
+          onBack={() => { setMessage(null); setScreen('home'); }}
+          onConfirm={(values, acknowledged) =>
+            void confirmBudgetPlan(values, acknowledged)}
         />
       )}
       {screen === 'section' && <SectionScreen title={sectionTitle} onBack={() => setScreen('home')} />}

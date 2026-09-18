@@ -1,5 +1,5 @@
 import type { SqlDatabase } from './database.ts';
-import { SCHEMA_V1, SCHEMA_V2, SCHEMA_VERSION } from './schema.ts';
+import { SCHEMA_V1, SCHEMA_V2, SCHEMA_V3, SCHEMA_VERSION } from './schema.ts';
 
 type UserVersionRow = Readonly<{ user_version: number }>;
 type Migration = Readonly<{ version: number; sql: string }>;
@@ -7,6 +7,7 @@ type Migration = Readonly<{ version: number; sql: string }>;
 const MIGRATIONS: readonly Migration[] = Object.freeze([
   Object.freeze({ version: 1, sql: SCHEMA_V1 }),
   Object.freeze({ version: 2, sql: SCHEMA_V2 }),
+  Object.freeze({ version: 3, sql: SCHEMA_V3 }),
 ]);
 
 async function rollbackQuietly(database: SqlDatabase): Promise<void> {

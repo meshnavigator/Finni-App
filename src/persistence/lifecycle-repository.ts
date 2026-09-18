@@ -507,10 +507,17 @@ export class LifecycleRepository {
         const payload = envelope.payload as CommandEnvelope<'ConfirmPlan'>['payload'];
         confirmPlan(payload.values, amount(profile.available));
         await database.runAsync(
-          `UPDATE period SET state = 'ACTIVE', confirmed_plan_json = ?, confirmed_at = ?
+          `UPDATE period
+           SET state = 'ACTIVE', confirmed_plan_json = ?, confirmed_at = ?,
+               budget_at_confirm = ?,
+               ledger_seq_at_confirm = (
+                 SELECT COALESCE(MAX(seq), 0) FROM ledger_entry WHERE period_id = ?
+               )
            WHERE id = ?`,
           json(payload.values),
           committedAt,
+          profile.available,
+          periodId,
           periodId,
         );
       } else {
