@@ -1,6 +1,6 @@
 import { AMOUNT_LIMIT } from '../domain/numeric.ts';
 
-export const SCHEMA_VERSION = 2;
+export const SCHEMA_VERSION = 3;
 
 const moneyCheck = (column: string, positive = false): string =>
   `typeof(${column}) = 'integer' AND ${column} ${positive ? '>' : '>='} 0 AND ${column} <= ${AMOUNT_LIMIT}`;
@@ -146,4 +146,28 @@ ALTER TABLE period ADD COLUMN confirmed_plan_json TEXT
 ALTER TABLE period ADD COLUMN confirmed_at TEXT;
 
 CREATE INDEX period_profile_state ON period(profile_id, state, period_index);
+`;
+
+export const SCHEMA_V3 = `
+ALTER TABLE period ADD COLUMN budget_at_confirm INTEGER
+  CHECK(budget_at_confirm IS NULL OR (${moneyCheck('budget_at_confirm')}));
+ALTER TABLE period ADD COLUMN ledger_seq_at_confirm INTEGER
+  CHECK(ledger_seq_at_confirm IS NULL OR (${counterCheck('ledger_seq_at_confirm')}));
+
+CREATE TABLE period_plan_addition (
+  seq INTEGER PRIMARY KEY AUTOINCREMENT,
+  addition_id TEXT NOT NULL UNIQUE CHECK(length(trim(addition_id)) > 0),
+  command_id TEXT NOT NULL UNIQUE,
+  profile_id TEXT NOT NULL REFERENCES profile(id) ON DELETE CASCADE,
+  period_id TEXT NOT NULL REFERENCES period(id) ON DELETE CASCADE,
+  need INTEGER NOT NULL CHECK(${moneyCheck('need')}),
+  want INTEGER NOT NULL CHECK(${moneyCheck('want')}),
+  save INTEGER NOT NULL CHECK(${moneyCheck('save')}),
+  created_at TEXT NOT NULL,
+  FOREIGN KEY(command_id) REFERENCES command_receipt(command_id) DEFERRABLE INITIALLY DEFERRED,
+  CHECK(need + want + save > 0)
+) STRICT;
+
+CREATE INDEX period_plan_addition_history
+  ON period_plan_addition(period_id, seq);
 `;
