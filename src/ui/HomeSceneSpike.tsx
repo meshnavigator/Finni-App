@@ -23,7 +23,7 @@ export function HomeSceneSpike({ diagnosticAsset }: Readonly<{ diagnosticAsset?:
     <FilamentScene>
       {!isRendererPaused ? <FilamentView style={styles.scene}>
         <DefaultLight /><Camera cameraPosition={[0, 0.8, 4]} cameraTarget={[0, 0.6, 0]} />
-        {canRenderAsset ? <Model source={{ uri: diagnosticAsset.bundleUri }} onPress={handleModelPress}>
+        {canRenderAsset ? <Model source={diagnosticAsset.module} onPress={handleModelPress}>
           {diagnosticAsset.skeletalClipIndex != null ? <Animator animationIndex={diagnosticAsset.skeletalClipIndex} /> : null}
         </Model> : null}
       </FilamentView> : null}
