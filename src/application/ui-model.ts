@@ -66,6 +66,48 @@ export type HomeScreenModel = Readonly<{
   savingsAvailable: boolean;
 }>;
 
+export type HomeResponsiveLayout = Readonly<{
+  mode: 'ordinary' | 'compact' | 'scroll-fallback';
+  primaryBeforeScene: boolean;
+  sceneMinHeight: number;
+  reviewConflict: boolean;
+}>;
+
+/**
+ * The ordinary composition is evidence only for the accepted 100% baselines.
+ * Enlarged text gets a real scrollable layout instead of clipping finances.
+ */
+export function homeResponsiveLayout(input: Readonly<{
+  width: number;
+  height: number;
+  fontScale: number;
+}>): HomeResponsiveLayout {
+  if (input.fontScale >= 2) {
+    return Object.freeze({
+      mode: 'scroll-fallback',
+      primaryBeforeScene: true,
+      sceneMinHeight: 112,
+      // Intentionally not a QA pass for ТЗ §2.5.3.
+      reviewConflict: true,
+    });
+  }
+
+  if (input.fontScale >= 1.5 || (input.width <= 360 && input.height <= 640)) {
+    return Object.freeze({
+      mode: 'compact',
+      primaryBeforeScene: input.fontScale >= 1.5,
+      sceneMinHeight: 120,
+      reviewConflict: false,
+    });
+  }
+
+  return Object.freeze({
+    mode: 'ordinary',
+    primaryBeforeScene: false,
+    sceneMinHeight: 164,
+    reviewConflict: false,
+  });
+}
 export function homeScreenModel(
   profile: ProfileSnapshot,
   lifecycle: LifecycleSnapshot,
