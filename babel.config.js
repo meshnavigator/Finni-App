@@ -3,8 +3,5 @@ module.exports = function babelConfig(api) {
 
   return {
     presets: ['babel-preset-expo'],
-    plugins: [
-      ['react-native-worklets-core/plugin', { processNestedWorklets: true }],
-    ],
   };
 };

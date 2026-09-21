@@ -1,6 +1,3 @@
-[CmdletBinding()]
-param()
-
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
@@ -71,6 +68,13 @@ if ($LASTEXITCODE -ne 0) {
 $gradleWrapper = Join-Path $PSScriptRoot '..\android\gradlew.bat'
 if (-not (Test-Path -LiteralPath $gradleWrapper -PathType Leaf)) {
     throw 'Не найден android/gradlew.bat. Каталог android должен быть сохранён после однократного prebuild.'
+}
+
+$appCxxDirectory = Join-Path $PSScriptRoot '..\android\app\.cxx'
+if (Test-Path -LiteralPath $appCxxDirectory -PathType Container) {
+    # Avoid CMake regenerating app autolinking while dependent module clean tasks
+    # remove their generated codegen directories in parallel.
+    Remove-Item -LiteralPath $appCxxDirectory -Recurse -Force
 }
 
 Push-Location (Split-Path -Parent $gradleWrapper)

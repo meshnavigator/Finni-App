@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect, useRef, useState } from 'react';
 import {
   KeyboardAvoidingView,
+  Modal,
   Platform,
   Pressable,
   SafeAreaView,
@@ -33,8 +34,9 @@ import {
 import type { Plan } from '../domain/economy.ts';
 import { openExpoDatabase } from '../persistence/expo-database.ts';
 import BudgetPlanScreen from './BudgetPlanScreen.tsx';
+import FinniHomeScene from './FinniHomeScene.tsx';
 
-type Screen = 'intro' | 'pet' | 'home' | 'help' | 'plan' | 'section';
+type Screen = 'intro' | 'pet' | 'home' | 'plan' | 'section';
 type Phase = 'loading' | 'ready' | 'error';
 
 function ActionButton(props: Readonly<{
@@ -178,6 +180,29 @@ function IntroScreen(props: Readonly<{
   );
 }
 
+/**
+ * Help is intentionally a native modal rather than a second Home route. This
+ * leaves the current Home state intact while preventing the scene and bottom
+ * navigation from receiving touches. Android Back is routed to
+ * `onRequestClose`, before any underlying navigation can run.
+ */
+function HelpOverlay(props: Readonly<{ onClose: () => void }>) {
+  return (
+    <Modal
+      accessibilityViewIsModal
+      animationType="slide"
+      onRequestClose={props.onClose}
+      presentationStyle="fullScreen"
+      statusBarTranslucent={false}
+      visible
+    >
+      <View accessibilityViewIsModal style={styles.helpOverlay} testID="home-help-overlay">
+        <IntroScreen repeat onContinue={() => undefined} onClose={props.onClose} />
+      </View>
+    </Modal>
+  );
+}
+
 function ChoiceButton(props: Readonly<{
   label: string;
   selected: boolean;
@@ -284,6 +309,7 @@ function HomeScreen(props: Readonly<{
   snapshot: AppSnapshot;
   busy: boolean;
   notice: string | null;
+  scenePaused: boolean;
   onOpenDay: () => void;
   onEditPet: () => void;
   onHelp: () => void;
@@ -307,18 +333,12 @@ function HomeScreen(props: Readonly<{
     />
   );
   const petScene = (
-    <View
-      accessible
+    <FinniHomeScene
       accessibilityLabel={`Финни дома. ${model.careLabel}. Настроение: спокойно`}
-      style={[styles.petScene, { minHeight: layout.sceneMinHeight }]}
-    >
-      <PetAvatar {...profile} size={layout.mode === 'ordinary' ? 112 : 92} />
-      <View style={styles.flex}>
-        <Text style={styles.cardTitle}>Финни дома</Text>
-        <Text style={styles.caption}>{model.careLabel}</Text>
-        <Text style={styles.mood}>Настроение: спокойно</Text>
-      </View>
-    </View>
+      careLabel={model.careLabel}
+      height={Math.max(layout.sceneMinHeight, layout.mode === 'ordinary' ? 220 : 180)}
+      paused={props.scenePaused}
+    />
   );
   return (
     <SafeAreaView style={[styles.page, styles.homePage]}>
@@ -361,6 +381,11 @@ function HomeScreen(props: Readonly<{
           <Text style={styles.summaryLabel}>АКТИВНОЕ ЗАНЯТИЕ</Text>
           <Text style={styles.summaryValue}>{model.lessonLabel}</Text>
         </View>
+        {layout.reviewConflict && (
+          <Text accessibilityLiveRegion="polite" style={styles.reviewConflict}>
+            Проверка макета: при 200% доступен прокручиваемый вариант; одновременная видимость всех обязательных элементов требует review.
+          </Text>
+        )}
         {props.notice && <Text style={styles.notice}>{props.notice}</Text>}
         {layout.primaryBeforeScene && primaryAction}
         {petScene}
@@ -417,6 +442,7 @@ export default function AppRoot() {
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [sectionTitle, setSectionTitle] = useState('');
+  const [helpOpen, setHelpOpen] = useState(false);
   const [boot, setBoot] = useState(0);
 
   useEffect(() => {
@@ -520,7 +546,6 @@ export default function AppRoot() {
     <>
       <StatusBar style="dark" />
       {screen === 'intro' && <IntroScreen onContinue={() => setScreen('pet')} />}
-      {screen === 'help' && <IntroScreen repeat onContinue={() => undefined} onClose={() => setScreen('home')} />}
       {screen === 'pet' && (
         <PetBuilder
           key={snapshot?.profile ? `${snapshot.profile.id}-${snapshot.profile.revision}` : 'new'}
@@ -540,12 +565,14 @@ export default function AppRoot() {
           snapshot={snapshot}
           busy={busy}
           notice={message}
+          scenePaused={helpOpen}
           onEditPet={() => { setMessage(null); setScreen('pet'); }}
-          onHelp={() => setScreen('help')}
+          onHelp={() => setHelpOpen(true)}
           onOpenDay={() => void openDay()}
           onSection={openSection}
         />
       )}
+      {helpOpen && <HelpOverlay onClose={() => setHelpOpen(false)} />}
       {screen === 'plan' && snapshot?.profile && snapshot.lifecycle && (
         <BudgetPlanScreen
           snapshot={snapshot}
@@ -636,10 +663,9 @@ const styles = StyleSheet.create({
   summaryCard: { backgroundColor: '#FFF8E4', borderRadius: 12, justifyContent: 'center', minHeight: 48, paddingHorizontal: 12 },
   summaryLabel: { color: colors.muted, fontSize: 11, fontWeight: '800', letterSpacing: 0.6 },
   summaryValue: { color: colors.ink, fontSize: 15, fontWeight: '800' },
-  petScene: { alignItems: 'center', backgroundColor: '#D9F0E6', borderRadius: 16, flexDirection: 'row', gap: 14, paddingHorizontal: 12 },
-  mood: { color: colors.teal, fontSize: 13, fontWeight: '800', marginTop: 4 },
   lessonCard: { backgroundColor: '#FFFFFF', borderColor: colors.line, borderRadius: 12, borderWidth: 1, justifyContent: 'center', minHeight: 56, paddingHorizontal: 12 },
   notice: { color: colors.coral, fontSize: 13, fontWeight: '700' },
+  reviewConflict: { backgroundColor: '#FFF1EF', borderColor: colors.coral, borderRadius: 12, borderWidth: 1, color: '#7A3028', fontSize: 14, fontWeight: '800', lineHeight: 19, padding: 10 },
   nav: { backgroundColor: '#FFFFFF', borderColor: colors.line, borderRadius: 14, borderWidth: 1, flexDirection: 'row', minHeight: 56 },
   navLargeText: { flexWrap: 'wrap' },
   navItem: { alignItems: 'center', flex: 1, justifyContent: 'center', minHeight: 56, paddingHorizontal: 4 },
@@ -649,4 +675,5 @@ const styles = StyleSheet.create({
   navLabelActive: { color: colors.teal, fontWeight: '900' },
   adultButton: { alignItems: 'center', alignSelf: 'center', justifyContent: 'center', minHeight: 48, paddingHorizontal: 16 },
   adultLabel: { color: colors.muted, fontSize: 13, textDecorationLine: 'underline' },
+  helpOverlay: { flex: 1 },
 });

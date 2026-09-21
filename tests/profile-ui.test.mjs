@@ -179,4 +179,10 @@ test('compact home source keeps safe-area padding, scroll fallback and 48 dp int
   assert.match(source, /ТЕКУЩАЯ ЦЕЛЬ/);
   assert.match(source, /АКТИВНОЕ ЗАНЯТИЕ/);
   assert.match(source, /Для взрослого/);
+  assert.match(source, /function HelpOverlay/);
+  assert.match(source, /onRequestClose=\{props\.onClose\}/);
+  assert.match(source, /testID="home-help-overlay"/);
+  assert.match(source, /\{helpOpen && <HelpOverlay onClose=\{\(\) => setHelpOpen\(false\)\} \/>\}/);
+  assert.match(source, /layout\.reviewConflict && \(/);
+  assert.match(source, /одновременная видимость всех обязательных элементов требует review/);
 });
