@@ -1,0 +1,50 @@
+{
+  "schemaVersion":3,
+  "id":"LS-P01",
+  "title":"Дело о списке покупок",
+  "contentVersion":"1.2.0",
+  "topic":"purchases",
+  "format":"detective",
+  "level":1,
+  "observableAction":"Сверить корзину со списком и самостоятельно посчитать остаток.",
+  "explanation":"Подходящая корзина содержит оба обязательных вида товара и укладывается в учебный бюджет.",
+  "unlockPeriod":3,
+  "competencyIds":["EDU-03","EDU-04","EDU-09"],
+  "sourceRefs":["SRS §13.4","FR-23","FR-64"],
+  "defaultVariantId":"shopping-list",
+  "returnTarget":"shop",
+  "mechanic":"basket",
+  "mode":"shopping_list",
+  "rendererId":"basket",
+  "variants":[{
+    "id":"shopping-list",
+    "params":{
+      "budget":60,
+      "requiredUnits":{"food":1,"care":1},
+      "offers":[
+        {"id":"food_30","kind":"food","packSize":1,"packPrice":30,"maxPackages":1,"qualityKey":"standard","properties":["Еда"],"alternativeGroup":"food"},
+        {"id":"food_40","kind":"food","packSize":1,"packPrice":40,"maxPackages":1,"qualityKey":"standard","properties":["Еда"],"alternativeGroup":"food"},
+        {"id":"care_10","kind":"care","packSize":1,"packPrice":10,"maxPackages":1,"qualityKey":"standard","properties":["Уход"],"alternativeGroup":"care"},
+        {"id":"care_15","kind":"care","packSize":1,"packPrice":15,"maxPackages":1,"qualityKey":"standard","properties":["Уход"],"alternativeGroup":"care"},
+        {"id":"fun_20","kind":"fun","packSize":1,"packPrice":20,"maxPackages":1,"qualityKey":"optional","properties":["Развлечение"]}
+      ],
+      "preferLowerCostForEqualCoverage":false
+    },
+    "copy":{
+      "intro":"На учебную покупку есть 60. В списке — еда и уход. Развлечение можно добавить, если хватит.",
+      "hints":["Сверь корзину со списком.","Сложи цены и вычти итог из 60."],
+      "feedback":{
+        "meets_goal":"Список выполнен: стоимость {total}, осталось {remainder}.",
+        "valid_alternative":"Список выполнен допустимым способом.",
+        "needs_review":"Монеты могут остаться, но проверь обязательные пункты и расчёт.",
+        "invalid_input":"Эта корзина не может быть оплачена в учебном примере."
+      }
+    },
+    "evidence":[{"id":"shopping-list","text":"В списке отмечены еда и уход."}],
+    "fixtures":[
+      {"solution":{"packageCountByOfferId":{"food_30":1,"care_10":1,"fun_20":1},"statedTotal":60,"statedRemainder":0},"expectedOutcome":"meets_goal"},
+      {"solution":{"packageCountByOfferId":{"fun_20":1},"statedTotal":20,"statedRemainder":40},"expectedOutcome":"needs_review"},
+      {"solution":{"packageCountByOfferId":{"food_40":1,"care_15":1,"fun_20":1},"statedTotal":75,"statedRemainder":0},"expectedOutcome":"invalid_input"}
+    ]
+  }]
+}

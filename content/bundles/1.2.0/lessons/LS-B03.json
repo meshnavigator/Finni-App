@@ -1,0 +1,43 @@
+{
+  "schemaVersion":3,
+  "id":"LS-B03",
+  "title":"Как устроить запуск кораблика?",
+  "contentVersion":"1.2.0",
+  "topic":"budget",
+  "format":"workshop",
+  "level":3,
+  "observableAction":"Отметить уже имеющиеся ресурсы, выбрать способ и составить выполнимый учебный план.",
+  "explanation":"Сравнение учитывает конкретные недостающие ресурсы; ни сделать, ни купить не объявляется всегда лучшим.",
+  "unlockPeriod":4,
+  "competencyIds":["EDU-01","EDU-02","EDU-05","EDU-12"],
+  "sourceRefs":["SRS §13.9","TC-179","TC-180"],
+  "defaultVariantId":"materials-available",
+  "returnTarget":"budget",
+  "mechanic":"resource_choice",
+  "mode":"make_or_buy",
+  "rendererId":"resource_choice",
+  "variants":[
+    {
+      "id":"materials-available",
+      "params":{"budget":100,"needMinimum":40,"savingTarget":20,"requiredResources":[{"id":"paper","title":"Лист бумаги","packPrice":15},{"id":"pencil","title":"Карандаш","packPrice":20},{"id":"sail-kit","title":"Набор парус и мачта","packPrice":10}],"ownedResourceIds":["paper","pencil"],"readyPrice":35},
+      "copy":{"intro":"Часть материалов уже есть. Сравни сделать и купить готовый кораблик.","hints":["Отметь, что уже есть, и найди недостающее.","Проверь нужное, стоимость способа и сумму на мечту."],"feedback":{"meets_goal":"По плану способ выполним; на мечту предусмотрено {save}.","valid_alternative":"Другой способ тоже выполним при этих условиях.","needs_review":"Покажи недостающее, а не готовый результат.","invalid_input":"Общий план превышает учебный бюджет."}},
+      "evidence":[{"id":"owned-box","text":"В учебной коробке уже есть бумага и карандаш."}],
+      "fixtures":[
+        {"solution":{"checkedOwnedResourceIds":["paper","pencil"],"method":"make","allocation":{"need":40,"want":10,"save":50}},"expectedOutcome":"meets_goal"},
+        {"solution":{"checkedOwnedResourceIds":["paper","pencil"],"method":"make","allocation":{"need":40,"want":0,"save":60}},"expectedOutcome":"needs_review"},
+        {"solution":{"checkedOwnedResourceIds":["paper","pencil"],"method":"buy","allocation":{"need":40,"want":35,"save":40}},"expectedOutcome":"invalid_input"}
+      ]
+    },
+    {
+      "id":"materials-missing",
+      "params":{"budget":100,"needMinimum":40,"savingTarget":20,"requiredResources":[{"id":"paper","title":"Лист бумаги","packPrice":15},{"id":"pencil","title":"Карандаш","packPrice":20},{"id":"sail-kit","title":"Набор парус и мачта","packPrice":10}],"ownedResourceIds":[],"readyPrice":35},
+      "copy":{"intro":"Теперь материалов нет. Сравни полную стоимость изготовления и готовый вариант.","hints":["Для изготовления нужны все три ресурса.","Сравни 45 и 35 вместе с условием накопить 20."],"feedback":{"meets_goal":"Готовый вариант укладывается в план; на мечту предусмотрено {save}.","valid_alternative":"Другой способ финансово возможен, но проверь цель накопления.","needs_review":"Способ возможен, но одно из условий плана не выполнено.","invalid_input":"Общий план превышает учебный бюджет."}},
+      "evidence":[{"id":"empty-box","text":"В учебной коробке пока нет нужных материалов."}],
+      "fixtures":[
+        {"solution":{"checkedOwnedResourceIds":[],"method":"buy","allocation":{"need":40,"want":35,"save":25}},"expectedOutcome":"meets_goal"},
+        {"solution":{"checkedOwnedResourceIds":[],"method":"make","allocation":{"need":40,"want":45,"save":15}},"expectedOutcome":"needs_review"},
+        {"solution":{"checkedOwnedResourceIds":[],"method":"make","allocation":{"need":40,"want":45,"save":20}},"expectedOutcome":"invalid_input"}
+      ]
+    }
+  ]
+}

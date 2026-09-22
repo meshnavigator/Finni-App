@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 3,
+  "goals": [
+    {"id":"GOAL-LESSON-DREAM-90","title":"Учебная мечта","amount":90},
+    {"id":"GOAL-LESSON-SAVE-20","title":"Оставить на мечту","amount":20}
+  ]
+}
