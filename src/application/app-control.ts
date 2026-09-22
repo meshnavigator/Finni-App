@@ -24,10 +24,14 @@ export type AppControl = Readonly<{
   pendingAdminIntent: PendingAdminIntent | null;
 }>;
 
-/** The adapter must use replace/write+rename semantics, never partial overwrite. */
+/** Storage must compare revision and replace the row in one serialized transaction. */
 export type AppControlStorage = Readonly<{
   read: () => Promise<string | null>;
-  writeAtomic: (serialized: string) => Promise<void>;
+  replaceInTransaction: (
+    expectedRevision: Counter,
+    nextRevision: Counter,
+    serialized: string,
+  ) => Promise<boolean>;
 }>;
 
 const phases: readonly AdminPhase[] = Object.freeze([
@@ -100,7 +104,12 @@ export class AppControlStore {
       ...change,
       controlRevision: addCounter(current.controlRevision, counter(1)),
     });
-    await this.#storage.writeAtomic(JSON.stringify(next));
+    const replaced = await this.#storage.replaceInTransaction(
+      current.controlRevision,
+      next.controlRevision,
+      JSON.stringify(next),
+    );
+    if (!replaced) throw failure('STALE_STATE', undefined, true);
     return next;
   }
 

@@ -28,6 +28,11 @@ export type RuntimeFactory<R extends RuntimeRepository> = Readonly<{
   open: (mode: Mode) => Promise<OpenedRuntime<R>>;
 }>;
 
+/**
+ * Removal is complete when the known-name delete call resolved and DATA_REMOVED
+ * was durably stored. Platforms without an exists API verify that protocol
+ * evidence and use idempotent replay; they must not open a missing DB to check.
+ */
 export type AdminDataDriver = Readonly<{
   removeKnownModeData: (mode: Mode, operation: AdminOperation) => Promise<void>;
   verifyModeDataAbsent: (mode: Mode) => Promise<boolean>;
@@ -85,10 +90,16 @@ export class LifecycleCoordinator<R extends RuntimeRepository> {
     if (control.pendingAdminIntent) {
       control = await this.#resumeAdminIntent(control.pendingAdminIntent);
     }
-    await this.#open(control.selectedMode);
-    this.#epoch = addCounter(this.#epoch, counter(1));
-    this.#blocked = false;
-    return this.session();
+    try {
+      await this.#open(control.selectedMode);
+      this.#epoch = addCounter(this.#epoch, counter(1));
+      this.#blocked = false;
+      return this.session();
+    } catch (error) {
+      this.#epoch = addCounter(this.#epoch, counter(1));
+      this.#blocked = false;
+      throw error;
+    }
   }
 
   submit<T>(
@@ -114,6 +125,7 @@ export class LifecycleCoordinator<R extends RuntimeRepository> {
   async switchMode(targetMode: Mode, expectedControlRevision: Counter): Promise<RuntimeSession> {
     await this.#beginBoundary();
     try {
+      await this.#admin.clearUiState(this.#mode);
       await this.#closeRepository();
       const control = await this.#control.selectMode(targetMode, expectedControlRevision);
       await this.#open(control.selectedMode);
@@ -142,6 +154,40 @@ export class LifecycleCoordinator<R extends RuntimeRepository> {
       return this.session();
     } finally {
       this.#blocked = this.#repository === null;
+    }
+  }
+
+  synchronizeProfile(captured: RuntimeSession, profileId: string | null): Promise<RuntimeSession> {
+    const result = this.#tail.then(() => {
+      if (
+        this.#blocked ||
+        !this.#repository ||
+        captured.sessionEpoch !== this.#epoch ||
+        captured.mode !== this.#mode ||
+        captured.profileId !== this.#profileId
+      ) {
+        throw failure('SESSION_EXPIRED');
+      }
+      if (profileId !== this.#profileId) {
+        this.#profileId = profileId;
+        this.#epoch = addCounter(this.#epoch, counter(1));
+      }
+      return this.session();
+    });
+    this.#tail = result.then(() => undefined, () => undefined);
+    return result;
+  }
+
+  async shutdown(): Promise<void> {
+    if (!this.#blocked) {
+      await this.#beginBoundary();
+    } else {
+      await this.#tail;
+    }
+    try {
+      await this.#closeRepository();
+    } finally {
+      this.#blocked = true;
     }
   }
 

@@ -221,10 +221,16 @@ function toSnapshot(rows: Awaited<ReturnType<typeof periodRows>>): BudgetPlanSna
 export class BudgetPlanRepository {
   readonly #mode: Mode;
   readonly #executor: RepositoryExecutor;
+  readonly #ownsExecutor: boolean;
 
-  constructor(mode: Mode, database: SqlDatabase) {
+  constructor(mode: Mode, database: SqlDatabase, executor?: RepositoryExecutor) {
     this.#mode = mode;
-    this.#executor = new RepositoryExecutor(database);
+    this.#executor = executor ?? new RepositoryExecutor(database);
+    this.#ownsExecutor = !executor;
+  }
+
+  close(): Promise<void> {
+    return this.#ownsExecutor ? this.#executor.close() : Promise.resolve();
   }
 
   read(profileId: string, periodId: string): Promise<BudgetPlanSnapshot> {

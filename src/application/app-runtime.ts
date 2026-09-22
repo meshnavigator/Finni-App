@@ -1,10 +1,11 @@
 import { NormalClock } from '../domain/clocks.ts';
 import type { Plan } from '../domain/economy.ts';
-import { counter } from '../domain/numeric.ts';
+import { counter, positiveAmount } from '../domain/numeric.ts';
 import type { PetAppearance } from '../domain/pet-profile.ts';
 import type { Mode } from '../domain/contracts.ts';
 import type { SqlDatabase } from '../persistence/database.ts';
 import { BudgetPlanRepository, type BudgetPlanSnapshot } from '../persistence/budget-plan-repository.ts';
+import { CommerceRepository, type CommerceSnapshot } from '../persistence/commerce-repository.ts';
 import {
   LifecycleRepository,
   type LifecycleSnapshot,
@@ -15,11 +16,13 @@ import {
   ProfileRepository,
   type ProfileSnapshot,
 } from '../persistence/profile-repository.ts';
+import { RepositoryExecutor } from '../persistence/repository-executor.ts';
 
 export type AppSnapshot = Readonly<{
   profile: ProfileSnapshot | null;
   lifecycle: LifecycleSnapshot | null;
   budget: BudgetPlanSnapshot | null;
+  commerce: CommerceSnapshot | null;
 }>;
 
 const RULE_BUNDLE: RuleBundleSnapshot = Object.freeze({
@@ -41,12 +44,16 @@ export class AppRuntime {
   readonly #profiles: ProfileRepository;
   readonly #lifecycle: LifecycleRepository;
   readonly #budgets: BudgetPlanRepository;
+  readonly #commerce: CommerceRepository;
+  readonly #executor: RepositoryExecutor;
 
   private constructor(mode: Mode, database: SqlDatabase) {
     this.#mode = mode;
-    this.#profiles = new ProfileRepository(mode, database);
-    this.#lifecycle = new LifecycleRepository(mode, database);
-    this.#budgets = new BudgetPlanRepository(mode, database);
+    this.#executor = new RepositoryExecutor(database);
+    this.#profiles = new ProfileRepository(mode, database, this.#executor);
+    this.#lifecycle = new LifecycleRepository(mode, database, this.#executor);
+    this.#budgets = new BudgetPlanRepository(mode, database, this.#executor);
+    this.#commerce = new CommerceRepository(mode, database, this.#executor);
   }
 
   static async initialize(mode: Mode, database: SqlDatabase): Promise<AppRuntime> {
@@ -55,12 +62,12 @@ export class AppRuntime {
   }
 
   async close(): Promise<void> {
-    await this.#profiles.close();
+    await this.#executor.close();
   }
 
   async load(): Promise<AppSnapshot> {
     const profile = await this.#profiles.readProfile();
-    if (!profile) return Object.freeze({ profile: null, lifecycle: null, budget: null });
+    if (!profile) return Object.freeze({ profile: null, lifecycle: null, budget: null, commerce: null });
     const lifecycle = await this.#lifecycle.readLifecycle(
       profile.id,
       new NormalClock(profile.timeZone),
@@ -68,7 +75,8 @@ export class AppRuntime {
     const budget = lifecycle.periodId
       ? await this.#budgets.read(profile.id, lifecycle.periodId)
       : null;
-    return Object.freeze({ profile, lifecycle, budget });
+    const commerce = await this.#commerce.read(profile.id, lifecycle.periodId);
+    return Object.freeze({ profile, lifecycle, budget, commerce });
   }
 
   async createProfile(appearance: PetAppearance): Promise<AppSnapshot> {
@@ -170,4 +178,83 @@ export class AppRuntime {
     );
     return this.load();
   }
+
+  async closePeriod(snapshot: AppSnapshot): Promise<AppSnapshot> {
+    if (!snapshot.profile || !snapshot.lifecycle?.periodId) throw new TypeError('Активный период не найден');
+    await this.#lifecycle.closePeriod(Object.freeze({
+      type: 'ClosePeriod' as const,
+      meta: Object.freeze({ commandId: identifier('close-period'), profileId: snapshot.profile.id, mode: this.#mode, expectedRevision: counter(snapshot.lifecycle.revision), sessionEpoch: counter(0) }),
+      payload: Object.freeze({ periodId: snapshot.lifecycle.periodId }),
+    }), new Date().toISOString());
+    return this.load();
+  }
+
+  async previewPurchase(snapshot: AppSnapshot, itemId: string) {
+    if (!snapshot.profile || !snapshot.lifecycle?.periodId) throw new TypeError('Активный период не найден');
+    return this.#commerce.previewPurchase(snapshot.profile.id, snapshot.lifecycle.periodId, itemId);
+  }
+
+  async previewSavings(snapshot: AppSnapshot, kind: 'deposit' | 'withdraw', value: number) {
+    if (!snapshot.profile) throw new TypeError('Профиль не найден');
+    return this.#commerce.previewSavings(snapshot.profile.id, kind, positiveAmount(value));
+  }
+
+  async purchase(snapshot: AppSnapshot, itemId: string, acknowledgedPlanOverrun: boolean): Promise<AppSnapshot> {
+    if (!snapshot.profile || !snapshot.lifecycle?.periodId) throw new TypeError('Активный период не найден');
+    await this.#commerce.purchase(Object.freeze({
+      type: 'ConfirmPurchase' as const,
+      meta: Object.freeze({ commandId: identifier('purchase'), profileId: snapshot.profile.id, mode: this.#mode, expectedRevision: counter(snapshot.lifecycle.revision), sessionEpoch: counter(0) }),
+      payload: Object.freeze({ periodId: snapshot.lifecycle.periodId, itemId, acknowledgedPlanOverrun }),
+    }), new Date().toISOString());
+    return this.load();
+  }
+
+  async selectGoal(snapshot: AppSnapshot, goalId: string | null): Promise<AppSnapshot> {
+    if (!snapshot.profile || !snapshot.lifecycle) throw new TypeError('Профиль не найден');
+    await this.#commerce.selectGoal(Object.freeze({
+      type: 'SelectGoal' as const,
+      meta: Object.freeze({ commandId: identifier('goal'), profileId: snapshot.profile.id, mode: this.#mode, expectedRevision: counter(snapshot.lifecycle.revision), sessionEpoch: counter(0) }),
+      payload: Object.freeze({ goalId }),
+    }), new Date().toISOString());
+    return this.load();
+  }
+
+  async depositSavings(snapshot: AppSnapshot, value: number): Promise<AppSnapshot> {
+    return this.transferSavings(snapshot, 'DepositSavings', value);
+  }
+
+  async withdrawSavings(snapshot: AppSnapshot, value: number): Promise<AppSnapshot> {
+    return this.transferSavings(snapshot, 'WithdrawSavings', value);
+  }
+
+  async claimGoal(snapshot: AppSnapshot, goalId: string): Promise<AppSnapshot> {
+    if (!snapshot.profile || !snapshot.lifecycle?.periodId) throw new TypeError('Активный период не найден');
+    await this.#commerce.claimGoal(Object.freeze({
+      type: 'ClaimGoal' as const,
+      meta: Object.freeze({ commandId: identifier('claim-goal'), profileId: snapshot.profile.id, mode: this.#mode, expectedRevision: counter(snapshot.lifecycle.revision), sessionEpoch: counter(0) }),
+      payload: Object.freeze({ periodId: snapshot.lifecycle.periodId, goalId }),
+    }), new Date().toISOString());
+    return this.load();
+  }
+
+  async history(snapshot: AppSnapshot): Promise<CommerceSnapshot['history']> {
+    if (!snapshot.profile) throw new TypeError('Профиль не найден');
+    return (await this.#commerce.read(snapshot.profile.id, snapshot.lifecycle?.periodId ?? null)).history;
+  }
+
+  private async transferSavings(
+    snapshot: AppSnapshot,
+    type: 'DepositSavings' | 'WithdrawSavings',
+    value: number,
+  ): Promise<AppSnapshot> {
+    if (!snapshot.profile || !snapshot.lifecycle?.periodId) throw new TypeError('Активный период не найден');
+    const transfer = positiveAmount(value);
+    await this.#commerce.transfer(Object.freeze({
+      type,
+      meta: Object.freeze({ commandId: identifier(type === 'DepositSavings' ? 'deposit' : 'withdraw'), profileId: snapshot.profile.id, mode: this.#mode, expectedRevision: counter(snapshot.lifecycle.revision), sessionEpoch: counter(0) }),
+      payload: Object.freeze({ periodId: snapshot.lifecycle.periodId, amount: transfer }),
+    }), new Date().toISOString());
+    return this.load();
+  }
+
 }

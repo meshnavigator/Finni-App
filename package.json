@@ -25,6 +25,7 @@
     "lint": "eslint . --max-warnings=0",
     "typecheck": "tsc --noEmit",
     "test": "node --test tests/*.test.mjs",
+    "test:core": "node --test tests/domain.test.mjs tests/domain-overflow.test.mjs tests/domain-five-period.test.mjs tests/budget-plan.test.mjs tests/commerce.test.mjs tests/savings-commerce.test.mjs tests/period-close.test.mjs tests/persistence.test.mjs tests/lifecycle.test.mjs tests/lifecycle-coordinator.test.mjs tests/adult-history-control.test.mjs tests/core-regression.test.mjs",
     "content": "node scripts/check-content.mjs",
     "fixtures": "node scripts/check-fixtures.mjs",
     "verify": "npm run lint && npm run typecheck && npm run test && npm run content && npm run fixtures",

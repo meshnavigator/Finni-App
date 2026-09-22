@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useRef, useState } from 'react';
 import {
+  AppState,
   KeyboardAvoidingView,
   Modal,
   Platform,
@@ -14,7 +15,9 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import { AppRuntime, type AppSnapshot } from '../application/app-runtime.ts';
+import { AdultAccessSession } from '../application/adult-access.ts';
+import type { AppRuntime, AppSnapshot } from '../application/app-runtime.ts';
+import { ProductionAppController } from '../application/production-app-controller.ts';
 import {
   errorScreenModel,
   homeResponsiveLayout,
@@ -32,12 +35,25 @@ import {
   type PetShapeId,
 } from '../domain/pet-profile.ts';
 import type { Plan } from '../domain/economy.ts';
-import { openExpoDatabase } from '../persistence/expo-database.ts';
+import type { Mode } from '../domain/contracts.ts';
+import AdultScreen from './AdultScreen.tsx';
 import BudgetPlanScreen from './BudgetPlanScreen.tsx';
+import HelpScreen from './HelpScreen.tsx';
+import HistoryScreen from './HistoryScreen.tsx';
+import PeriodResultScreen from './PeriodResultScreen.tsx';
+import SavingsScreen from './SavingsScreen.tsx';
+import ShopScreen from './ShopScreen.tsx';
 import FinniHomeScene from './FinniHomeScene.tsx';
 
-type Screen = 'intro' | 'pet' | 'home' | 'plan' | 'section';
+type Screen = 'intro' | 'pet' | 'home' | 'plan' | 'shop' | 'savings' | 'history' | 'result' | 'adult' | 'section';
 type Phase = 'loading' | 'ready' | 'error';
+
+const EMPTY_SNAPSHOT: AppSnapshot = Object.freeze({
+  profile: null,
+  lifecycle: null,
+  budget: null,
+  commerce: null,
+});
 
 function ActionButton(props: Readonly<{
   label: string;
@@ -128,7 +144,7 @@ function LoadingScreen() {
   );
 }
 
-function ErrorScreen(props: Readonly<{ message?: string; onRetry: () => void }>) {
+function ErrorScreen(props: Readonly<{ message?: string; onRetry: () => void; onAdult?: () => void }>) {
   const model = errorScreenModel(props.message);
   return (
     <SafeAreaView style={styles.centered} accessibilityLabel="Ошибка загрузки">
@@ -136,6 +152,7 @@ function ErrorScreen(props: Readonly<{ message?: string; onRetry: () => void }>)
       <Text style={styles.title}>{model.title}</Text>
       <Text style={styles.body}>{model.message}</Text>
       <ActionButton label={model.action} onPress={props.onRetry} />
+      {props.onAdult && <ActionButton label="Удалить повреждённые данные" onPress={props.onAdult} secondary />}
     </SafeAreaView>
   );
 }
@@ -144,6 +161,7 @@ function IntroScreen(props: Readonly<{
   repeat?: boolean;
   onContinue: () => void;
   onClose?: () => void;
+  onAdult?: () => void;
 }>) {
   return (
     <SafeAreaView style={styles.page}>
@@ -174,7 +192,11 @@ function IntroScreen(props: Readonly<{
             secondary
           />
         )}
-        {!props.repeat && <Text style={styles.expertLink}>Проверка для эксперта</Text>}
+        {!props.repeat && (
+          <Pressable accessibilityRole="button" onPress={props.onAdult} style={styles.adultButton}>
+            <Text style={styles.expertLink}>Раздел для взрослого</Text>
+          </Pressable>
+        )}
       </ScrollView>
     </SafeAreaView>
   );
@@ -197,7 +219,7 @@ function HelpOverlay(props: Readonly<{ onClose: () => void }>) {
       visible
     >
       <View accessibilityViewIsModal style={styles.helpOverlay} testID="home-help-overlay">
-        <IntroScreen repeat onContinue={() => undefined} onClose={props.onClose} />
+        <HelpScreen onBack={props.onClose} />
       </View>
     </Modal>
   );
@@ -311,6 +333,7 @@ function HomeScreen(props: Readonly<{
   notice: string | null;
   scenePaused: boolean;
   onOpenDay: () => void;
+  onResults: () => void;
   onEditPet: () => void;
   onHelp: () => void;
   onSection: (title: string) => void;
@@ -323,6 +346,7 @@ function HomeScreen(props: Readonly<{
   const primary = () => {
     if (model.action.route === 'open-day') props.onOpenDay();
     else if (model.action.route === 'plan') props.onSection('План');
+    else if (model.action.route === 'day' || model.action.route === 'results') props.onResults();
     else props.onSection(model.action.label);
   };
   const primaryAction = (
@@ -435,15 +459,45 @@ function SectionScreen(props: Readonly<{ title: string; onBack: () => void }>) {
 }
 
 export default function AppRoot() {
-  const runtime = useRef<AppRuntime | null>(null);
+  const controller = useRef<ProductionAppController | null>(null);
+  const adultAccess = useRef(new AdultAccessSession());
+  const returnScreen = useRef<Screen>('home');
   const [phase, setPhase] = useState<Phase>('loading');
   const [screen, setScreen] = useState<Screen>('intro');
   const [snapshot, setSnapshot] = useState<AppSnapshot | null>(null);
+  const [mode, setMode] = useState<Mode>('normal');
+  const [adultUnlocked, setAdultUnlocked] = useState(false);
+  const [adultRecoveryAvailable, setAdultRecoveryAvailable] = useState(false);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [sectionTitle, setSectionTitle] = useState('');
   const [helpOpen, setHelpOpen] = useState(false);
   const [boot, setBoot] = useState(0);
+
+  const lockAdult = () => {
+    adultAccess.current.lock();
+    setAdultUnlocked(false);
+  };
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', (state) => {
+      adultAccess.current.handleAppState(state);
+      if (state !== 'active') setAdultUnlocked(false);
+    });
+    return () => subscription.remove();
+  }, []);
+
+  useEffect(() => {
+    if (!adultUnlocked) return undefined;
+    const timer = setInterval(() => {
+      if (!adultAccess.current.isUnlocked(Date.now())) setAdultUnlocked(false);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [adultUnlocked]);
+
+  useEffect(() => () => {
+    void controller.current?.close();
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -451,18 +505,33 @@ export default function AppRoot() {
       setPhase('loading');
       setMessage(null);
       try {
-        await runtime.current?.close();
-        const database = await openExpoDatabase('normal');
-        const opened = await AppRuntime.initialize('normal', database);
-        const loaded = await opened.load();
+        await controller.current?.close();
+        controller.current = null;
+        setAdultRecoveryAvailable(false);
+        const initialized = await ProductionAppController.initialize(async () => {
+          adultAccess.current.lock();
+          if (!cancelled) {
+            setAdultUnlocked(false);
+            setHelpOpen(false);
+            setSnapshot(null);
+            setScreen('intro');
+          }
+        });
         if (cancelled) {
-          await opened.close();
+          await initialized.controller.close();
           return;
         }
-        runtime.current = opened;
-        setSnapshot(loaded);
-        setScreen(loaded.profile ? 'home' : 'intro');
-        setPhase('ready');
+        controller.current = initialized.controller;
+        setAdultRecoveryAvailable(true);
+        setMode(initialized.controller.mode());
+        if (initialized.startupError) {
+          setSnapshot(null);
+          setPhase('error');
+        } else {
+          setSnapshot(initialized.snapshot);
+          setScreen(initialized.snapshot?.profile ? 'home' : 'intro');
+          setPhase('ready');
+        }
       } catch {
         if (!cancelled) setPhase('error');
       }
@@ -474,13 +543,13 @@ export default function AppRoot() {
   }, [boot]);
 
   const savePet = async (appearance: PetAppearance) => {
-    if (!runtime.current) return;
+    if (!controller.current) return;
     setBusy(true);
     setMessage(null);
     try {
       const loaded = snapshot?.profile
-        ? await runtime.current.updatePet(snapshot.profile, appearance)
-        : await runtime.current.createProfile(appearance);
+        ? await controller.current.runSnapshot((runtime) => runtime.updatePet(snapshot.profile!, appearance))
+        : await controller.current.runSnapshot((runtime) => runtime.createProfile(appearance));
       setSnapshot(loaded);
       setScreen('home');
     } catch {
@@ -491,11 +560,11 @@ export default function AppRoot() {
   };
 
   const openDay = async () => {
-    if (!runtime.current || !snapshot) return;
+    if (!controller.current || !snapshot) return;
     setBusy(true);
     setMessage(null);
     try {
-      setSnapshot(await runtime.current.openDay(snapshot));
+      setSnapshot(await controller.current.runSnapshot((runtime) => runtime.openDay(snapshot)));
     } catch {
       setMessage('День не открылся. Деньги не начислены — попробуй ещё раз.');
     } finally {
@@ -504,11 +573,11 @@ export default function AppRoot() {
   };
 
   const confirmBudgetPlan = async (values: Plan, acknowledgedLowNeed: boolean) => {
-    if (!runtime.current || !snapshot) return;
+    if (!controller.current || !snapshot) return;
     setBusy(true);
     setMessage(null);
     try {
-      setSnapshot(await runtime.current.confirmPlan(snapshot, values, acknowledgedLowNeed));
+      setSnapshot(await controller.current.runSnapshot((runtime) => runtime.confirmPlan(snapshot, values, acknowledgedLowNeed)));
     } catch {
       setMessage('План не сохранился. Проверь суммы и попробуй ещё раз.');
     } finally {
@@ -517,13 +586,91 @@ export default function AppRoot() {
   };
 
   const allocateIncome = async (values: Plan) => {
-    if (!runtime.current || !snapshot) return;
+    if (!controller.current || !snapshot) return;
     setBusy(true);
     setMessage(null);
     try {
-      setSnapshot(await runtime.current.allocateAdditionalIncome(snapshot, values));
+      setSnapshot(await controller.current.runSnapshot((runtime) => runtime.allocateAdditionalIncome(snapshot, values)));
     } catch {
       setMessage('Доход изменился. Проверь доступный остаток и подтверди ещё раз.');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const updateCommerce = async (
+    action: (runtime: AppRuntime, current: AppSnapshot) => Promise<AppSnapshot>,
+    errorMessage: string,
+  ) => {
+    if (!controller.current || !snapshot) return;
+    setBusy(true);
+    setMessage(null);
+    try {
+      setSnapshot(await controller.current.runSnapshot((runtime) => action(runtime, snapshot)));
+    } catch {
+      setMessage(errorMessage);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const openHistory = (back: Screen) => {
+    returnScreen.current = back;
+    setMessage(null);
+    setScreen('history');
+  };
+
+  const openAdult = () => {
+    returnScreen.current = screen === 'adult' ? 'home' : screen;
+    lockAdult();
+    setMessage(null);
+    setScreen('adult');
+  };
+
+  const leaveAdult = () => {
+    lockAdult();
+    setMessage(null);
+    setScreen(snapshot?.profile ? 'home' : 'intro');
+  };
+
+  const switchMode = async (target: Mode) => {
+    if (!controller.current || target === mode) return;
+    if (!adultAccess.current.recordActivity(Date.now())) {
+      setAdultUnlocked(false);
+      return;
+    }
+    setBusy(true);
+    setMessage(null);
+    try {
+      const loaded = await controller.current.switchMode(target);
+      setMode(target);
+      setSnapshot(loaded);
+      lockAdult();
+      setScreen(loaded.profile ? 'home' : 'intro');
+    } catch {
+      setMessage('Режим не переключился. Данные не смешаны; попробуйте ещё раз.');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const runAdmin = async (operation: 'RESET_PROFILE' | 'DELETE_PROFILE') => {
+    if (!controller.current) return;
+    if (!adultAccess.current.recordActivity(Date.now())) {
+      setAdultUnlocked(false);
+      return;
+    }
+    setBusy(true);
+    setMessage(null);
+    try {
+      const loaded = await controller.current.runAdmin(operation);
+      setSnapshot(loaded);
+      setMode(controller.current.mode());
+      lockAdult();
+      setScreen('intro');
+      setPhase('ready');
+    } catch {
+      setMessage('Не удалось завершить удаление. Операция сохранена и будет продолжена при следующем запуске.');
     } finally {
       setBusy(false);
     }
@@ -535,17 +682,38 @@ export default function AppRoot() {
       setScreen('plan');
       return;
     }
+    if (title === 'Покупки') {
+      setScreen('shop');
+      return;
+    }
+    if (title === 'Копилка') {
+      setScreen('savings');
+      return;
+    }
+    if (title === 'Прогресс') {
+      openHistory('home');
+      return;
+    }
+    if (title === 'Для взрослого') {
+      openAdult();
+      return;
+    }
     setSectionTitle(title);
     setScreen('section');
   };
 
   if (phase === 'loading') return <LoadingScreen />;
-  if (phase === 'error') return <ErrorScreen onRetry={() => setBoot((value) => value + 1)} />;
+  if (phase === 'error') return (
+    <ErrorScreen
+      onAdult={adultRecoveryAvailable ? () => { setPhase('ready'); openAdult(); } : undefined}
+      onRetry={() => setBoot((value) => value + 1)}
+    />
+  );
 
   return (
     <>
       <StatusBar style="dark" />
-      {screen === 'intro' && <IntroScreen onContinue={() => setScreen('pet')} />}
+      {screen === 'intro' && <IntroScreen onAdult={openAdult} onContinue={() => setScreen('pet')} />}
       {screen === 'pet' && (
         <PetBuilder
           key={snapshot?.profile ? `${snapshot.profile.id}-${snapshot.profile.revision}` : 'new'}
@@ -569,6 +737,7 @@ export default function AppRoot() {
           onEditPet={() => { setMessage(null); setScreen('pet'); }}
           onHelp={() => setHelpOpen(true)}
           onOpenDay={() => void openDay()}
+          onResults={() => { setMessage(null); setScreen('result'); }}
           onSection={openSection}
         />
       )}
@@ -582,6 +751,82 @@ export default function AppRoot() {
           onBack={() => { setMessage(null); setScreen('home'); }}
           onConfirm={(values, acknowledged) =>
             void confirmBudgetPlan(values, acknowledged)}
+        />
+      )}
+      {screen === 'shop' && snapshot && (
+        <ShopScreen
+          snapshot={snapshot}
+          busy={busy}
+          onBack={() => setScreen('home')}
+          onPreview={(itemId) => controller.current!.submit((runtime) => runtime.previewPurchase(snapshot, itemId))}
+          onPurchase={(itemId, acknowledged) => {
+            void updateCommerce(
+              (runtime, current) => runtime.purchase(current, itemId, acknowledged),
+              'Покупка не выполнена. Деньги не изменились.',
+            );
+          }}
+        />
+      )}
+      {screen === 'savings' && snapshot && (
+        <SavingsScreen
+          snapshot={snapshot}
+          busy={busy}
+          message={message}
+          onBack={() => { setMessage(null); setScreen('home'); }}
+          onClaim={(goalId) => void updateCommerce(
+            (runtime, current) => runtime.claimGoal(current, goalId),
+            'Цель не получена. Монеты не изменились.',
+          )}
+          onHistory={() => openHistory('savings')}
+          onPreview={(kind, value) => controller.current!.submit((runtime) => runtime.previewSavings(snapshot, kind, value))}
+          onSelectGoal={(goalId) => void updateCommerce(
+            (runtime, current) => runtime.selectGoal(current, goalId),
+            'Цель не изменилась. Попробуй ещё раз.',
+          )}
+          onTransfer={(kind, value) => void updateCommerce(
+            (runtime, current) => kind === 'deposit'
+              ? runtime.depositSavings(current, value)
+              : runtime.withdrawSavings(current, value),
+            'Перевод не выполнен. Монеты не изменились.',
+          )}
+        />
+      )}
+      {screen === 'history' && snapshot && (
+        <HistoryScreen
+          snapshot={snapshot}
+          onBack={() => setScreen(returnScreen.current)}
+          onHelp={() => setHelpOpen(true)}
+        />
+      )}
+      {screen === 'result' && snapshot && (
+        <PeriodResultScreen
+          snapshot={snapshot}
+          busy={busy}
+          message={message}
+          onBack={() => { setMessage(null); setScreen('home'); }}
+          onClosePeriod={() => void updateCommerce(
+            (runtime, current) => runtime.closePeriod(current),
+            'Итог не сохранился. День остался открытым.',
+          )}
+        />
+      )}
+      {screen === 'adult' && (
+        <AdultScreen
+          unlocked={adultUnlocked}
+          mode={mode}
+          snapshot={snapshot ?? EMPTY_SNAPSHOT}
+          busy={busy}
+          message={message}
+          onUnlock={() => { adultAccess.current.unlock(Date.now()); setAdultUnlocked(true); }}
+          onActivity={() => {
+            if (!adultAccess.current.recordActivity(Date.now())) {
+              setAdultUnlocked(false);
+            }
+          }}
+          onExit={leaveAdult}
+          onSwitchMode={(target) => void switchMode(target)}
+          onResetDemo={() => void runAdmin('RESET_PROFILE')}
+          onDeleteSelected={() => void runAdmin('DELETE_PROFILE')}
         />
       )}
       {screen === 'section' && <SectionScreen title={sectionTitle} onBack={() => setScreen('home')} />}

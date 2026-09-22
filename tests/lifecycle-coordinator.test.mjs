@@ -39,23 +39,44 @@ const exists = async (path) => {
   }
 };
 
-const fileStorage = (path) => ({
-  async read() {
-    try {
-      return await readFile(path, 'utf8');
-    } catch (error) {
-      if (error?.code === 'ENOENT') return null;
-      throw error;
-    }
-  },
-  async writeAtomic(serialized) {
-    await mkdir(join(path, '..'), { recursive: true });
-    const temporary = `${path}.next`;
-    await writeFile(temporary, serialized, 'utf8');
-    await rm(path, { force: true });
-    await rename(temporary, path);
-  },
-});
+const fileStorage = (path) => {
+  let tail = Promise.resolve();
+  return {
+    async read() {
+      try {
+        return await readFile(path, 'utf8');
+      } catch (error) {
+        if (error?.code === 'ENOENT') return null;
+        throw error;
+      }
+    },
+    replaceInTransaction(expectedRevision, nextRevision, serialized) {
+      const operation = tail.then(async () => {
+        let current = null;
+        try {
+          current = await readFile(path, 'utf8');
+        } catch (error) {
+          if (error?.code !== 'ENOENT') throw error;
+        }
+        const revision = current === null
+          ? 0
+          : JSON.parse(current).controlRevision;
+        if (revision !== expectedRevision) return false;
+        if (nextRevision !== expectedRevision + 1) {
+          throw new TypeError('Control revision must advance exactly once');
+        }
+        await mkdir(join(path, '..'), { recursive: true });
+        const temporary = `${path}.next`;
+        await writeFile(temporary, serialized, 'utf8');
+        await rm(path, { force: true });
+        await rename(temporary, path);
+        return true;
+      });
+      tail = operation.then(() => undefined, () => undefined);
+      return operation;
+    },
+  };
+};
 
 const fixedModePaths = (root, mode) => {
   const base = join(root, DATABASE_FILES[mode]);
