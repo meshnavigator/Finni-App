@@ -21,6 +21,7 @@ type ShellCopy = Readonly<{
   title: string;
   intro: string;
   hints: readonly [string, string];
+  evidence: readonly Readonly<{ id: string; text: string }>[];
 }>;
 
 function ActionButton(props: Readonly<{
@@ -66,6 +67,8 @@ export default function LessonShell(props: Readonly<{
   busy: boolean;
   rewardReason: LessonRewardReason | null;
   onSolutionChange: LessonRendererProps['onChange'];
+  revealedEvidenceIds: readonly string[];
+  onRevealEvidence: (evidenceId: string) => void;
   onRevealHint: (level: HintLevel) => void;
   onEvaluate: () => void;
   onViewExplanation: (evaluationId: string) => void;
@@ -108,6 +111,9 @@ export default function LessonShell(props: Readonly<{
           solution: props.attempt.solution,
           disabled: props.busy || props.attempt.phase === 'completed',
           onChange: props.onSolutionChange,
+          evidence: props.copy.evidence,
+          revealedEvidenceIds: props.revealedEvidenceIds,
+          onRevealEvidence: props.onRevealEvidence,
         })}
 
         <View style={styles.hints}>

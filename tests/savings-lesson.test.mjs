@@ -39,7 +39,7 @@ test('S01 accepts flexible integer deposits and preserves an over-goal forecast'
 
 test('S01 shows the remaining amount and rejects invalid day deposits', () => {
   const incomplete = evaluateSavingsSchedule({ deposits: [10, 10, 10] }, schedule);
-  assert.equal(incomplete.outcome, 'valid_alternative');
+  assert.equal(incomplete.outcome, 'needs_review');
   assert.equal(incomplete.calculation.forecast, 60);
   assert.equal(incomplete.calculation.remaining, 30);
   assert.match(incomplete.explanation, /игровых дней/);
@@ -53,7 +53,7 @@ test('S02 preview calculates purchase and postponement without a money command',
     { withdrawal: 10, action: 'buy' },
     withdrawal,
   );
-  assert.equal(purchased.outcome, 'valid_alternative');
+  assert.equal(purchased.outcome, 'meets_goal');
   assert.deepEqual(purchased.calculation, {
     withdrawal: 10,
     availableAfterWithdrawal: 20,
@@ -101,6 +101,7 @@ test('savings renderer exposes both canonical SRS scenarios and a non-mutating p
   assert.match(source, /available/);
   assert.match(source, /itemCost/);
   assert.match(source, /postpone/);
+  assert.match(source, /parameters\.mode/);
   assert.match(source, /Это preview: монеты твоего игрового дня не меняются/);
   assert.match(source, /minHeight: 48/);
   assert.doesNotMatch(source, /repository|ledger|TransferToSavings/);

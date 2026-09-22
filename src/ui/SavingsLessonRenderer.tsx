@@ -131,7 +131,7 @@ function WithdrawalPreview(props: LessonRendererProps) {
 }
 
 export default function SavingsLessonRenderer(props: LessonRendererProps) {
-  return props.parameters.scenario === SAVINGS_SCHEDULE
+  return props.parameters.mode === SAVINGS_SCHEDULE
     ? <Schedule {...props} />
     : <WithdrawalPreview {...props} />;
 }

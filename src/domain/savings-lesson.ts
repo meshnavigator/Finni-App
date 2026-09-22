@@ -26,7 +26,7 @@ function scheduleValues(
   const deposits = solution.deposits;
   if (
     !Array.isArray(maxDeposits) || !Array.isArray(deposits) ||
-    maxDeposits.length !== 3 || deposits.length !== 3 ||
+    maxDeposits.length === 0 || deposits.length !== maxDeposits.length ||
     !maxDeposits.every(amount) || !deposits.every(amount)
   ) return null;
   return {
@@ -49,7 +49,7 @@ export function evaluateSavingsSchedule(
       maxDeposits: values.maxDeposits,
     });
   }
-  const added = values.deposits[0] + values.deposits[1] + values.deposits[2];
+  const added = values.deposits.reduce((sum, deposit) => sum + deposit, 0);
   const forecast = values.initialSavings + added;
   const remaining = Math.max(0, values.goalCost - forecast);
   const calculation = {
@@ -71,7 +71,7 @@ export function evaluateSavingsSchedule(
     };
   }
   return {
-    outcome: 'valid_alternative',
+    outcome: 'needs_review',
     consequence: 'Получится ' + forecast + '. До мечты ещё ' + remaining + '.',
     explanation: 'Это план трёх будущих игровых дней. Его можно менять: увеличь один или несколько взносов, но не больше лимита на игровой день.',
     nextStep: 'Попробуй другой план из трёх взносов.',
@@ -130,7 +130,7 @@ export function evaluateSavingsWithdrawalPreview(
   const result = { ...calculation, availableAfterAction };
   if (values.action === 'buy') {
     return {
-      outcome: 'valid_alternative',
+      outcome: 'meets_goal',
       consequence: 'Ты выбрал занятие сейчас. В учебном кошельке ' + availableAfterAction
         + ', в копилке ' + savingsAfterWithdrawal + '; до мечты ' + remaining + '.',
       explanation: 'Снятие не объявляется ошибкой: оно показывает выбор между занятием сейчас и большей суммой для мечты.',
@@ -148,10 +148,13 @@ export function evaluateSavingsWithdrawalPreview(
   };
 }
 
-export const evaluateSavingsLesson: LessonEvaluator = (solution, parameters) => {
-  if (parameters.scenario === SAVINGS_SCHEDULE) return evaluateSavingsSchedule(solution, parameters);
-  if (parameters.scenario === SAVINGS_WITHDRAWAL_PREVIEW) {
+/** The content snapshot pins `mode`, so one registered mechanic safely routes both savings lessons. */
+export const evaluateSavings: LessonEvaluator = (solution, parameters) => {
+  if (parameters.mode === SAVINGS_SCHEDULE) {
+    return evaluateSavingsSchedule(solution, parameters);
+  }
+  if (parameters.mode === SAVINGS_WITHDRAWAL_PREVIEW) {
     return evaluateSavingsWithdrawalPreview(solution, parameters);
   }
-  return invalid('Неизвестный учебный сценарий накоплений.');
+  return invalid('Не удалось определить учебный сценарий накоплений.');
 };

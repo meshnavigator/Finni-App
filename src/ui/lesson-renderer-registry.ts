@@ -7,6 +7,9 @@ export type LessonRendererProps = Readonly<{
   solution: Readonly<Record<string, unknown>>;
   disabled: boolean;
   onChange: (solution: Readonly<Record<string, unknown>>) => void;
+  evidence?: readonly Readonly<{ id: string; text: string }>[];
+  revealedEvidenceIds?: readonly string[];
+  onRevealEvidence?: (evidenceId: string) => void;
 }>;
 
 export type LessonRenderer = ComponentType<LessonRendererProps>;
