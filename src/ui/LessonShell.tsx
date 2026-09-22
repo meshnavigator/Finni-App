@@ -103,6 +103,8 @@ export default function LessonShell(props: Readonly<{
         </View>
 
         {props.registry.render(props.attempt.mechanic, {
+          lessonId: props.attempt.lessonId,
+          parameters: props.attempt.parameters,
           solution: props.attempt.solution,
           parameters: props.attempt.parameters,
           disabled: props.busy || props.attempt.phase === 'completed',

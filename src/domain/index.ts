@@ -6,5 +6,6 @@ export * from './economy.ts';
 export * from './errors.ts';
 export * from './lifecycle.ts';
 export * from './lesson.ts';
+export * from './savings-lesson.ts';
 export * from './pet-profile.ts';
 export * from './numeric.ts';

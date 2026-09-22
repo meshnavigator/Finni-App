@@ -10,6 +10,8 @@ test('renderer registry extends mechanics without changing LessonShell navigatio
   assert.equal(registry.has('basket'), true);
   assert.equal(registry.resolve('basket'), renderer);
   assert.equal(registry.render('basket', {
+    lessonId: 'LS-P01',
+    parameters: Object.freeze({}),
     solution: Object.freeze({}),
     disabled: false,
     onChange: () => {},
