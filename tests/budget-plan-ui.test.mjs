@@ -20,7 +20,8 @@ test('budget plan component wires draft, confirmation and additional-income stat
   assert.match(screen, /Оставить пока/);
   assert.match(screen, /minHeight: 48/g);
   assert.match(screen, /keyboardType="number-pad"/);
-  assert.match(root, /runtime\.current\.confirmPlan/);
-  assert.match(root, /runtime\.current\.allocateAdditionalIncome/);
+  assert.match(root, /runSnapshot\(\(runtime\) => runtime\.confirmPlan/);
+  assert.match(root, /runSnapshot\(\(runtime\) => runtime\.allocateAdditionalIncome/);
+  assert.doesNotMatch(root, /runtime\.current/);
   assert.match(root, /screen === 'plan'/);
 });

@@ -22,7 +22,6 @@ import {
   type PeriodState,
 } from '../domain/economy.ts';
 import {
-  assertPeriodTransition,
   derivePeriodState,
   requireOpenPeriodDate,
   type StoredPeriodState,
@@ -36,6 +35,7 @@ import {
   type Counter,
 } from '../domain/numeric.ts';
 import type { SqlDatabase } from './database.ts';
+import { closePeriodTransaction, readPeriodSummary, type ClosePeriodData, type PeriodSummarySnapshot } from './period-summary-repository.ts';
 import { RepositoryExecutor } from './repository-executor.ts';
 
 export type RuleBundleSnapshot = Readonly<{
@@ -58,6 +58,11 @@ export type LifecycleSnapshot = Readonly<{
   clockGeneration: Counter;
   nextEligibleDate: string | null;
   maxOpenedDate: string | null;
+  petStage: 1 | 2 | 3;
+  closedPeriods: Counter;
+  lifetimeGrowth: Counter;
+  newSavingPeriods: Counter;
+  latestSummary: PeriodSummarySnapshot | null;
   ruleBundle: RuleBundleSnapshot | null;
 }>;
 
@@ -80,6 +85,9 @@ type ProfileRow = Readonly<{
   available: number;
   savings: number;
   revision: number;
+  pet_stage: number;
+  lifetime_growth: number;
+  new_saving_periods: number;
 }>;
 
 type PeriodRow = Readonly<{
@@ -144,7 +152,10 @@ async function readProfile(database: SqlDatabase, profileId: string): Promise<Pr
             game_clock.max_opened_date,
             wallet_projection.available,
             wallet_projection.savings,
-            profile_state.revision
+            profile_state.revision,
+            profile_state.pet_stage,
+            profile_state.lifetime_growth,
+            profile_state.new_saving_periods
      FROM profile
      JOIN game_clock ON game_clock.profile_id = profile.id
      JOIN wallet_projection ON wallet_projection.profile_id = profile.id
@@ -212,14 +223,16 @@ async function saveReceipt<T>(
 export class LifecycleRepository {
   readonly #mode: Mode;
   readonly #executor: RepositoryExecutor;
+  readonly #ownsExecutor: boolean;
 
-  constructor(mode: Mode, database: SqlDatabase) {
+  constructor(mode: Mode, database: SqlDatabase, executor?: RepositoryExecutor) {
     this.#mode = mode;
-    this.#executor = new RepositoryExecutor(database);
+    this.#executor = executor ?? new RepositoryExecutor(database);
+    this.#ownsExecutor = !executor;
   }
 
   close(): Promise<void> {
-    return this.#executor.close();
+    return this.#ownsExecutor ? this.#executor.close() : Promise.resolve();
   }
 
   async #runTransaction<T>(work: (database: SqlDatabase) => Promise<T>): Promise<T> {
@@ -301,6 +314,10 @@ export class LifecycleRepository {
         nextEligibleDate: profile.next_eligible_date,
       });
       const visible = open ?? latest;
+      const latestSummary = await readPeriodSummary(database, visible?.id ?? null);
+      const closed = await database.getFirstAsync<CountRow>(
+        'SELECT COUNT(*) AS count FROM period_summary WHERE profile_id = ?', profileId,
+      );
       return Object.freeze({
         profileId,
         mode: this.#mode,
@@ -315,6 +332,11 @@ export class LifecycleRepository {
         clockGeneration: counter(profile.clock_generation),
         nextEligibleDate: profile.next_eligible_date,
         maxOpenedDate: profile.max_opened_date,
+        petStage: profile.pet_stage === 2 || profile.pet_stage === 3 ? profile.pet_stage : 1,
+        closedPeriods: counter(closed?.count ?? 0),
+        lifetimeGrowth: counter(profile.lifetime_growth),
+        newSavingPeriods: counter(profile.new_saving_periods),
+        latestSummary,
         ruleBundle: visible ? parseRuleBundle(visible.rule_bundle_json) : null,
       });
     });
@@ -460,29 +482,28 @@ export class LifecycleRepository {
     envelope: CommandEnvelope<'ConfirmPlan'>,
     committedAt: string,
   ): Promise<CommandReceipt<Readonly<{ periodId: string; state: 'ACTIVE' }>>> {
-    return this.#transitionPeriod(envelope, 'DRAFT', 'ACTIVE', committedAt);
+    return this.#confirmPlan(envelope, committedAt);
   }
 
-  closePeriod(
+  async closePeriod(
     envelope: CommandEnvelope<'ClosePeriod'>,
     committedAt: string,
-  ): Promise<CommandReceipt<Readonly<{ periodId: string; state: 'CLOSED' }>>> {
-    return this.#transitionPeriod(envelope, 'ACTIVE', 'CLOSED', committedAt);
+  ): Promise<CommandReceipt<ClosePeriodData>> {
+    if (envelope.meta.mode !== this.#mode) throw failure('PROFILE_MODE_MISMATCH');
+    return this.#runTransaction((database) =>
+      closePeriodTransaction(database, envelope, this.#mode, committedAt));
   }
 
-  async #transitionPeriod<K extends 'ConfirmPlan' | 'ClosePeriod'>(
-    envelope: CommandEnvelope<K>,
-    from: StoredPeriodState,
-    to: StoredPeriodState,
+  async #confirmPlan(
+    envelope: CommandEnvelope<'ConfirmPlan'>,
     committedAt: string,
-  ): Promise<CommandReceipt<Readonly<{ periodId: string; state: K extends 'ConfirmPlan' ? 'ACTIVE' : 'CLOSED' }>>> {
+  ): Promise<CommandReceipt<Readonly<{ periodId: string; state: 'ACTIVE' }>>> {
     if (envelope.meta.mode !== this.#mode) throw failure('PROFILE_MODE_MISMATCH');
-    assertPeriodTransition(from, to);
     const identity = canonicalBusinessParameters(envelope.type, envelope.meta, envelope.payload);
     return this.#runTransaction(async (database) => {
       type ResultData = Readonly<{
         periodId: string;
-        state: K extends 'ConfirmPlan' ? 'ACTIVE' : 'CLOSED';
+        state: 'ACTIVE';
       }>;
       const repeated = await readExistingReceipt<ResultData>(
         database,
@@ -502,31 +523,22 @@ export class LifecycleRepository {
         periodId,
         envelope.meta.profileId,
       );
-      if (!period || period.state !== from) throw failure('PERIOD_NOT_ACTIVE', { state: period?.state ?? 'missing' });
-      if (envelope.type === 'ConfirmPlan') {
-        const payload = envelope.payload as CommandEnvelope<'ConfirmPlan'>['payload'];
-        confirmPlan(payload.values, amount(profile.available));
-        await database.runAsync(
-          `UPDATE period
-           SET state = 'ACTIVE', confirmed_plan_json = ?, confirmed_at = ?,
-               budget_at_confirm = ?,
-               ledger_seq_at_confirm = (
-                 SELECT COALESCE(MAX(seq), 0) FROM ledger_entry WHERE period_id = ?
-               )
-           WHERE id = ?`,
-          json(payload.values),
-          committedAt,
-          profile.available,
-          periodId,
-          periodId,
-        );
-      } else {
-        await database.runAsync(
-          `UPDATE period SET state = 'CLOSED', closed_at = ? WHERE id = ?`,
-          committedAt,
-          periodId,
-        );
-      }
+      if (!period || period.state !== 'DRAFT') throw failure('PERIOD_NOT_ACTIVE', { state: period?.state ?? 'missing' });
+      confirmPlan(envelope.payload.values, amount(profile.available));
+      await database.runAsync(
+        `UPDATE period
+         SET state = 'ACTIVE', confirmed_plan_json = ?, confirmed_at = ?,
+             budget_at_confirm = ?,
+             ledger_seq_at_confirm = (
+               SELECT COALESCE(MAX(seq), 0) FROM ledger_entry WHERE period_id = ?
+             )
+         WHERE id = ?`,
+        json(envelope.payload.values),
+        committedAt,
+        profile.available,
+        periodId,
+        periodId,
+      );
       const revision = addCounter(counter(profile.revision), counter(1));
       await database.runAsync(
         'UPDATE profile_state SET revision = ? WHERE profile_id = ?',
@@ -540,12 +552,12 @@ export class LifecycleRepository {
         `event:${envelope.meta.commandId}`,
         envelope.meta.commandId,
         envelope.meta.profileId,
-        to === 'ACTIVE' ? 'PLAN_CONFIRMED' : 'PERIOD_CLOSED',
-        json({ periodId, from, to }),
+        'PLAN_CONFIRMED',
+        json({ periodId, from: 'DRAFT', to: 'ACTIVE' }),
         committedAt,
       );
       const before = snapshot(profile.available, profile.savings);
-      const data = Object.freeze({ periodId, state: to }) as ResultData;
+      const data = Object.freeze({ periodId, state: 'ACTIVE' as const });
       const result: CommandSuccess<ResultData> = Object.freeze({
         ok: true,
         data,
@@ -553,7 +565,7 @@ export class LifecycleRepository {
         after: before,
         revision,
         feedback: Object.freeze({
-          code: to === 'ACTIVE' ? 'PLAN_CONFIRMED' : 'PERIOD_CLOSED',
+          code: 'PLAN_CONFIRMED',
           params: Object.freeze({}),
           petReaction: 'calm',
         }),
