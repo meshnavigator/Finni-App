@@ -19,6 +19,9 @@ export const ERROR_CODES = [
   'EXTRA_INCOME_EXCEEDED',
   'SESSION_EXPIRED',
   'ADMIN_OPERATION_PENDING',
+  'ATTEMPT_STALE',
+  'EXPLANATION_REQUIRED',
+  'INVALID_LESSON_OUTCOME',
 ] as const;
 
 export type ErrorCode = (typeof ERROR_CODES)[number];

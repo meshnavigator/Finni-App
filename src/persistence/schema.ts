@@ -1,6 +1,6 @@
 import { AMOUNT_LIMIT } from '../domain/numeric.ts';
 
-export const SCHEMA_VERSION = 5;
+export const SCHEMA_VERSION = 6;
 
 const moneyCheck = (column: string, positive = false): string =>
   `typeof(${column}) = 'integer' AND ${column} ${positive ? '>' : '>='} 0 AND ${column} <= ${AMOUNT_LIMIT}`;
