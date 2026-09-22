@@ -5,8 +5,6 @@ export type LessonRendererProps = Readonly<{
   lessonId: string;
   parameters: Readonly<Record<string, unknown>>;
   solution: Readonly<Record<string, unknown>>;
-  /** Pinned attempt parameters; renderers must not read the live game state. */
-  parameters?: Readonly<Record<string, unknown>>;
   disabled: boolean;
   onChange: (solution: Readonly<Record<string, unknown>>) => void;
 }>;

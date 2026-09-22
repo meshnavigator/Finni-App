@@ -1,7 +1,6 @@
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import {
   SAVINGS_SCHEDULE,
-  SAVINGS_WITHDRAWAL_PREVIEW,
 } from '../domain/savings-lesson.ts';
 import type { LessonRendererProps } from './lesson-renderer-registry.ts';
 

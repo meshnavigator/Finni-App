@@ -106,7 +106,6 @@ export default function LessonShell(props: Readonly<{
           lessonId: props.attempt.lessonId,
           parameters: props.attempt.parameters,
           solution: props.attempt.solution,
-          parameters: props.attempt.parameters,
           disabled: props.busy || props.attempt.phase === 'completed',
           onChange: props.onSolutionChange,
         })}
