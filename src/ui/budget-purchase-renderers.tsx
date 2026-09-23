@@ -30,8 +30,8 @@ function packageCounts(value: unknown): Readonly<Record<string, number>> {
 }
 
 export function AllocationRenderer(props: LessonRendererProps) {
-  const p = props.parameters as Readonly<{ budget?: number; needMinimum?: number; savingTarget?: number }>;
-  return <View style={styles.card} accessibilityLabel="Учебное распределение"><Text style={styles.title}>Распредели учебные монеты</Text><Text style={styles.caption}>Доступно: {p.budget ?? 0}. На нужное — не меньше {p.needMinimum ?? 0}, на мечту — не меньше {p.savingTarget ?? 0}.</Text><Field label="Нужное" value={props.solution.need} disabled={props.disabled} onChange={(need) => props.onChange({ ...props.solution, need })} /><Field label="Желания" value={props.solution.want} disabled={props.disabled} onChange={(want) => props.onChange({ ...props.solution, want })} /><Field label="На мечту" value={props.solution.save} disabled={props.disabled} onChange={(save) => props.onChange({ ...props.solution, save })} /></View>;
+  const p = props.parameters as Readonly<{ budget?: number; needMinimum?: number; savingTarget?: number; initialPlan?: Readonly<{ need: number; want: number; save: number }> }>;
+  return <View style={styles.card} accessibilityLabel="Учебное распределение"><Text style={styles.title}>Распредели учебные монеты</Text><Text style={styles.caption}>Доступно: {p.budget ?? 0}. На нужное — не меньше {p.needMinimum ?? 0}, на мечту — не меньше {p.savingTarget ?? 0}.</Text>{p.initialPlan && <Text style={styles.caption}>Старый учебный черновик: нужное {p.initialPlan.need}, желания {p.initialPlan.want}, мечта {p.initialPlan.save}. Измени его под новое условие.</Text>}<Field label="Нужное" value={props.solution.need} disabled={props.disabled} onChange={(need) => props.onChange({ ...props.solution, need })} /><Field label="Желания" value={props.solution.want} disabled={props.disabled} onChange={(want) => props.onChange({ ...props.solution, want })} /><Field label="На мечту" value={props.solution.save} disabled={props.disabled} onChange={(save) => props.onChange({ ...props.solution, save })} /></View>;
 }
 
 export function BasketRenderer(props: LessonRendererProps) {

@@ -165,6 +165,16 @@ export default function LessonShell(props: Readonly<{
                 <Text style={styles.body}>{evaluation.explanation}</Text>
                 <Text style={styles.resultTitle}>Следующий шаг</Text>
                 <Text style={styles.body}>{evaluation.nextStep}</Text>
+                {props.attempt.mechanic === 'receipt_audit' && evaluation.calculation.awaitingSellerResponse === true && (
+                  <ActionButton
+                    label="Кажется, мяч указан дважды. Давайте проверим"
+                    onPress={() => props.onSolutionChange({ ...props.attempt.solution, sellerResponse: 'neutral_question' })}
+                    disabled={props.busy}
+                  />
+                )}
+                {evaluation.outcome === 'needs_review' && evaluation.calculation.awaitingSellerResponse !== true && (
+                  <Text style={styles.body}>Измени ответ выше, затем снова нажми «Проверить решение».</Text>
+                )}
                 {invalid ? (
                   <Text style={styles.error}>
                     Исправь ответ: невалидный ввод нельзя завершить.
