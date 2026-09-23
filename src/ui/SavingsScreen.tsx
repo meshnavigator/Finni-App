@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import {
   Alert,
+  Image,
   Pressable,
   SafeAreaView,
   ScrollView,
@@ -11,6 +12,7 @@ import {
 } from 'react-native';
 import type { AppSnapshot } from '../application/app-runtime.ts';
 import { GOALS } from '../domain/catalog.ts';
+import { goalSource } from './room-assets.ts';
 
 type TransferKind = 'deposit' | 'withdraw';
 type SavingsPreview = Readonly<{
@@ -155,7 +157,7 @@ export default function SavingsScreen(props: Props) {
           const saved = Math.min(lifecycle.savings, goal.cost);
           return (
             <View key={goal.id} style={[styles.goalCard, isSelected && styles.goalSelected]}>
-              <Text style={styles.goalName}>{goal.name} — {goal.cost}</Text>
+              <View style={styles.goalHeader}>{goalSource(goal.id) && <Image accessibilityIgnoresInvertColors source={goalSource(goal.id)!} style={styles.goalThumbnail} />}<Text style={styles.goalName}>{goal.name} — {goal.cost}</Text></View>
               <Text style={styles.caption}>{isClaimed ? 'Уже получено' : `Накоплено ${saved} из ${goal.cost}`}</Text>
               <Button
                 disabled={props.busy || isSelected || isClaimed}
@@ -202,7 +204,9 @@ const styles = StyleSheet.create({
   flex: { flex: 1 },
   goalCard: { backgroundColor: '#FFFFFF', borderColor: colors.line, borderRadius: 14, borderWidth: 1, gap: 7, padding: 12 },
   goalSelected: { backgroundColor: colors.yellow, borderColor: '#D5A623' },
-  goalName: { color: colors.ink, fontSize: 16, fontWeight: '800' },
+  goalHeader: { alignItems: 'center', flexDirection: 'row', gap: 10 },
+  goalThumbnail: { height: 64, width: 64 },
+  goalName: { flex: 1, color: colors.ink, fontSize: 16, fontWeight: '800' },
   caption: { color: colors.muted, fontSize: 14, lineHeight: 19 },
   button: { alignItems: 'center', backgroundColor: colors.teal, borderRadius: 12, justifyContent: 'center', minHeight: 48, paddingHorizontal: 12 },
   buttonSecondary: { backgroundColor: 'transparent', borderColor: colors.teal, borderWidth: 1.5 },
