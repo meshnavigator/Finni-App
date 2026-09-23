@@ -99,3 +99,27 @@ test('basket minimum excludes impossible simultaneous alternative-group offers',
     statedRemainder: 80,
   }), 'invalid_input');
 });
+
+test('demo variants pin P02, P03 and B03 without increasing the eight-topic manifest', async () => {
+  const { manifest, documents } = await canonicalBundle();
+  const bundle = loadContentBundle(manifest, documents);
+  assert.equal(bundle.lessons.size, 8);
+  const expected = {
+    'LS-P02': ['equal_goods', 'quantity_two', 'quantity_three'],
+    'LS-P03': ['duplicate-line', 'correct-receipt'],
+    'LS-B03': ['materials-available', 'materials-missing'],
+  };
+  for (const [lessonId, variantIds] of Object.entries(expected)) {
+    const lesson = bundle.lessons.get(lessonId);
+    assert.deepEqual(lesson.variants.map((variant) => variant.id), variantIds);
+    for (const variantId of variantIds) {
+      const snapshot = lessonDefinitionSnapshot(lesson, variantId);
+      assert.equal(snapshot.lessonId, lessonId);
+      assert.equal(snapshot.variantId, variantId);
+      assert.deepEqual(snapshot.hints, lesson.variants.find((variant) => variant.id === variantId).copy.hints);
+    }
+  }
+  const catalogSource = await readFile(join(process.cwd(), 'src', 'ui', 'AppRoot.tsx'), 'utf8');
+  assert.match(catalogSource, /lesson.variants.map/);
+  assert.match(catalogSource, /props.onSelect\(variant\)/);
+});

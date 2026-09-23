@@ -82,7 +82,9 @@ test('History and Help expose factual child-safe content and return contract', (
   assert.match(history, /commerce\?\.history/);
   assert.match(history, /selectedGoal/);
   assert.match(history, /closedPeriods/);
-  assert.match(history, /Завершённых занятий пока нет/);
+  assert.match(history, /Здесь появятся ситуации, которые мы разберём вместе/);
+  assert.match(history, /props.discoveries.map/);
+  assert.match(history, /Потренироваться ещё/);
   assert.match(history, /accessibilityLabel/);
   assert.match(help, /Короткий словарь/);
   assert.match(help, /Вернуться туда, где я был/);

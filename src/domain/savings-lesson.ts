@@ -142,7 +142,9 @@ export function evaluateSavingsWithdrawalPreview(
     outcome: 'meets_goal',
     consequence: 'Покупка подождёт. В учебном кошельке ' + availableAfterAction
       + ', в копилке ' + savingsAfterWithdrawal + '; до мечты ' + remaining + '.',
-    explanation: 'Ты сохранил накопления в этом учебном примере. Никакие монеты твоего игрового дня не менялись.',
+    explanation: values.withdrawal === 0
+      ? 'Ты отложил покупку и не снимал монеты из учебной копилки. Монеты твоего игрового дня не менялись.'
+      : 'Покупка отложена, но выбранное снятие уменьшило учебную копилку на ' + values.withdrawal + '. Монеты твоего игрового дня не менялись.',
     nextStep: 'Можно завершить задание или изменить сумму и посмотреть другой вариант.',
     calculation: result,
   };

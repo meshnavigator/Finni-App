@@ -40,6 +40,23 @@ export type LessonCompletionResult = Readonly<{
   }>;
 }>;
 
+/** A completed attempt and its original evaluation, never recalculated from current content. */
+export type LessonDiscovery = Readonly<{
+  attempt: LessonAttempt;
+  evaluation: LessonEvaluation;
+  completionKind: CompletionKind;
+  rewardReason: LessonRewardReason;
+  completedAt: string;
+}>;
+
+type CompletionRow = Readonly<{
+  attempt_id: string;
+  evaluation_id: string;
+  completion_kind: CompletionKind;
+  reward_reason: LessonRewardReason;
+  created_at: string;
+}>;
+
 type AttemptRow = Readonly<{
   id: string;
   profile_id: string;
@@ -213,6 +230,37 @@ export class LessonRepository {
       const row = await findEvaluation(database, evaluationId);
       if (!row) throw failure('ATTEMPT_STALE');
       return evaluationFromRow(row);
+    });
+  }
+
+  listDiscoveries(profileId: string): Promise<readonly LessonDiscovery[]> {
+    return this.#executor.run(async (database) => {
+      const rows = await database.getAllAsync<CompletionRow>(
+        `SELECT attempt_id, evaluation_id, completion_kind, reward_reason, created_at
+         FROM lesson_completion WHERE profile_id = ?
+         ORDER BY created_at DESC, id DESC`,
+        profileId,
+      );
+      const discoveries: LessonDiscovery[] = [];
+      for (const row of rows) {
+        const attemptRow = await findAttempt(database, row.attempt_id);
+        const evaluationRow = await findEvaluation(database, row.evaluation_id);
+        if (!attemptRow || !evaluationRow ||
+            attemptRow.profile_id !== profileId ||
+            attemptRow.phase !== 'completed' ||
+            attemptRow.current_evaluation_id !== row.evaluation_id ||
+            evaluationRow.attempt_id !== row.attempt_id) {
+          throw failure('STORAGE_WRITE_FAILED', { entity: 'lesson_completion' });
+        }
+        discoveries.push(Object.freeze({
+          attempt: attemptFromRow(attemptRow),
+          evaluation: evaluationFromRow(evaluationRow),
+          completionKind: row.completion_kind,
+          rewardReason: row.reward_reason,
+          completedAt: row.created_at,
+        }));
+      }
+      return Object.freeze(discoveries);
     });
   }
 

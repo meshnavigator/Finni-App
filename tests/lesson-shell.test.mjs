@@ -38,7 +38,9 @@ test('LessonShell exposes hints and the full action-to-next-step contract', () =
   assert.match(source, /Завершить с разбором/);
   assert.match(source, /phase !== 'completed'/);
   assert.match(source, /невалидный ввод нельзя завершить/);
-  assert.match(source, /Вернуться в свой день/);
+  assert.match(source, /Короткая справка/);
+  assert.match(source, /returnLabel/);
+  assert.match(source, /onHelp/);
   assert.match(source, /minHeight: 48/);
   assert.doesNotMatch(source, /onRevealHint\([^)]*onComplete/);
 });

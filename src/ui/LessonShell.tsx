@@ -20,7 +20,7 @@ import {
 type ShellCopy = Readonly<{
   title: string;
   intro: string;
-  hints: readonly [string, string];
+
   evidence: readonly Readonly<{ id: string; text: string }>[];
 }>;
 
@@ -66,6 +66,7 @@ export default function LessonShell(props: Readonly<{
   registry: LessonRendererRegistry;
   busy: boolean;
   rewardReason: LessonRewardReason | null;
+  message: string | null;
   onSolutionChange: LessonRendererProps['onChange'];
   revealedEvidenceIds: readonly string[];
   onRevealEvidence: (evidenceId: string) => void;
@@ -73,6 +74,8 @@ export default function LessonShell(props: Readonly<{
   onEvaluate: () => void;
   onViewExplanation: (evaluationId: string) => void;
   onComplete: (evaluationId: string) => void;
+  onHelp: () => void;
+  returnLabel: string;
   onBack: () => void;
 }>) {
   const evaluation = props.evaluation;
@@ -94,13 +97,14 @@ export default function LessonShell(props: Readonly<{
         <Text style={styles.eyebrow}>ЗАНЯТИЕ</Text>
         <Text style={styles.title}>{props.copy.title}</Text>
         <Text style={styles.body}>{props.copy.intro}</Text>
+        <Text style={styles.levelLabel}>L0 · Ситуация для твоего решения</Text>
         <View style={styles.notice}>
           <Text style={styles.noticeText}>
             В примере свои монеты. Монеты твоего дня не тратятся.
           </Text>
           <Text style={styles.noticeText}>
             {props.attempt.rewardEligibleAtStart
-              ? 'За первое занятие сегодня — 20 монет. Остальные можно пройти для тренировки.'
+              ? '20 монет выдаются только за первое завершённое занятие дня. Остальные — для тренировки.'
               : 'Это тренировочное прохождение без награды.'}
           </Text>
         </View>
@@ -117,16 +121,17 @@ export default function LessonShell(props: Readonly<{
         })}
 
         <View style={styles.hints}>
+          <ActionButton label="Короткая справка" onPress={props.onHelp} secondary />
           {(['L1', 'L2'] as const).map((level, index) => {
             const shown = props.attempt.shownHints.includes(level);
             return shown ? (
               <Text key={level} style={styles.hintText}>
-                {level}: {props.copy.hints[index]}
+                {level === 'L1' ? 'На что посмотреть' : 'Опора для расчёта'}: {props.attempt.hints[index]}
               </Text>
             ) : (
               <ActionButton
                 key={level}
-                label={level === 'L1' ? 'Подсказка' : 'Показать пример'}
+                label={level === 'L1' ? 'Подсказка L1' : 'Показать пример L2'}
                 onPress={() => props.onRevealHint(level)}
                 disabled={props.busy || props.attempt.phase === 'completed'}
                 secondary
@@ -176,8 +181,12 @@ export default function LessonShell(props: Readonly<{
           </View>
         )}
 
+        {props.attempt.phase === 'completed' && (
+          <Text style={styles.body}>Мы сохранили это открытие в прогрессе. Его можно посмотреть без нового начисления монет.</Text>
+        )}
+{props.message && <Text style={styles.error}>{props.message}</Text>}
         {reward && <Text style={styles.reward}>{reward}</Text>}
-        <ActionButton label="Вернуться в свой день" onPress={props.onBack} secondary />
+        <ActionButton label={props.returnLabel} onPress={props.onBack} disabled={props.busy} secondary />
       </ScrollView>
     </SafeAreaView>
   );
@@ -199,6 +208,7 @@ const styles = StyleSheet.create({
   eyebrow: { color: colors.teal, fontSize: 13, fontWeight: '800', letterSpacing: 1.4 },
   title: { color: colors.ink, fontSize: 25, fontWeight: '800' },
   body: { color: colors.muted, fontSize: 16, lineHeight: 22 },
+  levelLabel: { color: colors.teal, fontSize: 14, fontWeight: '800' },
   notice: { backgroundColor: colors.yellow, borderRadius: 14, gap: 4, padding: 12 },
   noticeText: { color: colors.ink, fontSize: 14, fontWeight: '700', lineHeight: 19 },
   hints: { gap: 8 },
