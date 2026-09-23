@@ -37,7 +37,7 @@ import {
 import type { Plan } from '../domain/economy.ts';
 import type { Mode } from '../domain/contracts.ts';
 import type { HintLevel, LessonAttempt, LessonEvaluation } from '../domain/lesson.ts';
-import { LOCAL_DEMO_LESSONS, type LocalLessonPresentation } from '../content/local-lesson-catalog.ts';
+import { LOCAL_DEMO_LESSONS, type LocalLessonPresentation, type LessonVariantPresentation } from '../content/local-lesson-catalog.ts';
 import AdultScreen from './AdultScreen.tsx';
 import BudgetPlanScreen from './BudgetPlanScreen.tsx';
 import HelpScreen from './HelpScreen.tsx';
@@ -51,6 +51,8 @@ import { LessonRendererRegistry } from './lesson-renderer-registry.ts';
 import { AllocationRenderer, BasketRenderer } from './budget-purchase-renderers.tsx';
 import { ReceiptAuditRenderer, ResourceChoiceRenderer } from './receipt-workshop-renderers.tsx';
 import SavingsLessonRenderer from './SavingsLessonRenderer.tsx';
+import { lessonReturnLabel, lessonReturnScreen, nextLessonVariant } from './lesson-return.ts';
+import type { LessonDiscovery } from '../persistence/lesson-repository.ts';
 
 type Screen = 'intro' | 'pet' | 'home' | 'plan' | 'shop' | 'savings' | 'history' | 'result' | 'adult' | 'section' | 'lesson-catalog' | 'lesson';
 type Phase = 'loading' | 'ready' | 'error';
@@ -475,7 +477,7 @@ function SectionScreen(props: Readonly<{ title: string; onBack: () => void }>) {
 
 function LessonCatalogScreen(props: Readonly<{
   lessons: readonly LocalLessonPresentation[];
-  onSelect: (lesson: LocalLessonPresentation) => void;
+  onSelect: (lesson: LessonVariantPresentation) => void;
   onBack: () => void;
 }>) {
   return (
@@ -485,10 +487,21 @@ function LessonCatalogScreen(props: Readonly<{
         <Text style={styles.title}>Выбери пример</Text>
         <Text style={styles.body}>Это задания для тренировки: покупки и переводы из копилки здесь не выполняются.</Text>
         {props.lessons.map((lesson) => (
-          <Pressable key={lesson.definition.lessonId} accessibilityRole="button" accessibilityLabel={lesson.title} onPress={() => props.onSelect(lesson)} style={styles.lessonCard}>
+          <View key={lesson.definition.lessonId} style={styles.lessonCard}>
             <Text style={styles.summaryValue}>{lesson.title}</Text>
-            <Text style={styles.caption}>{lesson.intro}</Text>
-          </Pressable>
+            {lesson.variants.map((variant, index) => (
+              <Pressable
+                key={variant.definition.variantId}
+                accessibilityRole="button"
+                accessibilityLabel={`${lesson.title}. Ситуация ${index + 1}. ${variant.intro}`}
+                onPress={() => props.onSelect(variant)}
+                style={styles.variantButton}
+              >
+                <Text style={styles.variantTitle}>Ситуация {index + 1}</Text>
+                <Text style={styles.caption}>{variant.intro}</Text>
+              </Pressable>
+            ))}
+          </View>
         ))}
         <ActionButton label="Вернуться в домик" onPress={props.onBack} secondary />
       </ScrollView>
@@ -511,9 +524,10 @@ export default function AppRoot() {
   const [sectionTitle, setSectionTitle] = useState('');
   const [lessonAttempt, setLessonAttempt] = useState<LessonAttempt | null>(null);
   const [lessonEvaluation, setLessonEvaluation] = useState<LessonEvaluation | null>(null);
-  const [lessonPresentation, setLessonPresentation] = useState<LocalLessonPresentation | null>(null);
+  const [lessonPresentation, setLessonPresentation] = useState<LessonVariantPresentation | null>(null);
   const [revealedEvidenceIds, setRevealedEvidenceIds] = useState<readonly string[]>([]);
   const [lessonRewardReason, setLessonRewardReason] = useState<null | 'GRANTED' | 'TRAINING' | 'PERIOD_NOT_ACTIVE' | 'ALREADY_GRANTED'>(null);
+  const [lessonDiscoveries, setLessonDiscoveries] = useState<readonly LessonDiscovery[]>([]);
   const [helpOpen, setHelpOpen] = useState(false);
   const [boot, setBoot] = useState(0);
 
@@ -657,10 +671,20 @@ export default function AppRoot() {
     }
   };
 
-  const openHistory = (back: Screen) => {
-    returnScreen.current = back;
+  const openHistory = async (back: Screen) => {
+    if (!snapshot?.profile || !controller.current) return;
+    setBusy(true);
     setMessage(null);
-    setScreen('history');
+    try {
+      const discoveries = await controller.current.submit((runtime) => runtime.listLessonDiscoveries(snapshot.profile!.id));
+      setLessonDiscoveries(discoveries);
+      returnScreen.current = back;
+      setScreen('history');
+    } catch {
+      setMessage('Не удалось открыть историю занятий. Попробуй ещё раз.');
+    } finally {
+      setBusy(false);
+    }
   };
 
   const openAdult = () => {
@@ -734,7 +758,7 @@ export default function AppRoot() {
       return;
     }
     if (title === 'Прогресс') {
-      openHistory('home');
+      void openHistory('home');
       return;
     }
     if (title === 'Для взрослого') {
@@ -745,7 +769,7 @@ export default function AppRoot() {
     setScreen('section');
   };
 
-  const openLesson = async (presentation: LocalLessonPresentation) => {
+  const openLesson = async (presentation: LessonVariantPresentation) => {
     if (!snapshot || !controller.current) return;
     setBusy(true);
     setMessage(null);
@@ -786,14 +810,33 @@ export default function AppRoot() {
     setMessage(null);
     try {
       const receipt = await controller.current.submit((runtime) => runtime.completeLesson(snapshot, lessonAttempt.attemptId, lessonEvaluation.evaluationId));
-      if (receipt.result.ok) setLessonRewardReason(receipt.result.data.reward.reason);
-      const refreshed = await controller.current.load();
-      setSnapshot(refreshed);
+      if (!receipt.result.ok) throw new Error('Lesson completion failed');
+      setLessonRewardReason(receipt.result.data.reward.reason);
       setLessonAttempt((current) => current ? { ...current, phase: 'completed' } : current);
+      try {
+        setSnapshot(await controller.current.load());
+      } catch {
+        setMessage('Занятие сохранено. Не удалось обновить день — открой приложение снова.');
+      }
     } catch {
-      setMessage('Завершение не сохранилось. Монеты твоего дня не изменились.');
+      setMessage('Завершение не сохранилось. Попробуй ещё раз.');
     } finally {
       setBusy(false);
+    }
+  };
+
+  const lessonTarget = lessonAttempt?.phase === 'completed'
+    ? lessonReturnScreen(lessonAttempt.lessonId, snapshot?.lifecycle?.state)
+    : null;
+  const leaveLesson = () => {
+    if (busy) return;
+    setMessage(null);
+    if (!lessonTarget) {
+      setScreen('lesson-catalog');
+    } else if (lessonTarget === 'history') {
+      void openHistory('home');
+    } else {
+      setScreen(lessonTarget);
     }
   };
 
@@ -880,7 +923,7 @@ export default function AppRoot() {
             (runtime, current) => runtime.claimGoal(current, goalId),
             'Цель не получена. Монеты не изменились.',
           )}
-          onHistory={() => openHistory('savings')}
+          onHistory={() => void openHistory('savings')}
           onPreview={(kind, value) => controller.current!.submit((runtime) => runtime.previewSavings(snapshot, kind, value))}
           onSelectGoal={(goalId) => void updateCommerce(
             (runtime, current) => runtime.selectGoal(current, goalId),
@@ -897,8 +940,13 @@ export default function AppRoot() {
       {screen === 'history' && snapshot && (
         <HistoryScreen
           snapshot={snapshot}
+          discoveries={lessonDiscoveries}
           onBack={() => setScreen(returnScreen.current)}
           onHelp={() => setHelpOpen(true)}
+          onPractice={(lessonId, previousVariantId) => {
+            const lesson = LOCAL_DEMO_LESSONS.find((item) => item.definition.lessonId === lessonId);
+            if (lesson) void openLesson(nextLessonVariant(lesson.variants, previousVariantId));
+          }}
         />
       )}
       {screen === 'result' && snapshot && (
@@ -936,10 +984,11 @@ export default function AppRoot() {
         <LessonShell
           attempt={lessonAttempt}
           evaluation={lessonEvaluation}
-          copy={{ title: lessonPresentation.title, intro: lessonPresentation.intro, hints: lessonPresentation.definition.hints, evidence: lessonPresentation.evidence }}
+          copy={{ title: lessonPresentation.title, intro: lessonPresentation.intro, evidence: lessonPresentation.evidence }}
           registry={lessonRenderers}
           busy={busy}
           rewardReason={lessonRewardReason}
+          message={message}
           onSolutionChange={(solution) => void withLesson((runtime, attempt) => runtime.saveLesson(attempt.attemptId, solution))}
           revealedEvidenceIds={revealedEvidenceIds}
           onRevealEvidence={(evidenceId) => setRevealedEvidenceIds((current) => current.includes(evidenceId) ? current : [...current, evidenceId])}
@@ -947,7 +996,9 @@ export default function AppRoot() {
           onEvaluate={() => void withLesson((runtime, attempt) => runtime.evaluateLesson(attempt.attemptId))}
           onViewExplanation={(evaluationId) => void withLesson((runtime, attempt) => runtime.viewLessonExplanation(attempt.attemptId, evaluationId))}
           onComplete={() => void completeLesson()}
-          onBack={() => { setMessage(null); setScreen('lesson-catalog'); }}
+          onHelp={() => setHelpOpen(true)}
+          returnLabel={lessonTarget ? lessonReturnLabel(lessonTarget) : 'К выбору занятий'}
+          onBack={leaveLesson}
         />
       )}
       {screen === 'section' && <SectionScreen title={sectionTitle} onBack={() => setScreen('home')} />}
@@ -1029,6 +1080,8 @@ const styles = StyleSheet.create({
   summaryCard: { backgroundColor: '#FFF8E4', borderRadius: 12, justifyContent: 'center', minHeight: 48, paddingHorizontal: 12 },
   summaryLabel: { color: colors.muted, fontSize: 11, fontWeight: '800', letterSpacing: 0.6 },
   summaryValue: { color: colors.ink, fontSize: 15, fontWeight: '800' },
+  variantButton: { backgroundColor: '#F7FBFC', borderColor: '#C7DEE5', borderRadius: 12, borderWidth: 1, justifyContent: 'center', minHeight: 48, padding: 10 },
+  variantTitle: { color: '#146B78', fontSize: 15, fontWeight: '800' },
   lessonCard: { backgroundColor: '#FFFFFF', borderColor: colors.line, borderRadius: 12, borderWidth: 1, justifyContent: 'center', minHeight: 56, paddingHorizontal: 12 },
   notice: { color: colors.coral, fontSize: 13, fontWeight: '700' },
   reviewConflict: { backgroundColor: '#FFF1EF', borderColor: colors.coral, borderRadius: 12, borderWidth: 1, color: '#7A3028', fontSize: 14, fontWeight: '800', lineHeight: 19, padding: 10 },

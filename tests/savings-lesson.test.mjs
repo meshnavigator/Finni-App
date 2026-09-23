@@ -71,6 +71,14 @@ test('S02 preview calculates purchase and postponement without a money command',
   assert.equal(postponed.outcome, 'meets_goal');
   assert.equal(postponed.calculation.savingsAfterWithdrawal, 60);
   assert.equal(postponed.calculation.remaining, 30);
+  assert.match(postponed.explanation, /не снимал/);
+  const postponedAfterWithdrawal = evaluateSavingsWithdrawalPreview(
+    { withdrawal: 20, action: 'postpone' },
+    withdrawal,
+  );
+  assert.equal(postponedAfterWithdrawal.calculation.savingsAfterWithdrawal, 40);
+  assert.match(postponedAfterWithdrawal.explanation, /уменьшило учебную копилку на 20/);
+  assert.doesNotMatch(postponedAfterWithdrawal.explanation, /сохранил накопления/);
 });
 
 test('S02 blocks an unfunded purchase and malformed withdrawals', () => {

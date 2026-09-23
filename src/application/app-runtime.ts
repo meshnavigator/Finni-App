@@ -103,6 +103,10 @@ export class AppRuntime {
     });
   }
 
+  listLessonDiscoveries(profileId: string) {
+    return this.#learning.listDiscoveries(profileId);
+  }
+
   saveLesson(attemptId: string, solution: Readonly<Record<string, unknown>>): Promise<LessonAttempt> {
     return this.#learning.save(attemptId, solution, new Date().toISOString());
   }

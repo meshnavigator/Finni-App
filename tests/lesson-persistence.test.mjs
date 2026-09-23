@@ -76,13 +76,14 @@ async function prepare(
   periodState = 'ACTIVE',
   periodId = 'period',
   answer = 'ok',
+  selectedDefinition = definition,
 ) {
   await learning.start({
     attemptId,
     profileId: 'profile',
     periodId,
     periodState,
-    definition,
+    definition: selectedDefinition,
     startedAt: `2026-09-22T10:00:${attemptId.length}.000Z`,
   });
   await learning.save(
@@ -170,7 +171,13 @@ test('concurrent completions persist both outcomes but grant exactly one reward'
   const repository = new LessonRepository('normal', database);
   const learning = service(repository);
   await prepare(learning, 'first');
-  await prepare(learning, 'second');
+  await learning.revealHint('first', 'L2', '2026-09-22T10:03:30.000Z');
+  await prepare(learning, 'second', 'ACTIVE', 'period', 'ok', {
+    ...definition,
+    variantId: 'another-situation',
+    hints: ['Смотри новый список', 'Сравни новые числа'],
+  });
+  assert.deepEqual((await learning.read('second')).shownHints, []);
 
   const receipts = await Promise.all([
     learning.complete(
@@ -186,6 +193,10 @@ test('concurrent completions persist both outcomes but grant exactly one reward'
     receipts.map((receipt) => receipt.result.data.reward.reason),
     ['GRANTED', 'ALREADY_GRANTED'],
   );
+  const discoveries = await learning.listDiscoveries('profile');
+  assert.deepEqual(new Set(discoveries.map((item) => item.attempt.lessonId)), new Set(['engine-test']));
+  assert.deepEqual(new Set(discoveries.map((item) => item.attempt.variantId)), new Set(['default', 'another-situation']));
+  assert.deepEqual(discoveries.find((item) => item.attempt.variantId === 'another-situation').attempt.shownHints, []);
   assert.deepEqual(await database.getFirstAsync(`SELECT
     (SELECT COUNT(*) FROM lesson_completion) AS completions,
     (SELECT COUNT(*) FROM ledger_entry WHERE type = 'LESSON_REWARD') AS rewards,
@@ -280,4 +291,47 @@ test('invalid input and stale evaluation cannot create completion or reward', as
     (SELECT COUNT(*) FROM command_receipt) AS receipts
   `), { completions: 0, ledger: 0, receipts: 0 });
   await repository.close();
+});
+
+test('completed discovery reloads pinned attempt and evaluation after restart without a new reward', async () => {
+  const path = temporaryPath('finni-lesson-discovery-');
+  const database = new SqliteFileAdapter(path);
+  await migrateDatabase(database);
+  await seed(database);
+  const repository = new LessonRepository('normal', database);
+  const learning = service(repository);
+  await learning.start({
+    attemptId: 'discovery',
+    profileId: 'profile',
+    periodId: 'period',
+    periodState: 'ACTIVE',
+    definition,
+    startedAt: '2026-09-22T10:00:00.000Z',
+  });
+  await learning.revealHint('discovery', 'L2', '2026-09-22T10:01:00.000Z');
+  await learning.save('discovery', { answer: 'review' }, '2026-09-22T10:02:00.000Z');
+  const evaluated = await learning.evaluate('discovery', 'evaluation-discovery', '2026-09-22T10:03:00.000Z');
+  await learning.viewExplanation('discovery', evaluated.evaluation.evaluationId, '2026-09-22T10:04:00.000Z');
+  await learning.complete(completeCommand('complete-discovery', 'discovery'), '2026-09-22T10:05:00.000Z');
+  await repository.close();
+
+  const reopenedDatabase = new SqliteFileAdapter(path);
+  await migrateDatabase(reopenedDatabase);
+  const reopened = new LessonRepository('normal', reopenedDatabase);
+  const results = await reopened.listDiscoveries('profile');
+  assert.equal(results.length, 1);
+  assert.equal(results[0].attempt.phase, 'completed');
+  assert.deepEqual(results[0].attempt.solution, { answer: 'review' });
+  assert.deepEqual(results[0].attempt.shownHints, ['L2']);
+  assert.equal(results[0].attempt.contentVersion, '1.0.0-test');
+  assert.equal(results[0].evaluation.evaluationId, 'evaluation-discovery');
+  assert.equal(results[0].evaluation.calculation.answer, 'review');
+  assert.equal(results[0].completionKind, 'reviewed');
+  assert.equal(results[0].rewardReason, 'GRANTED');
+  assert.deepEqual(await reopened.listDiscoveries('other-profile'), []);
+  assert.deepEqual(await reopenedDatabase.getFirstAsync(`SELECT
+    (SELECT COUNT(*) FROM lesson_completion) AS completions,
+    (SELECT COUNT(*) FROM ledger_entry WHERE type = 'LESSON_REWARD') AS rewards
+  `), { completions: 1, rewards: 1 });
+  await reopened.close();
 });

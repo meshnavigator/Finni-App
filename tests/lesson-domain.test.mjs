@@ -195,3 +195,19 @@ test('reward eligibility is captured at start and cannot be upgraded later', () 
   assert.equal(start('CLOSED').rewardEligibleAtStart, false);
   assert.equal(start('WAITING').rewardEligibleAtStart, false);
 });
+
+test('new variant starts with hidden hints even after the previous variant used L2', () => {
+  const previous = revealLessonHint(start(), 'L2', '2026-09-22T10:01:00.000Z');
+  const next = startLessonAttempt({
+    attemptId: 'attempt-other-variant',
+    profileId: 'profile',
+    periodId: 'period',
+    definition: { ...definition, variantId: 'other', hints: ['Смотри список', 'Сравни цену'] },
+    periodState: 'ACTIVE',
+    startedAt: '2026-09-22T10:02:00.000Z',
+  });
+  assert.deepEqual(previous.shownHints, ['L2']);
+  assert.deepEqual(next.shownHints, []);
+  assert.deepEqual(next.hints, ['Смотри список', 'Сравни цену']);
+  assert.equal(next.phase, 'draft');
+});

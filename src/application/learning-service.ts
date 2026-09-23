@@ -14,6 +14,7 @@ import {
 import {
   LessonRepository,
   type LessonCompletionResult,
+  type LessonDiscovery,
 } from '../persistence/lesson-repository.ts';
 
 export class LearningService {
@@ -41,6 +42,10 @@ export class LearningService {
 
   read(attemptId: string): Promise<LessonAttempt> {
     return this.#repository.readAttempt(attemptId);
+  }
+
+  listDiscoveries(profileId: string): Promise<readonly LessonDiscovery[]> {
+    return this.#repository.listDiscoveries(profileId);
   }
 
   async save(

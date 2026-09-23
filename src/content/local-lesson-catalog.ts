@@ -10,11 +10,15 @@ export type LessonEvidence = Readonly<{
   text: string;
 }>;
 
-export type LocalLessonPresentation = Readonly<{
+export type LessonVariantPresentation = Readonly<{
   definition: LessonDefinition;
   title: string;
   intro: string;
   evidence: readonly LessonEvidence[];
+}>;
+
+export type LocalLessonPresentation = LessonVariantPresentation & Readonly<{
+  variants: readonly LessonVariantPresentation[];
 }>;
 
 const rawManifest = require('../../content/bundles/1.2.0/manifest.json') as unknown;
@@ -41,11 +45,14 @@ const DEMO_LESSON_IDS = [
   'LS-S02',
 ] as const;
 
-function presentation(lessonId: (typeof DEMO_LESSON_IDS)[number]): LocalLessonPresentation {
+function presentation(
+  lessonId: (typeof DEMO_LESSON_IDS)[number],
+  variantId: string,
+): LessonVariantPresentation {
   const lesson = LOCAL_BUNDLE.lessons.get(lessonId);
   if (!lesson) throw new TypeError(`Bundled demo lesson ${lessonId} is missing`);
-  const definition = lessonDefinitionSnapshot(lesson);
-  const variant = variantById(lesson, definition.variantId);
+  const definition = lessonDefinitionSnapshot(lesson, variantId);
+  const variant = variantById(lesson, variantId);
   return Object.freeze({
     definition,
     title: lesson.title,
@@ -57,5 +64,14 @@ function presentation(lessonId: (typeof DEMO_LESSON_IDS)[number]): LocalLessonPr
   });
 }
 
-/** Built-in content is validated before the demo catalog becomes reachable by UI. */
-export const LOCAL_DEMO_LESSONS = Object.freeze(DEMO_LESSON_IDS.map(presentation));
+function catalogEntry(lessonId: (typeof DEMO_LESSON_IDS)[number]): LocalLessonPresentation {
+  const lesson = LOCAL_BUNDLE.lessons.get(lessonId);
+  if (!lesson) throw new TypeError(`Bundled demo lesson ${lessonId} is missing`);
+  const variants = Object.freeze(lesson.variants.map((variant) => presentation(lessonId, variant.id)));
+  const defaultPresentation = variants.find((item) => item.definition.variantId === lesson.defaultVariantId);
+  if (!defaultPresentation) throw new TypeError(`Default variant for ${lessonId} is missing`);
+  return Object.freeze({ ...defaultPresentation, variants });
+}
+
+/** Eight lesson topics, with every validated built-in variant selectable in the demo. */
+export const LOCAL_DEMO_LESSONS = Object.freeze(DEMO_LESSON_IDS.map(catalogEntry));
