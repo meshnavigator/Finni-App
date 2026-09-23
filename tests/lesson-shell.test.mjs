@@ -44,3 +44,17 @@ test('LessonShell exposes hints and the full action-to-next-step contract', () =
   assert.match(source, /minHeight: 48/);
   assert.doesNotMatch(source, /onRevealHint\([^)]*onComplete/);
 });
+
+test('needs-review result explicitly invites the child to edit and check again', () => {
+  const source = readFileSync(new URL('../src/ui/LessonShell.tsx', import.meta.url), 'utf8');
+  assert.match(source, /evaluation.outcome === 'needs_review'/);
+  assert.match(source, /Измени ответ выше, затем снова нажми «Проверить решение»/);
+});
+test('P03 offers the neutral seller line only after a checked receipt discrepancy', () => {
+  const source = readFileSync(new URL('../src/ui/LessonShell.tsx', import.meta.url), 'utf8');
+  assert.match(source, /evaluation.calculation.awaitingSellerResponse === true/);
+  assert.match(source, /Кажется, мяч указан дважды. Давайте проверим/);
+  assert.match(source, /sellerResponse: 'neutral_question'/);
+  assert.match(source, /\.\.\.props\.attempt\.solution, sellerResponse: 'neutral_question'/);
+  assert.match(source, /awaitingSellerResponse !== true/);
+});

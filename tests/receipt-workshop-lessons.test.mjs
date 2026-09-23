@@ -27,15 +27,23 @@ function definition(id, variantId) {
 test('P03 detects either duplicate, accepts a correct receipt, and explains incorrect change', () => {
   const duplicate = definition('LS-P03', 'duplicate-line');
   for (const lineId of ['receipt-ball-a', 'receipt-ball-b']) {
-    const evaluation = registry.evaluate(duplicate.mechanic, { flaggedLineIds: [lineId], correctedTotal: 60, expectedChange: 40 }, duplicate.parameters);
+    const pending = registry.evaluate(duplicate.mechanic, { flaggedLineIds: [lineId], correctedTotal: 60, expectedChange: 40 }, duplicate.parameters);
+    assert.equal(pending.outcome, 'needs_review');
+    assert.equal(pending.calculation.awaitingSellerResponse, true);
+    const evaluation = registry.evaluate(duplicate.mechanic, { flaggedLineIds: [lineId], correctedTotal: 60, expectedChange: 40, sellerResponse: 'neutral_question' }, duplicate.parameters);
     assert.equal(evaluation.outcome, 'meets_goal');
     assert.equal(evaluation.calculation.difference, 20);
+    assert.match(evaluation.explanation, /была одна лишняя строка/);
+    assert.match(evaluation.nextStep, /спокойный вопрос/);
+    assert.match(evaluation.nextStep, /настоящей покупки нет/);
   }
   const wrongChange = registry.evaluate(duplicate.mechanic, { flaggedLineIds: ['receipt-ball-b'], correctedTotal: 60, expectedChange: 20 }, duplicate.parameters);
   assert.equal(wrongChange.outcome, 'needs_review');
   assert.match(wrongChange.explanation, /сдачу/);
   const correct = definition('LS-P03', 'correct-receipt');
-  assert.equal(registry.evaluate(correct.mechanic, { flaggedLineIds: [], correctedTotal: 60, expectedChange: 40 }, correct.parameters).outcome, 'meets_goal');
+  const correctResult = registry.evaluate(correct.mechanic, { flaggedLineIds: [], correctedTotal: 60, expectedChange: 40 }, correct.parameters);
+  assert.equal(correctResult.outcome, 'meets_goal');
+  assert.doesNotMatch(correctResult.nextStep, /продавца/);
   assert.equal(registry.evaluate(correct.mechanic, { flaggedLineIds: ['receipt-ball'], correctedTotal: 40, expectedChange: 60 }, correct.parameters).outcome, 'needs_review');
 });
 
@@ -71,7 +79,7 @@ test('P03 and B03 training completions create no financial ledger entry', async 
     const repository = new LessonRepository('normal', database);
     const learning = new LearningService(repository, registry);
     const cases = [
-      ['receipt', definition('LS-P03', 'duplicate-line'), { flaggedLineIds: ['receipt-ball-b'], correctedTotal: 60, expectedChange: 40 }],
+      ['receipt', definition('LS-P03', 'duplicate-line'), { flaggedLineIds: ['receipt-ball-b'], correctedTotal: 60, expectedChange: 40, sellerResponse: 'neutral_question' }],
       ['workshop', definition('LS-B03', 'materials-available'), { checkedOwnedResourceIds: ['paper', 'pencil'], method: 'make', allocation: { need: 40, want: 10, save: 50 } }],
     ];
     for (const [id, lesson, solution] of cases) {

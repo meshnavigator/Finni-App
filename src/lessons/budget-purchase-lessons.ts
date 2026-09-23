@@ -121,6 +121,13 @@ export const evaluateAllocation: LessonEvaluator = (solution, rawParameters) => 
   if (!Number.isSafeInteger(total) || total > parameters.budget) {
     return action('invalid_input', `Получилось ${total}, а есть ${parameters.budget}.`, 'Сумма трёх частей не должна быть больше учебного бюджета.', 'Исправь распределение до проверки.', { need, want, save, total, budget: parameters.budget });
   }
+  const initialPlan = rawParameters.initialPlan;
+  if (typeof initialPlan === 'object' && initialPlan !== null && !Array.isArray(initialPlan)) {
+    const draft = initialPlan as Readonly<Record<string, unknown>>;
+    if (need === draft.need && want === draft.want && save === draft.save) {
+      return action('needs_review', 'Это прежний учебный черновик.', 'На нужное теперь нужно ' + parameters.needMinimum + ', а в старом плане ' + need + '. Измени хотя бы одну сумму и снова проверь условия.', 'Измени учебный план до начала дня.', { need, want, save, total, unchangedDraft: true });
+    }
+  }
   if (need >= parameters.needMinimum && save >= parameters.savingTarget) {
     return action('meets_goal', 'Нужное покрыто, а на мечту запланирована сумма.', `Всего распределено ${total}; остаток ${parameters.budget - total} можно не распределять в учебном примере.`, 'Можно завершить занятие или попробовать другой план.', { need, want, save, total, remainder: parameters.budget - total });
   }
@@ -172,8 +179,14 @@ export const evaluateBasket: LessonEvaluator = (solution, rawParameters) => {
   const extraUnits = Object.entries(units)
     .map(([kind, count]) => Math.max(0, count - (parameters.requiredUnits[kind] ?? 0)))
     .reduce((sum, count) => sum + count, 0);
+  const pencilCount = parameters.requiredUnits.pencil;
+  const pencilSingle = parameters.offers.find((offer) => offer.kind === 'pencil' && offer.packSize === 1);
+  const pencilPack = parameters.offers.find((offer) => offer.kind === 'pencil' && offer.packSize === 3);
+  const quantityExplanation = (pencilCount === 2 || pencilCount === 3) && pencilSingle && pencilPack
+    ? 'Нужно ' + pencilCount + ' карандаша: отдельные по ' + pencilSingle.packPrice + ' стоят ' + (pencilCount * pencilSingle.packPrice) + ', набор из 3 стоит ' + pencilPack.packPrice + '. В выбранной корзине ' + (units.pencil ?? 0) + ' карандаша; ' + (extraUnits === 0 ? 'лишних нет' : 'на ' + extraUnits + ' больше нужного') + '. Остаток ' + (parameters.budget - total) + '.'
+    : null;
   if (parameters.preferLowerCostForEqualCoverage && total > minimum) {
-    return action('valid_alternative', 'Список выполнен и денег хватило.', 'Этот вариант допустим. При одинаковом покрытии можно сравнить общую цену и выбрать более экономный набор.', 'Можно завершить занятие и сравнить итог с другим вариантом.', { total, remainder: parameters.budget - total, extraUnits, minimum });
+    return action('valid_alternative', 'Список выполнен и денег хватило.', quantityExplanation ?? 'Этот вариант допустим. При одинаковом покрытии можно сравнить общую цену и выбрать более экономный набор.', 'Можно завершить занятие и сравнить итог с другим вариантом.', { total, remainder: parameters.budget - total, extraUnits, minimum });
   }
-  return action('meets_goal', 'Список выполнен, а остаток совпадает с учебным чеком.', 'Сравнивают общую цену нужного количества и свойства товара. В этом примере деньги твоего дня не меняются.', 'Можно завершить занятие или посмотреть другой вариант.', { total, remainder: parameters.budget - total, extraUnits, minimum });
+  return action('meets_goal', 'Список выполнен, а остаток совпадает с учебным чеком.', quantityExplanation ?? 'Сравнивают общую цену нужного количества и свойства товара. В этом примере деньги твоего дня не меняются.', 'Можно завершить занятие или посмотреть другой вариант.', { total, remainder: parameters.budget - total, extraUnits, minimum });
 };

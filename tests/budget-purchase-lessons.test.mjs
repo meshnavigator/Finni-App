@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { evaluateAllocation, evaluateBasket } from '../src/lessons/budget-purchase-lessons.ts';
+import { startLessonAttempt } from '../src/domain/lesson.ts';
 
 const allocation = (solution, parameters) => evaluateAllocation(solution, parameters);
 const basket = (solution, parameters) => evaluateBasket(solution, parameters);
@@ -50,4 +51,41 @@ test('P02 detects invalid competing offers and a more expensive equal coverage a
   assert.equal(basket({ packageCountByOfferId: { food_a: 1, care: 1 }, statedTotal: 40, statedRemainder: 10 }, parameters).outcome, 'meets_goal');
   assert.equal(basket({ packageCountByOfferId: { food_b: 1, care: 1 }, statedTotal: 50, statedRemainder: 0 }, parameters).outcome, 'valid_alternative');
   assert.equal(basket({ packageCountByOfferId: { food_a: 1, food_b: 1, care: 1 }, statedTotal: 80, statedRemainder: 0 }, parameters).outcome, 'invalid_input');
+});
+
+test('B02 starts from the visible 40/40/20 draft and accepts only an edited plan', () => {
+  const parameters = { budget: 100, needMinimum: 60, savingTarget: 20, initialPlan: { need: 40, want: 40, save: 20 } };
+  const attempt = startLessonAttempt({
+    attemptId: 'b02-draft', profileId: 'profile', periodId: null, periodState: 'DRAFT',
+    definition: { lessonId: 'LS-B02', contentVersion: '1.2.0', variantId: 'changed-need-60', mechanic: 'allocation', parameters, hints: ['one', 'two'] },
+    startedAt: '2026-09-23T00:00:00.000Z',
+  });
+  assert.deepEqual(attempt.solution, parameters.initialPlan);
+  const unchanged = allocation(attempt.solution, parameters);
+  assert.equal(unchanged.outcome, 'needs_review');
+  assert.equal(unchanged.calculation.unchangedDraft, true);
+  assert.equal(allocation({ need: 60, want: 20, save: 20 }, parameters).outcome, 'meets_goal');
+  assert.equal(allocation({ need: 40, want: 40, save: 20 }, parameters).outcome, 'needs_review');
+});
+
+test('P02 explains exact prices, quantities and leftovers in both pencil variants', () => {
+  const offers = [
+    { id: 'single', kind: 'pencil', packSize: 1, packPrice: 10, maxPackages: 3 },
+    { id: 'pack_three', kind: 'pencil', packSize: 3, packPrice: 25, maxPackages: 1 },
+  ];
+  const two = { budget: 50, requiredUnits: { pencil: 2 }, offers, preferLowerCostForEqualCoverage: true };
+  const separate = basket({ packageCountByOfferId: { single: 2 }, statedTotal: 20, statedRemainder: 30 }, two);
+  const pack = basket({ packageCountByOfferId: { pack_three: 1 }, statedTotal: 25, statedRemainder: 25 }, two);
+  assert.equal(separate.outcome, 'meets_goal');
+  assert.equal(pack.outcome, 'valid_alternative');
+  assert.match(separate.explanation, /отдельные по 10 стоят 20, набор из 3 стоит 25/);
+  assert.match(pack.explanation, /3 карандаша; на 1 больше нужного/);
+  assert.match(pack.explanation, /Остаток 25/);
+  const three = { ...two, requiredUnits: { pencil: 3 } };
+  const threeSingles = basket({ packageCountByOfferId: { single: 3 }, statedTotal: 30, statedRemainder: 20 }, three);
+  const threePack = basket({ packageCountByOfferId: { pack_three: 1 }, statedTotal: 25, statedRemainder: 25 }, three);
+  assert.equal(threeSingles.outcome, 'valid_alternative');
+  assert.equal(threePack.outcome, 'meets_goal');
+  assert.match(threePack.explanation, /отдельные по 10 стоят 30, набор из 3 стоит 25/);
+  assert.match(threePack.explanation, /лишних нет/);
 });

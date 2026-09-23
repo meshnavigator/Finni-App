@@ -109,8 +109,18 @@ test('savings renderer exposes both canonical SRS scenarios and a non-mutating p
   assert.match(source, /available/);
   assert.match(source, /itemCost/);
   assert.match(source, /postpone/);
+  assert.ok(source.includes("props.solution.action === 'buy' || props.solution.action === 'postpone'"));
+  assert.ok(source.includes('parsed > savings'));
+  assert.ok(source.includes('Math.max(0, goalCost'));
+  assert.ok(!source.includes("? 'buy' : 'postpone'"));
   assert.match(source, /parameters\.mode/);
   assert.match(source, /Это preview: монеты твоего игрового дня не меняются/);
   assert.match(source, /minHeight: 48/);
   assert.doesNotMatch(source, /repository|ledger|TransferToSavings/);
+});
+
+test('S02 requires an explicit choice before evaluating a withdrawal', () => {
+  assert.equal(evaluateSavingsWithdrawalPreview({ withdrawal: 0 }, withdrawal).outcome, 'invalid_input');
+  assert.equal(evaluateSavingsWithdrawalPreview({ withdrawal: 0, action: 'postpone' }, withdrawal).outcome, 'meets_goal');
+  assert.equal(evaluateSavingsWithdrawalPreview({ withdrawal: 61, action: 'buy' }, withdrawal).outcome, 'invalid_input');
 });

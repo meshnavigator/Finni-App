@@ -98,8 +98,8 @@ function WithdrawalPreview(props: LessonRendererProps) {
   const itemCost = amount(props.parameters.itemCost, 20);
   const withdrawal = typeof props.solution.withdrawal === 'number' ? String(props.solution.withdrawal) : '';
   const parsed = parse(withdrawal);
-  const value = parsed ?? 0;
-  const action = props.solution.action === 'buy' ? 'buy' : 'postpone';
+
+  const action = props.solution.action === 'buy' || props.solution.action === 'postpone' ? props.solution.action : null;
   return (
     <View style={styles.card}>
       <Text style={styles.title}>Посмотри последствия выбора</Text>
@@ -108,10 +108,10 @@ function WithdrawalPreview(props: LessonRendererProps) {
         disabled={props.disabled}
         label={'Снять из копилки (от 0 до ' + savings + ')'}
         value={withdrawal}
-        onChangeText={(text) => props.onChange({ withdrawal: parse(text), action })}
+        onChangeText={(text) => props.onChange({ withdrawal: parse(text), ...(action ? { action } : {}) })}
       />
       <Text style={styles.preview}>
-        После снятия: кошелёк {available + value}, копилка {savings - value}, до мечты {goalCost - (savings - value)}.
+        {parsed === null ? 'Введи целую сумму снятия.' : parsed > savings ? 'Сумма больше учебной копилки. Выбери от 0 до ' + savings + '.' : 'После снятия: кошелёк ' + (available + parsed) + ', копилка ' + (savings - parsed) + ', до мечты ' + Math.max(0, goalCost - (savings - parsed)) + '.'}
       </Text>
       <Choice
         disabled={props.disabled}
@@ -125,7 +125,7 @@ function WithdrawalPreview(props: LessonRendererProps) {
         onPress={() => props.onChange({ withdrawal: parsed, action: 'postpone' })}
         selected={action === 'postpone'}
       />
-      <Text style={styles.note}>Это preview: монеты твоего игрового дня не меняются.</Text>
+      <Text style={styles.note}>Выбери, купить сейчас или отложить. Это preview: монеты твоего игрового дня не меняются.</Text>
     </View>
   );
 }

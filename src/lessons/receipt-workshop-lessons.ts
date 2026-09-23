@@ -41,7 +41,21 @@ export const evaluateReceiptAudit: LessonEvaluator = (solution, raw) => {
   if (solution.correctedTotal !== total || solution.expectedChange !== change) {
     return result('needs_review', `Покупка стоит ${total}, сдача из ${raw.tendered} — ${change}.`, 'После сравнения строк пересчитай итог и сдачу отдельно.', 'Исправь расчёт или заверши с разбором.', calculation);
   }
-  return result('meets_goal', flagged.length === 0 ? 'Все строки совпали.' : 'Лишний повтор найден.', `В корзине вещи на ${total}. Из ${raw.tendered} сдача ${change}. ${flagged.length === 0 ? 'Этот чек был верным.' : `В чеке было лишних строк: ${flagged.length}; расхождение ${raw.reportedTotal - total}.`}`, 'Можно завершить проверку или сравнить другой чек.', calculation);
+  if (flagged.length > 0 && solution.sellerResponse !== 'neutral_question') {
+    return result('needs_review', 'Расчёт верен. Остался спокойный вопрос продавцу.', 'Ты нашёл расхождение и пересчитал сдачу. Теперь выбери нейтральное обращение без обвинения.', 'Выбери учебную реплику и снова проверь решение.', { ...calculation, awaitingSellerResponse: true });
+  }
+  if (flagged.length === 0 && solution.sellerResponse !== undefined) {
+    return result('needs_review', 'Строки совпадают.', 'В правильном учебном чеке нет ошибки, о которой нужно спрашивать продавца.', 'Убери вопрос об ошибке и проверь ещё раз.', calculation);
+  }
+  const finding = flagged.length === 0
+    ? 'Этот чек был верным.'
+    : flagged.length === 1
+      ? 'В чеке была одна лишняя строка; расхождение ' + (raw.reportedTotal - total) + '.'
+      : 'В чеке было лишних строк: ' + flagged.length + '; расхождение ' + (raw.reportedTotal - total) + '.';
+  const nextStep = flagged.length === 0
+    ? 'Можно завершить проверку или сравнить другой учебный чек.'
+    : 'Ты выбрал спокойный вопрос о повторе. Это тренировка, настоящей покупки нет. Можно завершить проверку.';
+  return result('meets_goal', flagged.length === 0 ? 'Все строки совпали.' : 'Лишний повтор найден.', 'В корзине вещи на ' + total + '. Из ' + raw.tendered + ' сдача ' + change + '. ' + finding, nextStep, calculation);
 };
 
 type Resource = Readonly<{ id: string; title: string; packPrice: number }>;

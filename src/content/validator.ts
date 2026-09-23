@@ -300,7 +300,8 @@ function validateSolution(mechanic: LessonMechanic, mode: string, params: Object
     return;
   }
   if (mechanic === 'receipt_audit') {
-    exact(solution, ['flaggedLineIds', 'correctedTotal', 'expectedChange'], path);
+    exactOptional(solution, ['flaggedLineIds', 'correctedTotal', 'expectedChange'], ['sellerResponse'], path);
+    if (solution.sellerResponse !== undefined) enumeration(solution.sellerResponse, ['neutral_question'] as const, path + '.sellerResponse');
     const flagged = array(solution.flaggedLineIds, `${path}.flaggedLineIds`, 0, 20).map((item, index) => id(item, `${path}.flaggedLineIds[${index}]`));
     unique(flagged, `${path}.flaggedLineIds`);
     integer(solution.correctedTotal, `${path}.correctedTotal`);
@@ -426,7 +427,7 @@ export const evaluateContentFixture: ContentFixtureEvaluator = (lesson, variant,
     if (expected.join('\n') !== remaining.join('\n')) return 'needs_review';
     const total = (params.originalBasket as ObjectValue[]).reduce((sum, line) => sum + (line.quantity as number) * (line.unitPrice as number), 0);
     if (!Number.isSafeInteger(total) || total > MAX_AMOUNT || total > (params.tendered as number)) return 'invalid_input';
-    return solution.correctedTotal === total && solution.expectedChange === (params.tendered as number) - total
+    return solution.correctedTotal === total && solution.expectedChange === (params.tendered as number) - total && (flagged.size === 0 ? solution.sellerResponse === undefined : solution.sellerResponse === 'neutral_question')
       ? 'meets_goal' : 'needs_review';
   }
   const checked = [...(solution.checkedOwnedResourceIds as string[])].sort();

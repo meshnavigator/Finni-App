@@ -169,7 +169,12 @@ export function startLessonAttempt(input: Readonly<{
     hints: Object.freeze([...input.definition.hints]) as readonly [string, string],
     phase: 'draft',
     solutionRevision: 0,
-    solution: Object.freeze({}),
+    solution: input.definition.mechanic === 'allocation' &&
+      typeof input.definition.parameters.initialPlan === 'object' &&
+      input.definition.parameters.initialPlan !== null &&
+      !Array.isArray(input.definition.parameters.initialPlan)
+      ? immutableRecord(input.definition.parameters.initialPlan as Readonly<Record<string, unknown>>)
+      : Object.freeze({}),
     shownHints: Object.freeze([]),
     rewardEligibleAtStart: input.periodState === 'ACTIVE',
     currentEvaluationId: null,
