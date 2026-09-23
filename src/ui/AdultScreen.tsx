@@ -7,6 +7,7 @@ import {
 } from '../application/adult-access.ts';
 import type { AppSnapshot } from '../application/app-runtime.ts';
 import type { Mode } from '../domain/contracts.ts';
+import type { PresentationPreferences } from '../persistence/app-control-sqlite.ts';
 
 function AdultGate(props: Readonly<{ onUnlock: () => void; onExit: () => void }>) {
   const [progress, setProgress] = useState(0);
@@ -91,6 +92,9 @@ export default function AdultScreen(props: Readonly<{
   snapshot: AppSnapshot;
   busy: boolean;
   message: string | null;
+  presentationPreferences: PresentationPreferences;
+  onMotionEnabledChange: (enabled: boolean) => void;
+  onSoundEnabledChange: (enabled: boolean) => void;
   onUnlock: () => void;
   onActivity: () => void;
   onExit: () => void;
@@ -130,6 +134,30 @@ export default function AdultScreen(props: Readonly<{
           <Text style={styles.body}>Шагов роста: {lifecycle?.lifetimeGrowth ?? 0}</Text>
           <Text style={styles.body}>Текущая мечта: {goal ? `${goal.name}, ${goal.cost} монет` : 'не выбрана'}</Text>
           <Text style={styles.body}>Завершённые занятия: данных пока нет — учебный модуль ещё не подключён.</Text>
+        </View>
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>Восприятие</Text>
+          <Text style={styles.body}>Настройки сохраняются на устройстве и не влияют на деньги, награды или рост.</Text>
+          <Pressable
+            accessibilityLabel="Движение Финни"
+            accessibilityRole="switch"
+            accessibilityState={{ checked: props.presentationPreferences.motionEnabled, disabled: props.busy }}
+            disabled={props.busy}
+            onPress={() => props.onMotionEnabledChange(!props.presentationPreferences.motionEnabled)}
+            style={[styles.secondary, props.busy && styles.disabled]}
+          >
+            <Text style={styles.secondaryText}>Движение: {props.presentationPreferences.motionEnabled ? 'включено' : 'выключено'}</Text>
+          </Pressable>
+          <Pressable
+            accessibilityLabel="Звуки Финни"
+            accessibilityRole="switch"
+            accessibilityState={{ checked: props.presentationPreferences.soundEnabled, disabled: props.busy }}
+            disabled={props.busy}
+            onPress={() => props.onSoundEnabledChange(!props.presentationPreferences.soundEnabled)}
+            style={[styles.secondary, props.busy && styles.disabled]}
+          >
+            <Text style={styles.secondaryText}>Звуки: {props.presentationPreferences.soundEnabled ? 'включены' : 'выключены'}</Text>
+          </Pressable>
         </View>
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Для разговора</Text>

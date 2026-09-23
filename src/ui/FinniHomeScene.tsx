@@ -9,6 +9,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import { FINNI_ANCHORS, FINNI_CANVAS, FINNI_STAGE_SCALE, type FinniStage } from './finni-layer-contract.ts';
 
 const ROOM_SOURCE = require('../../assets/2d/master/FINNI-2D-MASTER-V1/room_clean_v1.png');
 const NEUTRAL_SOURCE = require('../../assets/2d/master/FINNI-2D-MASTER-V1/pet_neutral_canvas_v1.png');
@@ -23,13 +24,23 @@ export default function FinniHomeScene(props: Readonly<{
   careLabel: string;
   height: number;
   paused: boolean;
+  motionEnabled: boolean;
+  stage: FinniStage;
+  showCaption?: boolean;
 }>) {
   const [appState, setAppState] = useState<AppStateStatus>(AppState.currentState);
   const [reduceMotion, setReduceMotion] = useState(false);
   const [blinkPhase, setBlinkPhase] = useState(0);
   const [decodeError, setDecodeError] = useState(false);
   const [translateY] = useState(() => new Animated.Value(0));
-  const animationActive = appState === 'active' && !props.paused && !reduceMotion && !decodeError;
+  const animationActive = appState === 'active' && !props.paused && props.motionEnabled && !reduceMotion && !decodeError;
+  const stageScale = FINNI_STAGE_SCALE[props.stage];
+  const petFrame = {
+    width: `${stageScale * 100}%` as const,
+    height: `${stageScale * 100}%` as const,
+    left: `${(1 - stageScale) * FINNI_ANCHORS.feet.x / FINNI_CANVAS.width * 100}%` as const,
+    top: `${(1 - stageScale) * FINNI_ANCHORS.feet.y / FINNI_CANVAS.height * 100}%` as const,
+  };
 
   useEffect(() => {
     void AccessibilityInfo.isReduceMotionEnabled().then(setReduceMotion);
@@ -112,12 +123,14 @@ export default function FinniHomeScene(props: Readonly<{
         source={animationActive && blinkPhase === BLINK_CYCLE_FRAMES - 1
           ? BLINK_SOURCE
           : NEUTRAL_SOURCE}
-        style={[styles.layer, { transform: [{ translateY }] }]}
+        style={[styles.petLayer, petFrame, { transform: [{ translateY }] }]}
       />
-      <View pointerEvents="none" style={styles.caption}>
-        <Text style={styles.captionTitle}>Финни дома</Text>
-        <Text style={styles.captionText}>{props.careLabel}</Text>
-      </View>
+      {props.showCaption !== false && (
+        <View pointerEvents="none" style={styles.caption}>
+          <Text style={styles.captionTitle}>Финни дома</Text>
+          <Text style={styles.captionText}>{props.careLabel}</Text>
+        </View>
+      )}
     </View>
   );
 }
@@ -139,6 +152,7 @@ const styles = StyleSheet.create({
     top: 0,
     width: '100%',
   },
+  petLayer: { position: 'absolute' },
   caption: {
     backgroundColor: 'rgba(255, 255, 255, 0.88)',
     borderRadius: 12,

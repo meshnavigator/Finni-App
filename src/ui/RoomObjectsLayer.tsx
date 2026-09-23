@@ -9,6 +9,9 @@ export type RoomObjectsLayerProps = Readonly<{
   onOpenPlanner: () => void;
   onOpenSavings: () => void;
   onOpenShop: () => void;
+  plannerEnabled: boolean;
+  shopEnabled: boolean;
+  savingsEnabled: boolean;
 }>;
 
 /** Presentation only. Parent owns navigation, goal state and all transactions. */
@@ -20,11 +23,12 @@ export default function RoomObjectsLayer(props: RoomObjectsLayerProps) {
     label: string;
     position: 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
     onPress: () => void;
+    enabled: boolean;
   }>[] = [
-    { id: 'OBJ-PLANNER', label: 'Планер', position: 'topLeft', onPress: props.onOpenPlanner },
-    { id: 'OBJ-GOAL-DISPLAY', label: 'Цель', position: 'topRight', onPress: props.onOpenSavings },
-    { id: 'OBJ-CARE', label: 'Забота', position: 'bottomLeft', onPress: props.onOpenShop },
-    { id: 'OBJ-CHEST', label: 'Копилка', position: 'bottomRight', onPress: props.onOpenSavings },
+    { id: 'OBJ-PLANNER', label: 'Планер', position: 'topLeft', onPress: props.onOpenPlanner, enabled: props.plannerEnabled },
+    { id: 'OBJ-GOAL-DISPLAY', label: 'Цель', position: 'topRight', onPress: props.onOpenSavings, enabled: props.savingsEnabled },
+    { id: 'OBJ-CARE', label: 'Забота', position: 'bottomLeft', onPress: props.onOpenShop, enabled: props.shopEnabled },
+    { id: 'OBJ-CHEST', label: 'Копилка', position: 'bottomRight', onPress: props.onOpenSavings, enabled: props.savingsEnabled },
   ];
 
   return (
@@ -37,8 +41,10 @@ export default function RoomObjectsLayer(props: RoomObjectsLayerProps) {
             key={object.id}
             accessibilityLabel={object.label}
             accessibilityRole="button"
+            accessibilityState={{ disabled: !object.enabled }}
+            disabled={!object.enabled}
             onPress={object.onPress}
-            style={({ pressed }) => [styles.object, styles[object.position], pressed && styles.pressed]}
+            style={({ pressed }) => [styles.object, styles[object.position], !object.enabled && styles.disabled, pressed && styles.pressed]}
             testID={`room-object-${object.id}`}
           >
             {failed.has(object.id) ? (
@@ -79,6 +85,7 @@ const styles = StyleSheet.create({
   fallback: { color: '#14324A', fontSize: 12, minHeight: 47, textAlign: 'center', textAlignVertical: 'center' },
   label: { color: '#14324A', fontSize: 11, fontWeight: '700', textAlign: 'center' },
   pressed: { opacity: 0.72 },
+  disabled: { opacity: 0.52 },
   topLeft: { left: 8, top: 8 },
   topRight: { right: 8, top: 8 },
   bottomLeft: { bottom: 8, left: 8 },
