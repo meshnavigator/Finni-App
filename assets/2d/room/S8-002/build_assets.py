@@ -24,6 +24,8 @@ GOLD = "#E5AC4E"
 CORAL = "#DB8172"
 BLUE = "#78B8CA"
 
+PAINTERLY_OBJECTS = {"OBJ-PLANNER", "OBJ-CHEST", "OBJ-CARE", "OBJ-GOAL-DISPLAY", "OBJ-COIN"}
+
 ASSETS = {
     "OBJ-PLANNER": "planner",
     "OBJ-CHEST": "chest",
@@ -178,11 +180,21 @@ def main() -> None:
     for asset_id, kind in ASSETS.items():
         name = asset_id.lower().replace("-", "_") + ".png"
         path = output / name
-        draw_icon(kind).save(path, optimize=True)
+        if asset_id not in PAINTERLY_OBJECTS:
+            draw_icon(kind).save(path, optimize=True)
+        elif not path.is_file():
+            raise FileNotFoundError(f"Missing imagegen master: {path}")
+        with Image.open(path) as exported:
+            dimensions, mode = list(exported.size), exported.mode
+        if mode != "RGBA":
+            raise ValueError(f"Expected RGBA: {path}")
         record = {
             "assetId": f"CAT-{asset_id}" if asset_id.startswith(("IT-", "GL-")) else asset_id,
             "path": f"png/{name}",
             "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+            "dimensions": dimensions,
+            "mode": mode,
+            "sourceType": "imagegen" if asset_id in PAINTERLY_OBJECTS else "code-native",
         }
         if asset_id.startswith("IT-"):
             record["itemId"] = asset_id
@@ -190,18 +202,18 @@ def main() -> None:
             record["goalId"] = asset_id
         records.append(record)
     manifest = {
-        "packageId": "S8-002-ROOM-OBJECTS-V1",
-        "version": 1,
+        "packageId": "S8-002-ROOM-OBJECTS-V2",
+        "version": 2,
         "status": "engineering-candidate-art-acceptance-open",
-        "source": "build_assets.py",
+        "source": "build_assets.py for 11 catalog illustrations; exact imagegen masters for five OBJ assets",
         "baseRoom": {
             "assetId": "ROOM-BASE",
             "path": "../../master/FINNI-2D-MASTER-V1/room_clean_v1.png",
             "sha256": hashlib.sha256(room.read_bytes()).hexdigest(),
             "sourcePackage": "FINNI-2D-MASTER-V1",
         },
-        "license": "original project geometry; no third-party images or fonts",
-        "export": {"size": [SIZE, SIZE], "mode": "RGBA", "supersampling": S},
+        "rights": "original project geometry and AI-generated OBJ assets; no third-party images or fonts; owner art/legal acceptance open",
+        "codeNativeExport": {"size": [SIZE, SIZE], "mode": "RGBA", "supersampling": S},
         "assets": records,
     }
     (ROOT / "asset-manifest.json").write_text(

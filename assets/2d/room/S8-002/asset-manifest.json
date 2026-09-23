@@ -1,16 +1,16 @@
 {
-  "packageId": "S8-002-ROOM-OBJECTS-V1",
-  "version": 1,
+  "packageId": "S8-002-ROOM-OBJECTS-V2",
+  "version": 2,
   "status": "engineering-candidate-art-acceptance-open",
-  "source": "build_assets.py",
+  "source": "build_assets.py for 11 catalog illustrations; exact imagegen masters for five OBJ assets",
   "baseRoom": {
     "assetId": "ROOM-BASE",
     "path": "../../master/FINNI-2D-MASTER-V1/room_clean_v1.png",
     "sha256": "2c76a1e29090e61de615c5e228bf309d34016f89aa74cac9ea1b990821ac6140",
     "sourcePackage": "FINNI-2D-MASTER-V1"
   },
-  "license": "original project geometry; no third-party images or fonts",
-  "export": {
+  "rights": "original project geometry and AI-generated OBJ assets; no third-party images or fonts; owner art/legal acceptance open",
+  "codeNativeExport": {
     "size": [
       192,
       192
@@ -22,92 +22,188 @@
     {
       "assetId": "OBJ-PLANNER",
       "path": "png/obj_planner.png",
-      "sha256": "20fe3de778d8c8eb4036cd6ed38009f072cacbc70117d3d4f0c60b7360f522eb"
+      "sha256": "1341f9017a2b87b87839b161bf41d284f823e81dbc49e35c066c7a0e5c7baa35",
+      "dimensions": [
+        1312,
+        1199
+      ],
+      "mode": "RGBA",
+      "sourceType": "imagegen"
     },
     {
       "assetId": "OBJ-CHEST",
       "path": "png/obj_chest.png",
-      "sha256": "addf4014846c8d5519df53fb30e4e7f0d20f3bb15e308c333025bd1139fa49b0"
+      "sha256": "e92da0923b2681511e137463ff9192bc847ed99e46be1336866d173a81922a57",
+      "dimensions": [
+        1434,
+        1097
+      ],
+      "mode": "RGBA",
+      "sourceType": "imagegen"
     },
     {
       "assetId": "OBJ-CARE",
       "path": "png/obj_care.png",
-      "sha256": "91eaa456c197e0434d54e71a3d0801b818c7e47cc99e12f3100c2f57493c0d34"
+      "sha256": "378922ae6e36a898132907187b63d0f5f1554e9923e851895a2e84d8102e9252",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA",
+      "sourceType": "imagegen"
     },
     {
       "assetId": "OBJ-GOAL-DISPLAY",
       "path": "png/obj_goal_display.png",
-      "sha256": "34c4922260c97b3df8a9bff2da84133686b77152842c69a273cdc4afc043b28d"
+      "sha256": "98ddcaf468a091f379ed9d28d33e35d704709c4cb8a3855ccf3f70b7718aa657",
+      "dimensions": [
+        1378,
+        1142
+      ],
+      "mode": "RGBA",
+      "sourceType": "imagegen"
     },
     {
       "assetId": "OBJ-COIN",
       "path": "png/obj_coin.png",
-      "sha256": "d65c02a6c7230ae52935c34a2a6a8784704a1ff20969864ab3ef929a1b9dc5fd"
+      "sha256": "f838df1b05f662fe6c54c2ebaeffd90d44dd4c6e7592cff0782937c1ba76f6ab",
+      "dimensions": [
+        1278,
+        1230
+      ],
+      "mode": "RGBA",
+      "sourceType": "imagegen"
     },
     {
       "assetId": "CAT-IT-01",
       "path": "png/it_01.png",
       "sha256": "491bf703ace0509a0ffb67412b6477308f2c085fc4e4f0e759e90b41871ed8f8",
+      "dimensions": [
+        192,
+        192
+      ],
+      "mode": "RGBA",
+      "sourceType": "code-native",
       "itemId": "IT-01"
     },
     {
       "assetId": "CAT-IT-02",
       "path": "png/it_02.png",
       "sha256": "3f72e362ab89fd06796806a6761d58d310f702f547bd342a9f709c64139487fd",
+      "dimensions": [
+        192,
+        192
+      ],
+      "mode": "RGBA",
+      "sourceType": "code-native",
       "itemId": "IT-02"
     },
     {
       "assetId": "CAT-IT-03",
       "path": "png/it_03.png",
       "sha256": "db21315dae6bb181680d93b44c6d1ba00bb7ee41db3f170dbbdbedfb72cef6e1",
+      "dimensions": [
+        192,
+        192
+      ],
+      "mode": "RGBA",
+      "sourceType": "code-native",
       "itemId": "IT-03"
     },
     {
       "assetId": "CAT-IT-04",
       "path": "png/it_04.png",
       "sha256": "5092f4384d6ea3da706abc952ac26fc627ba8ee9e9427461b471676db55c21b7",
+      "dimensions": [
+        192,
+        192
+      ],
+      "mode": "RGBA",
+      "sourceType": "code-native",
       "itemId": "IT-04"
     },
     {
       "assetId": "CAT-IT-05",
       "path": "png/it_05.png",
       "sha256": "fa9d614a8c7ef712b4c9337407df5d4a0ddfb0e13fc9df044feceb57ea9b9896",
+      "dimensions": [
+        192,
+        192
+      ],
+      "mode": "RGBA",
+      "sourceType": "code-native",
       "itemId": "IT-05"
     },
     {
       "assetId": "CAT-IT-06",
       "path": "png/it_06.png",
       "sha256": "6f1d6578d1237f8e786969847ff2b7310353020db04f0ea1ac9e2b23e8c0c611",
+      "dimensions": [
+        192,
+        192
+      ],
+      "mode": "RGBA",
+      "sourceType": "code-native",
       "itemId": "IT-06"
     },
     {
       "assetId": "CAT-IT-07",
       "path": "png/it_07.png",
       "sha256": "e4a64a73ac0f623bf53dbef7a75f7472bb2d4cf2a2d7d223bab800dcb8049429",
+      "dimensions": [
+        192,
+        192
+      ],
+      "mode": "RGBA",
+      "sourceType": "code-native",
       "itemId": "IT-07"
     },
     {
       "assetId": "CAT-IT-08",
       "path": "png/it_08.png",
       "sha256": "0f9fe598e1d969e53904ce270db8eecca869002ce589c6dae9f34c31ccbe0616",
+      "dimensions": [
+        192,
+        192
+      ],
+      "mode": "RGBA",
+      "sourceType": "code-native",
       "itemId": "IT-08"
     },
     {
       "assetId": "CAT-GL-01",
       "path": "png/gl_01.png",
       "sha256": "844a3e2fb36bd611cf49e1c5ee29eb3115307520359f2f66c41115aa01862ff8",
+      "dimensions": [
+        192,
+        192
+      ],
+      "mode": "RGBA",
+      "sourceType": "code-native",
       "goalId": "GL-01"
     },
     {
       "assetId": "CAT-GL-02",
       "path": "png/gl_02.png",
       "sha256": "593ee706d6eeb44dad22dbd77b5a8d8ff8c512ab5e5878c3f46aa33f31055b96",
+      "dimensions": [
+        192,
+        192
+      ],
+      "mode": "RGBA",
+      "sourceType": "code-native",
       "goalId": "GL-02"
     },
     {
       "assetId": "CAT-GL-03",
       "path": "png/gl_03.png",
       "sha256": "3c85975abd7ca49643372c5fdda6dc71505ce05c3619af89d7d9a150db32fd45",
+      "dimensions": [
+        192,
+        192
+      ],
+      "mode": "RGBA",
+      "sourceType": "code-native",
       "goalId": "GL-03"
     }
   ]
