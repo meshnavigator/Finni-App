@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { Alert, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Alert, Image, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import type { AppSnapshot } from '../application/app-runtime.ts';
 import { CATALOG } from '../domain/catalog.ts';
+import { itemSource } from './room-assets.ts';
 
 type Props = Readonly<{
   snapshot: AppSnapshot;
@@ -29,9 +30,9 @@ export default function ShopScreen(props: Props) {
   };
   return <SafeAreaView style={styles.page}><ScrollView contentContainerStyle={styles.content}>
     <Text style={styles.title}>Покупки</Text><Text accessibilityLiveRegion="polite" style={styles.notice}>{notice}</Text>
-    {CATALOG.map((item) => <View key={item.id} style={styles.card}><Text style={styles.name}>{item.name} — {item.price} монет</Text><Text>{item.effect}</Text><Button disabled={props.busy} label={props.busy ? 'Проверяем…' : 'Посмотреть и купить'} onPress={() => void select(item.id)} /></View>)}
+    {CATALOG.map((item) => <View key={item.id} style={styles.card}><View style={styles.cardHeader}>{itemSource(item.id) && <Image accessibilityIgnoresInvertColors source={itemSource(item.id)!} style={styles.thumbnail} />}<View style={styles.cardCopy}><Text style={styles.name}>{item.name} — {item.price} монет</Text><Text>{item.effect}</Text></View></View><Button disabled={props.busy} label={props.busy ? 'Проверяем…' : 'Посмотреть и купить'} onPress={() => void select(item.id)} /></View>)}
     <Button label="Вернуться в домик" onPress={props.onBack} />
   </ScrollView></SafeAreaView>;
 }
 
-const styles = StyleSheet.create({ page: { flex: 1, backgroundColor: '#EAF6FB' }, content: { gap: 12, padding: 18, paddingBottom: 32 }, title: { fontSize: 28, fontWeight: '700', color: '#14324A' }, notice: { color: '#4B6878' }, card: { gap: 6, borderWidth: 1, borderColor: '#C7DEE5', borderRadius: 12, padding: 12, backgroundColor: '#F7FBFC' }, name: { fontWeight: '700', color: '#14324A' }, button: { minHeight: 48, padding: 14, textAlign: 'center', backgroundColor: '#146B78', color: '#fff', borderRadius: 10, overflow: 'hidden' }, disabled: { opacity: 0.5 } });
+const styles = StyleSheet.create({ page: { flex: 1, backgroundColor: '#EAF6FB' }, content: { gap: 12, padding: 18, paddingBottom: 32 }, title: { fontSize: 28, fontWeight: '700', color: '#14324A' }, notice: { color: '#4B6878' }, card: { gap: 6, borderWidth: 1, borderColor: '#C7DEE5', borderRadius: 12, padding: 12, backgroundColor: '#F7FBFC' }, cardHeader: { alignItems: 'center', flexDirection: 'row', gap: 10 }, cardCopy: { flex: 1, gap: 3 }, thumbnail: { height: 64, width: 64 }, name: { fontWeight: '700', color: '#14324A' }, button: { minHeight: 48, padding: 14, textAlign: 'center', backgroundColor: '#146B78', color: '#fff', borderRadius: 10, overflow: 'hidden' }, disabled: { opacity: 0.5 } });

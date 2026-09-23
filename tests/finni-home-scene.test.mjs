@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
+import { FINNI_ANCHORS, FINNI_CANVAS, FINNI_STAGE_SCALE } from '../src/ui/finni-layer-contract.ts';
 
 const root = new URL('../', import.meta.url);
 const app = await readFile(new URL('App.tsx', root), 'utf8');
@@ -47,4 +48,17 @@ test('Home scene is local, lifecycle-aware, reduced-motion safe and bounded', ()
   assert.match(scene, /props\.paused/);
   assert.match(scene, /onError=\{\(\) => setDecodeError\(true\)\}/);
   assert.match(scene, /testID="finni-home-scene-fallback"/);
+});
+
+test('three stage frames preserve the same room floor contact', () => {
+  const footY = FINNI_ANCHORS.feet.y / FINNI_CANVAS.height;
+  const footX = FINNI_ANCHORS.feet.x / FINNI_CANVAS.width;
+  for (const stage of [1, 2, 3]) {
+    const scale = FINNI_STAGE_SCALE[stage];
+    const left = (1 - scale) * footX;
+    const top = (1 - scale) * footY;
+    assert.ok(Math.abs(left + scale * footX - footX) < 1e-12);
+    assert.ok(Math.abs(top + scale * footY - footY) < 1e-12);
+  }
+  assert.deepEqual(Object.keys(FINNI_STAGE_SCALE), ['1', '2', '3']);
 });

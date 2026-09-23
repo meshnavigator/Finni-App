@@ -9,7 +9,7 @@ import type { Mode } from '../domain/contracts.ts';
 import { createExpoAdminDataDriver } from '../persistence/expo-admin-data.ts';
 import { openExpoAppControlStorage } from '../persistence/expo-control.ts';
 import { openExpoDatabase } from '../persistence/expo-database.ts';
-import type { SqliteAppControlStorage } from '../persistence/app-control-sqlite.ts';
+import type { PresentationPreferences, SqliteAppControlStorage } from '../persistence/app-control-sqlite.ts';
 
 const runtimeFactory: RuntimeFactory<AppRuntime> = Object.freeze({
   async open(mode: Mode) {
@@ -77,6 +77,18 @@ export class ProductionAppController {
       await storage.close();
       throw error;
     }
+  }
+
+  presentationPreferences(): Promise<PresentationPreferences> {
+    return this.#storage.readPresentationPreferences();
+  }
+
+  setMotionEnabled(enabled: boolean): Promise<void> {
+    return this.#storage.setMotionEnabled(enabled);
+  }
+
+  setSoundEnabled(enabled: boolean): Promise<void> {
+    return this.#storage.setSoundEnabled(enabled);
   }
 
   mode(): Mode {

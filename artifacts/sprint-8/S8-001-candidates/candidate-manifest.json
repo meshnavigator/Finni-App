@@ -1,0 +1,107 @@
+{
+  "packageId": "S8-001-CHARACTER-CANDIDATES-2026-09-23",
+  "status": "non-production-review-evidence",
+  "referencePackage": "FINNI-2D-MASTER-V1",
+  "referenceSha256": "8b2932caa23b99ae0d6575105940cda70858619f32333d564847d9b0dcdb6cc0",
+  "referenceAlphaBoundsAt128": [
+    280,
+    724,
+    694,
+    1261
+  ],
+  "generator": "built-in image_gen",
+  "assets": [
+    {
+      "path": "round_plain_candidate.png",
+      "sha256": "de75fe0c1604908e9fa3d32016622aa9daf2d26cfac484ba03caea045f87ada5",
+      "bytes": 376394,
+      "dimensions": [
+        941,
+        1672
+      ],
+      "mode": "RGBA",
+      "alphaBoundsAt128": [
+        277,
+        749,
+        697,
+        1263
+      ],
+      "alphaBoundsAt1": [
+        41,
+        37,
+        830,
+        1616
+      ],
+      "verdict": "review_required_alpha_cleanup"
+    },
+    {
+      "path": "floppy_plain_candidate.png",
+      "sha256": "5221ff5f28019e6429504c0cc184a111aeac42d205f6e2d550db92c47499d946",
+      "bytes": 379657,
+      "dimensions": [
+        941,
+        1672
+      ],
+      "mode": "RGBA",
+      "alphaBoundsAt128": [
+        261,
+        776,
+        697,
+        1262
+      ],
+      "alphaBoundsAt1": [
+        48,
+        37,
+        836,
+        1584
+      ],
+      "verdict": "rejected_identity_drift"
+    },
+    {
+      "path": "pointy_spots_rejected_scale.png",
+      "sha256": "fc72328350595f43a25327e1c8fc52e10ccf29e7a419ef00010bc0d098340c70",
+      "bytes": 733362,
+      "dimensions": [
+        941,
+        1672
+      ],
+      "mode": "RGBA",
+      "alphaBoundsAt128": [
+        202,
+        529,
+        806,
+        1311
+      ],
+      "alphaBoundsAt1": [
+        0,
+        19,
+        841,
+        1638
+      ],
+      "verdict": "rejected_alignment"
+    },
+    {
+      "path": "pointy_spots_rejected_canvas.png",
+      "sha256": "bc391f8451b4c90f7ee5d2817cc5d7040db457fdd66e4889ab659c92174cc895",
+      "bytes": 420672,
+      "dimensions": [
+        981,
+        1603
+      ],
+      "mode": "RGBA",
+      "alphaBoundsAt128": [
+        294,
+        711,
+        743,
+        1285
+      ],
+      "alphaBoundsAt1": [
+        178,
+        37,
+        850,
+        1577
+      ],
+      "verdict": "rejected_canvas_and_alignment"
+    }
+  ]
+}

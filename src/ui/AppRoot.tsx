@@ -46,6 +46,7 @@ import PeriodResultScreen from './PeriodResultScreen.tsx';
 import SavingsScreen from './SavingsScreen.tsx';
 import ShopScreen from './ShopScreen.tsx';
 import FinniHomeScene from './FinniHomeScene.tsx';
+import RoomObjectsLayer from './RoomObjectsLayer.tsx';
 import LessonShell from './LessonShell.tsx';
 import { LessonRendererRegistry } from './lesson-renderer-registry.ts';
 import { AllocationRenderer, BasketRenderer } from './budget-purchase-renderers.tsx';
@@ -53,6 +54,7 @@ import { ReceiptAuditRenderer, ResourceChoiceRenderer } from './receipt-workshop
 import SavingsLessonRenderer from './SavingsLessonRenderer.tsx';
 import { lessonReturnLabel, lessonReturnScreen, nextLessonVariant } from './lesson-return.ts';
 import type { LessonDiscovery } from '../persistence/lesson-repository.ts';
+import type { PresentationPreferences } from '../persistence/app-control-sqlite.ts';
 
 type Screen = 'intro' | 'pet' | 'home' | 'plan' | 'shop' | 'savings' | 'history' | 'result' | 'adult' | 'section' | 'lesson-catalog' | 'lesson';
 type Phase = 'loading' | 'ready' | 'error';
@@ -348,6 +350,7 @@ function HomeScreen(props: Readonly<{
   busy: boolean;
   notice: string | null;
   scenePaused: boolean;
+  motionEnabled: boolean;
   onOpenDay: () => void;
   onResults: () => void;
   onEditPet: () => void;
@@ -359,6 +362,15 @@ function HomeScreen(props: Readonly<{
   const profile = props.snapshot.profile!;
   const lifecycle = props.snapshot.lifecycle!;
   const model = homeScreenModel(profile, lifecycle);
+  const selectedGoal = props.snapshot.commerce?.selectedGoal ?? null;
+  const purchased = props.snapshot.commerce?.purchases ?? [];
+  const foodReady = purchased.some(({ item }) => item.slot === 'food');
+  const careReady = purchased.some(({ item }) => item.slot === 'care');
+  const careLabel = foodReady && careReady
+    ? 'Еда и уход готовы'
+    : foodReady ? 'Еда готова, уход ещё нужен'
+      : careReady ? 'Уход готов, еда ещё нужна'
+        : model.careLabel;
   const layout = homeResponsiveLayout(viewport);
   const primary = () => {
     if (model.action.route === 'open-day') props.onOpenDay();
@@ -373,13 +385,31 @@ function HomeScreen(props: Readonly<{
       onPress={primary}
     />
   );
+  const sceneHeight = Math.max(layout.sceneMinHeight, layout.mode === 'ordinary' ? 220 : 180);
   const petScene = (
-    <FinniHomeScene
-      accessibilityLabel={`Финни дома. ${model.careLabel}. Настроение: спокойно`}
-      careLabel={model.careLabel}
-      height={Math.max(layout.sceneMinHeight, layout.mode === 'ordinary' ? 220 : 180)}
-      paused={props.scenePaused}
-    />
+    <View>
+      <View style={[styles.roomFrame, { height: sceneHeight }]}>
+        <FinniHomeScene
+          accessibilityLabel={`Финни дома, стадия ${lifecycle.petStage}. ${careLabel}. Настроение: спокойно`}
+          careLabel={careLabel}
+          height={sceneHeight}
+          paused={props.scenePaused}
+          motionEnabled={props.motionEnabled}
+          showCaption={false}
+          stage={lifecycle.petStage}
+        />
+        <RoomObjectsLayer
+          selectedGoalId={selectedGoal?.id ?? null}
+          onOpenPlanner={() => props.onSection('План')}
+          onOpenSavings={() => props.onSection('Копилка')}
+          onOpenShop={() => props.onSection('Покупки')}
+          plannerEnabled={model.planAvailable}
+          savingsEnabled={model.savingsAvailable}
+          shopEnabled={model.spendingAvailable}
+        />
+      </View>
+      <Text style={styles.roomStatus}>{careLabel}</Text>
+    </View>
   );
   return (
     <SafeAreaView style={[styles.page, styles.homePage]}>
@@ -416,7 +446,7 @@ function HomeScreen(props: Readonly<{
         </View>
         <View style={styles.summaryCard}>
           <Text style={styles.summaryLabel}>ТЕКУЩАЯ ЦЕЛЬ</Text>
-          <Text style={styles.summaryValue}>{model.goalLabel}</Text>
+          <Text style={styles.summaryValue}>{selectedGoal?.name ?? model.goalLabel}</Text>
         </View>
         <Pressable accessibilityRole="button" onPress={props.onLesson} style={styles.lessonCard}>
           <Text style={styles.summaryLabel}>АКТИВНОЕ ЗАНЯТИЕ</Text>
@@ -517,6 +547,7 @@ export default function AppRoot() {
   const [screen, setScreen] = useState<Screen>('intro');
   const [snapshot, setSnapshot] = useState<AppSnapshot | null>(null);
   const [mode, setMode] = useState<Mode>('normal');
+  const [presentationPreferences, setPresentationPreferences] = useState<PresentationPreferences>({ motionEnabled: true, soundEnabled: true });
   const [adultUnlocked, setAdultUnlocked] = useState(false);
   const [adultRecoveryAvailable, setAdultRecoveryAvailable] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -579,6 +610,7 @@ export default function AppRoot() {
           return;
         }
         controller.current = initialized.controller;
+        setPresentationPreferences(await initialized.controller.presentationPreferences());
         setAdultRecoveryAvailable(true);
         setMode(initialized.controller.mode());
         if (initialized.startupError) {
@@ -598,6 +630,24 @@ export default function AppRoot() {
       cancelled = true;
     };
   }, [boot]);
+
+  const updatePresentationPreference = async (kind: 'motion' | 'sound', enabled: boolean) => {
+    if (!controller.current) return;
+    setBusy(true);
+    setMessage(null);
+    try {
+      if (kind === 'motion') await controller.current.setMotionEnabled(enabled);
+      else await controller.current.setSoundEnabled(enabled);
+      setPresentationPreferences((previous) => ({
+        ...previous,
+        [kind === 'motion' ? 'motionEnabled' : 'soundEnabled']: enabled,
+      }));
+    } catch {
+      setMessage('Настройка не сохранилась. Попробуй ещё раз.');
+    } finally {
+      setBusy(false);
+    }
+  };
 
   const savePet = async (appearance: PetAppearance) => {
     if (!controller.current) return;
@@ -872,6 +922,7 @@ export default function AppRoot() {
           busy={busy}
           notice={message}
           scenePaused={helpOpen}
+          motionEnabled={presentationPreferences.motionEnabled}
           onEditPet={() => { setMessage(null); setScreen('pet'); }}
           onHelp={() => setHelpOpen(true)}
           onLesson={() => { setMessage(null); setScreen('lesson-catalog'); }}
@@ -968,6 +1019,9 @@ export default function AppRoot() {
           snapshot={snapshot ?? EMPTY_SNAPSHOT}
           busy={busy}
           message={message}
+          presentationPreferences={presentationPreferences}
+          onMotionEnabledChange={(enabled) => void updatePresentationPreference('motion', enabled)}
+          onSoundEnabledChange={(enabled) => void updatePresentationPreference('sound', enabled)}
           onUnlock={() => { adultAccess.current.unlock(Date.now()); setAdultUnlocked(true); }}
           onActivity={() => {
             if (!adultAccess.current.recordActivity(Date.now())) {
@@ -1030,6 +1084,8 @@ const styles = StyleSheet.create({
   title: { color: colors.ink, fontSize: 25, fontWeight: '800', textAlign: 'center' },
   body: { color: colors.muted, fontSize: 16, lineHeight: 22, maxWidth: 340, textAlign: 'center' },
   caption: { color: colors.muted, fontSize: 13, lineHeight: 17 },
+  roomFrame: { position: 'relative', width: '100%' },
+  roomStatus: { color: colors.muted, fontSize: 13, lineHeight: 18, marginTop: 5 },
   cardTitle: { color: colors.ink, fontSize: 16, fontWeight: '800' },
   action: { alignItems: 'center', alignSelf: 'stretch', backgroundColor: colors.teal, borderRadius: 14, justifyContent: 'center', minHeight: 48, paddingHorizontal: 16 },
   actionSecondary: { backgroundColor: 'transparent', borderColor: colors.teal, borderWidth: 1.5 },
