@@ -5,10 +5,11 @@ import test from 'node:test';
 import { LessonEvaluatorRegistry } from '../src/domain/lesson.ts';
 import { evaluateSavings } from '../src/domain/savings-lesson.ts';
 import { evaluateAllocation, evaluateBasket } from '../src/lessons/budget-purchase-lessons.ts';
+import { evaluateReceiptAudit, evaluateResourceChoice } from '../src/lessons/receipt-workshop-lessons.ts';
 import { lessonDefinitionSnapshot, loadContentBundle } from '../src/content/loader.ts';
 
 const bundleRoot = join(process.cwd(), 'content', 'bundles', '1.2.0');
-const lessonIds = ['LS-B01', 'LS-B02', 'LS-P01', 'LS-P02', 'LS-S01', 'LS-S02'];
+const lessonIds = ['LS-B01', 'LS-B02', 'LS-B03', 'LS-P01', 'LS-P02', 'LS-P03', 'LS-S01', 'LS-S02'];
 
 async function bundle() {
   const manifest = JSON.parse(await readFile(join(bundleRoot, 'manifest.json'), 'utf8'));
@@ -19,11 +20,13 @@ async function bundle() {
   return loadContentBundle(manifest, documents);
 }
 
-test('actual lesson evaluator registry matches every canonical fixture for the six runnable lessons', async () => {
+test('actual lesson evaluator registry matches every canonical fixture for the eight runnable lessons', async () => {
   const registry = new LessonEvaluatorRegistry()
     .register('allocation', evaluateAllocation)
     .register('basket', evaluateBasket)
-    .register('savings', evaluateSavings);
+    .register('savings', evaluateSavings)
+    .register('receipt_audit', evaluateReceiptAudit)
+    .register('resource_choice', evaluateResourceChoice);
   const content = await bundle();
   for (const lessonId of lessonIds) {
     const lesson = content.lessons.get(lessonId);

@@ -33,8 +33,10 @@ const LOCAL_BUNDLE = loadContentBundle(rawManifest, {
 const DEMO_LESSON_IDS = [
   'LS-B01',
   'LS-B02',
+  'LS-B03',
   'LS-P01',
   'LS-P02',
+  'LS-P03',
   'LS-S01',
   'LS-S02',
 ] as const;
