@@ -258,9 +258,9 @@ test('v4 fixture survives injected v5 migration failure and unsupported newer sc
   await database.execAsync(`PRAGMA user_version = ${SCHEMA_VERSION + 1}`);
   await assert.rejects(
     () => migrateDatabase(database),
-    /Unsupported SQLite schema version 6; maximum is 5/,
+    /Unsupported SQLite schema version 7; maximum is 6/,
   );
-  assert.deepEqual(await database.getFirstAsync('PRAGMA user_version'), { user_version: 6 });
+  assert.deepEqual(await database.getFirstAsync('PRAGMA user_version'), { user_version: 7 });
   assert.deepEqual(
     await database.getFirstAsync(`SELECT available, savings FROM wallet_projection
       WHERE profile_id = 'fixture-v4-profile'`),

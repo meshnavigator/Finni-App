@@ -17,6 +17,16 @@ import {
   type ProfileSnapshot,
 } from '../persistence/profile-repository.ts';
 import { RepositoryExecutor } from '../persistence/repository-executor.ts';
+import { LessonRepository } from '../persistence/lesson-repository.ts';
+import { LearningService } from './learning-service.ts';
+import {
+  LessonEvaluatorRegistry,
+  type HintLevel,
+  type LessonAttempt,
+  type LessonDefinition,
+} from '../domain/lesson.ts';
+import { evaluateAllocation, evaluateBasket } from '../lessons/budget-purchase-lessons.ts';
+import { evaluateSavings } from '../domain/savings-lesson.ts';
 
 export type AppSnapshot = Readonly<{
   profile: ProfileSnapshot | null;
@@ -45,6 +55,7 @@ export class AppRuntime {
   readonly #lifecycle: LifecycleRepository;
   readonly #budgets: BudgetPlanRepository;
   readonly #commerce: CommerceRepository;
+  readonly #learning: LearningService;
   readonly #executor: RepositoryExecutor;
 
   private constructor(mode: Mode, database: SqlDatabase) {
@@ -54,6 +65,14 @@ export class AppRuntime {
     this.#lifecycle = new LifecycleRepository(mode, database, this.#executor);
     this.#budgets = new BudgetPlanRepository(mode, database, this.#executor);
     this.#commerce = new CommerceRepository(mode, database, this.#executor);
+    const evaluators = new LessonEvaluatorRegistry()
+      .register('allocation', evaluateAllocation)
+      .register('basket', evaluateBasket)
+      .register('savings', evaluateSavings);
+    this.#learning = new LearningService(
+      new LessonRepository(mode, database, this.#executor),
+      evaluators,
+    );
   }
 
   static async initialize(mode: Mode, database: SqlDatabase): Promise<AppRuntime> {
@@ -63,6 +82,57 @@ export class AppRuntime {
 
   async close(): Promise<void> {
     await this.#executor.close();
+  }
+
+  startLesson(snapshot: AppSnapshot, definition: LessonDefinition): Promise<LessonAttempt> {
+    if (!snapshot.profile) throw new TypeError('Профиль ещё не создан');
+    const state = snapshot.lifecycle?.state;
+    const periodState = state === 'DRAFT' || state === 'ACTIVE' || state === 'CLOSED' || state === 'WAITING'
+      ? state
+      : 'WAITING';
+    return this.#learning.start({
+      attemptId: identifier('lesson'),
+      profileId: snapshot.profile.id,
+      periodId: snapshot.lifecycle?.periodId ?? null,
+      periodState,
+      definition,
+      startedAt: new Date().toISOString(),
+    });
+  }
+
+  saveLesson(attemptId: string, solution: Readonly<Record<string, unknown>>): Promise<LessonAttempt> {
+    return this.#learning.save(attemptId, solution, new Date().toISOString());
+  }
+
+  revealLessonHint(attemptId: string, level: HintLevel) {
+    return this.#learning.revealHint(attemptId, level, new Date().toISOString());
+  }
+
+  evaluateLesson(attemptId: string) {
+    return this.#learning.evaluate(attemptId, identifier('lesson-evaluation'), new Date().toISOString());
+  }
+
+  viewLessonExplanation(attemptId: string, evaluationId: string) {
+    return this.#learning.viewExplanation(attemptId, evaluationId, new Date().toISOString());
+  }
+
+  completeLesson(snapshot: AppSnapshot, attemptId: string, evaluationId: string) {
+    if (!snapshot.profile) throw new TypeError('Профиль ещё не создан');
+    return this.#learning.complete(Object.freeze({
+      type: 'CompleteLesson' as const,
+      meta: Object.freeze({
+        commandId: identifier('complete-lesson'),
+        profileId: snapshot.profile.id,
+        mode: this.#mode,
+        expectedRevision: snapshot.lifecycle?.revision ?? counter(0),
+        sessionEpoch: counter(0),
+      }),
+      payload: Object.freeze({
+        periodId: snapshot.lifecycle?.periodId ?? null,
+        attemptId,
+        evaluationId,
+      }),
+    }), new Date().toISOString());
   }
 
   async load(): Promise<AppSnapshot> {

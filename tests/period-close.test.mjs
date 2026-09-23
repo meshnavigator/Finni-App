@@ -133,7 +133,7 @@ function closeCommand(id, revision, periodId) {
   });
 }
 
-test('schema v4 migrates sequentially to v5 and survives restart', async () => {
+test('schema v4 migrates sequentially to v6 and survives restart', async () => {
   const { path, database } = tempDatabase('finni-v4-v5-');
   await database.execAsync(SCHEMA_V1);
   await database.execAsync(SCHEMA_V2);
@@ -147,7 +147,7 @@ test('schema v4 migrates sequentially to v5 and survives restart', async () => {
   await database.closeAsync();
 
   const restarted = new SqliteFileAdapter(path);
-  assert.equal(await migrateDatabase(restarted), 5);
+  assert.equal(await migrateDatabase(restarted), 6);
   assert.deepEqual(await restarted.getFirstAsync('SELECT revision, pet_stage FROM profile_state'), { revision: 7, pet_stage: 1 });
   assert.equal((await restarted.getFirstAsync("SELECT COUNT(*) AS count FROM sqlite_master WHERE type = 'table' AND name = 'period_summary'"))?.count, 1);
   await restarted.closeAsync();

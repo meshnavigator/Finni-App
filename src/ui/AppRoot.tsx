@@ -36,6 +36,8 @@ import {
 } from '../domain/pet-profile.ts';
 import type { Plan } from '../domain/economy.ts';
 import type { Mode } from '../domain/contracts.ts';
+import type { HintLevel, LessonAttempt, LessonEvaluation } from '../domain/lesson.ts';
+import { LOCAL_DEMO_LESSONS, type LocalLessonPresentation } from '../content/local-lesson-catalog.ts';
 import AdultScreen from './AdultScreen.tsx';
 import BudgetPlanScreen from './BudgetPlanScreen.tsx';
 import HelpScreen from './HelpScreen.tsx';
@@ -44,8 +46,12 @@ import PeriodResultScreen from './PeriodResultScreen.tsx';
 import SavingsScreen from './SavingsScreen.tsx';
 import ShopScreen from './ShopScreen.tsx';
 import FinniHomeScene from './FinniHomeScene.tsx';
+import LessonShell from './LessonShell.tsx';
+import { LessonRendererRegistry } from './lesson-renderer-registry.ts';
+import { AllocationRenderer, BasketRenderer } from './budget-purchase-renderers.tsx';
+import SavingsLessonRenderer from './SavingsLessonRenderer.tsx';
 
-type Screen = 'intro' | 'pet' | 'home' | 'plan' | 'shop' | 'savings' | 'history' | 'result' | 'adult' | 'section';
+type Screen = 'intro' | 'pet' | 'home' | 'plan' | 'shop' | 'savings' | 'history' | 'result' | 'adult' | 'section' | 'lesson-catalog' | 'lesson';
 type Phase = 'loading' | 'ready' | 'error';
 
 const EMPTY_SNAPSHOT: AppSnapshot = Object.freeze({
@@ -54,6 +60,11 @@ const EMPTY_SNAPSHOT: AppSnapshot = Object.freeze({
   budget: null,
   commerce: null,
 });
+
+const lessonRenderers = new LessonRendererRegistry()
+  .register('allocation', AllocationRenderer)
+  .register('basket', BasketRenderer)
+  .register('savings', SavingsLessonRenderer);
 
 function ActionButton(props: Readonly<{
   label: string;
@@ -336,6 +347,7 @@ function HomeScreen(props: Readonly<{
   onResults: () => void;
   onEditPet: () => void;
   onHelp: () => void;
+  onLesson: () => void;
   onSection: (title: string) => void;
 }>) {
   const viewport = useWindowDimensions();
@@ -401,10 +413,10 @@ function HomeScreen(props: Readonly<{
           <Text style={styles.summaryLabel}>ТЕКУЩАЯ ЦЕЛЬ</Text>
           <Text style={styles.summaryValue}>{model.goalLabel}</Text>
         </View>
-        <View style={styles.lessonCard}>
+        <Pressable accessibilityRole="button" onPress={props.onLesson} style={styles.lessonCard}>
           <Text style={styles.summaryLabel}>АКТИВНОЕ ЗАНЯТИЕ</Text>
           <Text style={styles.summaryValue}>{model.lessonLabel}</Text>
-        </View>
+        </Pressable>
         {layout.reviewConflict && (
           <Text accessibilityLiveRegion="polite" style={styles.reviewConflict}>
             Проверка макета: при 200% доступен прокручиваемый вариант; одновременная видимость всех обязательных элементов требует review.
@@ -458,6 +470,29 @@ function SectionScreen(props: Readonly<{ title: string; onBack: () => void }>) {
   );
 }
 
+function LessonCatalogScreen(props: Readonly<{
+  lessons: readonly LocalLessonPresentation[];
+  onSelect: (lesson: LocalLessonPresentation) => void;
+  onBack: () => void;
+}>) {
+  return (
+    <SafeAreaView style={styles.page} accessibilityLabel="Каталог учебных занятий">
+      <ScrollView contentContainerStyle={styles.introContent}>
+        <Text style={styles.eyebrow}>УЧЕБНЫЕ ЗАНЯТИЯ</Text>
+        <Text style={styles.title}>Выбери пример</Text>
+        <Text style={styles.body}>Это задания для тренировки: покупки и переводы из копилки здесь не выполняются.</Text>
+        {props.lessons.map((lesson) => (
+          <Pressable key={lesson.definition.lessonId} accessibilityRole="button" accessibilityLabel={lesson.title} onPress={() => props.onSelect(lesson)} style={styles.lessonCard}>
+            <Text style={styles.summaryValue}>{lesson.title}</Text>
+            <Text style={styles.caption}>{lesson.intro}</Text>
+          </Pressable>
+        ))}
+        <ActionButton label="Вернуться в домик" onPress={props.onBack} secondary />
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+
 export default function AppRoot() {
   const controller = useRef<ProductionAppController | null>(null);
   const adultAccess = useRef(new AdultAccessSession());
@@ -471,6 +506,11 @@ export default function AppRoot() {
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [sectionTitle, setSectionTitle] = useState('');
+  const [lessonAttempt, setLessonAttempt] = useState<LessonAttempt | null>(null);
+  const [lessonEvaluation, setLessonEvaluation] = useState<LessonEvaluation | null>(null);
+  const [lessonPresentation, setLessonPresentation] = useState<LocalLessonPresentation | null>(null);
+  const [revealedEvidenceIds, setRevealedEvidenceIds] = useState<readonly string[]>([]);
+  const [lessonRewardReason, setLessonRewardReason] = useState<null | 'GRANTED' | 'TRAINING' | 'PERIOD_NOT_ACTIVE' | 'ALREADY_GRANTED'>(null);
   const [helpOpen, setHelpOpen] = useState(false);
   const [boot, setBoot] = useState(0);
 
@@ -702,6 +742,58 @@ export default function AppRoot() {
     setScreen('section');
   };
 
+  const openLesson = async (presentation: LocalLessonPresentation) => {
+    if (!snapshot || !controller.current) return;
+    setBusy(true);
+    setMessage(null);
+    try {
+      const attempt = await controller.current.submit((runtime) => runtime.startLesson(snapshot, presentation.definition));
+      setLessonAttempt(attempt);
+      setLessonEvaluation(null);
+      setLessonPresentation(presentation);
+      setRevealedEvidenceIds([]);
+      setLessonRewardReason(null);
+      setScreen('lesson');
+    } catch {
+      setMessage('Занятие не открылось. Монеты твоего дня не изменились.');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const withLesson = async (work: (runtime: AppRuntime, attempt: LessonAttempt) => Promise<LessonAttempt | Readonly<{ attempt: LessonAttempt; evaluation?: LessonEvaluation }>>) => {
+    if (!lessonAttempt || !controller.current) return;
+    setBusy(true);
+    setMessage(null);
+    try {
+      const result = await controller.current.submit((runtime) => work(runtime, lessonAttempt));
+      const next = 'attempt' in result ? result.attempt : result;
+      setLessonAttempt(next);
+      if ('evaluation' in result && result.evaluation) setLessonEvaluation(result.evaluation);
+    } catch {
+      setMessage('Действие не сохранилось. Можно попробовать ещё раз.');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const completeLesson = async () => {
+    if (!snapshot || !lessonAttempt || !lessonEvaluation || !controller.current) return;
+    setBusy(true);
+    setMessage(null);
+    try {
+      const receipt = await controller.current.submit((runtime) => runtime.completeLesson(snapshot, lessonAttempt.attemptId, lessonEvaluation.evaluationId));
+      if (receipt.result.ok) setLessonRewardReason(receipt.result.data.reward.reason);
+      const refreshed = await controller.current.load();
+      setSnapshot(refreshed);
+      setLessonAttempt((current) => current ? { ...current, phase: 'completed' } : current);
+    } catch {
+      setMessage('Завершение не сохранилось. Монеты твоего дня не изменились.');
+    } finally {
+      setBusy(false);
+    }
+  };
+
   if (phase === 'loading') return <LoadingScreen />;
   if (phase === 'error') return (
     <ErrorScreen
@@ -736,9 +828,17 @@ export default function AppRoot() {
           scenePaused={helpOpen}
           onEditPet={() => { setMessage(null); setScreen('pet'); }}
           onHelp={() => setHelpOpen(true)}
+          onLesson={() => { setMessage(null); setScreen('lesson-catalog'); }}
           onOpenDay={() => void openDay()}
           onResults={() => { setMessage(null); setScreen('result'); }}
           onSection={openSection}
+        />
+      )}
+      {screen === 'lesson-catalog' && (
+        <LessonCatalogScreen
+          lessons={LOCAL_DEMO_LESSONS}
+          onBack={() => setScreen('home')}
+          onSelect={(lesson) => void openLesson(lesson)}
         />
       )}
       {helpOpen && <HelpOverlay onClose={() => setHelpOpen(false)} />}
@@ -827,6 +927,24 @@ export default function AppRoot() {
           onSwitchMode={(target) => void switchMode(target)}
           onResetDemo={() => void runAdmin('RESET_PROFILE')}
           onDeleteSelected={() => void runAdmin('DELETE_PROFILE')}
+        />
+      )}
+      {screen === 'lesson' && lessonAttempt && lessonPresentation && (
+        <LessonShell
+          attempt={lessonAttempt}
+          evaluation={lessonEvaluation}
+          copy={{ title: lessonPresentation.title, intro: lessonPresentation.intro, hints: lessonPresentation.definition.hints, evidence: lessonPresentation.evidence }}
+          registry={lessonRenderers}
+          busy={busy}
+          rewardReason={lessonRewardReason}
+          onSolutionChange={(solution) => void withLesson((runtime, attempt) => runtime.saveLesson(attempt.attemptId, solution))}
+          revealedEvidenceIds={revealedEvidenceIds}
+          onRevealEvidence={(evidenceId) => setRevealedEvidenceIds((current) => current.includes(evidenceId) ? current : [...current, evidenceId])}
+          onRevealHint={(level: HintLevel) => void withLesson((runtime, attempt) => runtime.revealLessonHint(attempt.attemptId, level))}
+          onEvaluate={() => void withLesson((runtime, attempt) => runtime.evaluateLesson(attempt.attemptId))}
+          onViewExplanation={(evaluationId) => void withLesson((runtime, attempt) => runtime.viewLessonExplanation(attempt.attemptId, evaluationId))}
+          onComplete={() => void completeLesson()}
+          onBack={() => { setMessage(null); setScreen('lesson-catalog'); }}
         />
       )}
       {screen === 'section' && <SectionScreen title={sectionTitle} onBack={() => setScreen('home')} />}

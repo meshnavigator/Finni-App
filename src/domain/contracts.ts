@@ -80,14 +80,23 @@ export type CommandPayloads = Readonly<{
   DepositSavings: Readonly<{ periodId: string; amount: Amount }>;
   WithdrawSavings: Readonly<{ periodId: string; amount: Amount }>;
   ClaimGoal: Readonly<{ periodId: string; goalId: string }>;
-  StartLesson: Readonly<{ lessonId: string; contentVersion: number }>;
+  StartLesson: Readonly<{
+    attemptId: string;
+    periodId: string | null;
+    lessonId: string;
+    contentVersion: string;
+    variantId: string;
+    mechanic: string;
+    parameters: Readonly<Record<string, unknown>>;
+    hints: readonly [string, string];
+  }>;
   SaveAttempt: Readonly<{
     attemptId: string;
     data: Readonly<Record<string, unknown>>;
   }>;
   EvaluateAttempt: Readonly<{ attemptId: string }>;
   CompleteLesson: Readonly<{
-    periodId: string;
+    periodId: string | null;
     attemptId: string;
     evaluationId: string;
   }>;
