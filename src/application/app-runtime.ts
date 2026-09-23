@@ -26,6 +26,7 @@ import {
   type LessonDefinition,
 } from '../domain/lesson.ts';
 import { evaluateAllocation, evaluateBasket } from '../lessons/budget-purchase-lessons.ts';
+import { evaluateReceiptAudit, evaluateResourceChoice } from '../lessons/receipt-workshop-lessons.ts';
 import { evaluateSavings } from '../domain/savings-lesson.ts';
 
 export type AppSnapshot = Readonly<{
@@ -68,7 +69,9 @@ export class AppRuntime {
     const evaluators = new LessonEvaluatorRegistry()
       .register('allocation', evaluateAllocation)
       .register('basket', evaluateBasket)
-      .register('savings', evaluateSavings);
+      .register('savings', evaluateSavings)
+      .register('receipt_audit', evaluateReceiptAudit)
+      .register('resource_choice', evaluateResourceChoice);
     this.#learning = new LearningService(
       new LessonRepository(mode, database, this.#executor),
       evaluators,

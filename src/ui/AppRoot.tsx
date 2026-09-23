@@ -49,6 +49,7 @@ import FinniHomeScene from './FinniHomeScene.tsx';
 import LessonShell from './LessonShell.tsx';
 import { LessonRendererRegistry } from './lesson-renderer-registry.ts';
 import { AllocationRenderer, BasketRenderer } from './budget-purchase-renderers.tsx';
+import { ReceiptAuditRenderer, ResourceChoiceRenderer } from './receipt-workshop-renderers.tsx';
 import SavingsLessonRenderer from './SavingsLessonRenderer.tsx';
 
 type Screen = 'intro' | 'pet' | 'home' | 'plan' | 'shop' | 'savings' | 'history' | 'result' | 'adult' | 'section' | 'lesson-catalog' | 'lesson';
@@ -64,7 +65,9 @@ const EMPTY_SNAPSHOT: AppSnapshot = Object.freeze({
 const lessonRenderers = new LessonRendererRegistry()
   .register('allocation', AllocationRenderer)
   .register('basket', BasketRenderer)
-  .register('savings', SavingsLessonRenderer);
+  .register('savings', SavingsLessonRenderer)
+  .register('receipt_audit', ReceiptAuditRenderer)
+  .register('resource_choice', ResourceChoiceRenderer);
 
 function ActionButton(props: Readonly<{
   label: string;

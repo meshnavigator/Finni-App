@@ -20,14 +20,14 @@ test('allocation and basket renderers expose canonical editable learning actions
   assert.doesNotMatch(renderer, /selectedIds|revealedIds|remainder/);
 });
 
-test('pinned content definitions route all six demo lessons through LessonShell', () => {
+test('pinned content definitions route all eight demo lessons through LessonShell', () => {
   assert.match(shell, /parameters: props\.attempt\.parameters/);
   assert.match(shell, /revealedEvidenceIds/);
   assert.match(root, /runtime\.startLesson\(snapshot, presentation\.definition\)/);
   assert.match(root, /LOCAL_DEMO_LESSONS/);
   assert.match(root, /new LessonRendererRegistry\(\)/);
   assert.match(root, /\.register\('savings', SavingsLessonRenderer\)/);
-  for (const lessonId of ['LS-B01', 'LS-B02', 'LS-P01', 'LS-P02', 'LS-S01', 'LS-S02']) {
+  for (const lessonId of ['LS-B01', 'LS-B02', 'LS-B03', 'LS-P01', 'LS-P02', 'LS-P03', 'LS-S01', 'LS-S02']) {
     assert.match(catalog, new RegExp(lessonId));
   }
 });
