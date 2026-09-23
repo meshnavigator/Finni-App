@@ -56,9 +56,11 @@ Goal and stage clips expose skip. Skipping ends only presentation playback.
 Motion is allowed only if enabled by the app and system and the scene is visible.
 When blocked, no idle, blink, interest or active effect runs; the current
 presentation's static expression and final values remain. Sound off does not
-cancel motion. Persist app preferences outside this presentation module; it
-has no domain or persistence imports. No sound file is registered until source,
-license and playback QA exist.
+cancel motion. The app preferences persist independently in the existing
+`finni-control.db` via `SqliteAppControlStorage.readPresentationPreferences`,
+`setMotionEnabled` and `setSoundEnabled`. System reduce-motion remains a runtime
+input. The animation module has no domain or persistence imports. No sound file
+is registered until source, license and playback QA exist.
 
 ## Remaining gates
 
