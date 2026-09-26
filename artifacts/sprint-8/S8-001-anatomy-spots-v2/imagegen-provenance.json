@@ -1,0 +1,21 @@
+{
+  "date": "2026-09-25",
+  "mode": "built-in image_gen",
+  "numLastImages": 5,
+  "generatedFile": "exec-4cf713c7-71ba-4932-887a-5ff9de8462ba.png",
+  "localDonor": "input/imagegen-spotted-coat.png",
+  "donorSha256": "1CDA8C5EACEDF4800A7FB8CD4AEDFDF633B955A4BE5FF4DEC1A55D85C5369B19",
+  "masterSha256": "8b2932caa23b99ae0d6575105940cda70858619f32333d564847d9b0dcdb6cc0",
+  "sourceGeometry": "S8-001-anatomy-spots-v1 original anatomical parts",
+  "methods": [
+    "affine donor registration",
+    "anatomical matte transfer of generated RGB",
+    "original alpha retained",
+    "source protected layers copied byte-for-byte"
+  ],
+  "proceduralPatternDrawing": false,
+  "programmaticRecoloring": false,
+  "wholeGeneratedCharacterAccepted": false,
+  "artStatus": "candidate pending owner review",
+  "runtimeModified": false
+}

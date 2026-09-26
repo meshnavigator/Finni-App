@@ -1,0 +1,126 @@
+{
+  "packageId": "S8-001-FIRST-APPEARANCE-CANDIDATE",
+  "revision": 2,
+  "status": "art-review-candidate-not-runtime",
+  "appearance": {
+    "earShape": "pointy",
+    "furPattern": "spots"
+  },
+  "source": "accepted S7-004 pixels and accepted S8-001 layer separation; local paint overlay",
+  "sourceMasterSha256": "8b2932caa23b99ae0d6575105940cda70858619f32333d564847d9b0dcdb6cc0",
+  "furSwatchSha256": "dc898f5a419ae5bea5deb1ec78d9bd625f94aa8c75538036e4606c8d6a1f1fad",
+  "canvas": [
+    941,
+    1672
+  ],
+  "layerOrderBackToFront": [
+    "room-base",
+    "pet-back",
+    "pet-body",
+    "pet-pattern",
+    "pet-ear-shape",
+    "pet-face",
+    "pet-expression",
+    "pet-accessory",
+    "room-foreground"
+  ],
+  "underfurPixelsBeneathEarBases": 10633,
+  "patternPixelsOnProtectedLegsAndPaws": 0,
+  "changedPixelsOutsideBodyAndConcealedEarSeam": 0,
+  "changedPixelsTotal": 12198,
+  "ora": {
+    "path": "source\\finni_pointy_spots_candidate.ora",
+    "sha256": "01e957cf8a682846a1565849c6f1e735939b6e9701d6412812791d98062290a8"
+  },
+  "layers": [
+    {
+      "name": "room-base",
+      "path": "layers/room-base.png",
+      "sha256": "4037569a92819890a5e68619a54f6c3b27129e72ebbe0fa67c9464f0b8651c1f",
+      "alphaBounds": [
+        0,
+        0,
+        941,
+        1672
+      ]
+    },
+    {
+      "name": "pet-back",
+      "path": "layers/pet-back.png",
+      "sha256": "cb95c50d18b76aad697e10eebe456cb89f4b87ab9bb2ed47d99ca58e84c25d47",
+      "alphaBounds": [
+        541,
+        1007,
+        703,
+        1237
+      ]
+    },
+    {
+      "name": "pet-body",
+      "path": "layers/pet-body.png",
+      "sha256": "2916ee3015c85a1dcf7b6d32a44b1beb87838dd8cc688f00532b66f2047e3593",
+      "alphaBounds": [
+        210,
+        781,
+        620,
+        1264
+      ]
+    },
+    {
+      "name": "pet-pattern",
+      "path": "layers/pet-pattern.png",
+      "sha256": "86491ee57ea31e35be432de0308111f2360f25f050e6b13a61087c359c58781f",
+      "alphaBounds": [
+        323,
+        1038,
+        547,
+        1099
+      ]
+    },
+    {
+      "name": "pet-ear-shape",
+      "path": "layers/pet-ear-shape.png",
+      "sha256": "39afce606b66b70fc388758892e36fd704560431b5c744f4e1bf6069a95309c6",
+      "alphaBounds": [
+        298,
+        720,
+        641,
+        941
+      ]
+    },
+    {
+      "name": "pet-face",
+      "path": "layers/pet-face.png",
+      "sha256": "9495265c165c66ece83c415c63490b404d9f8280b386549a1dc21f7562a0ca88",
+      "alphaBounds": [
+        272,
+        720,
+        714,
+        1030
+      ]
+    },
+    {
+      "name": "pet-expression",
+      "path": "layers/pet-expression.png",
+      "sha256": "89adcfa598ebed0b1f435cad625c162267ef54431ef1fe4fd21a9aa26e31f083",
+      "alphaBounds": null
+    },
+    {
+      "name": "pet-accessory",
+      "path": "layers/pet-accessory.png",
+      "sha256": "6fd4d6d0ec71993f33daf64a925a43b103c2825a6fd6e95133d5a3911fd3f88a",
+      "alphaBounds": [
+        357,
+        1007,
+        519,
+        1093
+      ]
+    },
+    {
+      "name": "room-foreground",
+      "path": "layers/room-foreground.png",
+      "sha256": "89adcfa598ebed0b1f435cad625c162267ef54431ef1fe4fd21a9aa26e31f083",
+      "alphaBounds": null
+    }
+  ]
+}

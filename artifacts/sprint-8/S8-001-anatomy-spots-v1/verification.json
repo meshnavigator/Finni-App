@@ -1,0 +1,102 @@
+{
+  "canvas": [
+    941,
+    1672
+  ],
+  "origin": [
+    0,
+    0
+  ],
+  "sourceSha256": "8b2932caa23b99ae0d6575105940cda70858619f32333d564847d9b0dcdb6cc0",
+  "neutralVisiblePixelDifferences": 0,
+  "bodySplitVisiblePixelDifferences": 0,
+  "parts": [
+    "rear-left",
+    "rear-right",
+    "torso",
+    "chest",
+    "foreleg-left",
+    "foreleg-right"
+  ],
+  "externalLayers": [
+    "room-base",
+    "pet-back",
+    "pet-body",
+    "pet-pattern",
+    "pet-ear-shape",
+    "pet-face",
+    "pet-expression",
+    "pet-accessory",
+    "room-foreground"
+  ],
+  "hiddenAnatomy": "not created; visible neutral extraction only",
+  "chestPattern": "empty by composition choice",
+  "sourceParts": {
+    "rear-left": {
+      "alphaBounds": [
+        210,
+        1060,
+        358,
+        1246
+      ],
+      "sha256": "ae4ed9c83fdd3dda74ba1aa2efc2fc9756b6ca7ac4f14ae93faa25840c1c1b8a"
+    },
+    "rear-right": {
+      "alphaBounds": [
+        496,
+        1077,
+        581,
+        1246
+      ],
+      "sha256": "cbfcfcbefc5866289daba2fb7df9855e118ce8dd704e9e2b11e963143e8136a7"
+    },
+    "torso": {
+      "alphaBounds": [
+        243,
+        954,
+        620,
+        1163
+      ],
+      "sha256": "ad69eafb2eb5c4bd7cfc8208cb6b4cb6bec26bf81eeb34cd6c48ba4b5ac1f550"
+    },
+    "chest": {
+      "alphaBounds": [
+        367,
+        1023,
+        496,
+        1149
+      ],
+      "sha256": "26a5786be23f2631435640487b579cc66f5374aa1f77c992b2a0bf1dbed5915f"
+    },
+    "foreleg-left": {
+      "alphaBounds": [
+        329,
+        1017,
+        425,
+        1261
+      ],
+      "sha256": "e40a982d261075555e16303402ba98e59a0e36f58705fd6b9e2b73b3b950435f"
+    },
+    "foreleg-right": {
+      "alphaBounds": [
+        418,
+        1028,
+        543,
+        1264
+      ],
+      "sha256": "bd530e94934936ffb3837efe8dadb4dbf335f13fe2423f0f67660b59eac5c60f"
+    }
+  },
+  "generatedOverlaySha256": "a75d19ba742adbd7ca1f9e527831bde08cff9af3c4ca8d081ce56a99dbc1e57a",
+  "changedVisiblePixels": 1858,
+  "changedOutsidePaintable": 0,
+  "patternVisiblePixels": 1873,
+  "patternAlphaBounds": [
+    307,
+    1109,
+    561,
+    1178
+  ],
+  "protectedLayerHashesEqual": true,
+  "exportCount": 9
+}

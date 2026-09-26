@@ -1,0 +1,195 @@
+{
+  "device": "emulator-5554 API 26",
+  "scope": "debug + Metro; QA database fixture",
+  "results": [
+    {
+      "id": "pointy-plain-stage1",
+      "stage": 1,
+      "appearance": "pointy/plain",
+      "screenshot": "matrix\\pointy-plain-stage1.png",
+      "status": "PASS"
+    },
+    {
+      "id": "pointy-spots-stage1",
+      "stage": 1,
+      "appearance": "pointy/spots",
+      "screenshot": "matrix\\pointy-spots-stage1.png",
+      "status": "PASS"
+    },
+    {
+      "id": "pointy-stripes-stage1",
+      "stage": 1,
+      "appearance": "pointy/stripes",
+      "screenshot": "matrix\\pointy-stripes-stage1.png",
+      "status": "PASS"
+    },
+    {
+      "id": "round-plain-stage1",
+      "stage": 1,
+      "appearance": "round/plain",
+      "screenshot": "matrix\\round-plain-stage1.png",
+      "status": "PASS"
+    },
+    {
+      "id": "round-spots-stage1",
+      "stage": 1,
+      "appearance": "round/spots",
+      "screenshot": "matrix\\round-spots-stage1.png",
+      "status": "PASS"
+    },
+    {
+      "id": "round-stripes-stage1",
+      "stage": 1,
+      "appearance": "round/stripes",
+      "screenshot": "matrix\\round-stripes-stage1.png",
+      "status": "PASS"
+    },
+    {
+      "id": "floppy-plain-stage1",
+      "stage": 1,
+      "appearance": "floppy/plain",
+      "screenshot": "matrix\\floppy-plain-stage1.png",
+      "status": "PASS"
+    },
+    {
+      "id": "floppy-spots-stage1",
+      "stage": 1,
+      "appearance": "floppy/spots",
+      "screenshot": "matrix\\floppy-spots-stage1.png",
+      "status": "PASS"
+    },
+    {
+      "id": "floppy-stripes-stage1",
+      "stage": 1,
+      "appearance": "floppy/stripes",
+      "screenshot": "matrix\\floppy-stripes-stage1.png",
+      "status": "PASS"
+    },
+    {
+      "id": "pointy-plain-stage2",
+      "stage": 2,
+      "appearance": "pointy/plain",
+      "screenshot": "matrix\\pointy-plain-stage2.png",
+      "status": "PASS"
+    },
+    {
+      "id": "pointy-spots-stage2",
+      "stage": 2,
+      "appearance": "pointy/spots",
+      "screenshot": "matrix\\pointy-spots-stage2.png",
+      "status": "PASS"
+    },
+    {
+      "id": "pointy-stripes-stage2",
+      "stage": 2,
+      "appearance": "pointy/stripes",
+      "screenshot": "matrix\\pointy-stripes-stage2.png",
+      "status": "PASS"
+    },
+    {
+      "id": "round-plain-stage2",
+      "stage": 2,
+      "appearance": "round/plain",
+      "screenshot": "matrix\\round-plain-stage2.png",
+      "status": "PASS"
+    },
+    {
+      "id": "round-spots-stage2",
+      "stage": 2,
+      "appearance": "round/spots",
+      "screenshot": "matrix\\round-spots-stage2.png",
+      "status": "PASS"
+    },
+    {
+      "id": "round-stripes-stage2",
+      "stage": 2,
+      "appearance": "round/stripes",
+      "screenshot": "matrix\\round-stripes-stage2.png",
+      "status": "PASS"
+    },
+    {
+      "id": "floppy-plain-stage2",
+      "stage": 2,
+      "appearance": "floppy/plain",
+      "screenshot": "matrix\\floppy-plain-stage2.png",
+      "status": "PASS"
+    },
+    {
+      "id": "floppy-spots-stage2",
+      "stage": 2,
+      "appearance": "floppy/spots",
+      "screenshot": "matrix\\floppy-spots-stage2.png",
+      "status": "PASS"
+    },
+    {
+      "id": "floppy-stripes-stage2",
+      "stage": 2,
+      "appearance": "floppy/stripes",
+      "screenshot": "matrix\\floppy-stripes-stage2.png",
+      "status": "PASS"
+    },
+    {
+      "id": "pointy-plain-stage3",
+      "stage": 3,
+      "appearance": "pointy/plain",
+      "screenshot": "matrix\\pointy-plain-stage3.png",
+      "status": "PASS"
+    },
+    {
+      "id": "pointy-spots-stage3",
+      "stage": 3,
+      "appearance": "pointy/spots",
+      "screenshot": "matrix\\pointy-spots-stage3.png",
+      "status": "PASS"
+    },
+    {
+      "id": "pointy-stripes-stage3",
+      "stage": 3,
+      "appearance": "pointy/stripes",
+      "screenshot": "matrix\\pointy-stripes-stage3.png",
+      "status": "PASS"
+    },
+    {
+      "id": "round-plain-stage3",
+      "stage": 3,
+      "appearance": "round/plain",
+      "screenshot": "matrix\\round-plain-stage3.png",
+      "status": "PASS"
+    },
+    {
+      "id": "round-spots-stage3",
+      "stage": 3,
+      "appearance": "round/spots",
+      "screenshot": "matrix\\round-spots-stage3.png",
+      "status": "PASS"
+    },
+    {
+      "id": "round-stripes-stage3",
+      "stage": 3,
+      "appearance": "round/stripes",
+      "screenshot": "matrix\\round-stripes-stage3.png",
+      "status": "PASS"
+    },
+    {
+      "id": "floppy-plain-stage3",
+      "stage": 3,
+      "appearance": "floppy/plain",
+      "screenshot": "matrix\\floppy-plain-stage3.png",
+      "status": "PASS"
+    },
+    {
+      "id": "floppy-spots-stage3",
+      "stage": 3,
+      "appearance": "floppy/spots",
+      "screenshot": "matrix\\floppy-spots-stage3.png",
+      "status": "PASS"
+    },
+    {
+      "id": "floppy-stripes-stage3",
+      "stage": 3,
+      "appearance": "floppy/stripes",
+      "screenshot": "matrix\\floppy-stripes-stage3.png",
+      "status": "PASS"
+    }
+  ]
+}

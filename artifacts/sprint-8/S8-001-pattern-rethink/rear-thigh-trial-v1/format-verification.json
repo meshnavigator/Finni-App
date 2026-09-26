@@ -1,0 +1,34 @@
+[
+  {
+    "file": "Finni App/assets/2d/master/FINNI-2D-MASTER-V1/pet_neutral_canvas_v1.png",
+    "width": 941,
+    "height": 1672,
+    "pixelFormat": "Format32bppArgb",
+    "transparentPixels": 1408758,
+    "partialAlphaPixels": 164487,
+    "opaquePixels": 107,
+    "alphaBounds": [
+      210,
+      720,
+      713,
+      1263
+    ],
+    "sha256": "8B2932CAA23B99AE0D6575105940CDA70858619F32333D564847D9B0DCDB6CC0"
+  },
+  {
+    "file": "Finni App/artifacts/sprint-8/S8-001-pattern-rethink/rear-thigh-trial-v1/finni-rear-thigh-flecks-v1.png",
+    "width": 941,
+    "height": 1672,
+    "pixelFormat": "Format32bppArgb",
+    "transparentPixels": 1404437,
+    "partialAlphaPixels": 168892,
+    "opaquePixels": 23,
+    "alphaBounds": [
+      267,
+      37,
+      829,
+      1267
+    ],
+    "sha256": "B4EC88F466BCA27904B21C073AFE18B319585077AFD97099054286979077A401"
+  }
+]

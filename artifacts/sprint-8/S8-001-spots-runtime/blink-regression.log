@@ -1,0 +1,44 @@
+TAP version 13
+# (node:47568) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/00.MIDAS/PROJECTS/28.%20HackApp.%202026/Finni%20App/src/ui/finni-layer-contract.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to C:\\00.MIDAS\\PROJECTS\\28. HackApp. 2026\\Finni App\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: default app has one production root and no 3D diagnostic route
+ok 1 - default app has one production root and no 3D diagnostic route
+  ---
+  duration_ms: 2.4978
+  type: 'test'
+  ...
+# Subtest: production master copies match accepted S7-004 hashes
+ok 2 - production master copies match accepted S7-004 hashes
+  ---
+  duration_ms: 77.0034
+  type: 'test'
+  ...
+# Subtest: Home scene is local, lifecycle-aware, reduced-motion safe and bounded
+ok 3 - Home scene is local, lifecycle-aware, reduced-motion safe and bounded
+  ---
+  duration_ms: 1.7459
+  type: 'test'
+  ...
+# Subtest: three stage frames preserve the same room floor contact
+ok 4 - three stage frames preserve the same room floor contact
+  ---
+  duration_ms: 11.0717
+  type: 'test'
+  ...
+# Subtest: first blink waits for its decoded frame without swapping image sources
+ok 5 - first blink waits for its decoded frame without swapping image sources
+  ---
+  duration_ms: 1.0781
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 683.4871

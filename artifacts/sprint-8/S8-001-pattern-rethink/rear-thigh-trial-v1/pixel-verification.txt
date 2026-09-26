@@ -1,0 +1,17 @@
+{
+  "alphaThreshold": 128,
+  "masterBounds": [
+    280,
+    724,
+    693,
+    1260
+  ],
+  "trialBounds": [
+    278,
+    723,
+    696,
+    1262
+  ],
+  "changedVisiblePixels": 158099,
+  "changedAboveY1050": 84787
+}

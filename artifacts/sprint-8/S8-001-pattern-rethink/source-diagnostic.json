@@ -1,0 +1,9 @@
+{
+  "path": "C:\\00.MIDAS\\PROJECTS\\28. HackApp. 2026\\docs\\Finni_S7-004_2D_MASTER_v1\\source\\finni_home_layered_master_v1.ora",
+  "bytes": 5460668,
+  "sha256": "253581192a962c7af47b1c169fda991022c095e512dd335b7b967e7ff3ce4077",
+  "zip_test": null,
+  "entries": 7,
+  "stack_xml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<image version=\"0.0.1\" w=\"941\" h=\"1672\" name=\"Finni Home layered master v1\">\n  <stack name=\"Finni Home v1\">\n    <layer name=\"Pet neutral (visible)\" src=\"data/pet-neutral.png\" visibility=\"visible\" composite-op=\"svg:src-over\" />\n    <layer name=\"Pet blink (toggle)\" src=\"data/pet-blink.png\" visibility=\"hidden\" composite-op=\"svg:src-over\" />\n    <layer name=\"Room clean\" src=\"data/room.png\" visibility=\"visible\" composite-op=\"svg:src-over\" />\n  </stack>\n</image>",
+  "all_png_read": "PASS"
+}

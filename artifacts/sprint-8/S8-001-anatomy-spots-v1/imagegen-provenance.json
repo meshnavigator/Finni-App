@@ -1,0 +1,42 @@
+{
+  "date": "2026-09-25",
+  "mode": "built-in image_gen",
+  "status": "art-review-candidate-not-production",
+  "source": "FINNI-2D-MASTER-V1 supplied by user as chat attachment",
+  "sourceMasterSha256": "8b2932caa23b99ae0d6575105940cda70858619f32333d564847d9b0dcdb6cc0",
+  "outputs": [
+    {
+      "status": "rejected oversized tufts",
+      "numLastImages": 3,
+      "generatedFile": "exec-fd0a8476-f0c5-4547-975a-c6641571426c.png",
+      "localFile": "input/imagegen-pattern-overlay-v1-rejected.png",
+      "sha256": "7DF1B4FEF08425E03119669524D015C02949482F577E03BE38F320CE3BFA31FC",
+      "version": 1
+    },
+    {
+      "status": "used after mechanical registration",
+      "numLastImages": 4,
+      "generatedFile": "exec-0d177519-2f4d-4e44-82df-48094680c831.png",
+      "localFile": "input/imagegen-pattern-overlay.png",
+      "sha256": "DD79C65EF32E9D3F94B48298804C4C7952F58FAE05C3CDFFFF0DE28EB36E90F2",
+      "version": 2
+    }
+  ],
+  "registeredOverlay": {
+    "sha256": "A75D19BA742ADBD7CA1F9E527831BDE08CFF9AF3C4CA8D081CE56A99DBC1E57A",
+    "file": "input/imagegen-pattern-registered.png",
+    "recoloring": false,
+    "operations": [
+      "identify existing raster marks",
+      "crop",
+      "uniform downscale",
+      "translation",
+      "normal alpha composite",
+      "anatomical clip"
+    ],
+    "pixelPainting": false
+  },
+  "masterModified": false,
+  "runtimeModified": false,
+  "ownerArtAccepted": false
+}

@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "tool": "image_gen.imagegen",
+  "runs": [
+    {
+      "id": "overlay-v1",
+      "num_last_images_to_include": 3,
+      "prompt": "Asset type: transparent fur-marking overlay for the existing layered Finni character. Image 1 is the ONLY accepted geometric reference. Images 2 and 3 are rejected redraws: ignore their face, scale, anatomy and markings. Create ONLY an isolated transparent PNG overlay of sparse natural brown fur freckles for Image 1, on the same 941x1672 pixel canvas with identical registration. Do NOT include any base orange or cream fur, character body, silhouette, face, eyes, ears, collar, tail, paws or background: everything except the brown colored hair markings must be fully transparent. The overlay must contain four separate small clusters of markings, one on each visible leg: viewer-left rear thigh roughly x303-332,y1118-1186; viewer-right rear thigh x529-567,y1121-1188; viewer-left foreground leg x365-398,y1098-1173; viewer-right foreground leg x463-497,y1098-1173. In EACH zone paint 3 to 5 separated small irregular warm medium-brown freckles, about 9 to 17 pixels across, made of fine short individual straight silky hairs aligned with the existing local fur direction in Image 1. Pigment should have softly interleaved hair tips, warm illuminated upper-left hairs and slightly deeper lower-right hairs, so it looks like naturally colored fur when composited over the original. Retain substantial transparent gaps between freckles and between the four clusters. Sparse, clean, charming natural spotted coat; moderate contrast. Avoid curled tufts, muddy smears, rings, stripes, uniform stamped circles, dark black pigment, outlines, blueprints, labels or text. Leave the central chest, white paw socks and all empty margins fully transparent. This is a compositing overlay of colored hairs ONLY, not a new rendering of Finni. Preserve true alpha transparency."
+    },
+    {
+      "id": "overlay-v2",
+      "num_last_images_to_include": 4,
+      "prompt": "Create a corrected TRANSPARENT FUR-PIGMENT OVERLAY for the exact original Finni in Image 1. Images 2 and 3 are rejected character redraws; ignore them. Image 4 is a rejected overlay: its spots are too big and look like raised curled tufts. Preserve its overall four-leg idea but fix that defect. Output only 12 SMALL isolated flat pigment freckles, three per leg, on a true transparent 941x1672 canvas. Do not render the character, base fur, paws, tail, face, collar or any background. Each mark is a tiny irregular shape of warm medium-brown straight short hairs, 8 to 12 pixels wide and 9 to 14 pixels tall, with softly feathered hair ends. Marks are flat natural pigmentation, with no separate puffy volume, shadows, highlights, leaf forms, curls, rings or black center. Precise centers on the original canvas: rear viewer-left (313,1128), (321,1150), (314,1171); fore viewer-left (371,1117), (381,1138), (388,1160); fore viewer-right (485,1116), (476,1138), (468,1159); rear viewer-right (546,1127), (554,1148), (550,1170). Leave every other pixel transparent, especially the chest, socks and all pixels below y=1180. Marks must have plenty of transparent separation and look like clean subtle brown fur freckles rather than clumps of different fur pasted onto the body. Only the twelve fine hair pigment marks, nothing else."
+    }
+  ]
+}
