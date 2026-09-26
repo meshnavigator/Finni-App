@@ -1,0 +1,7 @@
+catalog-storage-error-visible PASS
+catalog-storage-failure-money-unchanged PASS
+actual-corrupt-database-error-scrollable PASS
+Traceback (most recent call last):
+  File "C:\00.MIDAS\PROJECTS\28. HackApp. 2026\Finni App\artifacts\sprint-9\S9-003-004-details\states.py", line 28, in <module>
+    assert n.find(nodes,'root-navigation');n.ok('onboarding-create-profile')
+AssertionError

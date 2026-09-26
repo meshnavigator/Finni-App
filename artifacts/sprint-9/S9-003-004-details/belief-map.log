@@ -1,0 +1,12 @@
+[belief-map] Scanning C:\00.MIDAS\PROJECTS\28. HackApp. 2026\Finni App ... (mode: regex/AST)
+[belief-map] Found 238 source files (157 py, 80 ts, 0 go, 1 sql)
+[belief-map] Parsing 238 changed files (0 cached)
+[belief-map] Regex/AST pass: 1.88s -- 238 nodes, 745 edges
+[belief-map] Done in 1.89s -- 238 nodes, 745 edges
+[belief-map] Output: C:\00.MIDAS\PROJECTS\28. HackApp. 2026\Finni App\.belief_map.sexp
+[belief-map] Repos: Finni App
+[belief-map] Entities: 872
+[belief-map]   CALLS_API: 1
+[belief-map]   DATA_FLOWS_TO: 15
+[belief-map]   IMPORTS: 240
+[belief-map]   REFERENCES: 489

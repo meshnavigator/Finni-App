@@ -1,0 +1,23 @@
+install-over-preserves-eight-files PASS
+installed-delivery-apk-exact-sha256 PASS
+final-root-home PASS
+final-root-plan PASS
+final-root-shop PASS
+final-root-savings PASS
+final-root-more PASS
+final-delivery-back-catalog PASS
+final-delivery-back-pet PASS
+final-delivery-back-history PASS
+final-delivery-back-help PASS
+final-delivery-back-adult PASS
+final-renderer-LS-B01 PASS
+Traceback (most recent call last):
+  File "C:\00.MIDAS\PROJECTS\28. HackApp. 2026\Finni App\artifacts\sprint-9\S9-003-004-details\final-smoke.py", line 17, in <module>
+    n.detail('Все занятия');n.lesson(lid);n.capture('final-'+lid,True);n.back();n.back();n.ok('final-renderer-'+lid)
+  File "C:\00.MIDAS\PROJECTS\28. HackApp. 2026\Finni App\artifacts\sprint-9\S9-003-004-details\native.py", line 54, in back
+    def back():q.adb('shell','input','keyevent','4');time.sleep(.3);return capture('current')
+  File "C:\00.MIDAS\PROJECTS\28. HackApp. 2026\Finni App\artifacts\sprint-9\S9-001-layout\android-qa.py", line 21, in adb
+    return subprocess.run([ADB, *args], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).stdout
+  File "C:\00.MIDAS\Исключения\python3105\lib\subprocess.py", line 524, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['C:/tmp/finni-s2-006-android-sdk/platform-tools/adb.exe', 'shell', 'input', 'keyevent', '4']' returned non-zero exit status 1.

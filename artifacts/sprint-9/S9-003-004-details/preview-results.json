@@ -1,0 +1,109 @@
+{
+  "apkSha256": "3c39f5215dc2b94f5568585aeeb837ca65222be321b2182829d8312f340526a7",
+  "checks": [
+    {
+      "case": "back-catalog",
+      "pass": true
+    },
+    {
+      "case": "back-history",
+      "pass": true
+    },
+    {
+      "case": "back-pet",
+      "pass": true
+    },
+    {
+      "case": "back-help",
+      "pass": true
+    },
+    {
+      "case": "back-adult-gate",
+      "pass": true
+    },
+    {
+      "case": "lesson-help-modal-back",
+      "pass": true
+    },
+    {
+      "case": "adult-accessible-unlock",
+      "pass": true
+    },
+    {
+      "case": "adult-relocked-on-exit",
+      "pass": true
+    },
+    {
+      "case": "pet-save-200",
+      "pass": true
+    }
+  ],
+  "screens": [
+    {
+      "name": "catalog",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "history",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "pet",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "help",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "adult-gate",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "lesson-allocation",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "lesson-help",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "adult-accessible",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "adult-controls",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "pet-200-top",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "pet-200-saved",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    }
+  ]
+}

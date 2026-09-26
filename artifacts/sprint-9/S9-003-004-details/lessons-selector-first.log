@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "C:\00.MIDAS\PROJECTS\28. HackApp. 2026\Finni App\artifacts\sprint-9\S9-003-004-details\lessons.py", line 14, in <module>
+    n.typevalue(label,solution[key])
+  File "C:\00.MIDAS\PROJECTS\28. HackApp. 2026\Finni App\artifacts\sprint-9\S9-003-004-details\native.py", line 60, in typevalue
+    n=scrollfind(nodes or capture('current'),label);tap(n)
+  File "C:\00.MIDAS\PROJECTS\28. HackApp. 2026\Finni App\artifacts\sprint-9\S9-003-004-details\native.py", line 43, in scrollfind
+    raise AssertionError('Scroll target: '+label)
+AssertionError: Scroll target: Нужное

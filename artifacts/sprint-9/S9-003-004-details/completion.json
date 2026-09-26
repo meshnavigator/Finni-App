@@ -1,0 +1,82 @@
+{
+  "status": "implementation-and-verify-complete-owner-visual-accepted-other-gates-open",
+  "deliveryApkSha256": "42d1a247ef6f7a8220d993f89b84a89a0f87dc3ab20d1a7e0f2b8da551e4d0d9",
+  "counts": {
+    "lessons.json": 17,
+    "matrix.json": 53,
+    "financial.json": 7,
+    "states.json": 6,
+    "children.json": 6,
+    "extras.json": 9,
+    "final-smoke.json": 19,
+    "transient-final.json": 3,
+    "resource-qa.json": 4
+  },
+  "geometryFrames": 164,
+  "contrastPairs": 8,
+  "avdRestore": {
+    "files": {
+      "files/BridgelessReactNativeDevBundle.js": true,
+      "files/SQLite/finni-control.db": true,
+      "files/SQLite/finni-control.db-shm": true,
+      "files/SQLite/finni-control.db-wal": true,
+      "files/SQLite/finni-main.db": true,
+      "shared_prefs/com.meshnavigator.finni_preferences.xml": true,
+      "shared_prefs/expo.modules.kotlin.PersistentDataManager.xml": true,
+      "shared_prefs/WebViewChromiumPrefs.xml": true
+    },
+    "wmSize": "Physical size: 1080x1920",
+    "wmDensity": "Physical density: 420",
+    "fontScale": "null",
+    "transitionScale": "0",
+    "nightMode": "Night mode: no",
+    "appStoppedAfterRestore": true,
+    "method": "Restore already existing prior-QA backup after matching all eight baseline SHA256; verify on-device hashes without copying a database out."
+  },
+  "deliveryAfterQa": {
+    "installedApkSha256": "42d1a247ef6f7a8220d993f89b84a89a0f87dc3ab20d1a7e0f2b8da551e4d0d9",
+    "qaMarkersAbsent": true,
+    "appStopped": true,
+    "avdName": "finni_s7_005_api26"
+  },
+  "sourceRestoration": {
+    "src/ui/BudgetPlanScreen.tsx": true,
+    "src/ui/ShopScreen.tsx": true,
+    "src/ui/SavingsScreen.tsx": true,
+    "productAppRootRestored": true,
+    "sourceHasNoQaMarkers": true
+  },
+  "configuredVerifyTests": 142,
+  "notRun": [
+    "Spoken TalkBack",
+    "Physical Android/performance/battery",
+    "Child/parent and external methodological review",
+    "Native old-schema migration in this presentation package"
+  ],
+  "executionMode": "DIRECT",
+  "model": "gpt-6-astra",
+  "reasoning": "xhigh",
+  "otherModelsUsedForContent": false,
+  "resumeEnvironmentCleanup": "Headless AVD started for resumed QA shut down after verified restore; completed resource-build shell wrapper stopped after source restoration and QA completion.",
+  "visualAcceptance": {
+    "date": "2026-09-26",
+    "status": "owner-accepted",
+    "userQuote": "принимаю",
+    "annotationTarget": "Художественную приёмку новых экранов оставляю вам.",
+    "scope": "Визуальный результат новых вложенных экранов пакета S9-003/004",
+    "deliveryApkSha256": "42d1a247ef6f7a8220d993f89b84a89a0f87dc3ab20d1a7e0f2b8da551e4d0d9",
+    "reviewSha256": {
+      "remaining-screens.jpg": "7a676101c3c2241fd404b7a9022a16d35b560e1b46f7c8c9c206adf1fd424d33",
+      "lesson-mechanics.jpg": "3267a818b3316f665c5bd7280d135f5f060fa78b838c91fc76240e1e941e3029",
+      "accessibility-200.jpg": "b150af723597cf8c4329c8fc6ebbdff6c2e81ca5fbb8740371b2c8bbbd39fb78",
+      "root-regression.jpg": "b4549305216e4cf6263db8c847d803574b592f29644ea72402df853143167ecd",
+      "fallback-and-loading.jpg": "400265007f14a92ef75545a029908b17b0e3fd5aa79438ffd9b5f88127000a60"
+    },
+    "remainingGates": [
+      "Spoken TalkBack",
+      "Physical Android/performance/battery",
+      "Child/parent and external methodological review",
+      "Native old-schema migration in this presentation package"
+    ]
+  }
+}

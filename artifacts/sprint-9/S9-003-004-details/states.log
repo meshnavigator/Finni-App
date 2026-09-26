@@ -1,0 +1,7 @@
+catalog-storage-error-visible PASS
+catalog-storage-failure-money-unchanged PASS
+actual-corrupt-database-error-scrollable PASS
+onboarding-create-profile PASS
+draft-plan-warning-explicit-confirmation PASS
+savings-invalid-transfer-visible PASS
+Transient, onboarding and financial form states complete

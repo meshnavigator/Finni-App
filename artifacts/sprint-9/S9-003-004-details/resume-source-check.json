@@ -1,0 +1,7 @@
+{
+  "src/ui/BudgetPlanScreen.tsx": true,
+  "src/ui/ShopScreen.tsx": true,
+  "src/ui/SavingsScreen.tsx": true,
+  "productAppRootRestored": true,
+  "sourceHasNoQaMarkers": true
+}

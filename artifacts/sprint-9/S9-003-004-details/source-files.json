@@ -1,0 +1,19 @@
+{
+  "src/ui/AdultScreen.tsx": "c46a908faf79a247a542693b562dc6df916bb88f09e40548db0dbf2b9e4e0b14",
+  "src/ui/AppRoot.tsx": "3b79e5085c0bdcb05e1ea7b36bd020b215863ed9d0e44463be341d21dd26d5a8",
+  "src/ui/budget-purchase-renderers.tsx": "859db09c2224738364f01a9f919fbfb1dc7675ebe0a05cf21590a9fcacb91d6d",
+  "src/ui/HelpScreen.tsx": "13bff64aecf2676a6e18e540d5bcd54d2c7d8a73a2b8f64ed1cd1fc965395a33",
+  "src/ui/HistoryScreen.tsx": "32ec9617cba2a9743bbb9299f96d3c259da8f9b692ddfcbebccd2bb97c80d759",
+  "src/ui/LessonShell.tsx": "fd49fd8cb07939d8ac8f89a7c736c488cbdc27363be197a42a7b2d43661d5876",
+  "src/ui/PeriodResultScreen.tsx": "debda29594d141482ba2f42c58d8e819e54d3d3e8bd864f661778c5027f237ea",
+  "src/ui/receipt-workshop-renderers.tsx": "2c7912fd40c17cb1e738fe4b65305054411e88cc5449dc2496a6071d4b1cc695",
+  "src/ui/SavingsLessonRenderer.tsx": "94d9818304a99e040b792513dd8237215f5715f947d3bc03bc86bc949e17fb62",
+  "tests/budget-purchase-renderers.test.mjs": "34b8257898c6f73f0d6e34fa8801f098f27940280dbc7154e8c826109fe3e7af",
+  "tests/lesson-shell.test.mjs": "c03dbae028246e8cf4b1e9c289977ef1bf3e584ec1458d2ca0efa751e424d8e4",
+  "tests/period-close.test.mjs": "f43fbe8a7948609142ba4ca6727b97ca76f998b001edbd2f33e347fc3e059947",
+  "tests/receipt-workshop-renderers.test.mjs": "d7519b0db70327df13548253719b72d0c7f472aef8e22e3c1de70b09de6f07b5",
+  "tests/savings-lesson.test.mjs": "280d8005c82a303bd7699cf4ff74da2c7e496de05df70fd22b3916168880fe81",
+  "src/ui/screen-theme.ts": "fac583171b5a7ab7aed911c57be774a4b725e1cfdad3c9c89166e99e0975e6e4",
+  "src/ui/DetailBack.tsx": "b5d3c132464ad1e197a6ca76a6d7166c4fe1daae205fefdd696206244bfa9665",
+  "tests/ui-control-contract.mjs": "68b08a043021f55799c4f7709d70c4c4d044f346466940eb0ad5a7d112e63d29"
+}

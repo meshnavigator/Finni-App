@@ -1,0 +1,92 @@
+{
+  "apkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+  "checks": [
+    {
+      "case": "additional-income-cancel",
+      "pass": true
+    },
+    {
+      "case": "additional-income-confirm",
+      "pass": true
+    },
+    {
+      "case": "additional-income-keeps-wallet",
+      "pass": true
+    },
+    {
+      "case": "goal-claim-cancel",
+      "pass": true
+    },
+    {
+      "case": "withdraw-confirm",
+      "pass": true
+    },
+    {
+      "case": "goal-claim-confirm-excess-retained",
+      "pass": true,
+      "goalCost": 300
+    }
+  ],
+  "screens": [
+    {
+      "name": "additional-income-form",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "additional-income-cancel",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "additional-income-committed",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "additional-income-wallet",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "goal-claim-cancel-dialog",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "goal-cancel-wallet",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "withdraw-confirm-dialog",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "withdraw-committed",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "goal-claim-confirm-dialog",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "goal-claimed-home",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    }
+  ]
+}

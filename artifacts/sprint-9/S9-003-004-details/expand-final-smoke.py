@@ -1,0 +1,4 @@
+from pathlib import Path
+p=Path('artifacts/sprint-9/S9-003-004-details/final-smoke.py');s=p.read_text(encoding='utf-8-sig');s=s.replace("for label,name in [('Все занятия','catalog'),('Имя и внешность','pet'),('Как играть','help')]:", "for tab in ('home','plan','shop','savings','more'):\n n.root(tab);n.capture('final-root-'+tab,True);n.ok('final-root-'+tab)\nfor label,name in [('Все занятия','catalog'),('Имя и внешность','pet'),('Прогресс','history'),('Как играть','help'),('Для взрослого','adult')]:")
+s=s.replace('with zipfile.ZipFile(n.APK) as z:',"for lid in ('LS-B01','LS-P01','LS-B03','LS-P03','LS-S01','LS-S02'):\n n.detail('Все занятия');n.lesson(lid);n.capture('final-'+lid,True);n.back();n.back();n.ok('final-renderer-'+lid)\nwith zipfile.ZipFile(n.APK) as z:")
+p.write_text(s,encoding='utf-8')

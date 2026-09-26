@@ -1,0 +1,8 @@
+root-final-home PASS
+root-final-plan PASS
+Traceback (most recent call last):
+  File "C:\00.MIDAS\PROJECTS\28. HackApp. 2026\Finni App\artifacts\sprint-9\S9-003-004-details\matrix.py", line 30, in <module>
+    audit('root-final-'+tab)
+  File "C:\00.MIDAS\PROJECTS\28. HackApp. 2026\Finni App\artifacts\sprint-9\S9-003-004-details\matrix.py", line 10, in audit
+    assert c-a>=48 and d-b>=48,(name,x)
+AssertionError: ('root-final-shop', {'index': '21', 'text': '', 'resource-id': '', 'class': 'android.widget.Button', 'package': 'com.meshnavigator.finni', 'content-desc': 'Посмотреть и купить', 'checkable': 'false', 'checked': 'false', 'clickable': 'true', 'enabled': 'true', 'focusable': 'true', 'focused': 'false', 'scrollable': 'false', 'long-clickable': 'false', 'password': 'false', 'selected': 'false', 'bounds': '[31,705][359,729]'})

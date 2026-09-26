@@ -1,0 +1,1182 @@
+--- before/src/ui/AdultScreen.tsx
++++ src/ui/AdultScreen.tsx
+@@ -1,5 +1,7 @@
++import DetailBack from './DetailBack.tsx';
++import { palette, screenStyles as ui } from './screen-theme.ts';
+ import { useEffect, useRef, useState } from 'react';
+-import { Alert, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
++import { Alert, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+ import {
+   ADULT_ACCESSIBLE_QUESTION,
+   ADULT_HOLD_DURATION_MS,
+@@ -40,10 +42,11 @@
+   };
+ 
+   return (
+-    <SafeAreaView style={styles.page}>
+-      <ScrollView contentContainerStyle={styles.content}>
++    <View style={styles.page}>
++      <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={styles.content}>
++        <DetailBack onPress={props.onExit} />
+         <Text style={styles.eyebrow}>РАЗДЕЛ ДЛЯ ВЗРОСЛОГО</Text>
+-        <Text style={styles.title}>Защита от случайного входа</Text>
++        <Text accessibilityRole="header" style={styles.title}>Защита от случайного входа</Text>
+         <Text style={styles.body}>Это простой барьер, а не проверка возраста, личности или родительских прав.</Text>
+         <Pressable
+           accessibilityHint="Удерживайте около трёх секунд. Для TalkBack доступен арифметический вариант ниже."
+@@ -55,12 +58,12 @@
+         >
+           <Text style={styles.holdText}>{progress > 0 ? `Удерживайте… ${progress}%` : 'Удерживать 3 секунды'}</Text>
+         </Pressable>
+-        <Pressable accessibilityRole="button" onPress={() => setAlternative((value) => !value)} style={styles.secondary}>
++        <Pressable accessibilityRole="button" accessibilityState={{ expanded: alternative }} onPress={() => setAlternative((value) => !value)} style={styles.secondary}>
+           <Text style={styles.secondaryText}>Доступный вариант без удержания</Text>
+         </Pressable>
+         {alternative && (
+           <View style={styles.card}>
+-            <Text style={styles.cardTitle}>{ADULT_ACCESSIBLE_QUESTION}</Text>
++            <Text accessibilityRole="header" style={styles.cardTitle}>{ADULT_ACCESSIBLE_QUESTION}</Text>
+             <TextInput
+               accessibilityLabel="Ответ на простой арифметический вопрос"
+               keyboardType="number-pad"
+@@ -70,6 +73,7 @@
+             />
+             <Pressable
+               accessibilityRole="button"
++              accessibilityState={{ disabled: !isAdultAccessibleAnswer(answer) }}
+               disabled={!isAdultAccessibleAnswer(answer)}
+               onPress={props.onUnlock}
+               style={[styles.primary, !isAdultAccessibleAnswer(answer) && styles.disabled]}
+@@ -82,7 +86,7 @@
+           <Text style={styles.secondaryText}>Вернуться</Text>
+         </Pressable>
+       </ScrollView>
+-    </SafeAreaView>
++    </View>
+   );
+ }
+ 
+@@ -117,26 +121,27 @@
+     [{ text: 'Отмена', style: 'cancel' }, { text: 'Удалить выбранный режим', style: 'destructive', onPress: props.onDeleteSelected }],
+   );
+   return (
+-    <SafeAreaView style={styles.page}>
++    <View style={styles.page}>
+       <ScrollView onScrollBeginDrag={props.onActivity} contentContainerStyle={styles.content}>
++        <DetailBack onPress={props.onExit} label="Выйти из взрослого раздела" disabled={props.busy} />
+         <Text style={styles.eyebrow}>ВЗРОСЛОМУ</Text>
+-        <Text style={styles.title}>Факты о прогрессе</Text>
++        <Text accessibilityRole="header" style={styles.title}>Факты о прогрессе</Text>
+         <Text style={styles.body}>Финни помогает ребёнку пробовать планирование, покупки и накопления в локальной игре. Это не оценка способностей и не исследование развития ребёнка.</Text>
+         <View style={styles.card}>
+-          <Text style={styles.cardTitle}>Текущий режим</Text>
++          <Text accessibilityRole="header" style={styles.cardTitle}>Текущий режим</Text>
+           <Text style={styles.value}>{modeLabel}</Text>
+-          <Text style={styles.body}>Данные normal и demo хранятся раздельно только на устройстве.</Text>
+-        </View>
+-        <View style={styles.card}>
+-          <Text style={styles.cardTitle}>Сводка без рейтинга</Text>
++          <Text style={styles.body}>Обычная игра и демонстрация хранятся раздельно только на этом устройстве.</Text>
++        </View>
++        <View style={styles.card}>
++          <Text accessibilityRole="header" style={styles.cardTitle}>Сводка без рейтинга</Text>
+           <Text style={styles.body}>Стадия питомца: {lifecycle?.petStage ?? 1} из 3</Text>
+           <Text style={styles.body}>Завершено игровых дней: {lifecycle?.closedPeriods ?? 0}</Text>
+           <Text style={styles.body}>Шагов роста: {lifecycle?.lifetimeGrowth ?? 0}</Text>
+           <Text style={styles.body}>Текущая мечта: {goal ? `${goal.name}, ${goal.cost} монет` : 'не выбрана'}</Text>
+-          <Text style={styles.body}>Завершённые занятия: данных пока нет — учебный модуль ещё не подключён.</Text>
+-        </View>
+-        <View style={styles.card}>
+-          <Text style={styles.cardTitle}>Восприятие</Text>
++          <Text style={styles.body}>Завершённые занятия и сохранённые разборы доступны в «Прогрессе».</Text>
++        </View>
++        <View style={styles.card}>
++          <Text accessibilityRole="header" style={styles.cardTitle}>Восприятие</Text>
+           <Text style={styles.body}>Настройки сохраняются на устройстве и не влияют на деньги, награды или рост.</Text>
+           <Pressable
+             accessibilityLabel="Движение Финни"
+@@ -160,49 +165,38 @@
+           </Pressable>
+         </View>
+         <View style={styles.card}>
+-          <Text style={styles.cardTitle}>Для разговора</Text>
++          <Text accessibilityRole="header" style={styles.cardTitle}>Для разговора</Text>
+           <Text style={styles.body}>«Как ты выбрал, на что потратить и что оставить?»</Text>
+         </View>
+         {props.message && <Text accessibilityLiveRegion="polite" style={styles.error}>{props.message}</Text>}
+-        <Pressable accessibilityRole="button" disabled={props.busy || props.mode === 'normal'} onPress={() => props.onSwitchMode('normal')} style={[styles.primary, (props.busy || props.mode === 'normal') && styles.disabled]}>
++        <Pressable accessibilityRole="button" accessibilityState={{ disabled: props.busy || props.mode === 'normal' }} disabled={props.busy || props.mode === 'normal'} onPress={() => props.onSwitchMode('normal')} style={[styles.primary, (props.busy || props.mode === 'normal') && styles.disabled]}>
+           <Text style={styles.primaryText}>Перейти в обычную игру</Text>
+         </Pressable>
+-        <Pressable accessibilityRole="button" disabled={props.busy || props.mode === 'demo'} onPress={() => props.onSwitchMode('demo')} style={[styles.primary, (props.busy || props.mode === 'demo') && styles.disabled]}>
++        <Pressable accessibilityRole="button" accessibilityState={{ disabled: props.busy || props.mode === 'demo' }} disabled={props.busy || props.mode === 'demo'} onPress={() => props.onSwitchMode('demo')} style={[styles.primary, (props.busy || props.mode === 'demo') && styles.disabled]}>
+           <Text style={styles.primaryText}>Открыть демонстрацию</Text>
+         </Pressable>
+-        <Pressable accessibilityRole="button" disabled={props.busy || props.mode !== 'demo'} onPress={confirmReset} style={[styles.danger, (props.busy || props.mode !== 'demo') && styles.disabled]}>
++        <Pressable accessibilityRole="button" accessibilityState={{ disabled: props.busy || props.mode !== 'demo' }} disabled={props.busy || props.mode !== 'demo'} onPress={confirmReset} style={[styles.danger, (props.busy || props.mode !== 'demo') && styles.disabled]}>
+           <Text style={styles.dangerText}>Сбросить демонстрацию</Text>
+         </Pressable>
+-        <Pressable accessibilityRole="button" disabled={props.busy} onPress={confirmDelete} style={[styles.danger, props.busy && styles.disabled]}>
++        <Pressable accessibilityRole="button" accessibilityState={{ disabled: props.busy }} disabled={props.busy} onPress={confirmDelete} style={[styles.danger, props.busy && styles.disabled]}>
+           <Text style={styles.dangerText}>Удалить данные выбранного режима</Text>
+         </Pressable>
+         <Pressable accessibilityRole="button" onPress={props.onExit} style={styles.secondary}>
+           <Text style={styles.secondaryText}>Выйти из взрослого раздела</Text>
+         </Pressable>
+       </ScrollView>
+-    </SafeAreaView>
++    </View>
+   );
+ }
+ 
+ const styles = StyleSheet.create({
+-  page: { flex: 1, backgroundColor: '#EAF6FB' },
+-  content: { gap: 12, padding: 18, paddingBottom: 36 },
+-  eyebrow: { color: '#146B78', fontSize: 13, fontWeight: '800', letterSpacing: 1.4 },
+-  title: { color: '#14324A', fontSize: 25, fontWeight: '800' },
+-  body: { color: '#4B6878', fontSize: 15, lineHeight: 21 },
+-  card: { backgroundColor: '#FFFFFF', borderColor: '#C7DEE5', borderRadius: 14, borderWidth: 1, gap: 7, padding: 13 },
+-  cardTitle: { color: '#14324A', fontSize: 17, fontWeight: '800' },
+-  value: { color: '#146B78', fontSize: 18, fontWeight: '900' },
+-  input: { backgroundColor: '#FFFFFF', borderColor: '#C7DEE5', borderRadius: 12, borderWidth: 1.5, color: '#14324A', fontSize: 18, minHeight: 48, paddingHorizontal: 14 },
+-  holdButton: { alignItems: 'center', backgroundColor: '#146B78', borderRadius: 14, justifyContent: 'center', minHeight: 72, paddingHorizontal: 16 },
+-  holdText: { color: '#FFFFFF', fontSize: 18, fontWeight: '900' },
+-  primary: { alignItems: 'center', backgroundColor: '#146B78', borderRadius: 12, justifyContent: 'center', minHeight: 48, paddingHorizontal: 14 },
+-  primaryText: { color: '#FFFFFF', fontSize: 16, fontWeight: '800' },
+-  secondary: { alignItems: 'center', borderColor: '#146B78', borderRadius: 12, borderWidth: 1.5, justifyContent: 'center', minHeight: 48, paddingHorizontal: 14 },
+-  secondaryText: { color: '#146B78', fontSize: 16, fontWeight: '800' },
+-  danger: { alignItems: 'center', borderColor: '#B54135', borderRadius: 12, borderWidth: 1.5, justifyContent: 'center', minHeight: 48, paddingHorizontal: 14 },
+-  dangerText: { color: '#B54135', fontSize: 16, fontWeight: '800' },
+-  error: { color: '#B54135', fontSize: 14, fontWeight: '700' },
+-  disabled: { opacity: 0.42 },
+-  pressed: { opacity: 0.72 },
++  page: ui.page, content: ui.content, eyebrow: ui.eyebrow, title: ui.title, body: ui.body,
++  card: ui.card, cardTitle: ui.cardTitle,
++  value: { color: palette.accent, fontSize: 20, fontWeight: '600' }, input: ui.input,
++  holdButton: { ...ui.button, minHeight: 80 }, holdText: { ...ui.buttonText, fontSize: 18, fontVariant: ['tabular-nums'] },
++  primary: ui.button, primaryText: ui.buttonText,
++  secondary: { ...ui.button, ...ui.secondary }, secondaryText: { ...ui.buttonText, ...ui.secondaryText },
++  danger: { ...ui.button, backgroundColor: palette.errorSurface, borderColor: palette.error, borderWidth: 1 },
++  dangerText: { ...ui.buttonText, color: palette.error },
++  error: ui.error, disabled: ui.disabled, pressed: ui.pressed,
+ });
+--- before/src/ui/AppRoot.tsx
++++ src/ui/AppRoot.tsx
+@@ -1,3 +1,5 @@
++import DetailBack from './DetailBack.tsx';
++import { palette, screenStyles as ui } from './screen-theme.ts';
+ import { StatusBar } from 'expo-status-bar';
+ import { useCallback, useEffect, useRef, useState } from 'react';
+ import {
+@@ -8,7 +10,6 @@
+   Modal,
+   Platform,
+   Pressable,
+-  SafeAreaView,
+   ScrollView,
+   StatusBar as NativeStatusBar,
+   StyleSheet,
+@@ -181,24 +182,24 @@
+ 
+ function LoadingScreen() {
+   return (
+-    <SafeAreaView style={styles.centered} accessibilityLabel="Загрузка приложения">
++    <RootSafeAreaView style={styles.page}><StatusBar style="dark" /><ScrollView contentContainerStyle={styles.centered} accessibilityLabel="Загрузка приложения">
+       <PetAvatar name="Финни" shapeId="round" patternId="plain" size={104} />
+-      <Text style={styles.title}>{loadingScreenModel.title}</Text>
++      <Text accessibilityRole="header" style={styles.title}>{loadingScreenModel.title}</Text>
+       <Text style={styles.body}>{loadingScreenModel.message}</Text>
+-    </SafeAreaView>
++    </ScrollView></RootSafeAreaView>
+   );
+ }
+ 
+ function ErrorScreen(props: Readonly<{ message?: string; onRetry: () => void; onAdult?: () => void }>) {
+   const model = errorScreenModel(props.message);
+   return (
+-    <SafeAreaView style={styles.centered} accessibilityLabel="Ошибка загрузки">
++    <RootSafeAreaView style={styles.page}><StatusBar style="dark" /><ScrollView contentContainerStyle={styles.centered} accessibilityLabel="Ошибка загрузки">
+       <Text style={styles.errorIcon}>!</Text>
+-      <Text style={styles.title}>{model.title}</Text>
++      <Text accessibilityRole="header" style={styles.title}>{model.title}</Text>
+       <Text style={styles.body}>{model.message}</Text>
+       <ActionButton label={model.action} onPress={props.onRetry} />
+       {props.onAdult && <ActionButton label="Удалить повреждённые данные" onPress={props.onAdult} secondary />}
+-    </SafeAreaView>
++    </ScrollView></RootSafeAreaView>
+   );
+ }
+ 
+@@ -209,11 +210,11 @@
+   onAdult?: () => void;
+ }>) {
+   return (
+-    <SafeAreaView style={styles.page}>
++    <View style={styles.page}>
+       <ScrollView contentContainerStyle={styles.introContent}>
+         <PetAvatar name="Финни" shapeId="round" patternId="spots" size={96} />
+         <Text style={styles.eyebrow}>ПИТОМЕЦ ФИННИ</Text>
+-        <Text style={styles.title}>{onboardingScreenModel.title}</Text>
++        <Text accessibilityRole="header" style={styles.title}>{onboardingScreenModel.title}</Text>
+         <Text style={styles.body}>Выбирай сам — Финни поможет увидеть результат.</Text>
+         <View style={styles.directionList}>
+           {onboardingScreenModel.directions.map((item, index) => (
+@@ -243,7 +244,7 @@
+           </Pressable>
+         )}
+       </ScrollView>
+-    </SafeAreaView>
++    </View>
+   );
+ }
+ 
+@@ -263,9 +264,9 @@
+       statusBarTranslucent={false}
+       visible
+     >
+-      <View accessibilityViewIsModal style={styles.helpOverlay} testID="home-help-overlay">
++      <RootSafeAreaView accessibilityViewIsModal style={styles.helpOverlay} testID="home-help-overlay">
+         <HelpScreen onBack={props.onClose} />
+-      </View>
++      </RootSafeAreaView>
+     </Modal>
+   );
+ }
+@@ -287,7 +288,7 @@
+       ]}
+     >
+       <Text style={[styles.choiceText, props.selected && styles.choiceTextSelected]}>
+-        {props.label}
++        {props.selected ? '✓ ' : ''}{props.label}
+       </Text>
+     </Pressable>
+   );
+@@ -304,8 +305,10 @@
+   const [shapeId, setShapeId] = useState<PetShapeId>(props.initial?.shapeId ?? 'round');
+   const [patternId, setPatternId] = useState<PetPatternId>(props.initial?.patternId ?? 'plain');
+   const validation = petNameError(name);
++  const { fontScale } = useWindowDimensions();
++  const largeChoices = usesLargeNavigation(fontScale);
+   return (
+-    <SafeAreaView style={styles.page}>
++    <View style={styles.page}>
+       <KeyboardAvoidingView
+         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+         style={styles.flex}
+@@ -314,11 +317,13 @@
+           keyboardShouldPersistTaps="handled"
+           contentContainerStyle={styles.builderContent}
+         >
++          <DetailBack onPress={props.onCancel} label={props.initial ? "Назад" : "К знакомству"} disabled={props.busy} />
+           <Text style={styles.eyebrow}>{props.initial ? 'О ПИТОМЦЕ' : 'НОВЫЙ ДРУГ'}</Text>
+-          <Text style={styles.title}>{props.initial ? 'Настрой питомца' : 'Как выглядит Финни?'}</Text>
+-          <PetAvatar name={name || 'Питомец'} shapeId={shapeId} patternId={patternId} size={112} />
++          <Text accessibilityRole="header" style={styles.title}>{props.initial ? 'Имя и внешность' : 'Как выглядит Финни?'}</Text>
++          <View style={styles.builderPreview}><PetAvatar name={name || 'Питомец'} shapeId={shapeId} patternId={patternId} size={136} /></View>
++          <View style={styles.profileForm}>
+           <Text style={styles.fieldLabel}>Форма</Text>
+-          <View accessibilityRole="radiogroup" style={styles.choiceRow}>
++          <View accessibilityRole="radiogroup" style={[styles.choiceRow, largeChoices && styles.choiceColumn]}>
+             {PET_SHAPES.map((shape) => (
+               <ChoiceButton
+                 key={shape.id}
+@@ -329,7 +334,7 @@
+             ))}
+           </View>
+           <Text style={styles.fieldLabel}>Узор</Text>
+-          <View accessibilityRole="radiogroup" style={styles.choiceRow}>
++          <View accessibilityRole="radiogroup" style={[styles.choiceRow, largeChoices && styles.choiceColumn]}>
+             {PET_PATTERNS.map((pattern) => (
+               <ChoiceButton
+                 key={pattern.id}
+@@ -349,8 +354,9 @@
+             style={[styles.input, validation && styles.inputError]}
+             value={name}
+           />
+-          {validation && <Text style={styles.validation}>{validation}</Text>}
+-          {props.saveError && <Text style={styles.validation}>{props.saveError}</Text>}
++          {validation && <Text accessibilityLiveRegion="polite" style={styles.validation}>{validation}</Text>}
++          {props.saveError && <Text accessibilityLiveRegion="polite" style={styles.validation}>{props.saveError}</Text>}
++          </View>
+           <ActionButton
+             label={props.busy ? 'Сохраняем…' : 'Готово'}
+             disabled={props.busy || Boolean(validation)}
+@@ -359,45 +365,55 @@
+           <ActionButton label="Отмена" onPress={props.onCancel} secondary />
+         </ScrollView>
+       </KeyboardAvoidingView>
+-    </SafeAreaView>
++    </View>
+   );
+ }
+ 
+ function SectionScreen(props: Readonly<{ title: string; onBack: () => void }>) {
+   return (
+-    <SafeAreaView style={styles.centered}>
++    <View style={styles.centered}>
+       <Text style={styles.eyebrow}>РАЗДЕЛ</Text>
+-      <Text style={styles.title}>{props.title}</Text>
++      <Text accessibilityRole="header" style={styles.title}>{props.title}</Text>
+       <Text style={styles.body}>Основа навигации готова. Действия откроются, когда выполнены денежные предусловия.</Text>
+       <ActionButton label="Вернуться в домик" onPress={props.onBack} />
+-    </SafeAreaView>
++    </View>
+   );
+ }
+ 
+ function LessonCatalogScreen(props: Readonly<{
+   lessons: readonly LocalLessonPresentation[];
++  busy: boolean;
++  message: string | null;
+   onSelect: (lesson: LessonVariantPresentation) => void;
+   onBack: () => void;
+   backLabel: string;
+ }>) {
++  const scroll = useRef<ScrollView>(null);
++  useEffect(() => {
++    if (props.message) scroll.current?.scrollTo({ y: 0, animated: false });
++  }, [props.message]);
+   return (
+-    <SafeAreaView style={styles.page} accessibilityLabel="Каталог учебных занятий">
+-      <ScrollView contentContainerStyle={styles.introContent}>
++    <View style={styles.page} accessibilityLabel="Каталог учебных занятий">
++      <ScrollView ref={scroll} contentContainerStyle={styles.catalogContent}>
++        <DetailBack onPress={props.onBack} label={props.backLabel} />
++        {props.message && <Text accessibilityLiveRegion="polite" style={ui.error}>{props.message}</Text>}
+         <Text style={styles.eyebrow}>УЧЕБНЫЕ ЗАНЯТИЯ</Text>
+-        <Text style={styles.title}>Выбери пример</Text>
+-        <Text style={styles.body}>Это задания для тренировки: покупки и переводы из копилки здесь не выполняются.</Text>
++        <Text accessibilityRole="header" style={styles.title}>Выбери пример</Text>
++        <Text style={ui.body}>Это задания для тренировки: покупки и переводы из копилки здесь не выполняются.</Text>
+         {props.lessons.map((lesson) => (
+           <View key={lesson.definition.lessonId} style={styles.lessonCard}>
+-            <Text style={styles.summaryValue}>{lesson.title}</Text>
++            <Text accessibilityRole="header" style={styles.catalogTitle}>{lesson.title}</Text>
+             {lesson.variants.map((variant, index) => (
+               <Pressable
+                 key={variant.definition.variantId}
+                 accessibilityRole="button"
++                accessibilityState={{ disabled: props.busy }}
++                disabled={props.busy}
+                 accessibilityLabel={`${lesson.title}. Ситуация ${index + 1}. ${variant.intro}`}
+                 onPress={() => props.onSelect(variant)}
+-                style={styles.variantButton}
++                style={({ pressed }) => [styles.variantButton, pressed && ui.pressed]}
+               >
+-                <Text style={styles.variantTitle}>Ситуация {index + 1}</Text>
++                <View style={styles.variantHeading}><Text style={styles.variantTitle}>Ситуация {index + 1}</Text><Text accessible={false} style={styles.variantArrow}>›</Text></View>
+                 <Text style={styles.caption}>{variant.intro}</Text>
+               </Pressable>
+             ))}
+@@ -405,7 +421,7 @@
+         ))}
+         <ActionButton label={props.backLabel} onPress={props.onBack} secondary />
+       </ScrollView>
+-    </SafeAreaView>
++    </View>
+   );
+ }
+ 
+@@ -825,7 +841,7 @@
+   );
+ 
+   return (
+-    <RootSafeAreaView style={{ flex: 1, backgroundColor: '#F6F0E6' }} edges={root ? ['top', 'right', 'bottom', 'left'] : []}>
++    <RootSafeAreaView style={{ flex: 1, backgroundColor: '#F6F0E6' }} edges={['top', 'right', 'bottom', 'left']}>
+       <StatusBar style="dark" />
+       <View style={{ flex: 1 }} accessibilityElementsHidden={rootMenuOpen || helpOpen || (screen === 'home' && Boolean(message))}
+         importantForAccessibility={rootMenuOpen || helpOpen || (screen === 'home' && message) ? 'no-hide-descendants' : 'auto'}
+@@ -875,6 +891,8 @@
+       {screen === 'lesson-catalog' && (
+         <LessonCatalogScreen
+           lessons={LOCAL_DEMO_LESSONS}
++          busy={busy}
++          message={message}
+           backLabel={detailOrigin === 'more' ? 'Вернуться в «Ещё»' : 'Вернуться в домик'}
+           onBack={() => setScreen(detailOrigin)}
+           onSelect={(lesson) => void openLesson(lesson)}
+@@ -1016,14 +1034,9 @@
+ }
+ 
+ const colors = {
+-  ink: '#14324A',
+-  muted: '#4B6878',
+-  sky: '#EAF6FB',
+-  teal: '#146B78',
+-  pale: '#F7FBFC',
+-  line: '#C7DEE5',
+-  coral: '#D95D4F',
+-  yellow: '#F7C85E',
++  ink: palette.ink, muted: palette.muted, sky: palette.background,
++  teal: palette.accent, pale: palette.surface, line: palette.line,
++  coral: palette.error, yellow: palette.soft,
+ };
+ 
+ const styles = StyleSheet.create({
+@@ -1032,38 +1045,45 @@
+   flex: { flex: 1 },
+   page: { flex: 1, backgroundColor: colors.sky },
+   homePage: { paddingTop: Platform.OS === 'android' ? NativeStatusBar.currentHeight ?? 0 : 0 },
+-  centered: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 12, padding: 24, backgroundColor: colors.sky },
+-  introContent: { alignItems: 'center', gap: 10, padding: 20, paddingBottom: 28 },
+-  builderContent: { alignItems: 'center', gap: 8, padding: 18, paddingBottom: 36 },
++  centered: { flexGrow: 1, alignItems: 'center', justifyContent: 'center', gap: 16, padding: 24, backgroundColor: colors.sky },
++  introContent: { alignItems: 'center', gap: 16, padding: 20, paddingBottom: 28 },
++  catalogContent: ui.content,
++  catalogTitle: ui.cardTitle,
++  variantHeading: { flexDirection: 'row', alignItems: 'center', gap: 10 },
++  variantArrow: { color: palette.muted, fontSize: 26 },
++  builderPreview: { alignSelf: 'center', padding: 12, borderRadius: 28, backgroundColor: palette.soft },
++  profileForm: { ...ui.card, gap: 12 },
++  choiceColumn: { flexDirection: 'column' },
++  builderContent: { gap: 14, padding: 18, paddingBottom: 28 },
+   homeContent: { gap: 8, minHeight: '100%', paddingHorizontal: 14, paddingBottom: 8 },
+   homeContentLargeText: { paddingBottom: 24 },
+-  eyebrow: { color: colors.teal, fontSize: 13, fontWeight: '800', letterSpacing: 1.5 },
+-  title: { color: colors.ink, fontSize: 25, fontWeight: '800', textAlign: 'center' },
+-  body: { color: colors.muted, fontSize: 16, lineHeight: 22, maxWidth: 340, textAlign: 'center' },
+-  caption: { color: colors.muted, fontSize: 13, lineHeight: 17 },
++  eyebrow: { ...ui.eyebrow },
++  title: { ...ui.title },
++  body: { ...ui.body },
++  caption: { ...ui.body },
+   roomFrame: { position: 'relative', width: '100%' },
+   roomStatus: { color: colors.muted, fontSize: 13, lineHeight: 18, marginTop: 5 },
+-  cardTitle: { color: colors.ink, fontSize: 16, fontWeight: '800' },
+-  action: { alignItems: 'center', alignSelf: 'stretch', backgroundColor: colors.teal, borderRadius: 14, justifyContent: 'center', minHeight: 48, paddingHorizontal: 16 },
+-  actionSecondary: { backgroundColor: 'transparent', borderColor: colors.teal, borderWidth: 1.5 },
++  cardTitle: { ...ui.cardTitle },
++  action: { ...ui.button, alignSelf: 'stretch' },
++  actionSecondary: { ...ui.secondary },
+   actionDisabled: { opacity: 0.45 },
+-  actionText: { color: '#FFFFFF', fontSize: 16, fontWeight: '800' },
+-  actionSecondaryText: { color: colors.teal },
+-  pressed: { opacity: 0.72 },
++  actionText: { ...ui.buttonText },
++  actionSecondaryText: { ...ui.secondaryText },
++  pressed: { ...ui.pressed },
+   errorIcon: { backgroundColor: colors.coral, borderRadius: 30, color: '#FFFFFF', fontSize: 28, fontWeight: '900', lineHeight: 56, overflow: 'hidden', textAlign: 'center', width: 56 },
+   directionList: { alignSelf: 'stretch', gap: 8, marginVertical: 4 },
+-  directionCard: { alignItems: 'center', backgroundColor: colors.pale, borderColor: colors.line, borderRadius: 14, borderWidth: 1, flexDirection: 'row', gap: 12, minHeight: 58, paddingHorizontal: 12 },
+-  directionNumber: { backgroundColor: colors.yellow, borderRadius: 18, color: colors.ink, fontSize: 16, fontWeight: '900', lineHeight: 36, textAlign: 'center', width: 36 },
+-  expertLink: { color: colors.muted, fontSize: 13, marginTop: 4, textDecorationLine: 'underline' },
+-  choiceRow: { flexDirection: 'row', gap: 7, width: '100%' },
+-  choice: { alignItems: 'center', backgroundColor: colors.pale, borderColor: colors.line, borderRadius: 12, borderWidth: 1, flex: 1, justifyContent: 'center', minHeight: 48, paddingHorizontal: 4 },
+-  choiceSelected: { backgroundColor: '#D5EEF0', borderColor: colors.teal, borderWidth: 2 },
+-  choiceText: { color: colors.ink, fontSize: 13, fontWeight: '700', textAlign: 'center' },
+-  choiceTextSelected: { color: colors.teal },
+-  fieldLabel: { alignSelf: 'flex-start', color: colors.ink, fontSize: 15, fontWeight: '800', marginTop: 3 },
+-  input: { alignSelf: 'stretch', backgroundColor: '#FFFFFF', borderColor: colors.line, borderRadius: 12, borderWidth: 1.5, color: colors.ink, fontSize: 17, minHeight: 48, paddingHorizontal: 14 },
++  directionCard: { ...ui.card, flexDirection: 'row', alignItems: 'flex-start', gap: 12 },
++  directionNumber: { backgroundColor: colors.yellow, borderRadius: 18, color: colors.ink, fontSize: 16, fontWeight: '600', textAlign: 'center', minWidth: 36, padding: 6 },
++  expertLink: { color: colors.muted, fontSize: 16, textDecorationLine: 'underline', textAlign: 'center' },
++  choiceRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, width: '100%' },
++  choice: { ...ui.button, ...ui.secondary, flexGrow: 1, paddingHorizontal: 12, borderRadius: 14 },
++  choiceSelected: { ...ui.selected },
++  choiceText: { ...ui.buttonText, color: colors.ink },
++  choiceTextSelected: { color: colors.ink },
++  fieldLabel: { color: colors.ink, fontSize: 16, fontWeight: '600', marginTop: 4 },
++  input: { ...ui.input },
+   inputError: { borderColor: colors.coral },
+-  validation: { alignSelf: 'stretch', color: colors.coral, fontSize: 14, fontWeight: '700' },
++  validation: { ...ui.error },
+   petFrame: { alignItems: 'center', justifyContent: 'center' },
+   petHead: { alignItems: 'center', backgroundColor: '#F1B86B', borderColor: colors.ink, borderRadius: 42, borderWidth: 3, height: '72%', justifyContent: 'center', overflow: 'hidden', width: '76%' },
+   petHeadPointy: { borderRadius: 24 },
+@@ -1093,9 +1113,9 @@
+   summaryCard: { backgroundColor: '#FFF8E4', borderRadius: 12, justifyContent: 'center', minHeight: 48, paddingHorizontal: 12 },
+   summaryLabel: { color: colors.muted, fontSize: 11, fontWeight: '800', letterSpacing: 0.6 },
+   summaryValue: { color: colors.ink, fontSize: 15, fontWeight: '800' },
+-  variantButton: { backgroundColor: '#F7FBFC', borderColor: '#C7DEE5', borderRadius: 12, borderWidth: 1, justifyContent: 'center', minHeight: 48, padding: 10 },
+-  variantTitle: { color: '#146B78', fontSize: 15, fontWeight: '800' },
+-  lessonCard: { backgroundColor: '#FFFFFF', borderColor: colors.line, borderRadius: 12, borderWidth: 1, justifyContent: 'center', minHeight: 56, paddingHorizontal: 12 },
++  variantButton: { backgroundColor: colors.sky, borderRadius: 14, justifyContent: 'center', minHeight: 56, gap: 6, padding: 12 },
++  variantTitle: { color: colors.teal, fontSize: 16, fontWeight: '600', flex: 1 },
++  lessonCard: { ...ui.card },
+   notice: { color: colors.coral, fontSize: 13, fontWeight: '700' },
+   reviewConflict: { backgroundColor: '#FFF1EF', borderColor: colors.coral, borderRadius: 12, borderWidth: 1, color: '#7A3028', fontSize: 14, fontWeight: '800', lineHeight: 19, padding: 10 },
+   nav: { backgroundColor: '#FFFFFF', borderColor: colors.line, borderRadius: 14, borderWidth: 1, flexDirection: 'row', minHeight: 56 },
+@@ -1107,5 +1127,5 @@
+   navLabelActive: { color: colors.teal, fontWeight: '900' },
+   adultButton: { alignItems: 'center', alignSelf: 'center', justifyContent: 'center', minHeight: 48, paddingHorizontal: 16 },
+   adultLabel: { color: colors.muted, fontSize: 13, textDecorationLine: 'underline' },
+-  helpOverlay: { flex: 1 },
++  helpOverlay: { flex: 1, backgroundColor: palette.background },
+ });
+--- before/src/ui/budget-purchase-renderers.tsx
++++ src/ui/budget-purchase-renderers.tsx
+@@ -1,3 +1,4 @@
++import { palette, screenStyles as ui } from './screen-theme.ts';
+ import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+ import type { LessonRendererProps } from './lesson-renderer-registry.ts';
+ 
+@@ -31,7 +32,7 @@
+ 
+ export function AllocationRenderer(props: LessonRendererProps) {
+   const p = props.parameters as Readonly<{ budget?: number; needMinimum?: number; savingTarget?: number; initialPlan?: Readonly<{ need: number; want: number; save: number }> }>;
+-  return <View style={styles.card} accessibilityLabel="Учебное распределение"><Text style={styles.title}>Распредели учебные монеты</Text><Text style={styles.caption}>Доступно: {p.budget ?? 0}. На нужное — не меньше {p.needMinimum ?? 0}, на мечту — не меньше {p.savingTarget ?? 0}.</Text>{p.initialPlan && <Text style={styles.caption}>Старый учебный черновик: нужное {p.initialPlan.need}, желания {p.initialPlan.want}, мечта {p.initialPlan.save}. Измени его под новое условие.</Text>}<Field label="Нужное" value={props.solution.need} disabled={props.disabled} onChange={(need) => props.onChange({ ...props.solution, need })} /><Field label="Желания" value={props.solution.want} disabled={props.disabled} onChange={(want) => props.onChange({ ...props.solution, want })} /><Field label="На мечту" value={props.solution.save} disabled={props.disabled} onChange={(save) => props.onChange({ ...props.solution, save })} /></View>;
++  return <View style={styles.card} accessibilityLabel="Учебное распределение"><Text accessibilityRole="header" style={styles.title}>Распредели учебные монеты</Text><Text style={styles.caption}>Доступно: {p.budget ?? 0}. На нужное — не меньше {p.needMinimum ?? 0}, на мечту — не меньше {p.savingTarget ?? 0}.</Text>{p.initialPlan && <Text style={styles.caption}>Старый учебный черновик: нужное {p.initialPlan.need}, желания {p.initialPlan.want}, мечта {p.initialPlan.save}. Измени его под новое условие.</Text>}<Field label="Нужное" value={props.solution.need} disabled={props.disabled} onChange={(need) => props.onChange({ ...props.solution, need })} /><Field label="Желания" value={props.solution.want} disabled={props.disabled} onChange={(want) => props.onChange({ ...props.solution, want })} /><Field label="На мечту" value={props.solution.save} disabled={props.disabled} onChange={(save) => props.onChange({ ...props.solution, save })} /></View>;
+ }
+ 
+ export function BasketRenderer(props: LessonRendererProps) {
+@@ -50,13 +51,16 @@
+       statedRemainder: props.solution.statedRemainder ?? '',
+     });
+   };
+-  return <View style={styles.card} accessibilityLabel="Учебная корзина"><Text style={styles.title}>Собери учебную корзину</Text><Text style={styles.caption}>Бюджет: {budget}. В корзине сейчас: {total}. Цена указана за всю упаковку, не за другую единицу товара.</Text>{(props.evidence ?? []).map((item) => <Pressable key={item.id} accessibilityRole="button" disabled={props.disabled} onPress={() => props.onRevealEvidence?.(item.id)} style={styles.evidence}><Text style={styles.evidenceText}>{revealed.has(item.id) ? item.text : 'Открыть сведения'}</Text></Pressable>)}{items.map((item) => <View key={item.id} style={styles.item}><Text style={styles.itemTitle}>{item.properties.join(' · ') || item.kind}</Text><Text style={styles.caption}>{item.packSize} шт. за упаковку; всего {item.packPrice}</Text><View style={styles.counter}><Pressable accessibilityRole="button" accessibilityLabel={'Убрать ' + item.id} disabled={props.disabled || (counts[item.id] ?? 0) === 0} onPress={() => changeCount(item, -1)} style={styles.countButton}><Text style={styles.countText}>−</Text></Pressable><Text accessibilityLabel={'Количество ' + item.id} style={styles.count}>{counts[item.id] ?? 0} из {item.maxPackages}</Text><Pressable accessibilityRole="button" accessibilityLabel={'Добавить ' + item.id} disabled={props.disabled || (counts[item.id] ?? 0) >= item.maxPackages} onPress={() => changeCount(item, 1)} style={styles.countButton}><Text style={styles.countText}>+</Text></Pressable></View></View>)}<Field label="Итог по чеку" value={props.solution.statedTotal} disabled={props.disabled} onChange={(statedTotal) => props.onChange({ ...props.solution, packageCountByOfferId: counts, statedTotal })} /><Field label="Сколько останется" value={props.solution.statedRemainder} disabled={props.disabled} onChange={(statedRemainder) => props.onChange({ ...props.solution, packageCountByOfferId: counts, statedRemainder })} /></View>;
++  return <View style={styles.card} accessibilityLabel="Учебная корзина"><Text accessibilityRole="header" style={styles.title}>Собери учебную корзину</Text><Text style={styles.caption}>Бюджет: {budget}. В корзине сейчас: {total}. Цена указана за всю упаковку, не за другую единицу товара.</Text>{(props.evidence ?? []).map((item) => <Pressable key={item.id} accessibilityRole="button" accessibilityState={{ disabled: props.disabled }} disabled={props.disabled} onPress={() => props.onRevealEvidence?.(item.id)} style={styles.evidence}><Text style={styles.evidenceText}>{revealed.has(item.id) ? item.text : 'Открыть сведения'}</Text></Pressable>)}{items.map((item) => <View key={item.id} style={styles.item}><Text style={styles.itemTitle}>{item.properties.join(' · ') || item.kind}</Text><Text style={styles.caption}>{item.packSize} шт. за упаковку; всего {item.packPrice}</Text><View style={styles.counter}><Pressable accessibilityRole="button" accessibilityLabel={'Убрать ' + item.id} accessibilityState={{ disabled: props.disabled || (counts[item.id] ?? 0) === 0 }} disabled={props.disabled || (counts[item.id] ?? 0) === 0} onPress={() => changeCount(item, -1)} style={[styles.countButton, (props.disabled || (counts[item.id] ?? 0) === 0) && ui.disabled]}><Text style={styles.countText}>−</Text></Pressable><Text accessibilityLabel={'Количество ' + item.id} style={styles.count}>{counts[item.id] ?? 0} из {item.maxPackages}</Text><Pressable accessibilityRole="button" accessibilityLabel={'Добавить ' + item.id} accessibilityState={{ disabled: props.disabled || (counts[item.id] ?? 0) >= item.maxPackages }} disabled={props.disabled || (counts[item.id] ?? 0) >= item.maxPackages} onPress={() => changeCount(item, 1)} style={[styles.countButton, (props.disabled || (counts[item.id] ?? 0) >= item.maxPackages) && ui.disabled]}><Text style={styles.countText}>+</Text></Pressable></View></View>)}<Field label="Итог по чеку" value={props.solution.statedTotal} disabled={props.disabled} onChange={(statedTotal) => props.onChange({ ...props.solution, packageCountByOfferId: counts, statedTotal })} /><Field label="Сколько останется" value={props.solution.statedRemainder} disabled={props.disabled} onChange={(statedRemainder) => props.onChange({ ...props.solution, packageCountByOfferId: counts, statedRemainder })} /></View>;
+ }
+ 
+ const styles = StyleSheet.create({
+-  card: { backgroundColor: '#FFFFFF', borderColor: '#C7DEE5', borderRadius: 14, borderWidth: 1, gap: 10, padding: 14 },
+-  title: { color: '#14324A', fontSize: 18, fontWeight: '800' }, caption: { color: '#4B6878', fontSize: 14, lineHeight: 19 },
+-  field: { gap: 4 }, label: { color: '#14324A', fontSize: 15, fontWeight: '800' }, input: { backgroundColor: '#F7FBFC', borderColor: '#C7DEE5', borderRadius: 10, borderWidth: 1, color: '#14324A', fontSize: 17, minHeight: 48, paddingHorizontal: 12 },
+-  item: { borderColor: '#C7DEE5', borderRadius: 10, borderWidth: 1, gap: 5, padding: 10 }, itemTitle: { color: '#14324A', fontSize: 16, fontWeight: '800' }, evidence: { alignSelf: 'flex-start', minHeight: 48, justifyContent: 'center', paddingHorizontal: 10 }, evidenceText: { color: '#146B78', fontSize: 14, fontWeight: '800', textDecorationLine: 'underline' },
+-  counter: { alignItems: 'center', flexDirection: 'row', gap: 10 }, countButton: { alignItems: 'center', borderColor: '#146B78', borderRadius: 10, borderWidth: 1, justifyContent: 'center', minHeight: 48, minWidth: 48 }, countText: { color: '#146B78', fontSize: 22, fontWeight: '800' }, count: { color: '#14324A', fontSize: 15, fontWeight: '800' },
++  card: ui.card, title: ui.cardTitle, caption: ui.body,
++  field: { gap: 6 }, label: { color: palette.ink, fontSize: 16, fontWeight: '600' }, input: ui.input,
++  item: { backgroundColor: palette.background, borderRadius: 14, gap: 10, padding: 12 }, itemTitle: ui.cardTitle,
++  evidence: { ...ui.button, ...ui.secondary, alignItems: 'flex-start' }, evidenceText: { ...ui.body, color: palette.accent },
++  counter: { alignItems: 'center', flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
++  countButton: { ...ui.button, ...ui.secondary, minWidth: 52, paddingHorizontal: 12, paddingVertical: 8 },
++  countText: { color: palette.accent, fontSize: 22, fontWeight: '600' },
++  count: { color: palette.ink, fontSize: 16, fontWeight: '600', flexShrink: 1, fontVariant: ['tabular-nums'] },
+ });
+--- before/src/ui/HelpScreen.tsx
++++ src/ui/HelpScreen.tsx
+@@ -1,4 +1,6 @@
+-import { Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
++import DetailBack from './DetailBack.tsx';
++import { palette, screenStyles as ui } from './screen-theme.ts';
++import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+ 
+ const glossary = Object.freeze([
+   ['Бюджет', 'План: сколько монет есть и на что ты хочешь их использовать.'],
+@@ -15,10 +17,11 @@
+ 
+ export default function HelpScreen(props: Readonly<{ onBack: () => void }>) {
+   return (
+-    <SafeAreaView style={styles.page}>
++    <View style={styles.page}>
+       <ScrollView contentContainerStyle={styles.content}>
++        <DetailBack onPress={props.onBack} label="Закрыть справку" />
+         <Text style={styles.eyebrow}>СПРАВКА</Text>
+-        <Text style={styles.title}>Короткий словарь</Text>
++        <Text accessibilityRole="header" style={styles.title}>Короткий словарь</Text>
+         <Text style={styles.intro}>Настоящие деньги здесь не используются. Все монеты — часть игры.</Text>
+         {glossary.map(([term, definition]) => (
+           <View key={term} accessible accessibilityLabel={`${term}. ${definition}`} style={styles.card}>
+@@ -30,19 +33,13 @@
+           <Text style={styles.buttonText}>Вернуться туда, где я был</Text>
+         </Pressable>
+       </ScrollView>
+-    </SafeAreaView>
++    </View>
+   );
+ }
+ 
+ const styles = StyleSheet.create({
+-  page: { flex: 1, backgroundColor: '#EAF6FB' },
+-  content: { gap: 10, padding: 18, paddingBottom: 36 },
+-  eyebrow: { color: '#146B78', fontSize: 13, fontWeight: '800', letterSpacing: 1.4 },
+-  title: { color: '#14324A', fontSize: 25, fontWeight: '800' },
+-  intro: { color: '#4B6878', fontSize: 15, lineHeight: 21 },
+-  card: { backgroundColor: '#FFFFFF', borderColor: '#C7DEE5', borderRadius: 12, borderWidth: 1, gap: 4, padding: 12 },
+-  term: { color: '#14324A', fontSize: 16, fontWeight: '800' },
+-  definition: { color: '#4B6878', fontSize: 15, lineHeight: 21 },
+-  button: { alignItems: 'center', backgroundColor: '#146B78', borderRadius: 12, justifyContent: 'center', minHeight: 48, paddingHorizontal: 14 },
+-  buttonText: { color: '#FFFFFF', fontSize: 16, fontWeight: '800' },
++  page: ui.page, content: ui.content, eyebrow: ui.eyebrow, title: ui.title,
++  intro: { ...ui.body, backgroundColor: palette.soft, borderRadius: 18, padding: 14 },
++  card: ui.card, term: ui.cardTitle, definition: ui.body,
++  button: ui.button, buttonText: ui.buttonText,
+ });
+--- before/src/ui/HistoryScreen.tsx
++++ src/ui/HistoryScreen.tsx
+@@ -1,5 +1,7 @@
++import DetailBack from './DetailBack.tsx';
++import { palette, screenStyles as ui } from './screen-theme.ts';
+ import { useState } from 'react';
+-import { Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
++import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+ import { LOCAL_DEMO_LESSONS } from '../content/local-lesson-catalog.ts';
+ import type { LessonDiscovery } from '../persistence/lesson-repository.ts';
+ import { discoveryAction, discoveryHelp, discoveryOutcome } from './lesson-discovery-summary.ts';
+@@ -32,25 +34,26 @@
+   const goal = commerce?.selectedGoal;
+   const [openDiscoveryId, setOpenDiscoveryId] = useState<string | null>(null);
+   return (
+-    <SafeAreaView style={styles.page}>
++    <View style={styles.page}>
+       <ScrollView contentContainerStyle={styles.content}>
++        <DetailBack onPress={props.onBack} />
+         <Text style={styles.eyebrow}>ПРОГРЕСС И ИСТОРИЯ</Text>
+-        <Text style={styles.title}>Что уже получилось</Text>
++        <Text accessibilityRole="header" style={styles.title}>Что уже получилось</Text>
+ 
+         <View style={styles.card} accessible accessibilityLabel={`Стадия Финни ${lifecycle.petStage} из 3`}>
+-          <Text style={styles.cardTitle}>Финни растёт вместе с решениями</Text>
++          <Text accessibilityRole="header" style={styles.cardTitle}>Финни растёт вместе с решениями</Text>
+           <Text style={styles.value}>Стадия {lifecycle.petStage} из 3</Text>
+           <Text style={styles.caption}>Завершено игровых дней: {lifecycle.closedPeriods}</Text>
+         </View>
+ 
+         <View style={styles.card}>
+-          <Text style={styles.cardTitle}>Текущая мечта</Text>
++          <Text accessibilityRole="header" style={styles.cardTitle}>Текущая мечта</Text>
+           <Text style={styles.value}>{goal ? `${goal.name} · ${goal.cost} монет` : 'Мечта пока не выбрана'}</Text>
+           <Text style={styles.caption}>В копилке: {lifecycle.savings}</Text>
+         </View>
+ 
+         <View style={styles.card}>
+-          <Text style={styles.cardTitle}>Совместные открытия</Text>
++          <Text accessibilityRole="header" style={styles.cardTitle}>Совместные открытия</Text>
+           <Text style={styles.caption}>Здесь записаны разобранные учебные ситуации. Подсказки показывают только то, что открывали в приложении.</Text>
+           {props.discoveries.length === 0 && (
+             <Text style={styles.empty}>Здесь появятся ситуации, которые мы разберём вместе.</Text>
+@@ -66,9 +69,9 @@
+                   accessibilityRole="button"
+                   accessibilityState={{ expanded }}
+                   onPress={() => setOpenDiscoveryId(expanded ? null : id)}
+-                  style={styles.discoveryToggle}
++                  style={({ pressed }) => [styles.discoveryToggle, expanded && styles.discoveryOpen, pressed && ui.pressed]}
+                 >
+-                  <Text style={styles.cardTitle}>{title}</Text>
++                  <Text accessibilityRole="header" style={styles.cardTitle}>{title}</Text>
+                   <Text style={styles.caption}>{discoveryOutcome(discovery)} · {expanded ? 'Скрыть' : 'Посмотреть'}</Text>
+                 </Pressable>
+                 {expanded && (
+@@ -93,7 +96,7 @@
+         </View>
+ 
+         <View style={styles.card}>
+-          <Text style={styles.cardTitle}>Последний закрытый день</Text>
++          <Text accessibilityRole="header" style={styles.cardTitle}>Последний закрытый день</Text>
+           {summary ? (
+             <>
+               <Text style={styles.value}>+{summary.periodGrowth} шагов роста</Text>
+@@ -105,7 +108,7 @@
+           ) : <Text style={styles.empty}>Закрытых дней пока нет. Первый итог появится после завершения игрового дня.</Text>}
+         </View>
+ 
+-        <Text style={styles.sectionTitle}>Операции</Text>
++        <Text accessibilityRole="header" style={styles.sectionTitle}>Операции</Text>
+         {history.length === 0 && <Text style={styles.empty}>Операций пока нет.</Text>}
+         {history.map((entry) => {
+           const title = operationLabels[entry.type] ?? entry.reasonCode;
+@@ -116,7 +119,7 @@
+               accessibilityLabel={`${title}. Сумма ${entry.amount}. Кошелёк ${signed(entry.deltaAvailable)}. Копилка ${signed(entry.deltaSavings)}.`}
+               style={styles.operation}
+             >
+-              <Text style={styles.cardTitle}>{title}</Text>
++              <Text accessibilityRole="header" style={styles.cardTitle}>{title}</Text>
+               <Text style={styles.caption}>Сумма {entry.amount} · кошелёк {signed(entry.deltaAvailable)} · копилка {signed(entry.deltaSavings)}</Text>
+             </View>
+           );
+@@ -129,27 +132,22 @@
+           <Text style={styles.primaryText}>Вернуться</Text>
+         </Pressable>
+       </ScrollView>
+-    </SafeAreaView>
++    </View>
+   );
+ }
+ 
+ const styles = StyleSheet.create({
+-  page: { flex: 1, backgroundColor: '#EAF6FB' },
+-  content: { gap: 12, padding: 18, paddingBottom: 36 },
+-  eyebrow: { color: '#146B78', fontSize: 13, fontWeight: '800', letterSpacing: 1.4 },
+-  title: { color: '#14324A', fontSize: 25, fontWeight: '800' },
+-  sectionTitle: { color: '#14324A', fontSize: 20, fontWeight: '800', marginTop: 4 },
+-  card: { backgroundColor: '#FFFFFF', borderColor: '#C7DEE5', borderRadius: 14, borderWidth: 1, gap: 6, padding: 13 },
+-  operation: { backgroundColor: '#F7FBFC', borderColor: '#C7DEE5', borderRadius: 12, borderWidth: 1, gap: 4, padding: 12 },
+-  discovery: { backgroundColor: '#F7FBFC', borderColor: '#C7DEE5', borderRadius: 12, borderWidth: 1 },
+-  discoveryToggle: { justifyContent: 'center', minHeight: 48, padding: 12 },
+-  discoveryDetail: { gap: 8, padding: 12, paddingTop: 0 },
+-  cardTitle: { color: '#14324A', fontSize: 16, fontWeight: '800' },
+-  value: { color: '#146B78', fontSize: 18, fontWeight: '900' },
+-  caption: { color: '#4B6878', fontSize: 14, lineHeight: 20 },
+-  empty: { color: '#4B6878', fontSize: 15, lineHeight: 21 },
+-  primary: { alignItems: 'center', backgroundColor: '#146B78', borderRadius: 12, justifyContent: 'center', minHeight: 48, paddingHorizontal: 14 },
+-  primaryText: { color: '#FFFFFF', fontSize: 16, fontWeight: '800' },
+-  secondary: { alignItems: 'center', borderColor: '#146B78', borderRadius: 12, borderWidth: 1.5, justifyContent: 'center', minHeight: 48, paddingHorizontal: 14 },
+-  secondaryText: { color: '#146B78', fontSize: 16, fontWeight: '800' },
++  page: ui.page, content: ui.content, eyebrow: ui.eyebrow, title: ui.title,
++  sectionTitle: { ...ui.cardTitle, fontSize: 22, marginTop: 8 },
++  card: ui.card,
++  operation: { ...ui.card, gap: 6 },
++  discovery: { backgroundColor: palette.background, borderRadius: 14, borderColor: palette.line, borderWidth: 1 },
++  discoveryToggle: { justifyContent: 'center', minHeight: 56, gap: 6, padding: 12, borderRadius: 14 },
++  discoveryOpen: { backgroundColor: palette.selected },
++  discoveryDetail: { gap: 12, padding: 12 },
++  cardTitle: ui.cardTitle,
++  value: { color: palette.accent, fontSize: 22, fontWeight: '600', fontVariant: ['tabular-nums'] },
++  caption: ui.body, empty: { ...ui.body, backgroundColor: palette.soft, borderRadius: 14, padding: 12 },
++  primary: ui.button, primaryText: ui.buttonText,
++  secondary: { ...ui.button, ...ui.secondary }, secondaryText: { ...ui.buttonText, ...ui.secondaryText },
+ });
+--- before/src/ui/LessonShell.tsx
++++ src/ui/LessonShell.tsx
+@@ -1,6 +1,7 @@
++import DetailBack from './DetailBack.tsx';
++import { palette, screenStyles as ui } from './screen-theme.ts';
+ import {
+   Pressable,
+-  SafeAreaView,
+   ScrollView,
+   StyleSheet,
+   Text,
+@@ -36,8 +37,9 @@
+       accessibilityState={{ disabled: Boolean(props.disabled) }}
+       disabled={props.disabled}
+       onPress={props.onPress}
+-      style={[
++      style={({ pressed }) => [
+         styles.button,
++        pressed && !props.disabled && ui.pressed,
+         props.secondary && styles.buttonSecondary,
+         props.disabled && styles.disabled,
+       ]}
+@@ -92,12 +94,13 @@
+   const reward = rewardText(props.rewardReason);
+ 
+   return (
+-    <SafeAreaView style={styles.page}>
+-      <ScrollView contentContainerStyle={styles.content}>
++    <View style={styles.page}>
++      <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={styles.content}>
++        <DetailBack onPress={props.onBack} label={props.returnLabel} disabled={props.busy} />
+         <Text style={styles.eyebrow}>ЗАНЯТИЕ</Text>
+-        <Text style={styles.title}>{props.copy.title}</Text>
++        <Text accessibilityRole="header" style={styles.title}>{props.copy.title}</Text>
+         <Text style={styles.body}>{props.copy.intro}</Text>
+-        <Text style={styles.levelLabel}>L0 · Ситуация для твоего решения</Text>
++        <Text style={styles.levelLabel}>Ситуация для твоего решения</Text>
+         <View style={styles.notice}>
+           <Text style={styles.noticeText}>
+             В примере свои монеты. Монеты твоего дня не тратятся.
+@@ -150,7 +153,7 @@
+ 
+         {evaluation && props.attempt.phase !== 'draft' && (
+           <View style={styles.result}>
+-            <Text style={styles.resultTitle}>Что получилось</Text>
++            <Text accessibilityRole="header" style={styles.resultTitle}>Что получилось</Text>
+             <Text style={styles.body}>{evaluation.consequence}</Text>
+             {!explanationVisible && (
+               <ActionButton
+@@ -161,9 +164,9 @@
+             )}
+             {explanationVisible && (
+               <>
+-                <Text style={styles.resultTitle}>Почему так</Text>
++                <Text accessibilityRole="header" style={styles.resultTitle}>Почему так</Text>
+                 <Text style={styles.body}>{evaluation.explanation}</Text>
+-                <Text style={styles.resultTitle}>Следующий шаг</Text>
++                <Text accessibilityRole="header" style={styles.resultTitle}>Следующий шаг</Text>
+                 <Text style={styles.body}>{evaluation.nextStep}</Text>
+                 {props.attempt.mechanic === 'receipt_audit' && evaluation.calculation.awaitingSellerResponse === true && (
+                   <ActionButton
+@@ -194,42 +197,22 @@
+         {props.attempt.phase === 'completed' && (
+           <Text style={styles.body}>Мы сохранили это открытие в прогрессе. Его можно посмотреть без нового начисления монет.</Text>
+         )}
+-{props.message && <Text style={styles.error}>{props.message}</Text>}
++        {props.message && <Text accessibilityLiveRegion="polite" style={styles.error}>{props.message}</Text>}
+         {reward && <Text style={styles.reward}>{reward}</Text>}
+         <ActionButton label={props.returnLabel} onPress={props.onBack} disabled={props.busy} secondary />
+       </ScrollView>
+-    </SafeAreaView>
++    </View>
+   );
+ }
+ 
+-const colors = {
+-  ink: '#14324A',
+-  muted: '#4B6878',
+-  sky: '#EAF6FB',
+-  teal: '#146B78',
+-  line: '#C7DEE5',
+-  yellow: '#FFF3C7',
+-  coral: '#B54135',
+-};
+-
+ const styles = StyleSheet.create({
+-  page: { flex: 1, backgroundColor: colors.sky },
+-  content: { gap: 12, padding: 18, paddingBottom: 36 },
+-  eyebrow: { color: colors.teal, fontSize: 13, fontWeight: '800', letterSpacing: 1.4 },
+-  title: { color: colors.ink, fontSize: 25, fontWeight: '800' },
+-  body: { color: colors.muted, fontSize: 16, lineHeight: 22 },
+-  levelLabel: { color: colors.teal, fontSize: 14, fontWeight: '800' },
+-  notice: { backgroundColor: colors.yellow, borderRadius: 14, gap: 4, padding: 12 },
+-  noticeText: { color: colors.ink, fontSize: 14, fontWeight: '700', lineHeight: 19 },
+-  hints: { gap: 8 },
+-  hintText: { backgroundColor: '#FFFFFF', borderColor: colors.line, borderRadius: 12, borderWidth: 1, color: colors.ink, fontSize: 15, lineHeight: 21, padding: 12 },
+-  result: { backgroundColor: '#FFFFFF', borderColor: colors.line, borderRadius: 14, borderWidth: 1, gap: 8, padding: 14 },
+-  resultTitle: { color: colors.ink, fontSize: 17, fontWeight: '800' },
+-  error: { color: colors.coral, fontSize: 14, fontWeight: '700' },
+-  reward: { backgroundColor: colors.yellow, borderRadius: 12, color: colors.ink, fontSize: 15, fontWeight: '800', padding: 12 },
+-  button: { alignItems: 'center', backgroundColor: colors.teal, borderRadius: 14, justifyContent: 'center', minHeight: 48, paddingHorizontal: 16 },
+-  buttonSecondary: { backgroundColor: 'transparent', borderColor: colors.teal, borderWidth: 1.5 },
+-  buttonText: { color: '#FFFFFF', fontSize: 16, fontWeight: '800' },
+-  buttonSecondaryText: { color: colors.teal },
+-  disabled: { opacity: 0.45 },
++  page: ui.page, content: ui.content, eyebrow: ui.eyebrow, title: ui.title, body: ui.body,
++  levelLabel: { color: palette.ink, fontSize: 16, fontWeight: '600' },
++  notice: { backgroundColor: palette.soft, borderRadius: 18, gap: 8, padding: 14 },
++  noticeText: ui.body, hints: { gap: 10 },
++  hintText: { ...ui.body, ...ui.card },
++  result: ui.card, resultTitle: ui.cardTitle, error: ui.error,
++  reward: { ...ui.body, backgroundColor: palette.soft, borderRadius: 18, color: palette.ink, padding: 14 },
++  button: ui.button, buttonSecondary: ui.secondary,
++  buttonText: ui.buttonText, buttonSecondaryText: ui.secondaryText, disabled: ui.disabled,
+ });
+--- before/src/ui/PeriodResultScreen.tsx
++++ src/ui/PeriodResultScreen.tsx
+@@ -1,4 +1,6 @@
+-import { Alert, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
++import DetailBack from './DetailBack.tsx';
++import { palette, screenStyles as ui } from './screen-theme.ts';
++import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+ import type { AppSnapshot } from '../application/app-runtime.ts';
+ 
+ function Button(props: Readonly<{
+@@ -69,15 +71,16 @@
+   );
+ 
+   return (
+-    <SafeAreaView style={styles.page}>
++    <View style={styles.page}>
+       <ScrollView contentContainerStyle={styles.content}>
++        <DetailBack onPress={props.onBack} label={active ? "Вернуться к дню" : "В домик"} disabled={props.busy} />
+         <Text style={styles.eyebrow}>{active ? 'ПРЕДВАРИТЕЛЬНЫЙ ИТОГ' : 'ИТОГ ДНЯ'}</Text>
+-        <Text style={styles.title}>День {lifecycle.periodIndex ?? 0}</Text>
++        <Text accessibilityRole="header" style={styles.title}>День {lifecycle.periodIndex ?? 0}</Text>
+         <Text style={styles.balance}>Доступно {lifecycle.available} · в копилке {lifecycle.savings}</Text>
+ 
+         {original && effective && facts && (
+           <View style={styles.card}>
+-            <Text style={styles.cardTitle}>План и результат</Text>
++            <Text accessibilityRole="header" style={styles.cardTitle}>План и результат</Text>
+             <Direction label="Нужно" planned={effective.need} actual={facts.actualNeed} />
+             <Direction label="Хочется" planned={effective.want} actual={facts.actualWant} />
+             <Direction label="На мечту" planned={effective.save} actual={facts.deposits - facts.withdrawals} />
+@@ -86,7 +89,7 @@
+         )}
+ 
+         <View style={styles.card}>
+-          <Text style={styles.cardTitle}>Забота о Финни</Text>
++          <Text accessibilityRole="header" style={styles.cardTitle}>Забота о Финни</Text>
+           <Text style={styles.caption}>Еда: {summary ? summary.facts.foodPurchased ? 'выбрана' : 'сегодня не выбрана' : food ? 'выбрана' : 'пока не выбрана'}</Text>
+           <Text style={styles.caption}>Уход: {summary ? summary.facts.carePurchased ? 'выбран' : 'сегодня не выбран' : care ? 'выбран' : 'пока не выбран'}</Text>
+         </View>
+@@ -94,13 +97,13 @@
+         {summary && (
+           <>
+             <View accessibilityLiveRegion="polite" style={styles.resultCard}>
+-              <Text style={styles.cardTitle}>Что получилось</Text>
++              <Text accessibilityRole="header" style={styles.cardTitle}>Что получилось</Text>
+               <Text style={styles.growth}>+{summary.periodGrowth} шагов роста</Text>
+               <Text style={styles.caption}>Стадия: {summary.stageAfter} из 3{summary.stageAfter > summary.stageBefore ? ' — новая стадия!' : ''}</Text>
+               <Text style={styles.body}>{summary.explanation}</Text>
+             </View>
+             <View style={styles.nextCard}>
+-              <Text style={styles.cardTitle}>Что можно попробовать дальше</Text>
++              <Text accessibilityRole="header" style={styles.cardTitle}>Что можно попробовать дальше</Text>
+               <Text style={styles.body}>{summary.nextSafeStep}</Text>
+             </View>
+           </>
+@@ -110,31 +113,22 @@
+         {active && <Button disabled={props.busy} label={props.busy ? 'Сохраняем итог…' : 'Завершить день'} onPress={confirmClose} />}
+         <Button label={active ? 'Вернуться к дню' : 'Вернуться в домик'} onPress={props.onBack} secondary />
+       </ScrollView>
+-    </SafeAreaView>
++    </View>
+   );
+ }
+ 
+ const styles = StyleSheet.create({
+-  page: { flex: 1, backgroundColor: '#EAF6FB' },
+-  content: { gap: 12, padding: 18, paddingBottom: 36 },
+-  eyebrow: { color: '#146B78', fontSize: 13, fontWeight: '800', letterSpacing: 1.4 },
+-  title: { color: '#14324A', fontSize: 26, fontWeight: '800' },
+-  balance: { color: '#14324A', fontSize: 17, fontWeight: '700' },
+-  card: { backgroundColor: '#FFFFFF', borderColor: '#C7DEE5', borderRadius: 14, borderWidth: 1, gap: 7, padding: 12 },
+-  resultCard: { backgroundColor: '#FFF3C7', borderRadius: 14, gap: 8, padding: 14 },
+-  nextCard: { backgroundColor: '#F7FBFC', borderColor: '#C7DEE5', borderRadius: 14, borderWidth: 1, gap: 8, padding: 14 },
+-  cardTitle: { color: '#14324A', fontSize: 18, fontWeight: '800' },
+-  direction: { borderTopColor: '#DCEAED', borderTopWidth: 1, gap: 2, paddingTop: 7 },
+-  directionLabel: { color: '#14324A', fontSize: 15, fontWeight: '800' },
+-  directionValue: { color: '#4B6878', fontSize: 14 },
+-  growth: { color: '#146B78', fontSize: 22, fontWeight: '900' },
+-  caption: { color: '#4B6878', fontSize: 14, lineHeight: 20 },
+-  body: { color: '#14324A', fontSize: 15, lineHeight: 21 },
+-  error: { color: '#B54135', fontSize: 14, fontWeight: '700' },
+-  button: { alignItems: 'center', backgroundColor: '#146B78', borderRadius: 12, justifyContent: 'center', minHeight: 48, paddingHorizontal: 14 },
+-  buttonSecondary: { backgroundColor: 'transparent', borderColor: '#146B78', borderWidth: 1.5 },
+-  buttonText: { color: '#FFFFFF', fontSize: 16, fontWeight: '800' },
+-  buttonSecondaryText: { color: '#146B78' },
+-  disabled: { opacity: 0.45 },
+-  pressed: { opacity: 0.72 },
++  page: ui.page, content: ui.content, eyebrow: ui.eyebrow, title: ui.title,
++  balance: { ...ui.body, color: palette.ink, fontVariant: ['tabular-nums'] },
++  card: ui.card,
++  resultCard: { ...ui.card, backgroundColor: palette.soft }, nextCard: ui.card,
++  cardTitle: ui.cardTitle,
++  direction: { borderTopColor: palette.line, borderTopWidth: 1, gap: 5, paddingTop: 10 },
++  directionLabel: { color: palette.ink, fontSize: 16, fontWeight: '600' },
++  directionValue: { ...ui.body, fontVariant: ['tabular-nums'] },
++  growth: { color: palette.accent, fontSize: 26, fontWeight: '600', fontVariant: ['tabular-nums'] },
++  caption: ui.body, body: ui.body, error: ui.error,
++  button: ui.button, buttonSecondary: ui.secondary,
++  buttonText: ui.buttonText, buttonSecondaryText: ui.secondaryText,
++  disabled: ui.disabled, pressed: ui.pressed,
+ });
+--- before/src/ui/receipt-workshop-renderers.tsx
++++ src/ui/receipt-workshop-renderers.tsx
+@@ -1,3 +1,4 @@
++import { palette, screenStyles as ui } from './screen-theme.ts';
+ import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+ import type { LessonRendererProps } from './lesson-renderer-registry.ts';
+ 
+@@ -17,7 +18,7 @@
+   const receipt = lines(props.parameters.receiptLines);
+   const flagged = array(props.solution.flaggedLineIds);
+   const toggle = (id: string) => props.onChange({ ...props.solution, flaggedLineIds: flagged.includes(id) ? flagged.filter((item) => item !== id) : [...flagged, id] });
+-  return <View style={styles.card} accessibilityLabel="Проверка учебного чека"><Text style={styles.title}>Сравни корзину и чек</Text><Text style={styles.caption}>Корзина — независимый список того, что выбрали. Отметь лишнюю строку, если она есть. Верный чек оставь без отметок.</Text><Text style={styles.label}>Корзина</Text>{basket.map((line) => <Text key={line.id} style={styles.row}>{itemName(line.itemId)} · {line.quantity} × {line.unitPrice}</Text>)}<Text style={styles.label}>Учебный чек</Text>{receipt.map((line) => <Pressable key={line.id} accessibilityRole="checkbox" accessibilityState={{ checked: flagged.includes(line.id) }} disabled={props.disabled} onPress={() => toggle(line.id)} style={styles.choice}><Text style={styles.choiceText}>{flagged.includes(line.id) ? '☑' : '☐'} {itemName(line.itemId)} · {line.quantity} × {line.unitPrice}</Text></Pressable>)}<Text style={styles.caption}>Напечатано: итог {String(props.parameters.reportedTotal ?? '')}, сдача {String(props.parameters.reportedChange ?? '')} из {String(props.parameters.tendered ?? '')}.</Text><Amount label="Исправленный итог" value={props.solution.correctedTotal} disabled={props.disabled} onChange={(correctedTotal) => props.onChange({ ...props.solution, flaggedLineIds: flagged, correctedTotal })} /><Amount label="Ожидаемая сдача" value={props.solution.expectedChange} disabled={props.disabled} onChange={(expectedChange) => props.onChange({ ...props.solution, flaggedLineIds: flagged, expectedChange })} /></View>;
++  return <View style={styles.card} accessibilityLabel="Проверка учебного чека"><Text accessibilityRole="header" style={styles.title}>Сравни корзину и чек</Text><Text style={styles.caption}>Корзина — независимый список того, что выбрали. Отметь лишнюю строку, если она есть. Верный чек оставь без отметок.</Text><Text style={styles.label}>Корзина</Text>{basket.map((line) => <Text key={line.id} style={styles.row}>{itemName(line.itemId)} · {line.quantity} × {line.unitPrice}</Text>)}<Text style={styles.label}>Учебный чек</Text>{receipt.map((line) => <Pressable key={line.id} accessibilityRole="checkbox" accessibilityState={{ checked: flagged.includes(line.id), disabled: props.disabled }} disabled={props.disabled} onPress={() => toggle(line.id)} style={[styles.choice, flagged.includes(line.id) && ui.selected, props.disabled && ui.disabled]}><Text style={styles.choiceText}>{flagged.includes(line.id) ? '☑' : '☐'} {itemName(line.itemId)} · {line.quantity} × {line.unitPrice}</Text></Pressable>)}<Text style={styles.caption}>Напечатано: итог {String(props.parameters.reportedTotal ?? '')}, сдача {String(props.parameters.reportedChange ?? '')} из {String(props.parameters.tendered ?? '')}.</Text><Amount label="Исправленный итог" value={props.solution.correctedTotal} disabled={props.disabled} onChange={(correctedTotal) => props.onChange({ ...props.solution, flaggedLineIds: flagged, correctedTotal })} /><Amount label="Ожидаемая сдача" value={props.solution.expectedChange} disabled={props.disabled} onChange={(expectedChange) => props.onChange({ ...props.solution, flaggedLineIds: flagged, expectedChange })} /></View>;
+ }
+ 
+ type Resource = Readonly<{ id: string; title: string; packPrice: number }>;
+@@ -39,13 +40,14 @@
+   const toggle = (id: string) => props.onChange({ ...props.solution, checkedOwnedResourceIds: checked.includes(id) ? checked.filter((item) => item !== id) : [...checked, id] });
+   const choose = (choice: 'make' | 'buy') => props.onChange({ ...props.solution, checkedOwnedResourceIds: checked, method: choice, allocation: plan });
+   const setAmount = (key: string, value: unknown) => props.onChange({ ...props.solution, checkedOwnedResourceIds: checked, allocation: { ...plan, [key]: value } });
+-  return <View style={styles.card} accessibilityLabel="Учебная мастерская"><Text style={styles.title}>Как устроить запуск кораблика?</Text><Text style={styles.caption}>Общий учебный бюджет: {String(props.parameters.budget ?? '')}. На нужное — хотя бы {String(props.parameters.needMinimum ?? '')}, на мечту — хотя бы {String(props.parameters.savingTarget ?? '')}. Покупки здесь не совершаются.</Text><Text style={styles.label}>Отметь, что уже есть в учебной коробке</Text>{items.map((item) => <Pressable key={item.id} accessibilityRole="checkbox" accessibilityState={{ checked: checked.includes(item.id) }} disabled={props.disabled} onPress={() => toggle(item.id)} style={styles.choice}><Text style={styles.choiceText}>{checked.includes(item.id) ? '☑' : '☐'} {item.title} · если докупать, {item.packPrice}</Text></Pressable>)}<Text style={styles.caption}>Недостающее для изготовления: {makeCost}. Готовый кораблик: {String(props.parameters.readyPrice ?? '')}. Цена изготовления зависит от того, что уже есть.</Text><Text style={styles.label}>Выбери способ</Text><View style={styles.methods}><Pressable accessibilityRole="radio" accessibilityState={{ selected: method === 'make' }} disabled={props.disabled} onPress={() => choose('make')} style={styles.choice}><Text style={styles.choiceText}>{method === 'make' ? '◉' : '○'} Сделать</Text></Pressable><Pressable accessibilityRole="radio" accessibilityState={{ selected: method === 'buy' }} disabled={props.disabled} onPress={() => choose('buy')} style={styles.choice}><Text style={styles.choiceText}>{method === 'buy' ? '◉' : '○'} Купить готовый</Text></Pressable></View><Amount label="На нужное" value={plan.need} disabled={props.disabled} onChange={(value) => setAmount('need', value)} /><Amount label="На выбранный способ" value={plan.want} disabled={props.disabled} onChange={(value) => setAmount('want', value)} /><Amount label="На мечту" value={plan.save} disabled={props.disabled} onChange={(value) => setAmount('save', value)} /><Text style={styles.caption}>{validPreview ? `Что получится по плану: ${method === 'make' ? 'самодельный кораблик' : 'готовый кораблик'}. Можно выбрать другой способ и сравнить.` : `Что ещё нужно проверить: список материалов, нужное, стоимость способа и сумму на мечту. Недостающие материалы: ${items.filter((item) => !owned.includes(item.id)).map((item) => item.title).join(', ') || 'нет'}.`}</Text></View>;
++  return <View style={styles.card} accessibilityLabel="Учебная мастерская"><Text accessibilityRole="header" style={styles.title}>Как устроить запуск кораблика?</Text><Text style={styles.caption}>Общий учебный бюджет: {String(props.parameters.budget ?? '')}. На нужное — хотя бы {String(props.parameters.needMinimum ?? '')}, на мечту — хотя бы {String(props.parameters.savingTarget ?? '')}. Покупки здесь не совершаются.</Text><Text style={styles.label}>Отметь, что уже есть в учебной коробке</Text>{items.map((item) => <Pressable key={item.id} accessibilityRole="checkbox" accessibilityState={{ checked: checked.includes(item.id), disabled: props.disabled }} disabled={props.disabled} onPress={() => toggle(item.id)} style={[styles.choice, checked.includes(item.id) && ui.selected, props.disabled && ui.disabled]}><Text style={styles.choiceText}>{checked.includes(item.id) ? '☑' : '☐'} {item.title} · если докупать, {item.packPrice}</Text></Pressable>)}<Text style={styles.caption}>Недостающее для изготовления: {makeCost}. Готовый кораблик: {String(props.parameters.readyPrice ?? '')}. Цена изготовления зависит от того, что уже есть.</Text><Text style={styles.label}>Выбери способ</Text><View style={styles.methods}><Pressable accessibilityRole="radio" accessibilityState={{ selected: method === 'make', disabled: props.disabled }} disabled={props.disabled} onPress={() => choose('make')} style={[styles.choice, method === 'make' && ui.selected, props.disabled && ui.disabled]}><Text style={styles.choiceText}>{method === 'make' ? '◉' : '○'} Сделать</Text></Pressable><Pressable accessibilityRole="radio" accessibilityState={{ selected: method === 'buy', disabled: props.disabled }} disabled={props.disabled} onPress={() => choose('buy')} style={[styles.choice, method === 'buy' && ui.selected, props.disabled && ui.disabled]}><Text style={styles.choiceText}>{method === 'buy' ? '◉' : '○'} Купить готовый</Text></Pressable></View><Amount label="На нужное" value={plan.need} disabled={props.disabled} onChange={(value) => setAmount('need', value)} /><Amount label="На выбранный способ" value={plan.want} disabled={props.disabled} onChange={(value) => setAmount('want', value)} /><Amount label="На мечту" value={plan.save} disabled={props.disabled} onChange={(value) => setAmount('save', value)} /><Text style={styles.caption}>{validPreview ? `Что получится по плану: ${method === 'make' ? 'самодельный кораблик' : 'готовый кораблик'}. Можно выбрать другой способ и сравнить.` : `Что ещё нужно проверить: список материалов, нужное, стоимость способа и сумму на мечту. Недостающие материалы: ${items.filter((item) => !owned.includes(item.id)).map((item) => item.title).join(', ') || 'нет'}.`}</Text></View>;
+ }
+ 
+ const styles = StyleSheet.create({
+-  card: { backgroundColor: '#FFFFFF', borderColor: '#C7DEE5', borderRadius: 14, borderWidth: 1, gap: 10, padding: 14 },
+-  title: { color: '#14324A', fontSize: 18, fontWeight: '800' }, caption: { color: '#4B6878', fontSize: 14, lineHeight: 19 },
+-  label: { color: '#14324A', fontSize: 15, fontWeight: '800' }, row: { color: '#14324A', fontSize: 15 },
+-  field: { gap: 4 }, input: { backgroundColor: '#F7FBFC', borderColor: '#C7DEE5', borderRadius: 10, borderWidth: 1, color: '#14324A', fontSize: 17, minHeight: 48, paddingHorizontal: 12 },
+-  choice: { borderColor: '#C7DEE5', borderRadius: 10, borderWidth: 1, justifyContent: 'center', minHeight: 48, paddingHorizontal: 12, paddingVertical: 8 }, choiceText: { color: '#14324A', fontSize: 15 }, methods: { gap: 8 },
++  card: ui.card, title: ui.cardTitle, caption: ui.body,
++  label: { color: palette.ink, fontSize: 16, fontWeight: '600' },
++  row: { ...ui.body, color: palette.ink, fontVariant: ['tabular-nums'] },
++  field: { gap: 6 }, input: ui.input,
++  choice: { ...ui.button, ...ui.secondary, alignItems: 'stretch', borderRadius: 14 },
++  choiceText: { ...ui.body, color: palette.ink }, methods: { gap: 10 },
+ });
+--- before/src/ui/SavingsLessonRenderer.tsx
++++ src/ui/SavingsLessonRenderer.tsx
+@@ -1,3 +1,4 @@
++import { palette, screenStyles as ui } from './screen-theme.ts';
+ import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+ import {
+   SAVINGS_SCHEDULE,
+@@ -51,7 +52,7 @@
+       onPress={props.onPress}
+       style={[styles.choice, props.selected && styles.choiceSelected, props.disabled && styles.disabled]}
+     >
+-      <Text style={styles.choiceText}>{props.label}</Text>
++      <Text style={styles.choiceText}>{props.selected ? '✓ ' : ''}{props.label}</Text>
+     </Pressable>
+   );
+ }
+@@ -70,7 +71,7 @@
+     : null;
+   return (
+     <View style={styles.card}>
+-      <Text style={styles.title}>Три будущих игровых дня</Text>
++      <Text accessibilityRole="header" style={styles.title}>Три будущих игровых дня</Text>
+       <Text style={styles.body}>В копилке {initialSavings}. Мечта стоит {goalCost}.</Text>
+       {[0, 1, 2].map((index) => (
+         <Field
+@@ -102,7 +103,7 @@
+   const action = props.solution.action === 'buy' || props.solution.action === 'postpone' ? props.solution.action : null;
+   return (
+     <View style={styles.card}>
+-      <Text style={styles.title}>Посмотри последствия выбора</Text>
++      <Text accessibilityRole="header" style={styles.title}>Посмотри последствия выбора</Text>
+       <Text style={styles.body}>Учебный кошелёк: {available}. Копилка: {savings}. Мечта: {goalCost}.</Text>
+       <Field
+         disabled={props.disabled}
+@@ -137,16 +138,9 @@
+ }
+ 
+ const styles = StyleSheet.create({
+-  card: { backgroundColor: '#FFFFFF', borderColor: '#C7DEE5', borderRadius: 14, borderWidth: 1, gap: 10, padding: 14 },
+-  title: { color: '#14324A', fontSize: 18, fontWeight: '800' },
+-  body: { color: '#4B6878', fontSize: 16, lineHeight: 22 },
+-  field: { gap: 4 },
+-  label: { color: '#14324A', fontSize: 15, fontWeight: '700' },
+-  input: { backgroundColor: '#F4FAFC', borderColor: '#91B9C5', borderRadius: 10, borderWidth: 1, color: '#14324A', fontSize: 18, minHeight: 48, paddingHorizontal: 12 },
+-  preview: { backgroundColor: '#FFF3C7', borderRadius: 10, color: '#14324A', fontSize: 15, fontWeight: '700', padding: 10 },
+-  choice: { alignItems: 'center', borderColor: '#146B78', borderRadius: 12, borderWidth: 1.5, justifyContent: 'center', minHeight: 48, paddingHorizontal: 12 },
+-  choiceSelected: { backgroundColor: '#DFF2F2' },
+-  choiceText: { color: '#146B78', fontSize: 16, fontWeight: '800' },
+-  note: { color: '#4B6878', fontSize: 14, lineHeight: 19 },
+-  disabled: { opacity: 0.45 },
++  card: ui.card, title: ui.cardTitle, body: ui.body,
++  field: { gap: 6 }, label: { color: palette.ink, fontSize: 16, fontWeight: '600' }, input: ui.input,
++  preview: { ...ui.body, backgroundColor: palette.soft, borderRadius: 14, color: palette.ink, padding: 12, fontVariant: ['tabular-nums'] },
++  choice: { ...ui.button, ...ui.secondary, borderRadius: 14 }, choiceSelected: ui.selected,
++  choiceText: { ...ui.buttonText, color: palette.ink }, note: ui.body, disabled: ui.disabled,
+ });
+--- before/tests/budget-purchase-renderers.test.mjs
++++ tests/budget-purchase-renderers.test.mjs
+@@ -1,3 +1,4 @@
++import { assertSharedControlTargets } from './ui-control-contract.mjs';
+ import assert from 'node:assert/strict';
+ import { readFileSync } from 'node:fs';
+ import test from 'node:test';
+@@ -16,7 +17,7 @@
+   assert.match(renderer, /onRevealEvidence/);
+   assert.match(renderer, /Открыть сведения/);
+   assert.match(renderer, /Цена указана за всю упаковку/);
+-  assert.match(renderer, /minHeight: 48/);
++  assertSharedControlTargets(renderer);
+   assert.doesNotMatch(renderer, /selectedIds|revealedIds|remainder/);
+ });
+ 
+--- before/tests/lesson-shell.test.mjs
++++ tests/lesson-shell.test.mjs
+@@ -1,3 +1,4 @@
++import { assertSharedControlTargets } from './ui-control-contract.mjs';
+ import assert from 'node:assert/strict';
+ import { readFileSync } from 'node:fs';
+ import test from 'node:test';
+@@ -41,7 +42,7 @@
+   assert.match(source, /Короткая справка/);
+   assert.match(source, /returnLabel/);
+   assert.match(source, /onHelp/);
+-  assert.match(source, /minHeight: 48/);
++  assertSharedControlTargets(source);
+   assert.doesNotMatch(source, /onRevealHint\([^)]*onComplete/);
+ });
+ 
+--- before/tests/period-close.test.mjs
++++ tests/period-close.test.mjs
+@@ -1,3 +1,4 @@
++import { assertSharedControlTargets } from './ui-control-contract.mjs';
+ import assert from 'node:assert/strict';
+ import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
+ import { tmpdir } from 'node:os';
+@@ -297,5 +298,5 @@
+   assert.match(screen, /Вернуться к дню/);
+   assert.match(screen, /Финни не заболеет и ничего не потеряет/);
+   assert.match(screen, /accessibilityLiveRegion="polite"/);
+-  assert.match(screen, /minHeight: 48/g);
+-});
++  assertSharedControlTargets(screen);
++});
+--- before/tests/receipt-workshop-renderers.test.mjs
++++ tests/receipt-workshop-renderers.test.mjs
+@@ -1,3 +1,4 @@
++import { assertSharedControlTargets } from './ui-control-contract.mjs';
+ import assert from 'node:assert/strict';
+ import { readFileSync } from 'node:fs';
+ import test from 'node:test';
+@@ -22,7 +23,7 @@
+   assert.match(source, /Сделать/);
+   assert.match(source, /Купить готовый/);
+   assert.match(source, /Что получится по плану/);
+-  assert.match(source, /minHeight: 48/);
++  assertSharedControlTargets(source);
+   assert.doesNotMatch(source, /ConfirmPurchase|DepositSavings|executeMoneyCommand/);
+   assert.match(root, /\.register\('receipt_audit', ReceiptAuditRenderer\)/);
+   assert.match(root, /\.register\('resource_choice', ResourceChoiceRenderer\)/);
+--- before/tests/savings-lesson.test.mjs
++++ tests/savings-lesson.test.mjs
+@@ -1,3 +1,4 @@
++import { assertSharedControlTargets } from './ui-control-contract.mjs';
+ import assert from 'node:assert/strict';
+ import { readFileSync } from 'node:fs';
+ import test from 'node:test';
+@@ -115,7 +116,7 @@
+   assert.ok(!source.includes("? 'buy' : 'postpone'"));
+   assert.match(source, /parameters\.mode/);
+   assert.match(source, /Это preview: монеты твоего игрового дня не меняются/);
+-  assert.match(source, /minHeight: 48/);
++  assertSharedControlTargets(source);
+   assert.doesNotMatch(source, /repository|ledger|TransferToSavings/);
+ });
+ 
+--- /dev/null
++++ src/ui/screen-theme.ts
+@@ -0,0 +1,27 @@
++import { StyleSheet } from 'react-native';
++
++/** The warm surfaces and readable controls shared by the non-scene screens. */
++export const palette = Object.freeze({
++  ink: '#3D352D', muted: '#665444', background: '#F6F0E6', surface: '#FFFCF6',
++  accent: '#AE482A', line: '#E4D6C1', inputLine: '#A78E72',
++  soft: '#F1E5CB', selected: '#EEDFCA', error: '#A33629', errorSurface: '#FBE6DE',
++});
++
++export const screenStyles = StyleSheet.create({
++  page: { flex: 1, backgroundColor: palette.background },
++  content: { gap: 14, padding: 18, paddingBottom: 28 },
++  eyebrow: { color: palette.accent, fontSize: 13, fontWeight: '600', letterSpacing: 1.2 },
++  title: { color: palette.ink, fontSize: 26, fontWeight: '600' },
++  body: { color: palette.muted, fontSize: 16, lineHeight: 23 },
++  cardTitle: { color: palette.ink, fontSize: 18, fontWeight: '600' },
++  card: { backgroundColor: palette.surface, borderColor: palette.line, borderRadius: 22, borderWidth: 1, gap: 10, padding: 16 },
++  input: { backgroundColor: palette.surface, borderColor: palette.inputLine, borderRadius: 14, borderWidth: 1, color: palette.ink, fontSize: 18, minHeight: 52, paddingHorizontal: 14, paddingVertical: 10, fontVariant: ['tabular-nums'] },
++  button: { alignItems: 'center', backgroundColor: palette.accent, borderRadius: 18, justifyContent: 'center', minHeight: 52, paddingHorizontal: 16, paddingVertical: 12 },
++  buttonText: { color: '#FFFFFF', fontSize: 16, fontWeight: '600', textAlign: 'center' },
++  secondary: { backgroundColor: palette.surface, borderColor: palette.inputLine, borderWidth: 1 },
++  secondaryText: { color: palette.ink },
++  error: { backgroundColor: palette.errorSurface, borderRadius: 14, color: palette.error, fontSize: 16, lineHeight: 23, padding: 12 },
++  selected: { backgroundColor: palette.selected, borderColor: palette.accent, borderWidth: 2 },
++  disabled: { opacity: 0.5 },
++  pressed: { transform: [{ scale: 0.96 }] },
++});
+--- /dev/null
++++ src/ui/DetailBack.tsx
+@@ -0,0 +1,19 @@
++import { Pressable, StyleSheet, Text } from 'react-native';
++import { palette, screenStyles } from './screen-theme.ts';
++
++export default function DetailBack({ onPress, label = 'Назад', disabled = false }: Readonly<{
++  onPress: () => void; label?: string; disabled?: boolean;
++}>) {
++  return <Pressable accessibilityRole="button" accessibilityLabel={label}
++    accessibilityState={{ disabled }} disabled={disabled} onPress={onPress} testID="detail-back"
++    style={({ pressed }) => [styles.back, disabled && screenStyles.disabled, pressed && !disabled && screenStyles.pressed]}>
++    <Text accessible={false} style={styles.arrow}>‹</Text>
++    <Text style={styles.label}>{label}</Text>
++  </Pressable>;
++}
++
++const styles = StyleSheet.create({
++  back: { alignSelf: 'flex-start', flexDirection: 'row', alignItems: 'center', gap: 10, minHeight: 48, paddingHorizontal: 12, paddingVertical: 6, borderRadius: 16, backgroundColor: palette.surface },
++  arrow: { color: palette.muted, fontSize: 28, lineHeight: 32 },
++  label: { flexShrink: 1, color: palette.ink, fontSize: 16, lineHeight: 22 },
++});
+--- /dev/null
++++ tests/ui-control-contract.mjs
+@@ -0,0 +1,22 @@
++import assert from 'node:assert/strict';
++import { readFileSync } from 'node:fs';
++import vm from 'node:vm';
++import ts from 'typescript';
++
++const module = { exports: {} };
++const source = ts.transpileModule(readFileSync(new URL('../src/ui/screen-theme.ts', import.meta.url), 'utf8'), {
++  compilerOptions: { module: ts.ModuleKind.CommonJS },
++}).outputText;
++vm.runInNewContext(source, { module, exports: module.exports, require: (id) => {
++  assert.equal(id, 'react-native');
++  return { StyleSheet: { create: (styles) => styles } };
++} });
++
++export function assertSharedControlTargets(consumer) {
++  assert.match(consumer, /screen-theme\.ts/);
++  assert.match(consumer, /ui\.button/);
++  for (const key of ['button', 'input']) {
++    assert.ok(module.exports.screenStyles[key].minHeight >= 48, key + ' needs a 48dp target');
++    assert.ok(module.exports.screenStyles[key].paddingVertical >= 8, key + ' needs space around enlarged text');
++  }
++}

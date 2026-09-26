@@ -1,0 +1,10 @@
+adult-real-hold-unlock PASS
+adult-motion-switch PASS
+adult-sound-switch PASS
+adult-delete-cancel PASS
+adult-cancel-preserves-wallet PASS
+adult-background-relocks PASS
+adult-wrong-answer-disabled-200 PASS
+adult-unlocked-controls-200-scrollable PASS
+night-native-confirm-cancel PASS
+Adult and night-mode checks complete

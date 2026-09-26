@@ -1,0 +1,2 @@
+from pathlib import Path
+p=Path('artifacts/sprint-9/S9-003-004-details/states.py');s=p.read_text(encoding='utf-8');old="n.start(360,640,2);n.detail('Все занятия');n.lesson('LS-B01');n.top();n.scrollfind(n.CURRENT,'Занятие не открылось. Монеты твоего дня не изменились.');nodes=n.capture('catalog-storage-error-200',True)";new="n.start(360,640,2);n.detail('Все занятия');n.lesson('LS-S02');nodes=n.capture('catalog-storage-error-200',True)";assert old in s;s=s.replace(old,new);p.write_text(s,encoding='utf-8')

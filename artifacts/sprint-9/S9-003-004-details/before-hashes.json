@@ -1,0 +1,19 @@
+{
+  "src/ui/AppRoot.tsx": "fdd0f4096de85ef623381119f613611a3698a9dffebe4a695dfe945c9213ac06",
+  "src/ui/AdultScreen.tsx": "9829bc03075eb167042cc2fa23ed57bd095effafe8541b96e12f998702d5c2ce",
+  "src/ui/HelpScreen.tsx": "097e03ec14e989c9e0fa270bcc1bdb761babb80b4dd4cb1ba1444a3bb57b4a48",
+  "src/ui/HistoryScreen.tsx": "f400c5c8fb32febf254c14783bd9d42f1b95fb7b1fcbfbc88cb1ff01045d254e",
+  "src/ui/PeriodResultScreen.tsx": "a44f1c4c17aeaee8cbfe5a1d42b66cd0501b66ec166f98c6521841a9d21f4ccd",
+  "src/ui/LessonShell.tsx": "6df722437df35c0a40cb6e7c47fdda9690be4aa6241d7254f8271203d2ff9da3",
+  "src/ui/SavingsLessonRenderer.tsx": "b62814b3bf107860bfb2200df09fb5e4baebd7ef4ae60b374f3d1c60fbbe4a37",
+  "src/ui/budget-purchase-renderers.tsx": "499560c19c11630de2ac39b638e73f8f17bbb15b765ded93721163310b460d8f",
+  "src/ui/receipt-workshop-renderers.tsx": "e83675fdf1427b04c92b2e81e17670b555dd5b7306448bb815f25cb90de1b1cc",
+  "src/ui/BudgetPlanScreen.tsx": "fc1fb157ef849c598a6f59b4c574b1c7a10ec934dcc339b96f1083775eff999e",
+  "src/ui/ShopScreen.tsx": "ff30abe281d54b7b82a81cee2ff49827ee93aa00383910f1b5823cea6343913b",
+  "src/ui/SavingsScreen.tsx": "a812f8a4461b7f6a5553ae24a0d1fcd061bbd04863213cac3ed09cbae95bede4",
+  "../docs/CURRENT_IMPLEMENTATION.md": "14847835383fb3c09b30127976298bf936d1d1e45e2cd4b0bb61984e21c9443f",
+  "../docs/IMPLEMENTATION_DECISIONS.md": "a15f5d8f0d42541a8a1cf946e64173c88036b460436234ad778b06af8051e7f3",
+  "../docs/mermaid/S9_001_HOME_LAYERS.md": "e99377290aaafc81e76da5543895aeee4f36d59b99ceb800594aa62b96572cb0",
+  "../tasks/sprint-9/S9-003_financial-screens-visual-language.md": "c0761fab8767f7f5a17b33540356b6014c505abdf7969e9c00d1ec6cc9b3b795",
+  "../tasks/sprint-9/S9-004_lessons-history-adult-visual-language.md": "1e54aedc6c30cf1d295063b60f79c866ed48f78e03f5cc6ba371448bf5e4b708"
+}
