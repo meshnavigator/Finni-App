@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "variants": [
+    {
+      "id": "round-plain",
+      "constructor": "PASS",
+      "saveHome": "PASS"
+    },
+    {
+      "id": "round-spots",
+      "constructor": "PASS",
+      "saveHome": "PASS"
+    },
+    {
+      "id": "round-stripes",
+      "constructor": "PASS",
+      "saveHome": "PASS"
+    },
+    {
+      "id": "floppy-plain",
+      "constructor": "PASS",
+      "saveHome": "PASS"
+    },
+    {
+      "id": "floppy-spots",
+      "constructor": "PASS",
+      "saveHome": "PASS"
+    },
+    {
+      "id": "floppy-stripes",
+      "constructor": "PASS",
+      "saveHome": "PASS"
+    }
+  ],
+  "cancelAndColdPersistence": "floppy/stripes preserved",
+  "scope": "API26 debug + Metro, stage1"
+}

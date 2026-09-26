@@ -1,0 +1,270 @@
+{
+  "status": "PASS",
+  "fileCount": 66,
+  "files": [
+    {
+      "path": "pointy-plain/blink.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-plain/neutral.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-plain/preview.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-plain/source.ora",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-plain/export/blink/pet-accessory.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-plain/export/blink/pet-back.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-plain/export/blink/pet-body.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-plain/export/blink/pet-ear-shape.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-plain/export/blink/pet-expression.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-plain/export/blink/pet-face.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-plain/export/blink/pet-pattern.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-plain/export/blink/room-base.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-plain/export/blink/room-foreground.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-plain/export/neutral/pet-accessory.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-plain/export/neutral/pet-back.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-plain/export/neutral/pet-body.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-plain/export/neutral/pet-ear-shape.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-plain/export/neutral/pet-expression.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-plain/export/neutral/pet-face.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-plain/export/neutral/pet-pattern.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-plain/export/neutral/room-base.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-plain/export/neutral/room-foreground.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-spots/blink.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-spots/neutral.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-spots/preview.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-spots/source.ora",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-spots/export/blink/pet-accessory.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-spots/export/blink/pet-back.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-spots/export/blink/pet-body.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-spots/export/blink/pet-ear-shape.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-spots/export/blink/pet-expression.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-spots/export/blink/pet-face.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-spots/export/blink/pet-pattern.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-spots/export/blink/room-base.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-spots/export/blink/room-foreground.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-spots/export/neutral/pet-accessory.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-spots/export/neutral/pet-back.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-spots/export/neutral/pet-body.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-spots/export/neutral/pet-ear-shape.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-spots/export/neutral/pet-expression.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-spots/export/neutral/pet-face.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-spots/export/neutral/pet-pattern.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-spots/export/neutral/room-base.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-spots/export/neutral/room-foreground.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-stripes/blink.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-stripes/neutral.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-stripes/preview.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-stripes/source.ora",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-stripes/export/blink/pet-accessory.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-stripes/export/blink/pet-back.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-stripes/export/blink/pet-body.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-stripes/export/blink/pet-ear-shape.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-stripes/export/blink/pet-expression.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-stripes/export/blink/pet-face.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-stripes/export/blink/pet-pattern.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-stripes/export/blink/room-base.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-stripes/export/blink/room-foreground.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-stripes/export/neutral/pet-accessory.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-stripes/export/neutral/pet-back.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-stripes/export/neutral/pet-body.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-stripes/export/neutral/pet-ear-shape.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-stripes/export/neutral/pet-expression.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-stripes/export/neutral/pet-face.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-stripes/export/neutral/pet-pattern.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-stripes/export/neutral/room-base.png",
+      "byteIdentical": true
+    },
+    {
+      "path": "pointy-stripes/export/neutral/room-foreground.png",
+      "byteIdentical": true
+    }
+  ]
+}

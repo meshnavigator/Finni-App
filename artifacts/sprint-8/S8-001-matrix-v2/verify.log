@@ -1,0 +1,201 @@
+{
+  "status": "PASS",
+  "variants": [
+    {
+      "id": "pointy-plain",
+      "frames": 2,
+      "layersPerFrame": 9,
+      "ora": "PASS",
+      "identityCore": "unchanged",
+      "feetTail": "unchanged",
+      "pixelReassembly": "exact"
+    },
+    {
+      "id": "pointy-spots",
+      "frames": 2,
+      "layersPerFrame": 9,
+      "ora": "PASS",
+      "identityCore": "unchanged",
+      "feetTail": "unchanged",
+      "pixelReassembly": "exact"
+    },
+    {
+      "id": "pointy-stripes",
+      "frames": 2,
+      "layersPerFrame": 9,
+      "ora": "PASS",
+      "identityCore": "unchanged",
+      "feetTail": "unchanged",
+      "pixelReassembly": "exact"
+    },
+    {
+      "id": "round-plain",
+      "frames": 2,
+      "layersPerFrame": 9,
+      "ora": "PASS",
+      "identityCore": "unchanged",
+      "feetTail": "unchanged",
+      "pixelReassembly": "exact"
+    },
+    {
+      "id": "round-spots",
+      "frames": 2,
+      "layersPerFrame": 9,
+      "ora": "PASS",
+      "identityCore": "unchanged",
+      "feetTail": "unchanged",
+      "pixelReassembly": "exact"
+    },
+    {
+      "id": "round-stripes",
+      "frames": 2,
+      "layersPerFrame": 9,
+      "ora": "PASS",
+      "identityCore": "unchanged",
+      "feetTail": "unchanged",
+      "pixelReassembly": "exact"
+    },
+    {
+      "id": "floppy-plain",
+      "frames": 2,
+      "layersPerFrame": 9,
+      "ora": "PASS",
+      "identityCore": "unchanged",
+      "feetTail": "unchanged",
+      "pixelReassembly": "exact"
+    },
+    {
+      "id": "floppy-spots",
+      "frames": 2,
+      "layersPerFrame": 9,
+      "ora": "PASS",
+      "identityCore": "unchanged",
+      "feetTail": "unchanged",
+      "pixelReassembly": "exact"
+    },
+    {
+      "id": "floppy-stripes",
+      "frames": 2,
+      "layersPerFrame": 9,
+      "ora": "PASS",
+      "identityCore": "unchanged",
+      "feetTail": "unchanged",
+      "pixelReassembly": "exact"
+    }
+  ],
+  "uniqueNeutralRenders": 9,
+  "frameCount": 18,
+  "layerPngCount": 162,
+  "oraCount": 9,
+  "surgicalChecks": [
+    {
+      "id": "pointy-plain",
+      "frame": "neutral",
+      "approvedBodyDifferences": 0,
+      "pointyUnchanged": true
+    },
+    {
+      "id": "pointy-plain",
+      "frame": "blink",
+      "approvedBodyDifferences": 0,
+      "pointyUnchanged": true
+    },
+    {
+      "id": "pointy-spots",
+      "frame": "neutral",
+      "approvedBodyDifferences": 0,
+      "pointyUnchanged": true
+    },
+    {
+      "id": "pointy-spots",
+      "frame": "blink",
+      "approvedBodyDifferences": 0,
+      "pointyUnchanged": true
+    },
+    {
+      "id": "pointy-stripes",
+      "frame": "neutral",
+      "approvedBodyDifferences": 0,
+      "pointyUnchanged": true
+    },
+    {
+      "id": "pointy-stripes",
+      "frame": "blink",
+      "approvedBodyDifferences": 0,
+      "pointyUnchanged": true
+    },
+    {
+      "id": "round-plain",
+      "frame": "neutral",
+      "approvedBodyDifferences": 0,
+      "pointyUnchanged": false
+    },
+    {
+      "id": "round-plain",
+      "frame": "blink",
+      "approvedBodyDifferences": 0,
+      "pointyUnchanged": false
+    },
+    {
+      "id": "round-spots",
+      "frame": "neutral",
+      "approvedBodyDifferences": 0,
+      "pointyUnchanged": false
+    },
+    {
+      "id": "round-spots",
+      "frame": "blink",
+      "approvedBodyDifferences": 0,
+      "pointyUnchanged": false
+    },
+    {
+      "id": "round-stripes",
+      "frame": "neutral",
+      "approvedBodyDifferences": 0,
+      "pointyUnchanged": false
+    },
+    {
+      "id": "round-stripes",
+      "frame": "blink",
+      "approvedBodyDifferences": 0,
+      "pointyUnchanged": false
+    },
+    {
+      "id": "floppy-plain",
+      "frame": "neutral",
+      "approvedBodyDifferences": 0,
+      "pointyUnchanged": false
+    },
+    {
+      "id": "floppy-plain",
+      "frame": "blink",
+      "approvedBodyDifferences": 0,
+      "pointyUnchanged": false
+    },
+    {
+      "id": "floppy-spots",
+      "frame": "neutral",
+      "approvedBodyDifferences": 0,
+      "pointyUnchanged": false
+    },
+    {
+      "id": "floppy-spots",
+      "frame": "blink",
+      "approvedBodyDifferences": 0,
+      "pointyUnchanged": false
+    },
+    {
+      "id": "floppy-stripes",
+      "frame": "neutral",
+      "approvedBodyDifferences": 0,
+      "pointyUnchanged": false
+    },
+    {
+      "id": "floppy-stripes",
+      "frame": "blink",
+      "approvedBodyDifferences": 0,
+      "pointyUnchanged": false
+    }
+  ],
+  "scope": "pixel/contract proof; visual assessment required separately"
+}

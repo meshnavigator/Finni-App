@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "tool": "image_gen.imagegen",
+  "runs": [
+    {
+      "id": "round-ear-donor",
+      "num_last_images_to_include": 1,
+      "prompt": "Edit the supplied accepted Finni character. Create the ROUND-EARS appearance only. Replace the two tall pointed ears with clearly rounded, compact upright plush ears with broad curved tips, warm ginger outer fur and soft peach-pink inner fur, each naturally attached at the exact existing ear roots and following the current tilted three-quarter head pose. The new ear silhouette must be distinctly round, not merely a softened triangle. Preserve the exact original face, eyes, brows, forehead tuft, cheeks, muzzle, mouth, collar, body, paws, tail, lighting, fur detail, pose and framing. Do not redesign the character or change its scale or position. No spots or stripes. Keep the entire original 941×1672 transparent canvas, including all empty space; original feet at x470 y1272. Output one full character with a true transparent background, no text, no grid, no extra objects. This output supplies only the new ear artwork; all non-ear original pixels will be retained during mechanical production assembly."
+    },
+    {
+      "id": "floppy-ear-donor",
+      "num_last_images_to_include": 2,
+      "prompt": "Image 1 is the user's accepted original Finni, the sole geometry and identity reference. Image 2 is the round-ear experiment; do not copy it. Edit Image 1 to make the SOFT FLOPPY-EARS appearance only. Replace both upright triangular ears with two clearly drooping rounded soft ears, short puppy-like silky ginger ears folding outward and down from the original ear roots. Broad soft folds, cream edge hairs, subtle peach inner fur where naturally visible. Both folded tips must hang to the outer sides of the head, framing the upper cheeks without covering eyebrows, eyes or face. Distinctly different silhouette from round upright ears and pointed upright ears; warm and friendly, not heavy hound ears. Preserve the original face, forehead tuft, eyes, brows, muzzle, mouth, collar, body, paws, tail, lighting, detailed fur, pose, scale and placement exactly. No spots or stripes. Keep full original 941×1672 transparent canvas and feet x470 y1272. Output one full character with actual transparent background; no text or grid. Only ear pixels will be harvested; non-ear source pixels remain original during assembly."
+    },
+    {
+      "id": "stripe-coat-donor",
+      "num_last_images_to_include": 3,
+      "prompt": "Image 1 is the user's accepted original Finni, the sole geometry and identity reference. Images 2 and 3 are ear experiments and must not influence this edit. Create a premium STRIPED BODY COAT appearance on the exact original character from Image 1. Retain the original pointed ears. Add warm chestnut-brown natural tabby-style fur stripes wrapping both rear haunches and both front legs: 3 broad gently curved tapering bands on each rear thigh, and 3 narrower irregular curved bands on each foreleg/outer shoulder. The pattern must be immediately recognizable as stripes at small phone size, clearly distinct from spots. Stripe widths and intervals vary organically; narrow warm ginger channels remain between bands. Follow limb volume and fur direction, with individual hairs crossing soft pigment boundaries and matching existing highlights and shadows. Preserve the cream central chest bib and all white toes, face/head/ears, collar, tail, exact silhouette and limb occlusion. No spots, leopard rosettes, zigzags, painted decals, muddy texture or procedural regular rings. Keep original full 941×1672 transparent canvas, original scale/position, feet x470 y1272. Output one complete character on actual transparent background, no labels/contact sheet. Only body/leg fur will be harvested into original anatomical mattes; face and other protected pixels remain accepted originals."
+    }
+  ]
+}
