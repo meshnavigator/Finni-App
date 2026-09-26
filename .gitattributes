@@ -1,2 +1,2 @@
-# Keep captured logs byte-for-byte; whitespace can be part of device output.
-*.log whitespace=-blank-at-eol,-blank-at-eof
+# Keep captured evidence byte-for-byte; whitespace can be part of device output and source snapshots.
+artifacts/** whitespace=-blank-at-eol,-blank-at-eof

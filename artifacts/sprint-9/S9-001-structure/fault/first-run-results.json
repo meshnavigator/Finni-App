@@ -1,0 +1,22 @@
+[
+  {
+    "case": "happy",
+    "pass": true
+  },
+  {
+    "case": "thoughtful",
+    "pass": true
+  },
+  {
+    "case": "inspired",
+    "pass": true
+  },
+  {
+    "case": "reduced",
+    "pass": true
+  },
+  {
+    "case": "system-reduced",
+    "pass": true
+  }
+]

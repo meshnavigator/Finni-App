@@ -1,0 +1,1 @@
+[{'case': 'QA-missing', 'pass': True, 'recovery': 'home-return'}, {'case': 'QA-corrupt', 'pass': True, 'recovery': 'home-return'}, {'case': 'QA-object', 'pass': True, 'recovery': 'home-return'}]

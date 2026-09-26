@@ -1,0 +1,5 @@
+--------- beginning of main
+09-25 17:57:35.625 22044 22063 I ReactNativeJS: Running "main"
+09-25 17:57:35.628 22044 22063 W ReactNativeJS: SafeAreaView has been deprecated and will be removed in a future release. Please use 'react-native-safe-area-context' instead. See https://github.com/AppAndFlow/react-native-safe-area-context
+09-25 17:57:38.242 22044 22063 I ReactNativeJS: QA expression-loaded
+09-25 17:57:38.247 22044 22063 I ReactNativeJS: QA transition

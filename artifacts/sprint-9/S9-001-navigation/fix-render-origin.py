@@ -1,0 +1,2 @@
+from pathlib import Path
+p=Path('src/ui/AppRoot.tsx');s=p.read_text(encoding='utf-8');s=s.replace("const detailOrigin = useRef<RootRoute>('home');", "const [detailOrigin, setDetailOrigin] = useState<RootRoute>('home');");s=s.replace('detailOrigin.current = origin;', 'setDetailOrigin(origin);').replace("detailOrigin.current = 'home';", "setDetailOrigin('home');").replace('detailOrigin.current','detailOrigin');p.write_text(s,encoding='utf-8')

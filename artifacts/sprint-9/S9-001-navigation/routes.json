@@ -1,0 +1,113 @@
+{
+  "apkSha256": "e80e5e6277e68df32f9d47e5414977bbe9686d5c5ab37699ef5c6d53d73c303d",
+  "results": [
+    {
+      "case": "root-plan-1",
+      "pass": true
+    },
+    {
+      "case": "root-shop-1",
+      "pass": true
+    },
+    {
+      "case": "root-savings-1",
+      "pass": true
+    },
+    {
+      "case": "root-more-1",
+      "pass": true
+    },
+    {
+      "case": "root-home-1",
+      "pass": true
+    },
+    {
+      "case": "detail-back-Все занятия-1",
+      "pass": true
+    },
+    {
+      "case": "detail-back-Прогресс-1",
+      "pass": true
+    },
+    {
+      "case": "detail-back-Имя и внешность-1",
+      "pass": true
+    },
+    {
+      "case": "detail-back-Как играть-1",
+      "pass": true
+    },
+    {
+      "case": "detail-back-Для взрослого-1",
+      "pass": true
+    },
+    {
+      "case": "root-plan-1.19",
+      "pass": true
+    },
+    {
+      "case": "root-shop-1.19",
+      "pass": true
+    },
+    {
+      "case": "root-savings-1.19",
+      "pass": true
+    },
+    {
+      "case": "root-more-1.19",
+      "pass": true
+    },
+    {
+      "case": "root-home-1.19",
+      "pass": true
+    },
+    {
+      "case": "detail-back-Все занятия-1.19",
+      "pass": true
+    },
+    {
+      "case": "detail-back-Прогресс-1.19",
+      "pass": true
+    },
+    {
+      "case": "detail-back-Имя и внешность-1.19",
+      "pass": true
+    },
+    {
+      "case": "detail-back-Как играть-1.19",
+      "pass": true
+    },
+    {
+      "case": "detail-back-Для взрослого-1.19",
+      "pass": true
+    },
+    {
+      "case": "large-root-menu-plan",
+      "pass": true
+    },
+    {
+      "case": "large-root-menu-shop",
+      "pass": true
+    },
+    {
+      "case": "large-root-menu-savings",
+      "pass": true
+    },
+    {
+      "case": "large-root-menu-more",
+      "pass": true
+    },
+    {
+      "case": "large-root-menu-home",
+      "pass": true
+    },
+    {
+      "case": "reached-goal-confirm-cancel",
+      "pass": true
+    },
+    {
+      "case": "purchase-cancel-isolated",
+      "pass": true
+    }
+  ]
+}

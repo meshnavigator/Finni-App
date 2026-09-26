@@ -1,0 +1,464 @@
+[
+  {
+    "name": "ACTIVE-360-640-1",
+    "width": 360,
+    "height": 640,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "ACTIVE-360-640-1.5",
+    "width": 360,
+    "height": 640,
+    "scale": 1.5,
+    "issues": []
+  },
+  {
+    "name": "ACTIVE-360-640-2",
+    "width": 360,
+    "height": 640,
+    "scale": 2,
+    "issues": []
+  },
+  {
+    "name": "ACTIVE-390-844-1",
+    "width": 390,
+    "height": 844,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "ACTIVE-390-844-1.5",
+    "width": 390,
+    "height": 844,
+    "scale": 1.5,
+    "issues": []
+  },
+  {
+    "name": "ACTIVE-390-844-2",
+    "width": 390,
+    "height": 844,
+    "scale": 2,
+    "issues": []
+  },
+  {
+    "name": "ACTIVE-412-915-1",
+    "width": 412,
+    "height": 915,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "ACTIVE-412-915-1.5",
+    "width": 412,
+    "height": 915,
+    "scale": 1.5,
+    "issues": []
+  },
+  {
+    "name": "ACTIVE-412-915-2",
+    "width": 412,
+    "height": 915,
+    "scale": 2,
+    "issues": []
+  },
+  {
+    "name": "DRAFT-360-640-1",
+    "width": 360,
+    "height": 640,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "DRAFT-360-640-1.5",
+    "width": 360,
+    "height": 640,
+    "scale": 1.5,
+    "issues": []
+  },
+  {
+    "name": "DRAFT-360-640-2",
+    "width": 360,
+    "height": 640,
+    "scale": 2,
+    "issues": []
+  },
+  {
+    "name": "DRAFT-390-844-1",
+    "width": 390,
+    "height": 844,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "DRAFT-390-844-1.5",
+    "width": 390,
+    "height": 844,
+    "scale": 1.5,
+    "issues": []
+  },
+  {
+    "name": "DRAFT-390-844-2",
+    "width": 390,
+    "height": 844,
+    "scale": 2,
+    "issues": []
+  },
+  {
+    "name": "DRAFT-412-915-1",
+    "width": 412,
+    "height": 915,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "DRAFT-412-915-1.5",
+    "width": 412,
+    "height": 915,
+    "scale": 1.5,
+    "issues": []
+  },
+  {
+    "name": "DRAFT-412-915-2",
+    "width": 412,
+    "height": 915,
+    "scale": 2,
+    "issues": []
+  },
+  {
+    "name": "READY-360-640-1",
+    "width": 360,
+    "height": 640,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "READY-360-640-1.5",
+    "width": 360,
+    "height": 640,
+    "scale": 1.5,
+    "issues": []
+  },
+  {
+    "name": "READY-360-640-2",
+    "width": 360,
+    "height": 640,
+    "scale": 2,
+    "issues": []
+  },
+  {
+    "name": "READY-390-844-1",
+    "width": 390,
+    "height": 844,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "READY-390-844-1.5",
+    "width": 390,
+    "height": 844,
+    "scale": 1.5,
+    "issues": []
+  },
+  {
+    "name": "READY-390-844-2",
+    "width": 390,
+    "height": 844,
+    "scale": 2,
+    "issues": []
+  },
+  {
+    "name": "READY-412-915-1",
+    "width": 412,
+    "height": 915,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "READY-412-915-1.5",
+    "width": 412,
+    "height": 915,
+    "scale": 1.5,
+    "issues": []
+  },
+  {
+    "name": "READY-412-915-2",
+    "width": 412,
+    "height": 915,
+    "scale": 2,
+    "issues": []
+  },
+  {
+    "name": "WAITING-360-640-1",
+    "width": 360,
+    "height": 640,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "WAITING-360-640-1.5",
+    "width": 360,
+    "height": 640,
+    "scale": 1.5,
+    "issues": []
+  },
+  {
+    "name": "WAITING-360-640-2",
+    "width": 360,
+    "height": 640,
+    "scale": 2,
+    "issues": []
+  },
+  {
+    "name": "WAITING-390-844-1",
+    "width": 390,
+    "height": 844,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "WAITING-390-844-1.5",
+    "width": 390,
+    "height": 844,
+    "scale": 1.5,
+    "issues": []
+  },
+  {
+    "name": "WAITING-390-844-2",
+    "width": 390,
+    "height": 844,
+    "scale": 2,
+    "issues": []
+  },
+  {
+    "name": "WAITING-412-915-1",
+    "width": 412,
+    "height": 915,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "WAITING-412-915-1.5",
+    "width": 412,
+    "height": 915,
+    "scale": 1.5,
+    "issues": []
+  },
+  {
+    "name": "WAITING-412-915-2",
+    "width": 412,
+    "height": 915,
+    "scale": 2,
+    "issues": []
+  },
+  {
+    "name": "empty-360-640-1",
+    "width": 360,
+    "height": 640,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "empty-360-640-1.5",
+    "width": 360,
+    "height": 640,
+    "scale": 1.5,
+    "issues": []
+  },
+  {
+    "name": "empty-360-640-2",
+    "width": 360,
+    "height": 640,
+    "scale": 2,
+    "issues": []
+  },
+  {
+    "name": "pointy-plain-1",
+    "width": 390,
+    "height": 844,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "pointy-plain-2",
+    "width": 390,
+    "height": 844,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "pointy-plain-3",
+    "width": 390,
+    "height": 844,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "pointy-spots-1",
+    "width": 390,
+    "height": 844,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "pointy-spots-2",
+    "width": 390,
+    "height": 844,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "pointy-spots-3",
+    "width": 390,
+    "height": 844,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "pointy-stripes-1",
+    "width": 390,
+    "height": 844,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "pointy-stripes-2",
+    "width": 390,
+    "height": 844,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "pointy-stripes-3",
+    "width": 390,
+    "height": 844,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "round-plain-1",
+    "width": 390,
+    "height": 844,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "round-plain-2",
+    "width": 390,
+    "height": 844,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "round-plain-3",
+    "width": 390,
+    "height": 844,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "round-spots-1",
+    "width": 390,
+    "height": 844,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "round-spots-2",
+    "width": 390,
+    "height": 844,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "round-spots-3",
+    "width": 390,
+    "height": 844,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "round-stripes-1",
+    "width": 390,
+    "height": 844,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "round-stripes-2",
+    "width": 390,
+    "height": 844,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "round-stripes-3",
+    "width": 390,
+    "height": 844,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "floppy-plain-1",
+    "width": 390,
+    "height": 844,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "floppy-plain-2",
+    "width": 390,
+    "height": 844,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "floppy-plain-3",
+    "width": 390,
+    "height": 844,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "floppy-spots-1",
+    "width": 390,
+    "height": 844,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "floppy-spots-2",
+    "width": 390,
+    "height": 844,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "floppy-spots-3",
+    "width": 390,
+    "height": 844,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "floppy-stripes-1",
+    "width": 390,
+    "height": 844,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "floppy-stripes-2",
+    "width": 390,
+    "height": 844,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "name": "floppy-stripes-3",
+    "width": 390,
+    "height": 844,
+    "scale": 1,
+    "issues": []
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "element": "primary text",
+    "foreground": "#FFFFFF",
+    "background": "#AE482A",
+    "ratio": 5.58
+  },
+  {
+    "element": "disabled text",
+    "foreground": "#FFFFFF",
+    "background": "#806C5B",
+    "ratio": 4.98
+  },
+  {
+    "element": "body",
+    "foreground": "#3D352D",
+    "background": "#FFFCF6",
+    "ratio": 11.75
+  },
+  {
+    "element": "caption",
+    "foreground": "#665444",
+    "background": "#FFFCF6",
+    "ratio": 7.03
+  },
+  {
+    "element": "state",
+    "foreground": "#665444",
+    "background": "#F9F2E7",
+    "ratio": 6.47
+  },
+  {
+    "element": "selected nav",
+    "foreground": "#603C24",
+    "background": "#EEDFCA",
+    "ratio": 7.4
+  },
+  {
+    "element": "icons",
+    "foreground": "#725741",
+    "background": "#FFFCF6",
+    "ratio": 6.5
+  },
+  {
+    "element": "name",
+    "foreground": "#594737",
+    "background": "#EDE2CD",
+    "ratio": 6.87
+  }
+]

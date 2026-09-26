@@ -1,0 +1,18 @@
+{
+  "files": {
+    "files/BridgelessReactNativeDevBundle.js": true,
+    "files/SQLite/finni-control.db": true,
+    "files/SQLite/finni-control.db-shm": true,
+    "files/SQLite/finni-control.db-wal": true,
+    "files/SQLite/finni-main.db": true,
+    "shared_prefs/com.meshnavigator.finni_preferences.xml": true,
+    "shared_prefs/expo.modules.kotlin.PersistentDataManager.xml": true,
+    "shared_prefs/WebViewChromiumPrefs.xml": true
+  },
+  "apkSha256": "3c9595dc3f109e9487de640c04e9a21da320ac02b903a05f4cabd841385d17bf",
+  "wmSize": "Physical size: 1080x1920",
+  "wmDensity": "Physical density: 420",
+  "fontScaleSetting": "null",
+  "appStoppedAfterRestore": true,
+  "fontScaleSettingDeletedAgainAfterReset": true
+}

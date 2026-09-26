@@ -1,0 +1,45 @@
+{
+  "apkSha256": "30127ed7cb5a891d92b1322e730c3d2b6954df95631dd35945e83db70fd15795",
+  "results": [
+    {
+      "case": "delivery-root-plan",
+      "pass": true
+    },
+    {
+      "case": "delivery-root-shop",
+      "pass": true
+    },
+    {
+      "case": "delivery-root-savings",
+      "pass": true
+    },
+    {
+      "case": "delivery-root-more",
+      "pass": true
+    },
+    {
+      "case": "delivery-root-home",
+      "pass": true
+    },
+    {
+      "case": "editor-save-returns-more",
+      "pass": true
+    },
+    {
+      "case": "editor-cancel-returns-more",
+      "pass": true
+    },
+    {
+      "case": "direct-home-lesson-clears-prior-more-origin",
+      "pass": true
+    },
+    {
+      "case": "delivery-transfer-cancel",
+      "pass": true
+    },
+    {
+      "case": "delivery-large-adult-barrier-back",
+      "pass": true
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "apkSha256": "c310c4554f4113994bba192802ed6fd10e5f971334928d16d49d20ecefe75d27",
+  "results": [
+    {
+      "case": "choose",
+      "label": "Выбрать мечту",
+      "moneyUnchanged": true,
+      "pass": true
+    },
+    {
+      "case": "save",
+      "label": "Отложить на мечту",
+      "moneyUnchanged": true,
+      "pass": true
+    },
+    {
+      "case": "review",
+      "label": "Проверить итоги",
+      "moneyUnchanged": true,
+      "pass": true
+    }
+  ]
+}

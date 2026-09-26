@@ -1,0 +1,9 @@
+{
+  "src/ui/HomeScreen.tsx": "e03b968a1e548861ca0c8cad14419b6b194503242b1ab253581f31dcf5feeefe",
+  "src/ui/FinniHomeScene.tsx": "8b54a3d4e68900f8c178ba667be66e26a3e6dd03847c56b9cef3dd3df6cdd18c",
+  "src/ui/home-scene-layout.ts": "1ac18611d2a4f20138c0cb4bf29c27f4c47b5ccf471490d026d734c8880f0760",
+  "src/ui/home-next-step.ts": "407d94e663c52ea519a293577e8b90c1054d05dd0d8cb7cc2af1f511095bb7d3",
+  "src/ui/AppRoot.tsx": "2ca7d9944298c3e1361994979e2d369986d8e2bdfb9c7c37053091e9657e46ef",
+  "tests/home-next-step.test.mjs": "982a325037c7ca4351a30eaef2290732f6750dd1b8e6fd5b44bae5d6e3b7dee1",
+  "tests/profile-ui.test.mjs": "420542e9515de7b613af8e73a5afa7bc5d7381b001ec206d095820be523eed44"
+}

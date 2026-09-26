@@ -1,0 +1,4 @@
+--------- beginning of main
+09-25 14:12:54.860  4740  4759 I ReactNativeJS: Running "main"
+09-25 14:12:54.861  4740  4759 W ReactNativeJS: SafeAreaView has been deprecated and will be removed in a future release. Please use 'react-native-safe-area-context' instead. See https://github.com/AppAndFlow/react-native-safe-area-context
+09-25 14:12:55.455  4740  4759 I ReactNativeJS: S9QA decode-error

@@ -1,0 +1,17 @@
+{
+  "existingBackupMatches": {
+    "files/BridgelessReactNativeDevBundle.js": true,
+    "files/SQLite/finni-control.db": true,
+    "files/SQLite/finni-control.db-shm": true,
+    "files/SQLite/finni-control.db-wal": true,
+    "files/SQLite/finni-main.db": true,
+    "shared_prefs/com.meshnavigator.finni_preferences.xml": true,
+    "shared_prefs/expo.modules.kotlin.PersistentDataManager.xml": true,
+    "shared_prefs/WebViewChromiumPrefs.xml": true
+  },
+  "size": "Physical size: 1080x1920",
+  "density": "Physical density: 420",
+  "fontScale": "null",
+  "transitionScale": "0",
+  "method": "Read-only hashes compared to existing prior-QA backup; no AVD database copied out"
+}

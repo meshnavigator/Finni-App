@@ -1,0 +1,16 @@
+{
+  "restoredFiles": [
+    "files/BridgelessReactNativeDevBundle.js",
+    "files/SQLite/finni-control.db",
+    "files/SQLite/finni-control.db-shm",
+    "files/SQLite/finni-control.db-wal",
+    "files/SQLite/finni-main.db",
+    "shared_prefs/com.meshnavigator.finni_preferences.xml",
+    "shared_prefs/expo.modules.kotlin.PersistentDataManager.xml",
+    "shared_prefs/WebViewChromiumPrefs.xml"
+  ],
+  "hashesMatch": true,
+  "wmSize": "Physical size: 1080x1920",
+  "wmDensity": "Physical density: 420",
+  "fontScale": "1.0"
+}

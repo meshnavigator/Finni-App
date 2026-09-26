@@ -1,0 +1,18 @@
+{
+  "files": {
+    "files/BridgelessReactNativeDevBundle.js": true,
+    "files/SQLite/finni-control.db": true,
+    "files/SQLite/finni-control.db-shm": true,
+    "files/SQLite/finni-control.db-wal": true,
+    "files/SQLite/finni-main.db": true,
+    "shared_prefs/com.meshnavigator.finni_preferences.xml": true,
+    "shared_prefs/expo.modules.kotlin.PersistentDataManager.xml": true,
+    "shared_prefs/WebViewChromiumPrefs.xml": true
+  },
+  "wmSize": "Physical size: 1080x1920",
+  "wmDensity": "Physical density: 420",
+  "fontScale": "null",
+  "transitionScale": "0",
+  "appStoppedAfterRestore": true,
+  "method": "Restore already existing prior-QA backup after matching all eight baseline SHA256; verify on-device hashes without copying a database out."
+}

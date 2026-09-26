@@ -1,0 +1,17 @@
+[
+  {
+    "case": "QA-missing",
+    "pass": true,
+    "recovery": "home-return"
+  },
+  {
+    "case": "QA-corrupt",
+    "pass": true,
+    "recovery": "home-return"
+  },
+  {
+    "case": "QA-object",
+    "pass": true,
+    "recovery": "home-return"
+  }
+]

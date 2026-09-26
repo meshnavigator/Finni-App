@@ -1,0 +1,18 @@
+[
+  {
+    "case": "ordinary",
+    "issues": []
+  },
+  {
+    "case": "small",
+    "issues": []
+  },
+  {
+    "case": "large",
+    "issues": []
+  },
+  {
+    "case": "large-stress",
+    "issues": []
+  }
+]

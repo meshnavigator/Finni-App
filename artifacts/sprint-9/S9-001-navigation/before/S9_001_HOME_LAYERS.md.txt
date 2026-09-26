@@ -1,0 +1,33 @@
+# S9-001: Home — данные, композиция и маршруты
+
+Актуальная структура: DEC-2026-09-25-013.
+
+```mermaid
+flowchart TD
+  DB[(SQLite)] --> Runtime[AppRuntime snapshot]
+  DB --> History[Read-only lesson history]
+  History --> Recommendation[Local catalog recommendation]
+  Runtime --> Home[HomeScreen]
+  Recommendation --> Home
+  Insets[SafeAreaProvider: реальные insets] --> Home
+  Home --> Money[Единый блок денег и предмета мечты]
+  Home --> Scene[Тихая native-сцена / портрет при крупном тексте]
+  Scene --> Pet[Принятые PNG / expressions / fallback]
+  Home --> Lesson[Одно занятие: открыть рекомендованное]
+  Lesson --> LessonRoute[Существующий openLesson]
+  Home --> Next[Контекстный следующий маршрут]
+  Home --> Nav[Домик / План / Покупки / Копилка]
+  Home --> Menu[Меню: вторичные разделы и каталог]
+  Nav --> Routes[Существующие экраны разделов]
+  Next --> Routes
+  Money --> Routes
+  Menu --> Routes
+  Routes --> Confirm[Существующее подтверждение / domain command]
+  Confirm --> DB
+  Home --> Modal[Меню / сообщение / справка]
+  Modal --> Pause[Pause scene + запрет taps и a11y подложки]
+  Back[Android Back] --> Modal
+  Back --> Home
+```
+
+Home не выполняет покупки, переводы или завершение периода. На обычных профилях одна основная навигация находится снизу; при fontScale >1.2 та же модель переносится в меню, а обязательная сводка остаётся одновременно видна. CLOSED проверяется как presentation state; сохранённый закрытый период lifecycle проецирует в READY/WAITING.

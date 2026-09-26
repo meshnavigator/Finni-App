@@ -1,0 +1,19 @@
+{
+  "apkSha256": "c310c4554f4113994bba192802ed6fd10e5f971334928d16d49d20ecefe75d27",
+  "results": [
+    {
+      "case": "route-План",
+      "moneyUnchanged": true,
+      "pass": true
+    },
+    {
+      "case": "purchase-confirm-cancel",
+      "pass": true
+    },
+    {
+      "case": "route-Покупки",
+      "moneyUnchanged": true,
+      "pass": true
+    }
+  ]
+}

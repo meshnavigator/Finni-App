@@ -1,0 +1,13 @@
+skip-independent-1 PASS
+skip-independent-1.19 PASS
+skip-independent-2 PASS
+navigation-during-reaction-1 PASS
+navigation-during-reaction-2 PASS
+QA-reduced PASS
+QA-thoughtful PASS
+system-reduced PASS
+background-cancel PASS
+QA-missing-navigation-survives PASS
+QA-goal-navigation-survives PASS
+resource-recovery PASS
+PASS 12 reaction/resource checks

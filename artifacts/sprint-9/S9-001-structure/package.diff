@@ -1,0 +1,446 @@
+--- HomeScreen.tsx before this package
++++ HomeScreen.tsx delivery
+@@ -4,7 +4,8 @@
+ import type { AppSnapshot } from '../application/app-runtime.ts';
+ import { homeScreenModel } from '../application/ui-model.ts';
+ import FinniHomeScene, { type HomeReaction } from './FinniHomeScene.tsx';
+-import { OBJECT_SOURCES, goalSource } from './room-assets.ts';
++import { goalSource } from './room-assets.ts';
++import { homeNextStep } from './home-next-step.ts';
+ import type { SceneRect } from './home-scene-layout.ts';
+ 
+ export type HomeScreenProps = Readonly<{
+@@ -12,23 +13,32 @@
+   motionEnabled: boolean; reaction: HomeReaction | null; lessonTitle: string | null; demo: boolean;
+   onReactionFinished: (id: number) => void; onReactionCancelled: (id: number) => void;
+   onDismissNotice: () => void; onOpenDay: () => void; onResults: () => void; onEditPet: () => void;
+-  onHelp: () => void; onLesson: () => void; onSection: (title: string) => void;
++  onHelp: () => void; onLesson: () => void; onAllLessons: () => void; onSection: (title: string) => void;
+ }>;
+ 
+-const HOME_ICONS = {
+-  home: require('../../assets/ui/home/home.png'),
+-  progress: require('../../assets/ui/home/progress.png'),
+-  adult: require('../../assets/ui/home/adult.png'),
+-  help: require('../../assets/ui/home/help.png'),
++const ICONS = {
++  home: require('../../assets/ui/home-v2/home.png'), plan: require('../../assets/ui/home-v2/plan.png'),
++  shop: require('../../assets/ui/home-v2/shop.png'), savings: require('../../assets/ui/home-v2/savings.png'),
++  menu: require('../../assets/ui/home-v2/menu.png'), book: require('../../assets/ui/home-v2/book.png'),
++  food: require('../../assets/ui/home-v2/food.png'), care: require('../../assets/ui/home-v2/care.png'),
++  mood: require('../../assets/ui/home-v2/mood.png'), arrow: require('../../assets/ui/home-v2/arrow.png'),
+ };
+-function RouteButton({ label, onPress, selected = false, icon, compact = false }: Readonly<{ label: string; onPress: () => void; selected?: boolean; icon?: keyof typeof HOME_ICONS; compact?: boolean }>) {
+-  return <Pressable accessibilityRole="button" accessibilityState={{ selected }} onPress={onPress} style={({ pressed }) => [styles.route, icon && styles.railRoute, compact && styles.compactRoute, pressed && styles.pressed]}>{icon && <Image accessible={false} source={HOME_ICONS[icon]} style={[styles.routeIcon, compact && styles.compactRouteIcon]} />}<Text style={styles.routeText}>{label}</Text></Pressable>;
++const ROUTES = [
++  { label: 'Домик', icon: 'home' }, { label: 'План', icon: 'plan' },
++  { label: 'Покупки', icon: 'shop' }, { label: 'Копилка', icon: 'savings' },
++] as const;
++function Icon({ name, size = 24 }: Readonly<{ name: keyof typeof ICONS; size?: number }>) {
++  return <Image accessible={false} source={ICONS[name]} style={{ width: size, height: size }} />;
+ }
+-
+-/** Home owns presentation only. All finance routes retain their confirmation screens. */
++function MenuRow({ label, onPress }: Readonly<{ label: string; onPress: () => void }>) {
++  return <Pressable accessibilityRole="button" onPress={onPress} style={({ pressed }) => [styles.menuRow, pressed && styles.pressed]}><Text style={styles.body}>{label}</Text><Icon name="arrow" /></Pressable>;
++}
++
++/** Presentation only: next steps open existing routes; money is confirmed there. */
+ export default function HomeScreen(props: HomeScreenProps) {
+   const viewport = useWindowDimensions();
+   const large = viewport.fontScale > 1.2;
++  const short = viewport.height < 720;
+   const profile = props.snapshot.profile!;
+   const life = props.snapshot.lifecycle!;
+   const model = homeScreenModel(profile, life);
+@@ -36,126 +46,196 @@
+   const purchases = props.snapshot.commerce?.purchases ?? [];
+   const [menu, setMenu] = useState(false);
+   const [skipReactionId, setSkipReactionId] = useState<number | null>(null);
++  const [failedGoal, setFailedGoal] = useState<string | null>(null);
++  const [sceneSize, setSceneSize] = useState({ width: viewport.width - 24, height: 260 });
+   const canSkip = props.reaction?.skippable && skipReactionId !== props.reaction.id;
+-  const [size, setSize] = useState({ width: viewport.width, height: viewport.height });
+-  const short = !large && size.height < 700;
+-  const scaledShort = short && viewport.fontScale > 1.05;
+-  const [region, setRegion] = useState<SceneRect>({ x: 6, y: 220, width: 100, height: 100 });
+-  const [copyHeight, setCopyHeight] = useState(112);
+-  const [sceneRect, setSceneRect] = useState<SceneRect>({ x: 12, y: 150, width: 336, height: 300 });
+-  const [failedObjects, setFailedObjects] = useState<readonly string[]>([]);
+-  const stateWord = (slot: string) => purchases.some(({ item }) => item.slot === slot) ? 'готово'
+-    : life.state === 'CLOSED' || life.state === 'WAITING' ? 'нет' : 'выберем';
+-  const food = `Еда: ${stateWord('food')}`;
+-  const care = `Уход: ${stateWord('care')}`;
++  const hasFood = purchases.some(({ item }) => item.slot === 'food');
++  const hasCare = purchases.some(({ item }) => item.slot === 'care');
++  const closed = life.state === 'CLOSED' || life.state === 'WAITING';
++  const food = hasFood ? 'Еда: есть' : closed ? 'Еда: нет' : 'Еда: выберем';
++  const care = hasCare ? 'Уход: есть' : closed ? 'Уход: нет' : 'Уход: выберем';
+   const mood = props.reaction?.expression === 'happy' ? 'Радостно' : props.reaction?.expression === 'thoughtful' ? 'Задумчиво'
+     : props.reaction?.expression === 'inspired' ? 'Вдохновлённо' : 'Спокойно';
+   const allGoals = (props.snapshot.commerce?.claimedGoalIds.length ?? 0) === 3;
+-  const goalName = goal?.name ?? (allGoals ? 'Мечты этого набора получены' : 'Выбери мечту');
++  const goalName = goal?.name ?? (allGoals ? 'Все мечты получены' : 'Выбери мечту');
+   const remaining = goal ? Math.max(0, goal.cost - life.savings) : null;
+-  const primary = () => {
+-    if (model.action.route === 'open-day') props.onOpenDay();
+-    else if (model.action.route === 'plan') props.onSection('План');
+-    else if (model.action.route === 'day' || model.action.route === 'results') props.onResults();
++  const goalImage = goalSource(goal?.id ?? null);
++  const next = homeNextStep({ state: life.state, hasFood, hasCare, hasGoal: Boolean(goal), allGoals, savings: life.savings, large });
++  const runNext = () => {
++    if (next.route === 'open-day') props.onOpenDay();
++    else if (next.route === 'results') props.onResults();
++    else if (next.route !== 'waiting') props.onSection(next.route);
+   };
+-  const compactAction = { READY: 'Начать день', DRAFT: 'К плану', ACTIVE: 'Мой день', CLOSED: 'Итоги дня', WAITING: 'День позже', STORAGE_ERROR: 'Повторить', NO_PROFILE: 'Питомец' }[life.state];
++  const portraitSize = short ? 120 : 152;
++  const blocked = props.busy || !model.action.enabled;
+   const navigate = (action: () => void) => { setMenu(false); action(); };
+-  const text = [styles.text, large && styles.largeText];
+-  const small = [styles.small, large && styles.largeSmall];
+-  const button = <Pressable accessibilityRole="button" accessibilityLabel={props.busy ? 'Подождите' : model.action.label} accessibilityState={{ disabled: props.busy || !model.action.enabled }} disabled={props.busy || !model.action.enabled} onPress={primary} style={({ pressed }) => [styles.primary, short && styles.shortPrimary, large && styles.largePrimary, (!model.action.enabled || props.busy) && styles.disabled, pressed && styles.pressed]} testID="home-primary"><Text style={[styles.primaryText, large && styles.largePrimaryText]}>{props.busy ? 'Подождите…' : large ? compactAction : model.action.label}</Text></Pressable>;
+-  const lesson = <Pressable accessibilityRole="button" accessibilityHint="Открывает список занятий" onPress={props.onLesson} style={[styles.lesson, large && styles.largeLesson]} testID="home-lesson"><Text style={small}>Занятие</Text><Text style={[text, styles.bold]}>{props.lessonTitle ?? 'Выбери занятие'}</Text></Pressable>;
+-  const state = <View style={[styles.state, large && styles.largeState]} testID="home-care"><Text style={large ? small : styles.statusText}>{food}</Text><Text style={large ? small : styles.statusText}>{care}</Text><Text accessibilityLabel={`Настроение: ${mood}`} style={large ? small : styles.statusText}>{mood}</Text></View>;
++  const petRegion: SceneRect = large
++    ? { x: 0, y: 0, width: portraitSize, height: portraitSize }
++    : { x: 24, y: short ? 8 : 34, width: Math.max(80, sceneSize.width - 48), height: Math.max(48, sceneSize.height - (short ? 46 : 84)) };
++  const primary = <Pressable accessibilityRole="button" accessibilityState={{ disabled: blocked }} disabled={blocked} onPress={runNext}
++    style={({ pressed }) => [styles.primary, short && styles.shortPrimary, large && styles.largePrimary, blocked && styles.disabled, pressed && styles.pressed]} testID="home-primary">
++    <Text style={[styles.primaryText, large && styles.largePrimaryText]}>{props.busy ? 'Подождите…' : next.label}</Text>
++  </Pressable>;
++  const menuButton = <Pressable accessibilityRole="button" accessibilityLabel={canSkip ? 'Пропустить анимацию' : 'Меню'} onPress={() => canSkip ? setSkipReactionId(props.reaction!.id) : setMenu(true)}
++    style={({ pressed }) => [styles.menuButton, large && styles.largeMenuButton, pressed && styles.pressed]} testID="home-sections">
++    {!large && <Icon name="menu" size={18} />}<Text style={styles.caption}>{canSkip ? 'Пропуск' : 'Меню'}</Text>
++  </Pressable>;
++  const state = <View style={[styles.state, large && [styles.largeState, { marginLeft: portraitSize + 10 }]]} testID="home-care">
++    {([{ name: 'food', text: food }, { name: 'care', text: care }, { name: 'mood', text: mood }] as const).map((item) =>
++      <View key={item.name} style={[styles.stateItem, large && styles.largeStateItem]}>
++        {!large && <Icon name={item.name} size={18} />}
++        <Text accessibilityLabel={item.name === 'mood' ? 'Настроение: ' + mood : undefined} style={[styles.caption, !large && styles.stateText]}>{item.text}</Text>
++      </View>)}
++  </View>;
++  const navigation = <View style={[styles.nav, short && !large && styles.shortNav, large && styles.menuNav]} accessibilityRole="tablist" testID="home-navigation">
++    {ROUTES.map(({ label, icon }) => <Pressable key={label} accessibilityRole="tab" accessibilityState={{ selected: label === 'Домик' }}
++      onPress={() => label === 'Домик' ? setMenu(false) : navigate(() => props.onSection(label))}
++      style={({ pressed }) => [styles.navItem, short && !large && styles.shortNavItem, large && styles.menuNavItem, label === 'Домик' && styles.navSelected, pressed && styles.pressed]}>
++      <Icon name={icon} /><Text style={[styles.navText, label === 'Домик' && styles.navSelectedText]}>{label}</Text>
++    </Pressable>)}
++  </View>;
+ 
+   return <SafeAreaView style={styles.safe}>
+-    <View style={styles.home} onLayout={({ nativeEvent: { layout } }) => setSize(layout)} testID={large ? 'home-large-summary' : 'home-v42'}>
+-      <View pointerEvents="none" style={StyleSheet.absoluteFill} importantForAccessibility="no-hide-descendants">
+-        <FinniHomeScene key={`${profile.shapeId}-${profile.patternId}`} accessibilityLabel={`${profile.name}. ${food}. ${care}. ${mood}`} careLabel={`${food}. ${care}`} height={size.height} paused={props.scenePaused || menu || Boolean(props.notice)} motionEnabled={props.motionEnabled} stage={life.petStage} appearance={profile} reaction={props.reaction} onReactionFinished={props.onReactionFinished} onReactionCancelled={props.onReactionCancelled} showCaption={false} roomOpacity={large ? .18 : 1} fullscreen petRegion={large ? region : { x: sceneRect.x + (short ? 84 : 4), y: sceneRect.y + copyHeight + 8, width: Math.max(80, sceneRect.width - (short ? (scaledShort ? 174 : 168) : 92)), height: Math.max(48, sceneRect.height - copyHeight - (short ? 12 : 90)) }} hideSkip skipReactionId={skipReactionId} />
++    <View style={[styles.home, short && styles.shortHome, large && styles.largeHome]} testID={large ? 'home-large-summary' : 'home-v42'}
++      accessibilityElementsHidden={menu || Boolean(props.notice)} importantForAccessibility={menu || props.notice ? 'no-hide-descendants' : 'auto'}
++      pointerEvents={menu || props.notice ? 'none' : 'auto'}>
++      <View style={[styles.finances, short && !large && styles.shortFinances, large && styles.largeFinances]} testID="home-finances">
++        <View style={[styles.money, short && !large && styles.shortMoney, large && styles.largeMoney]}>
++          {([['Доступно', life.available], ['Копилка', life.savings]] as const).map(([label, value]) =>
++            <View key={label} accessible accessibilityLabel={label + ': ' + value + ' монет'} style={[styles.metric, large && styles.largeMetric]}>
++              <Text style={styles.caption}>{large ? label : label + ', монет'}</Text>
++              <Text style={[styles.amount, short && !large && styles.shortAmount, large && styles.largeAmount]}>{value}</Text>
++            </View>)}
++        </View>
++        <Pressable accessibilityRole="button" accessibilityHint="Открывает цель и накопления" onPress={() => props.onSection('Копилка')}
++          style={[styles.goal, short && !large && styles.shortGoal, large && styles.largeGoal]} testID="home-goal">
++          {!large && goalImage && failedGoal !== goal?.id && <View style={[styles.goalArt, short && styles.shortGoalArt]}>
++            <Image accessible={false} source={goalImage} onError={() => setFailedGoal(goal!.id)} resizeMode="contain" style={[styles.goalImage, short && styles.shortGoalImage]} />
++          </View>}
++          <View style={styles.goalCopy}>
++            <Text style={[styles.goalTitle, large && styles.largeGoalTitle]}>{large ? 'Цель: ' : 'Мечта · '}{goalName}</Text>
++            {goal ? <>
++              <Text style={styles.caption}>{life.savings} из {goal.cost}{short && !large ? ' · ещё ' + remaining : ' монет'}</Text>
++              {!large && <View accessibilityRole="progressbar" accessibilityValue={{ min: 0, max: goal.cost, now: Math.min(life.savings, goal.cost) }} style={styles.track}>
++                <View style={[styles.fill, { width: `${Math.min(100, life.savings / goal.cost * 100)}%` }]} />
++              </View>}
++              {(!short || large) && <Text style={styles.caption}>{remaining === 0 ? 'Можно получить мечту' : 'Осталось ' + remaining}</Text>}
++            </> : <Text style={styles.caption}>{allGoals ? 'Ты умеешь копить!' : 'На что будем копить?'}</Text>}
++          </View>
++          {!large && <Icon name="arrow" size={18} />}
++        </Pressable>
+       </View>
+-      <View testID="home-hud" style={[styles.hud, short && styles.shortHud, large && styles.largeHud, { height: size.height }]} accessibilityElementsHidden={menu} importantForAccessibility={menu ? 'no-hide-descendants' : 'auto'} pointerEvents={menu ? 'none' : 'box-none'}>
+-        <View style={[styles.summary, large && styles.largeSummary]} testID="home-finances">
+-          {large && !goal && <Text style={small}>Монеты</Text>}
+-          <View style={[styles.money, large && styles.largeMoney]}>{[['Доступно', life.available], ['Копилка', life.savings]].map(([label, value]) => <View key={label} accessible accessibilityLabel={label + ': ' + value + ' монет'} style={[styles.metric, large && styles.largeMetric]}>{!large && !scaledShort && <Image accessible={false} source={OBJECT_SOURCES[label === 'Доступно' ? 'OBJ-COIN' : 'OBJ-CHEST']} style={styles.moneyIcon} />}<View style={large ? styles.largeMetricContent : styles.metricContent}><Text style={small}>{large ? label : label + ', монет'}</Text><Text style={[styles.amount, large && styles.largeAmount]}>{value}</Text></View></View>)}</View>
+-          <Pressable accessibilityRole="button" accessibilityHint="Открывает цель и накопления" onPress={() => props.onSection('Копилка')} style={[styles.goal, large && styles.largeGoal]} testID="home-goal">
+-            <View style={styles.goalHeading}>{!large && <Image accessible={false} source={goalSource(goal?.id ?? null) ?? OBJECT_SOURCES['OBJ-GOAL-DISPLAY']} resizeMode="contain" style={styles.goalIcon} />}<Text style={[text, styles.bold, styles.goalTitle]}>{'Цель: ' + goalName}</Text></View>
+-            {goal && (large ? <><Text style={small}>{life.savings} из {goal.cost} монет</Text><Text style={small}>Осталось {remaining}</Text></> : <><Text style={small}>{life.savings} из {goal.cost} монет · Осталось {remaining}</Text><View accessibilityRole="progressbar" accessibilityValue={{ min: 0, max: goal.cost, now: Math.min(life.savings, goal.cost) }} style={styles.track}><View style={[styles.fill, { width: `${Math.min(100, life.savings / goal.cost * 100)}%` }]} /></View></>)}
+-          </Pressable>
++
++      <View style={[styles.scene, short && styles.shortScene, large && [styles.largeScene, { height: portraitSize }]]} onLayout={({ nativeEvent: { layout } }) => setSceneSize(layout)} testID="home-scene-space">
++        {!large && <>
++          <View pointerEvents="none" style={styles.roomArch} /><View pointerEvents="none" style={styles.roomLight} />
++          <View pointerEvents="none" style={styles.roomFloor} />
++          <View pointerEvents="none" style={[styles.rug, { top: petRegion.y + petRegion.height - 18 }]} />
++          {!short && <View style={styles.identity}><Text style={styles.petName}>{profile.name}</Text><Text style={styles.caption}>{model.dayLabel}{props.demo ? ' · Демо' : ''}</Text></View>}
++          <View style={styles.sceneMenu}>{menuButton}</View>
++        </>}
++        <View pointerEvents="none" importantForAccessibility="no-hide-descendants" style={large ? [styles.portrait, { width: portraitSize, height: portraitSize }] : StyleSheet.absoluteFill}>
++          <FinniHomeScene key={profile.shapeId + '-' + profile.patternId} accessibilityLabel={profile.name + '. ' + food + '. ' + care + '. ' + mood}
++            careLabel={food + '. ' + care} height={large ? portraitSize : sceneSize.height} paused={props.scenePaused || menu || Boolean(props.notice)}
++            motionEnabled={props.motionEnabled} stage={life.petStage} appearance={profile} reaction={props.reaction}
++            onReactionFinished={props.onReactionFinished} onReactionCancelled={props.onReactionCancelled}
++            showCaption={false} sceneStyle="quiet" portrait={large} fullscreen petRegion={petRegion} hideSkip skipReactionId={skipReactionId} />
+         </View>
+-        {large ? <>
+-          <View style={styles.largePetRow} onLayout={({ nativeEvent: { layout } }) => setRegion({ x: layout.x, y: layout.y, width: 104, height: layout.height })}>
+-            <Pressable accessibilityRole="button" accessibilityLabel={`${profile.name}, стадия ${life.petStage}. Изменить питомца`} onPress={props.onEditPet} style={styles.petTarget} testID="home-pet-target" />{state}
+-          </View>{lesson}
+-          <View testID="home-footer" style={styles.largeFooter}><Pressable accessibilityRole="button" accessibilityLabel={canSkip ? "Пропустить анимацию" : "Разделы"} onPress={() => canSkip ? setSkipReactionId(props.reaction!.id) : setMenu(true)} style={styles.sections} testID="home-sections"><Text style={small}>{canSkip ? "Пропуск" : "Разделы"}</Text></Pressable>{button}</View>
+-        </> : <>
+-          <View style={styles.sceneSpace} onLayout={({ nativeEvent: { layout } }) => setSceneRect(layout)}>
+-            <View style={[styles.sceneCopy, { width: sceneRect.width - (short ? (scaledShort ? 92 : 80) : 86) }]} onLayout={({ nativeEvent: { layout } }) => setCopyHeight(layout.height)}><View style={styles.inlineState}>{state}</View>{lesson}</View>
+-            <Pressable accessibilityRole="button" accessibilityLabel={`${profile.name}, стадия ${life.petStage}. ${mood}. Изменить питомца`} onPress={props.onEditPet} style={[styles.ordinaryPetTarget, { top: copyHeight + 8 }, short && styles.shortPetTarget, scaledShort && styles.scaledPetTarget]} testID="home-pet-target" />
+-            <View style={[styles.rightRail, short && styles.shortRail, scaledShort && styles.scaledRail]}><RouteButton compact={short} icon="progress" label="Прогресс" onPress={() => props.onSection('Прогресс')} /><RouteButton compact={short} icon="adult" label={'Для\nвзрослого'} onPress={() => props.onSection('Для взрослого')} /><RouteButton compact={short} icon="help" label={canSkip ? 'Пропустить' : 'Как играть'} onPress={canSkip ? () => setSkipReactionId(props.reaction!.id) : props.onHelp} /></View>
+-              <View pointerEvents="box-none" style={styles.objects}>{[
+-                ['OBJ-PLANNER', 'Планер', 'План'], ['OBJ-CARE', 'Забота', 'Покупки'], ['OBJ-CHEST', 'Копилка', 'Копилка'],
+-              ].map(([id, label, route]) => <Pressable key={id} accessibilityRole="button" accessibilityLabel={label} onPress={() => props.onSection(route!)} style={({ pressed }) => [styles.object, scaledShort && styles.scaledObject, id === 'OBJ-PLANNER' ? styles.plannerAnchor : id === 'OBJ-CARE' ? styles.careAnchor : styles.chestAnchor, id === 'OBJ-CARE' && short && styles.shortCareAnchor, pressed && styles.pressed]} testID={`room-object-${id}`}>
+-                {!failedObjects.includes(id!) && <Image accessible={false} source={OBJECT_SOURCES[id!]} resizeMode="contain" onError={() => setFailedObjects((old) => [...old, id!])} style={styles.objectImage} />}<Text style={styles.objectLabel}>{label}</Text>
+-              </Pressable>)}</View>
+-          </View>
+-          <View testID="home-footer" style={styles.footer}>{button}<View style={styles.nav} accessibilityRole="tablist">{['Домик', 'План', 'Покупки', 'Копилка'].map((label) => <Pressable key={label} accessibilityRole="tab" accessibilityState={{ selected: label === 'Домик' }} onPress={() => label !== 'Домик' && props.onSection(label)} style={[styles.navItem, label === 'Домик' && styles.navSelected]}>{label === 'Домик' ? <Image accessible={false} source={HOME_ICONS.home} style={styles.navIcon} /> : <Image accessible={false} source={OBJECT_SOURCES[label === 'План' ? 'OBJ-PLANNER' : label === 'Покупки' ? 'OBJ-CARE' : 'OBJ-CHEST']} style={styles.navIcon} />}<Text style={[styles.small, label === 'Домик' && styles.bold]}>{label}</Text></Pressable>)}</View></View>
+-        </>}
++        <Pressable accessibilityRole="button" accessibilityLabel={profile.name + ', стадия ' + life.petStage + '. ' + mood + '. Изменить питомца'} onPress={props.onEditPet}
++          style={large ? [styles.portraitTarget, { width: portraitSize, height: portraitSize }] : [styles.petTarget, { left: petRegion.x, top: petRegion.y + (short ? 48 : 24), width: petRegion.width, height: Math.max(48, petRegion.height - (short ? 48 : 24)) }]} testID="home-pet-target" />
++        {state}
+       </View>
+-      <Modal visible={menu} onRequestClose={() => setMenu(false)} animationType="none" accessibilityViewIsModal>
+-        <SafeAreaView style={styles.menu}><ScrollView contentContainerStyle={styles.menuContent}><Text style={[styles.text, styles.bold]}>{profile.name}</Text><Text style={styles.text}>{model.dayLabel}{props.demo ? ' · Демо' : ''}</Text><RouteButton label="Вернуться в домик" onPress={() => setMenu(false)} />{['План', 'Покупки', 'Копилка', 'Прогресс', 'Для взрослого'].map((label) => <RouteButton key={label} label={label} onPress={() => navigate(() => props.onSection(label))} />)}<RouteButton label="Занятия" onPress={() => navigate(props.onLesson)} /><RouteButton label="О питомце" onPress={() => navigate(props.onEditPet)} /><RouteButton label="Как играть" onPress={() => navigate(props.onHelp)} /></ScrollView></SafeAreaView>
+-      </Modal>
+-      <Modal visible={Boolean(props.notice)} transparent onRequestClose={props.onDismissNotice}><View style={styles.noticeOverlay}><View style={styles.summary}><Text accessibilityLiveRegion="polite" style={styles.text}>{props.notice}</Text><RouteButton label="Понятно" onPress={props.onDismissNotice} /></View></View></Modal>
++
++      <Pressable accessibilityRole="button" accessibilityHint="Открывает это занятие" disabled={props.busy} accessibilityState={{ disabled: props.busy }} onPress={props.onLesson}
++        style={({ pressed }) => [styles.lesson, short && !large && styles.shortLesson, large && styles.largeLesson, pressed && styles.pressed]} testID="home-lesson">
++        {!large && <View style={styles.lessonIcon}><Icon name="book" size={26} /></View>}
++        <View style={styles.lessonCopy}><Text style={styles.caption}>Занятие</Text><Text style={[styles.lessonTitle, large && styles.largeLessonTitle]}>{props.lessonTitle ?? 'Выбери занятие'}</Text></View>
++        {!large && <Icon name="arrow" size={20} />}
++      </Pressable>
++      <View style={[styles.footer, large && styles.largeFooter]} testID="home-footer">{large && menuButton}{primary}</View>
++      {!large && navigation}
+     </View>
++
++    <Modal visible={menu} onRequestClose={() => setMenu(false)} animationType="none" accessibilityViewIsModal>
++      <SafeAreaView style={styles.safe}><ScrollView contentContainerStyle={styles.menuContent}>
++        <Text style={styles.menuTitle}>Домик {profile.name}</Text><Text style={styles.body}>{model.dayLabel}{props.demo ? ' · Демо' : ''}</Text>
++        <MenuRow label="Закрыть меню" onPress={() => setMenu(false)} />
++        {large && navigation}
++        {canSkip && <MenuRow label="Пропустить анимацию" onPress={() => { setSkipReactionId(props.reaction!.id); setMenu(false); }} />}
++        <MenuRow label="Все занятия" onPress={() => navigate(props.onAllLessons)} />
++        <MenuRow label="Прогресс" onPress={() => navigate(() => props.onSection('Прогресс'))} />
++        <MenuRow label="О питомце" onPress={() => navigate(props.onEditPet)} />
++        <MenuRow label="Как играть" onPress={() => navigate(props.onHelp)} />
++        <MenuRow label="Для взрослого" onPress={() => navigate(() => props.onSection('Для взрослого'))} />
++      </ScrollView></SafeAreaView>
++    </Modal>
++    <Modal visible={Boolean(props.notice)} transparent onRequestClose={props.onDismissNotice} accessibilityViewIsModal>
++      <View style={styles.noticeOverlay}><View style={styles.noticeCard}><Text accessibilityLiveRegion="polite" style={styles.body}>{props.notice}</Text><MenuRow label="Понятно" onPress={props.onDismissNotice} /></View></View>
++    </Modal>
+   </SafeAreaView>;
+ }
+ 
+-// Keep alpha on the material only: text and illustrations stay fully opaque.
+-// Secondary ink remains above 4.5:1 even when this surface is over black.
+-const HOME_SURFACE = { backgroundColor: 'rgba(255, 248, 235, 0.78)', borderWidth: StyleSheet.hairlineWidth, borderColor: 'rgba(255, 255, 255, 0.34)' };
+ const styles = StyleSheet.create({
+-  safe: { flex: 1, backgroundColor: '#F8F1E8' },
+-  home: { flex: 1 }, hud: { padding: 12, gap: 10 }, shortHud: { padding: 10, gap: 8 }, largeHud: { padding: 10, gap: 8 },
+-  text: { color: '#302D2A', includeFontPadding: false, fontSize: 15, lineHeight: 19 }, largeText: { includeFontPadding: false, fontSize: 14, lineHeight: 16.5 },
+-  small: { color: '#514537', includeFontPadding: false, fontSize: 12, lineHeight: 16 }, largeSmall: { includeFontPadding: false, fontSize: 12, lineHeight: 14 },
+-  bold: { fontWeight: '600' }, statusText: { color: '#514537', includeFontPadding: false, fontSize: 12, lineHeight: 16 },
+-  summary: { ...HOME_SURFACE, padding: 10, borderRadius: 20 }, largeSummary: { padding: 10, paddingHorizontal: 9, borderRadius: 20 },
+-  money: { flexDirection: 'row', gap: 10 }, largeMoney: { flexDirection: 'column', gap: 2 },
+-  metric: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: 6 }, metricContent: { flex: 1 },
+-  moneyIcon: { width: 26, height: 26, resizeMode: 'contain' },
+-  largeMetric: { flex: 0 }, largeMetricContent: { flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 4 },
+-  amount: { color: '#302D2A', includeFontPadding: false, fontSize: 20, lineHeight: 24, fontWeight: '700', fontVariant: ['tabular-nums'] },
+-  largeAmount: { includeFontPadding: false, fontSize: 16, lineHeight: 18, fontWeight: '600' },
+-  goal: { minHeight: 48, paddingTop: 6, marginTop: 6, borderTopWidth: 1, borderTopColor: 'rgba(81, 69, 55, 0.14)' },
+-  largeGoal: { paddingTop: 6, marginTop: 6 }, goalHeading: { flexDirection: 'row', alignItems: 'center', gap: 5 }, goalIcon: { width: 20, height: 20 }, goalTitle: { flex: 1 },
+-  track: { height: 4, borderRadius: 2, backgroundColor: 'rgba(81, 69, 55, 0.16)', marginTop: 4 }, fill: { height: 4, backgroundColor: '#4B7046', borderRadius: 2 },
+-  sceneCopy: { ...HOME_SURFACE, borderRadius: 18 },
+-  state: { flexDirection: 'row', flexWrap: 'wrap', columnGap: 6, rowGap: 0 },
+-  inlineState: { paddingHorizontal: 9, paddingTop: 8 },
+-  largeState: { ...HOME_SURFACE, flexDirection: 'column', flexWrap: 'nowrap', gap: 0, marginLeft: 112, padding: 8, borderRadius: 20, flex: 1 },
+-  lesson: { borderRadius: 18, paddingHorizontal: 9, paddingTop: 6, paddingBottom: 8, minHeight: 48, justifyContent: 'center' },
+-  largeLesson: { ...HOME_SURFACE, padding: 10, borderRadius: 20 },
+-  sceneSpace: { flex: 1, minHeight: 240 },
+-  rightRail: { position: 'absolute', right: 0, top: 0, width: 78, gap: 6 }, shortRail: { width: 72 }, scaledRail: { width: 84 },
+-  route: { ...HOME_SURFACE, borderRadius: 18, minHeight: 48, minWidth: 48, padding: 10, justifyContent: 'center' },
+-  railRoute: { minHeight: 66, paddingVertical: 7, paddingHorizontal: 3 },
+-  compactRoute: { minHeight: 52, paddingVertical: 4, paddingHorizontal: 2 }, compactRouteIcon: { width: 20, height: 20, marginBottom: 2 },
+-  routeIcon: { width: 26, height: 26, alignSelf: 'center', marginBottom: 3 },
+-  routeText: { includeFontPadding: false, fontSize: 12, lineHeight: 15, color: '#514537', textAlign: 'center' },
++  safe: { flex: 1, backgroundColor: '#F6F0E6' },
++  home: { flex: 1, padding: 12, gap: 10 }, shortHome: { padding: 10, gap: 6 }, largeHome: { padding: 10, gap: 8 },
++  body: { color: '#3D352D', includeFontPadding: false, fontSize: 16, lineHeight: 22 },
++  caption: { color: '#665444', includeFontPadding: false, fontSize: 12, lineHeight: 15 },
++  finances: { borderRadius: 24, backgroundColor: '#FFFCF6', padding: 14, paddingBottom: 12 },
++  shortFinances: { padding: 10 }, shortMoney: { paddingBottom: 6 }, shortAmount: { fontSize: 20, lineHeight: 23 },
++  shortGoal: { minHeight: 54, paddingTop: 6, gap: 8 }, shortGoalArt: { width: 48, height: 48, borderRadius: 14 }, shortGoalImage: { width: 46, height: 46 },
++  largeFinances: { padding: 10, borderRadius: 22 },
++  money: { flexDirection: 'row', gap: 16, paddingBottom: 10 }, largeMoney: { flexDirection: 'column', gap: 2, paddingBottom: 6 },
++  metric: { flex: 1, gap: 2 }, largeMetric: { flex: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 4 },
++  amount: { color: '#3D352D', includeFontPadding: false, fontSize: 24, lineHeight: 28, fontWeight: '700', fontVariant: ['tabular-nums'] },
++  largeAmount: { fontSize: 16, lineHeight: 18, fontWeight: '600' },
++  goal: { minHeight: 72, borderTopWidth: 1, borderTopColor: '#EAE0D1', paddingTop: 10, flexDirection: 'row', gap: 10, alignItems: 'center' },
++  largeGoal: { minHeight: 48, paddingTop: 6 },
++  goalArt: { width: 62, height: 64, borderRadius: 17, backgroundColor: '#F4E8D0', alignItems: 'center', justifyContent: 'center' },
++  goalImage: { width: 58, height: 58 }, goalCopy: { flex: 1, gap: 3 },
++  goalTitle: { color: '#3D352D', includeFontPadding: false, fontSize: 14, lineHeight: 18, fontWeight: '600' },
++  largeGoalTitle: { fontSize: 14, lineHeight: 16 },
++  track: { height: 5, borderRadius: 3, backgroundColor: '#E8DECC', marginVertical: 1 },
++  fill: { height: 5, borderRadius: 3, backgroundColor: '#5F7754' },
++  scene: { flex: 1, minHeight: 180, borderRadius: 28, backgroundColor: '#EDE2CD', overflow: 'hidden' },
++  shortScene: { minHeight: 130 },
++  roomArch: { position: 'absolute', width: '76%', height: '105%', top: '9%', left: '12%', borderTopLeftRadius: 160, borderTopRightRadius: 160, backgroundColor: '#F5ECDC' },
++  roomLight: { position: 'absolute', top: -30, left: -24, width: 110, height: '110%', backgroundColor: '#FBF3E2', opacity: .55, transform: [{ rotate: '24deg' }] },
++  roomFloor: { position: 'absolute', left: 0, right: 0, bottom: 0, height: '28%', backgroundColor: '#DDC9A8' },
++  rug: { position: 'absolute', left: '12%', width: '76%', height: 42, borderRadius: '50%', backgroundColor: '#C1AB89', borderWidth: 5, borderColor: '#D3BC97' },
++  identity: { position: 'absolute', left: 16, top: 13 },
++  petName: { color: '#594737', fontSize: 18, lineHeight: 23, fontWeight: '600', includeFontPadding: false },
++  sceneMenu: { position: 'absolute', top: 6, right: 6, zIndex: 2 },
++  menuButton: { minWidth: 60, minHeight: 48, padding: 8, gap: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 16, backgroundColor: '#FFFCF6' },
++  largeMenuButton: { minWidth: 86, minHeight: 56, padding: 8 },
++  petTarget: { position: 'absolute', minWidth: 48, minHeight: 48 },
++  state: { position: 'absolute', bottom: 0, left: 0, right: 0, minHeight: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', padding: 7, gap: 5, backgroundColor: '#F9F2E7' },
++  stateItem: { flexDirection: 'row', gap: 4, alignItems: 'center', flexShrink: 1 }, stateText: { fontSize: 11, lineHeight: 14, flexShrink: 1 },
++  largeScene: { flex: 0, minHeight: 112, height: 112, overflow: 'visible', backgroundColor: 'transparent', flexDirection: 'row', borderRadius: 0 },
++  portrait: { position: 'absolute', width: 112, height: 112, borderRadius: 28, overflow: 'hidden', backgroundColor: '#EBDDCA' },
++  portraitTarget: { position: 'absolute', left: 0, top: 0, width: 112, height: 112 },
++  largeState: { position: 'relative', marginLeft: 122, flex: 1, flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center', gap: 1, padding: 0, backgroundColor: 'transparent' },
++  largeStateItem: { flexDirection: 'row', flexShrink: 0 },
++  lesson: { minHeight: 68, borderRadius: 22, backgroundColor: '#FFFCF6', padding: 12, flexDirection: 'row', alignItems: 'center', gap: 10 },
++  lessonIcon: { width: 42, height: 42, borderRadius: 14, backgroundColor: '#EEE7D5', alignItems: 'center', justifyContent: 'center' },
++  shortLesson: { minHeight: 56, padding: 8 }, shortPrimary: { minHeight: 48 }, shortNav: { minHeight: 56 }, shortNavItem: { minHeight: 48 },
++  lessonCopy: { flex: 1, gap: 3 },
++  lessonTitle: { color: '#3D352D', includeFontPadding: false, fontSize: 15, lineHeight: 19, fontWeight: '600' },
++  largeLesson: { minHeight: 48, padding: 10, borderRadius: 20 }, largeLessonTitle: { fontSize: 14, lineHeight: 16 },
++  footer: { flexShrink: 0 },
++  largeFooter: { marginTop: 'auto', flexDirection: 'row', gap: 8 },
++  primary: { minHeight: 50, padding: 10, paddingHorizontal: 16, backgroundColor: '#AE482A', borderRadius: 18, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8 },
++  largePrimary: { minHeight: 56, flex: 1, padding: 8, justifyContent: 'center' },
++  primaryText: { flexShrink: 1, color: '#FFFFFF', includeFontPadding: false, fontSize: 16, lineHeight: 21, fontWeight: '600' },
++  largePrimaryText: { fontSize: 14, lineHeight: 17, textAlign: 'center' },
++  disabled: { backgroundColor: '#806C5B' },
++  nav: { minHeight: 60, padding: 4, borderRadius: 22, flexDirection: 'row', gap: 3, backgroundColor: '#FFFCF6' },
++  navItem: { flex: 1, minHeight: 52, paddingVertical: 3, borderRadius: 17, alignItems: 'center', justifyContent: 'center', gap: 3 },
++  navText: { color: '#665444', includeFontPadding: false, fontSize: 12, lineHeight: 15 }, navSelected: { backgroundColor: '#EEDFCA' }, navSelectedText: { color: '#603C24', fontWeight: '700' },
+   pressed: { transform: [{ scale: .96 }] },
+-  objects: { position: 'absolute', left: 0, bottom: 0, right: 0, height: 72 },
+-  plannerAnchor: { left: 0, bottom: 0 }, careAnchor: { right: 0, bottom: 80 }, shortCareAnchor: { left: 0, right: undefined }, chestAnchor: { right: 0, bottom: 0 },
+-  object: { ...HOME_SURFACE, position: 'absolute', width: 78, height: 72, borderRadius: 18, alignItems: 'center', justifyContent: 'center' },
+-  scaledObject: { height: 64 },
+-  objectImage: { width: 46, height: 43 }, objectLabel: { color: '#514537', includeFontPadding: false, fontSize: 12, lineHeight: 16 },
+-  ordinaryPetTarget: { position: 'absolute', left: 4, bottom: 82, right: 88 }, shortPetTarget: { left: 84, right: 84, bottom: 0 }, scaledPetTarget: { right: 90 },
+-  largePetRow: { minHeight: 108, flexDirection: 'row' }, petTarget: { position: 'absolute', left: 0, width: 104, top: 0, bottom: 0, minHeight: 48, minWidth: 48 },
+-  footer: { gap: 8, flexShrink: 0 },
+-  primary: { backgroundColor: '#AE482A', borderRadius: 18, minHeight: 52, padding: 8, alignItems: 'center', justifyContent: 'center' },
+-  shortPrimary: { minHeight: 48 },
+-  primaryText: { color: '#FFFFFF', includeFontPadding: false, fontSize: 16, lineHeight: 20, fontWeight: '600', textAlign: 'center' }, largePrimaryText: { color: '#FFFFFF', includeFontPadding: false, fontSize: 14, lineHeight: 17 },
+-  disabled: { backgroundColor: '#84705D' },
+-  nav: { ...HOME_SURFACE, height: 60, flexDirection: 'row', borderRadius: 21, padding: 4, gap: 4 },
+-  navItem: { flex: 1, minHeight: 50, alignItems: 'center', justifyContent: 'center', borderRadius: 16 },
+-  navSelected: { backgroundColor: 'rgba(174, 72, 42, 0.09)' }, navIcon: { width: 24, height: 24, resizeMode: 'contain', marginBottom: 2 },
+-  largeFooter: { marginTop: 'auto', flexDirection: 'row', gap: 8, minHeight: 56 }, sections: { ...HOME_SURFACE, minHeight: 56, minWidth: 48, borderRadius: 18, justifyContent: 'center', alignItems: 'center', padding: 8 }, largePrimary: { flex: 1, minHeight: 56 },
+-  menu: { flex: 1, backgroundColor: '#F8F1E8' }, menuContent: { padding: 16, gap: 8 },
++  menuContent: { padding: 18, gap: 12 }, menuTitle: { color: '#3D352D', fontSize: 24, lineHeight: 30, fontWeight: '600' },
++  menuRow: { minHeight: 56, borderRadius: 18, padding: 14, backgroundColor: '#FFFCF6', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12 },
++  menuNav: { flexWrap: 'wrap' }, menuNavItem: { flex: 0, width: '48%', minHeight: 80 },
+   noticeOverlay: { flex: 1, justifyContent: 'center', padding: 24, backgroundColor: '#00000066' },
++  noticeCard: { padding: 20, borderRadius: 24, backgroundColor: '#FFFCF6', gap: 16 },
+ });
++
+--- FinniHomeScene.tsx before this package
++++ FinniHomeScene.tsx delivery
+@@ -12,7 +12,7 @@
+ } from 'react-native';
+ import { FINNI_ANCHORS, FINNI_CANVAS, FINNI_STAGE_SCALE, type FinniExpression, type FinniStage } from './finni-layer-contract.ts';
+ 
+-import { homePetFrame, type SceneRect } from './home-scene-layout.ts';
++import { homePetFrame, homePetPortraitFrame, type SceneRect } from './home-scene-layout.ts';
+ import { FINNI_APPEARANCE_ASSETS } from './finni-appearance-assets.ts';
+ import { homeFinniAppearance, type FinniAppearance } from './finni-appearance-policy.ts';
+ import { FINNI_EXPRESSION_ASSETS } from './finni-expression-assets.ts';
+@@ -40,6 +40,8 @@
+   showCaption?: boolean;
+   fullscreen?: boolean;
+   roomOpacity?: number;
++  sceneStyle?: 'room' | 'quiet';
++  portrait?: boolean;
+   petRegion?: SceneRect;
+   hideSkip?: boolean;
+   skipReactionId?: number | null;
+@@ -63,14 +65,14 @@
+   const expressionReady = expressionKey !== null && loadedExpression === expressionKey;
+   const showBlink = animationActive && loadedBlinkAppearance === appearanceId
+     && blinkPhase === BLINK_CYCLE_FRAMES - 1;
+-  const petFrame = props.petRegion ? homePetFrame(props.petRegion, props.stage) : {
++  const petFrame = props.petRegion ? props.portrait ? homePetPortraitFrame(props.petRegion) : homePetFrame(props.petRegion, props.stage) : {
+     width: `${stageScale * 100}%` as const,
+     height: `${stageScale * 100}%` as const,
+     left: `${(1 - stageScale) * FINNI_ANCHORS.feet.x / FINNI_CANVAS.width * 100}%` as const,
+     top: `${(1 - stageScale) * FINNI_ANCHORS.feet.y / FINNI_CANVAS.height * 100}%` as const,
+   };
+ 
+-  const petMotion = props.petRegion ? { transformOrigin: [FINNI_ANCHORS.feet.x * (petFrame as ReturnType<typeof homePetFrame>).scale, FINNI_ANCHORS.feet.y * (petFrame as ReturnType<typeof homePetFrame>).scale, 0], transform: [{ scaleY: translateY.interpolate({ inputRange: [-4, 0], outputRange: [1.006, 1] }) }] } : { transform: [{ translateY }] };
++  const petMotion = props.portrait ? {} : props.petRegion ? { transformOrigin: [FINNI_ANCHORS.feet.x * (petFrame as ReturnType<typeof homePetFrame>).scale, FINNI_ANCHORS.feet.y * (petFrame as ReturnType<typeof homePetFrame>).scale, 0], transform: [{ scaleY: translateY.interpolate({ inputRange: [-4, 0], outputRange: [1.006, 1] }) }] } : { transform: [{ translateY }] };
+ 
+   useEffect(() => {
+     void AccessibilityInfo.isReduceMotionEnabled().then(setReduceMotion);
+@@ -169,16 +171,16 @@
+   return (
+     <View
+       accessible={false}
+-      style={[styles.scene, props.fullscreen && { borderRadius: 0, backgroundColor: '#F8F1E8' }, { height: props.height }]}
++      style={[styles.scene, props.fullscreen && { borderRadius: 0, backgroundColor: props.sceneStyle === 'quiet' ? 'transparent' : '#F8F1E8' }, { height: props.height }]}
+       testID="finni-home-scene"
+     >
+-      <Image
++      {props.sceneStyle !== 'quiet' && <Image
+         accessibilityIgnoresInvertColors
+         onError={() => setDecodeError(true)}
+         resizeMode="cover"
+         source={ROOM_SOURCE}
+         style={[styles.layer, { opacity: props.roomOpacity ?? 1 }]}
+-      />
++      />}
+       <Animated.Image
+         key={`${appearanceId}-neutral`}
+         accessible={!props.fullscreen}
+--- home-scene-layout.ts before this package
++++ home-scene-layout.ts delivery
+@@ -21,3 +21,15 @@
+     anchorY,
+   });
+ }
++
++/** Optical head framing at large text sizes; the accepted canvas is never edited. */
++export function homePetPortraitFrame(region: SceneRect) {
++  const scale = Math.min((region.width - 4) / 430, (region.height - 8) / 365);
++  return Object.freeze({
++    width: FINNI_CANVAS.width * scale,
++    height: FINNI_CANVAS.height * scale,
++    left: region.x + region.width / 2 - FINNI_ANCHORS.feet.x * scale,
++    top: region.y + 6 - HOME_PET_BOUNDS.top * scale,
++    scale,
++  });
++}
+--- AppRoot.tsx before this package
++++ AppRoot.tsx delivery
+@@ -834,7 +834,12 @@
+           onReactionCancelled={clearReaction}
+           onEditPet={() => { setMessage(null); setScreen('pet'); }}
+           onHelp={() => setHelpOpen(true)}
+-          onLesson={() => { setMessage(null); setScreen('lesson-catalog'); }}
++          onLesson={() => {
++            const lesson = recommendHomeLesson(mode, snapshot.lifecycle!.periodIndex, snapshot.homeLessons ?? [], LOCAL_DEMO_LESSONS, HOME_LESSON_ORDER);
++            if (lesson) void openLesson(lesson);
++            else { setMessage(null); setScreen('lesson-catalog'); }
++          }}
++          onAllLessons={() => { setMessage(null); setScreen('lesson-catalog'); }}
+           onOpenDay={() => void openDay()}
+           onResults={() => { setMessage(null); setScreen('result'); }}
+           onSection={openSection}

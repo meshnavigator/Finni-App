@@ -1,0 +1,101 @@
+{
+  "apkSha256": "c310c4554f4113994bba192802ed6fd10e5f971334928d16d49d20ecefe75d27",
+  "results": [
+    {
+      "case": "route-План",
+      "moneyUnchanged": true,
+      "pass": true
+    },
+    {
+      "case": "purchase-confirm-cancel",
+      "pass": true
+    },
+    {
+      "case": "route-Покупки",
+      "moneyUnchanged": true,
+      "pass": true
+    },
+    {
+      "case": "savings-confirm-cancel",
+      "pass": true
+    },
+    {
+      "case": "route-Копилка",
+      "moneyUnchanged": true,
+      "pass": true
+    },
+    {
+      "case": "route-home-goal",
+      "moneyUnchanged": true,
+      "pass": true
+    },
+    {
+      "case": "route-home-primary",
+      "moneyUnchanged": true,
+      "pass": true
+    },
+    {
+      "case": "route-home-pet-target",
+      "moneyUnchanged": true,
+      "pass": true
+    },
+    {
+      "case": "route-home-lesson",
+      "moneyUnchanged": true,
+      "pass": true
+    },
+    {
+      "case": "menu-route-Все занятия",
+      "moneyUnchanged": true,
+      "pass": true
+    },
+    {
+      "case": "menu-route-Прогресс",
+      "moneyUnchanged": true,
+      "pass": true
+    },
+    {
+      "case": "menu-route-О питомце",
+      "moneyUnchanged": true,
+      "pass": true
+    },
+    {
+      "case": "menu-route-Как играть",
+      "moneyUnchanged": true,
+      "pass": true
+    },
+    {
+      "case": "menu-route-Для взрослого",
+      "moneyUnchanged": true,
+      "pass": true
+    },
+    {
+      "case": "modal-back",
+      "pass": true
+    },
+    {
+      "case": "large-navigation",
+      "pass": true
+    },
+    {
+      "case": "final-ordinary",
+      "pass": true
+    },
+    {
+      "case": "final-small",
+      "pass": true
+    },
+    {
+      "case": "final-large",
+      "pass": true
+    },
+    {
+      "case": "final-large-stress",
+      "pass": true
+    },
+    {
+      "case": "final-short-119-stress",
+      "pass": true
+    }
+  ]
+}

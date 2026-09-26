@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "C:\00.MIDAS\PROJECTS\28. HackApp. 2026\Finni App\artifacts\sprint-9\S9-001-layout\fault-qa\run.py", line 100, in <module>
+    assert any(n.get('resource-id')=='finni-home-scene' for n in recovered)
+AssertionError
