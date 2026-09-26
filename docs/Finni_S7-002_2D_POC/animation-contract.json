@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "status": "exploratory_not_integrated",
+  "baseAsset": "finni_ref001_cutout_v1.png",
+  "states": {
+    "idle": {
+      "implementation": "deterministic_transform",
+      "durationMs": 6000,
+      "loop": true,
+      "scaleX": [1.0, 1.008, 1.0],
+      "scaleY": [1.0, 0.992, 1.0],
+      "translateY": [0, 5, 0]
+    },
+    "blink": {
+      "implementation": "image_swap",
+      "asset": "finni_ref001_blink_v1.png",
+      "closedDurationMs": 133,
+      "recommendedIntervalMs": [3000, 7000]
+    }
+  },
+  "spriteSheet": {
+    "asset": "finni_idle_sprite_4x3_v1.png",
+    "columns": 4,
+    "rows": 3,
+    "frameWidth": 512,
+    "frameHeight": 548,
+    "frameCount": 12
+  }
+}

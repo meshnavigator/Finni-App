@@ -1,0 +1,332 @@
+{
+  "package": "Finni_S7-002_R3",
+  "status": "candidate_not_art_pass_or_production",
+  "blender": "5.2.2 LTS",
+  "reference": {
+    "path": "C:\\00.MIDAS\\PROJECTS\\28. HackApp. 2026\\docs\\Finni_3D_Addendum_v1.0\\reference\\finni-home-approved.png",
+    "sha256": "84f8dfa0c2c6b86cb4fe25efdc051c3b764fc794a2bf1b08f1f240474f107211",
+    "bundled": false
+  },
+  "r2Preserved": {
+    "sha256": "d5e4ed776b32c04a06eed27eeffaf53746ab06cff19fa76cf00da69d6e20ca83"
+  },
+  "rejectedR1FromAuditedR3Package": {
+    "sha256": "26011d81398eb8f9a16a39400e0244c933564cb3c2b21907982cf84f2c0a219b",
+    "imported": false
+  },
+  "artBrief": {
+    "identity": "compact seated chibi kitten/cat; portrait framing; no upright fox",
+    "headSeatedHeight": "45-50%",
+    "headWidthToHeight": "1.05-1.15",
+    "bodyWidthToHead": "70-82%",
+    "eyeWidthToHead": "18-22%",
+    "muzzleToHead": "40-48%",
+    "earToHeadEars": "22-28%",
+    "pawsToHead": "16-20%",
+    "roughness": "0.65-0.85",
+    "camera": "941x1672 portrait",
+    "rootSliding": "prohibited"
+  },
+  "rig": {
+    "jointNames": [
+      "Joint.Root",
+      "Joint.Spine",
+      "Joint.Neck",
+      "Joint.Head",
+      "Joint.Ear.L",
+      "Joint.Ear.R",
+      "Joint.Eye.L",
+      "Joint.Eye.R",
+      "Joint.Lid.L",
+      "Joint.Lid.R",
+      "Joint.Paw.L",
+      "Joint.Paw.R",
+      "Joint.Tail.Base",
+      "Joint.Tail.Mid",
+      "Joint.Tail.Tip"
+    ],
+    "jointCount": 15,
+    "separateChest": true
+  },
+  "actions": [
+    {
+      "name": "idle",
+      "frames": 72,
+      "seconds": 2.4,
+      "rootLocked": true
+    },
+    {
+      "name": "blink",
+      "frames": 36,
+      "seconds": 1.2,
+      "rootLocked": true
+    },
+    {
+      "name": "joy",
+      "frames": 48,
+      "seconds": 1.6,
+      "rootLocked": true
+    },
+    {
+      "name": "curiosity",
+      "frames": 54,
+      "seconds": 1.8,
+      "rootLocked": true
+    }
+  ],
+  "glb": {
+    "path": "Finni_R3.glb",
+    "sha256": "4d035682e96917d234f5088e5fff03d0daecbad274d1481203a41d5588245830",
+    "animations": [
+      "blink",
+      "curiosity",
+      "idle",
+      "joy"
+    ],
+    "skins": 1,
+    "joints": 15,
+    "images": 5,
+    "nodes": 65
+  },
+  "renders": {
+    "camera": [
+      941,
+      1672
+    ],
+    "videoScalePercent": 50,
+    "videoEvenPadding": true,
+    "stills": [
+      "renders/neutral.png",
+      "renders/idle_extreme.png",
+      "renders/blink_extreme.png",
+      "renders/joy_extreme.png",
+      "renders/curiosity_extreme.png",
+      "renders/acceptance_sheet_ref_neutral_overlay_silhouette.png"
+    ],
+    "videos": [
+      "previews/idle.mp4",
+      "previews/blink.mp4",
+      "previews/joy.mp4",
+      "previews/curiosity.mp4"
+    ]
+  },
+  "measurements": {
+    "silhouetteIoU": "NOT MEASURED",
+    "headEarsIoU": "NOT MEASURED",
+    "landmarkError": "NOT MEASURED",
+    "reason": "Requires owner-approved segmentation/landmark review against original REF-001."
+  },
+  "files": [
+    {
+      "path": "Finni_R3.blend",
+      "sha256": "2a237dd200d8bc71c632ca16ed4d396b7f6b20587649be524e6d02e6a34932ef",
+      "bytes": 311821
+    },
+    {
+      "path": "Finni_R3.blend1",
+      "sha256": "4ba8b858591458b9c342f359eb0fee12a6af5b3b412a8cab0350a560d87a992c",
+      "bytes": 235506
+    },
+    {
+      "path": "Finni_R3.glb",
+      "sha256": "4d035682e96917d234f5088e5fff03d0daecbad274d1481203a41d5588245830",
+      "bytes": 899920
+    },
+    {
+      "path": "previews/blink.mp4",
+      "sha256": "566ec9a11250e29f5759e9344313c02f11df0f121a6e2230c0775d7573cbd28a",
+      "bytes": 20570
+    },
+    {
+      "path": "previews/curiosity.mp4",
+      "sha256": "f9bc8c3172a4ad26cd00a179687546d1dac61adf8a605b004042757d12768847",
+      "bytes": 22857
+    },
+    {
+      "path": "previews/idle.mp4",
+      "sha256": "798704c6f2ccc32173ad3b74126401ac30bf26821c3d59138401e7c2a8c47da2",
+      "bytes": 27135
+    },
+    {
+      "path": "previews/joy.mp4",
+      "sha256": "45bfaff5d09537bb4a9fcad50707a5296db04efa0fe221ff7daafc10f65b4f91",
+      "bytes": 22465
+    },
+    {
+      "path": "PROVENANCE.md",
+      "sha256": "9fd1b5745b5dd5900c0a6bdf00937ada2bbbef5248c416f0926fa5781c3f8e16",
+      "bytes": 2556
+    },
+    {
+      "path": "README.md",
+      "sha256": "93a06e3c9bccf5df454857e2a013c829f3b408cfc4c83ef671aea75eab59753f",
+      "bytes": 1301
+    },
+    {
+      "path": "renders/acceptance_sheet_preview.jpg",
+      "sha256": "5f5f824dba29b000f2fc75d42e896f29997c6948b519fa900ff377694a96982d",
+      "bytes": 67830
+    },
+    {
+      "path": "renders/acceptance_sheet_ref_neutral_overlay_silhouette.png",
+      "sha256": "d2b0318e2896fff62f778d45c98dda304f28a404be37b31709b03e157eb8d72f",
+      "bytes": 1831558
+    },
+    {
+      "path": "renders/blink_extreme.png",
+      "sha256": "172a0bc35c52e46d70306342312fa6d339d55337b55520be93351ac17d2f8910",
+      "bytes": 1582780
+    },
+    {
+      "path": "renders/curiosity_extreme.png",
+      "sha256": "99a6ceb7d5f62c746640cf759d5f4253caab65d414c31a196211071fa82e1c8d",
+      "bytes": 1585577
+    },
+    {
+      "path": "renders/idle_extreme.png",
+      "sha256": "74e6e02b291c933ba697764456c0e0041d3ad4250c9f11fa7d0a9c42999afd1a",
+      "bytes": 1583157
+    },
+    {
+      "path": "renders/joy_extreme.png",
+      "sha256": "adf7688cd47186d96a9f8106ee29deb414906ffbed315bbce7a324d73b855f2c",
+      "bytes": 1582000
+    },
+    {
+      "path": "renders/motion_extremes_preview.jpg",
+      "sha256": "2af911b31c6a066426349d57fafd605a2f383ff5007fe97336006c6c9dfb4680",
+      "bytes": 48756
+    },
+    {
+      "path": "renders/neutral.png",
+      "sha256": "2855957c9f51a635ce799271414332e1b887192368ef107ebe5567b2a85222c8",
+      "bytes": 1583072
+    },
+    {
+      "path": "renders/neutral_character_alpha.png",
+      "sha256": "87b2990044e6632265ffea89b0424508f672c55087943b8e1f2bf2697628fafa",
+      "bytes": 700908
+    },
+    {
+      "path": "renders/silhouette.png",
+      "sha256": "5eaf04808f566be608541a1a7f00e897dd544009bb621934ffe1ea7962b04426",
+      "bytes": 31471
+    },
+    {
+      "path": "source/build_finni_r3.py",
+      "sha256": "56fe872f02661273b26316280d1df47ae9411b274b8526a7c477424dd9bf15fa",
+      "bytes": 37950
+    },
+    {
+      "path": "source/finalize_r3_evidence.py",
+      "sha256": "4e1c9fd321bc9e4a73f802cef2ac8d28c36f6b9887ce6562b0b943f215697db4",
+      "bytes": 5893
+    },
+    {
+      "path": "textures/fur_cream.png",
+      "sha256": "7c22fa08d5f5e05b60e30eedf40fa0e6e1f25c9049a0ed14c001786ae7002597",
+      "bytes": 1109
+    },
+    {
+      "path": "textures/fur_orange.png",
+      "sha256": "c835ee460a990abcab471b57fbd991f4b510d0ae5690e87670a668afd0e4d0a0",
+      "bytes": 1016
+    },
+    {
+      "path": "textures/rug.png",
+      "sha256": "b262abcea217d7ced0ff5d05973befc7259d3a2e95296dad8b04f764c93ec20d",
+      "bytes": 1071
+    },
+    {
+      "path": "textures/wall.png",
+      "sha256": "24309e330ee9dc1f8ed22669a119258d35a2aebd62332cea7cf7aeb45e0be965",
+      "bytes": 1086
+    },
+    {
+      "path": "textures/wood.png",
+      "sha256": "08f928b6e8427eae6e1ff5d21f04c78979d2c5a694b9f91d212d1f665b94826d",
+      "bytes": 1057
+    },
+    {
+      "path": "validator-report.json",
+      "sha256": "e40e5a0a897800c8389f47c4b4cc0d2a513c982bf6186d8bc55b5a6debf2234d",
+      "bytes": 5415
+    },
+    {
+      "path": "VERIFY.md",
+      "sha256": "62bbaefc92d12f364cf92788cd6821c351c556157dd251f24c2f7baad79efeca",
+      "bytes": 3032
+    }
+  ],
+  "budgets": {
+    "bytes": 899920,
+    "meshes": 49,
+    "primitives": 49,
+    "verticesSummedPerPrimitive": 14732,
+    "triangles": 24580,
+    "materials": 8,
+    "embeddedImages": 5,
+    "animations": [
+      "blink",
+      "curiosity",
+      "idle",
+      "joy"
+    ],
+    "skins": 1,
+    "nodes": 65
+  },
+  "validation": {
+    "tool": "Khronos glTF Validator",
+    "report": "validator-report.json",
+    "errors": 0,
+    "warnings": 0,
+    "infos": 16,
+    "hints": 0
+  },
+  "videoProbe": [
+    {
+      "path": "C:/00.MIDAS/PROJECTS/28. HackApp. 2026/docs/Finni_S7-002_R3/previews/idle.mp4",
+      "codec": "h264",
+      "width": 470,
+      "height": 836,
+      "pixelFormat": "yuv420p",
+      "frameRate": "30/1",
+      "frames": 72,
+      "durationSeconds": 2.4,
+      "bytes": 27135
+    },
+    {
+      "path": "C:/00.MIDAS/PROJECTS/28. HackApp. 2026/docs/Finni_S7-002_R3/previews/blink.mp4",
+      "codec": "h264",
+      "width": 470,
+      "height": 836,
+      "pixelFormat": "yuv420p",
+      "frameRate": "30/1",
+      "frames": 36,
+      "durationSeconds": 1.2,
+      "bytes": 20570
+    },
+    {
+      "path": "C:/00.MIDAS/PROJECTS/28. HackApp. 2026/docs/Finni_S7-002_R3/previews/joy.mp4",
+      "codec": "h264",
+      "width": 470,
+      "height": 836,
+      "pixelFormat": "yuv420p",
+      "frameRate": "30/1",
+      "frames": 48,
+      "durationSeconds": 1.6,
+      "bytes": 22465
+    },
+    {
+      "path": "C:/00.MIDAS/PROJECTS/28. HackApp. 2026/docs/Finni_S7-002_R3/previews/curiosity.mp4",
+      "codec": "h264",
+      "width": 470,
+      "height": 836,
+      "pixelFormat": "yuv420p",
+      "frameRate": "30/1",
+      "frames": 54,
+      "durationSeconds": 1.8,
+      "bytes": 22857
+    }
+  ]
+}

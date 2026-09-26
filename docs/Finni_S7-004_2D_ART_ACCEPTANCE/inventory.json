@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "taskId": "S7-004",
+  "status": "blocked_no_production_master_or_owner_verdicts",
+  "checkedAt": "2026-09-20",
+  "scope": "historical reference and comparative 2D POC only; no production classification",
+  "assets": [
+    {
+      "assetId": "REF-001",
+      "path": "../Finni_3D_Addendum_v1.0/reference/finni-home-approved.png",
+      "status": "approved_visual_reference_historical_not_runtime_asset",
+      "sha256": "84f8dfa0c2c6b86cb4fe25efdc051c3b764fc794a2bf1b08f1f240474f107211",
+      "dimensions": { "width": 941, "height": 1672 },
+      "colorModel": "RGB",
+      "alphaBounds": null,
+      "alphaNote": "no alpha channel",
+      "provenanceStatus": "incomplete_for_distribution_scope",
+      "ownerVerdicts": { "art": "not_recorded", "productLegal": "not_recorded" }
+    },
+    {
+      "assetId": "S7-002-2D-OPEN-V1",
+      "path": "../Finni_S7-002_2D_POC/finni_ref001_cutout_v1.png",
+      "status": "comparative_candidate_not_production",
+      "sha256": "88cd415a30faa7e3a2b9c70cd57ff59ea1d68d86ca9601438b3db93ad8ca8b86",
+      "dimensions": { "width": 1212, "height": 1298 },
+      "colorModel": "RGBA (declared by POC VERIFY)",
+      "alphaBounds": { "left": 0, "top": 0, "rightExclusive": 1178, "bottomExclusive": 1294 },
+      "sourceReferenceAssetId": "REF-001",
+      "provenanceStatus": "exact_backend_model_and_generation_id_unavailable",
+      "ownerVerdicts": { "art": "not_recorded", "productLegal": "not_recorded" }
+    },
+    {
+      "assetId": "S7-002-2D-BLINK-V1",
+      "path": "../Finni_S7-002_2D_POC/finni_ref001_blink_v1.png",
+      "status": "comparative_candidate_not_production",
+      "sha256": "0afee6b06cd93d018458a30dae6c240fbbdbc07075e70ce5c0e206912d0dded9",
+      "dimensions": { "width": 1212, "height": 1298 },
+      "colorModel": "RGBA (declared by POC VERIFY)",
+      "alphaBounds": { "left": 0, "top": 0, "rightExclusive": 1180, "bottomExclusive": 1298 },
+      "sourceAssetId": "S7-002-2D-OPEN-V1",
+      "provenanceStatus": "exact_backend_model_and_generation_id_unavailable",
+      "ownerVerdicts": { "art": "not_recorded", "productLegal": "not_recorded" }
+    },
+    {
+      "assetId": "S7-002-2D-IDLE-SHEET-V1",
+      "path": "../Finni_S7-002_2D_POC/finni_idle_sprite_4x3_v1.png",
+      "status": "comparative_candidate_not_production",
+      "sha256": "7f82deb89fbb85f22fe22a4ebd1a80c7fd02d4cdc6741093a9f7e2ca2bfa918e",
+      "dimensions": { "width": 2048, "height": 1644 },
+      "colorModel": "RGBA (declared by POC VERIFY)",
+      "alphaBounds": { "left": 7, "top": 11, "rightExclusive": 2026, "bottomExclusive": 1623 },
+      "sprite": { "columns": 4, "rows": 3, "frameCount": 12, "frameWidth": 512, "frameHeight": 548 },
+      "provenanceStatus": "local_derivative_of_unaccepted_POC_source",
+      "ownerVerdicts": { "art": "not_recorded", "productLegal": "not_recorded" }
+    }
+  ],
+  "requiredBeforeProduction": [
+    "editable_layered_master",
+    "clean_room_home_art_slice",
+    "immutable_production_ids_paths_dimensions_alpha_bounds_sha256",
+    "art_owner_hash_bound_acceptance",
+    "product_legal_owner_hash_bound_acceptance"
+  ]
+}

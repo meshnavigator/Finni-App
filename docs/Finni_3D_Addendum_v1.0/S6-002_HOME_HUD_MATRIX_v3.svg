@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="2020" viewBox="0 0 1600 2020" role="img" aria-labelledby="title desc">
+  <title id="title">S6-002 v3 — матрица адаптации Home/HUD</title>
+  <desc id="desc">Четыре обязательные комбинации: 390 на 844 и 360 на 640 при масштабе шрифта 100 и 200 процентов. Компоненты и приоритеты едины. На 360 на 640 при 200 процентах показан честный конфликт обязательной сводки.</desc>
+  <metadata>artifact=S6-002-v3-adaptation-matrix; status=review; v2=not-approved; qa-005=not-run; qa-006=not-run; font-tokens=16-20-24sp-to-32-40-48sp; hard-conflict=360x640-200</metadata>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#F6F2FF"/><stop offset="1" stop-color="#EAF7F2"/></linearGradient>
+    <linearGradient id="money" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#173D49"/><stop offset="1" stop-color="#286864"/></linearGradient>
+    <linearGradient id="primary" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#7047CF"/><stop offset="1" stop-color="#A05BD4"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#34414A" flood-opacity=".12"/><feDropShadow dx="0" dy="16" stdDeviation="22" flood-color="#34414A" flood-opacity=".10"/></filter>
+    <style>
+      .font { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: #25343B; }
+      .t16 { font-size: 16px; font-weight: 560; }
+      .t20 { font-size: 20px; font-weight: 760; }
+      .t24 { font-size: 24px; font-weight: 780; font-variant-numeric: tabular-nums; }
+      .t32 { font-size: 32px; font-weight: 560; }
+      .t40 { font-size: 40px; font-weight: 760; }
+      .t48 { font-size: 48px; font-weight: 780; font-variant-numeric: tabular-nums; }
+      .white { fill: #FFFFFF; }
+      .meta { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; font-size: 15px; fill: #585568; }
+      .meta16 { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; font-size: 16px; fill: #4E4A5B; }
+      .head { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; font-size: 24px; font-weight: 780; fill: #282537; }
+      .panel { fill: #FFFFFF; stroke: #D3DDE0; }
+      .goal { fill: #FFF2D2; }
+      .care { fill: #E6F2EF; }
+      .lesson { fill: #FFFFFF; }
+      .nav { fill: #FFFFFF; }
+      .active { fill: #E9E1FA; }
+    </style>
+  </defs>
+  <rect width="1600" height="2020" fill="url(#bg)"/>
+  <text class="head" x="60" y="46">S6-002 · HOME/HUD ADAPTATION MATRIX · V3</text>
+  <text class="meta16" x="60" y="74">One system · same components and priorities · V2 NOT APPROVED · QA-005 / QA-006 NOT RUN</text>
+  <rect x="1110" y="28" width="430" height="62" rx="18" fill="#2E2940"/>
+  <text class="meta16 white" x="1132" y="54">DESIGN DATA — NOT IMPLEMENTED</text>
+  <text class="meta white" x="1132" y="78">SRS: B=100 · S=0 · GL-01/150 · LS-P02 available</text>
+
+  <!-- A: 390x844 / 100% -->
+  <text class="head" x="60" y="126">A · 390×844 / 100% · DESIGN CANDIDATE</text>
+  <g transform="translate(60 146)" filter="url(#shadow)">
+    <rect width="390" height="844" rx="32" fill="#F7FBFA" stroke="#173640" stroke-width="2"/>
+    <rect width="390" height="24" rx="32" fill="#173640"/>
+    <text class="font t20" x="16" y="52">Финни</text><text class="font t16" x="16" y="74" fill="#66747B">День 1 · ACTIVE</text>
+    <rect x="326" y="28" width="48" height="48" rx="15" fill="#E6F2EF"/><text class="font t16" x="350" y="59" text-anchor="middle">☻</text>
+    <rect x="16" y="84" width="358" height="80" rx="22" fill="url(#money)"/>
+    <text class="font t16 white" x="32" y="112">Доступно</text><text class="font t24 white" x="32" y="145">100 монет</text>
+    <text class="font t16 white" x="210" y="112">Копилка</text><text class="font t24 white" x="210" y="145">0 монет</text>
+    <rect class="goal" x="16" y="172" width="358" height="56" rx="18"/><text class="font t16" x="32" y="196">Цель · GL-01</text><text class="font t16" x="32" y="219">Воздушный змей · 150</text>
+    <rect x="16" y="236" width="358" height="264" rx="22" fill="#DCEDE8"/>
+    <image href="design/S6-002_v3_scene-preview.png" x="16" y="236" width="358" height="264" preserveAspectRatio="xMidYMid meet"/>
+    <rect class="care" x="16" y="508" width="358" height="48" rx="16"/><text class="font t16" x="32" y="538">Еда и уход</text><text class="font t16" x="358" y="538" text-anchor="end">Открыть план</text>
+    <rect class="lesson" x="16" y="564" width="358" height="72" rx="20"/><text class="font t16" x="32" y="590">LS-P02 · Покупки</text><text class="font t16" x="32" y="620">Детектив предложений</text><rect x="280" y="576" width="78" height="48" rx="15" fill="#E9E1FA"/><text class="font t16" x="319" y="606" text-anchor="middle">Открыть</text>
+    <rect x="16" y="644" width="358" height="56" rx="18" fill="url(#primary)"/><text class="font t20 white" x="195" y="680" text-anchor="middle">Продолжить день</text>
+    <rect class="nav" x="0" y="708" width="390" height="112"/><rect class="active" x="8" y="724" width="82" height="64" rx="18"/>
+    <g class="font t16" text-anchor="middle"><text x="49" y="764">Домик</text><text x="142" y="764">План</text><text x="238" y="764">Покупки</text><text x="338" y="764">Копилка</text></g>
+    <rect y="820" width="390" height="24" fill="#173640"/>
+  </g>
+
+  <!-- B: 360x640 / 100% -->
+  <text class="head" x="540" y="126">B · 360×640 / 100% · DESIGN CANDIDATE</text>
+  <g transform="translate(540 146)" filter="url(#shadow)">
+    <rect width="360" height="640" rx="30" fill="#F7FBFA" stroke="#173640" stroke-width="2"/>
+    <rect width="360" height="16" rx="30" fill="#173640"/>
+    <text class="font t20" x="12" y="42">Финни</text><text class="font t16" x="12" y="62" fill="#66747B">ACTIVE</text><rect x="300" y="16" width="48" height="48" rx="15" fill="#E6F2EF"/>
+    <rect x="12" y="70" width="336" height="68" rx="20" fill="url(#money)"/>
+    <text class="font t16 white" x="26" y="95">Доступно</text><text class="font t20 white" x="26" y="125">100 монет</text><text class="font t16 white" x="194" y="95">Копилка</text><text class="font t20 white" x="194" y="125">0 монет</text>
+    <rect class="goal" x="12" y="146" width="336" height="48" rx="16"/><text class="font t16" x="26" y="176">GL-01 · Воздушный змей · 150</text>
+    <rect x="12" y="202" width="336" height="166" rx="20" fill="#DCEDE8"/><image href="design/S6-002_v3_scene-preview.png" x="12" y="202" width="336" height="166" preserveAspectRatio="xMidYMid meet"/>
+    <rect class="care" x="12" y="376" width="336" height="48" rx="16"/><text class="font t16" x="26" y="406">Еда и уход</text><text class="font t16" x="334" y="406" text-anchor="end">План</text>
+    <rect class="lesson" x="12" y="432" width="336" height="56" rx="18"/><text class="font t16" x="26" y="455">LS-P02 · Детектив</text><text class="font t16" x="26" y="478">предложений</text><rect x="270" y="436" width="70" height="48" rx="14" fill="#E9E1FA"/><text class="font t16" x="305" y="466" text-anchor="middle">Урок</text>
+    <rect x="12" y="496" width="336" height="48" rx="16" fill="url(#primary)"/><text class="font t20 white" x="180" y="527" text-anchor="middle">Продолжить день</text>
+    <rect class="nav" x="0" y="552" width="360" height="64"/><rect class="active" x="4" y="556" width="82" height="56" rx="17"/><g class="font t16" text-anchor="middle"><text x="45" y="590">Домик</text><text x="132" y="590">План</text><text x="222" y="590">Покупки</text><text x="316" y="590">Копилка</text></g>
+    <rect y="616" width="360" height="24" fill="#173640"/>
+  </g>
+
+  <!-- C: 390x844 / 200% -->
+  <text class="head" x="60" y="1062">C · 390×844 / 200% · REVIEW REQUIRED</text>
+  <g transform="translate(60 1082)" filter="url(#shadow)">
+    <rect width="390" height="844" rx="32" fill="#F7FBFA" stroke="#173640" stroke-width="2"/>
+    <rect width="390" height="16" rx="32" fill="#173640"/>
+    <text class="font t40" x="16" y="62">Финни</text><text class="font t32" x="16" y="98">ACTIVE</text>
+    <rect x="16" y="108" width="358" height="120" rx="22" fill="url(#money)"/>
+    <text class="font t32 white" x="30" y="146">Доступно</text><text class="font t48 white" x="30" y="205">100</text><text class="font t32 white" x="148" y="205">монет</text>
+    <text class="font t32 white" x="220" y="146">Копилка</text><text class="font t48 white" x="220" y="205">0</text>
+    <rect class="goal" x="16" y="236" width="358" height="88" rx="20"/><text class="font t32" x="30" y="272">Воздушный змей</text><text class="font t40" x="30" y="316">150</text>
+    <rect x="16" y="332" width="358" height="96" rx="20" fill="#DCEDE8"/><image href="design/S6-002_v3_scene-preview.png" x="16" y="332" width="358" height="96" preserveAspectRatio="xMidYMid meet"/>
+    <rect class="care" x="16" y="436" width="358" height="56" rx="16"/><text class="font t32" x="30" y="474">Еда и уход</text>
+    <rect class="lesson" x="16" y="500" width="358" height="104" rx="18"/><text class="font t32" x="30" y="538">LS-P02 · Покупки</text><rect x="238" y="548" width="120" height="48" rx="15" fill="#E9E1FA"/><text class="font t32" x="298" y="583" text-anchor="middle">Урок</text>
+    <rect x="16" y="612" width="358" height="64" rx="18" fill="url(#primary)"/><text class="font t40 white" x="195" y="658" text-anchor="middle">Продолжить</text>
+    <rect class="nav" x="0" y="684" width="390" height="136"/><rect class="active" x="8" y="690" width="187" height="58" rx="18"/><g class="font t32" text-anchor="middle"><text x="100" y="730">Домик</text><text x="292" y="730">План</text><text x="100" y="793">Покупки</text><text x="292" y="793">Копилка</text></g>
+    <rect y="820" width="390" height="24" fill="#173640"/>
+  </g>
+
+  <!-- D: 360x640 / 200%; honest conflict -->
+  <text class="head" x="540" y="1062">D · 360×640 / 200% · CONFLICT / review required</text>
+  <g transform="translate(540 1082)" filter="url(#shadow)">
+    <rect width="360" height="640" rx="30" fill="#FFF9F7" stroke="#B94545" stroke-width="4"/>
+    <rect width="360" height="16" rx="30" fill="#173640"/>
+    <text class="font t40" x="14" y="62">Финни</text><text class="font t32" x="14" y="96">ACTIVE</text>
+    <!-- finance stacks at honest 32/48sp; two columns would overflow -->
+    <rect x="12" y="106" width="336" height="214" rx="22" fill="url(#money)"/>
+    <text class="font t32 white" x="26" y="145">Доступно</text><text class="font t48 white" x="26" y="199">100</text><text class="font t32 white" x="150" y="199">монет</text>
+    <path d="M26 218 H334" stroke="#FFFFFF" stroke-opacity=".25"/>
+    <text class="font t32 white" x="26" y="258">Копилка</text><text class="font t48 white" x="26" y="309">0</text><text class="font t32 white" x="72" y="309">монет</text>
+    <rect class="goal" x="12" y="328" width="336" height="88" rx="20"/><text class="font t32" x="26" y="365">Воздушный змей</text><text class="font t40" x="26" y="408">150</text>
+    <rect x="12" y="424" width="336" height="76" rx="18" fill="#DCEDE8"/><image href="design/S6-002_v3_scene-preview.png" x="12" y="424" width="336" height="76" preserveAspectRatio="xMidYMid meet"/>
+    <rect x="12" y="508" width="336" height="64" rx="18" fill="url(#primary)"/><text class="font t40 white" x="180" y="554" text-anchor="middle">Продолжить</text>
+    <path d="M12 590 H348" stroke="#B94545" stroke-width="3" stroke-dasharray="10 7"/>
+    <text class="font t32" x="180" y="626" text-anchor="middle" fill="#A13838">FOLD ↓</text>
+  </g>
+  <g transform="translate(540 1746)">
+    <rect width="360" height="176" rx="24" fill="#FFF0ED" stroke="#B94545" stroke-width="2" stroke-dasharray="9 6"/>
+    <text class="font t32" x="20" y="44">↓ scroll fallback</text>
+    <text class="font t32" x="20" y="88">care · lesson</text>
+    <text class="font t32" x="20" y="132">nav 2×2</text>
+    <text class="meta" x="20" y="160">Not an exception to §2.5.3</text>
+  </g>
+
+  <!-- Shared legend and review verdicts -->
+  <g transform="translate(1010 146)">
+    <rect width="530" height="1776" rx="30" fill="#FFFFFF" fill-opacity=".90" stroke="#D8D2E5"/>
+    <text class="head" x="30" y="46">ONE ADAPTIVE SYSTEM</text>
+    <text class="meta16" x="30" y="82">1 · profile / lifecycle</text><text class="meta16" x="30" y="112">2 · finance (first viewport priority)</text>
+    <text class="meta16" x="30" y="142">3 · goal</text><text class="meta16" x="30" y="172">4 · full-body Finni scene</text>
+    <text class="meta16" x="30" y="202">5 · care</text><text class="meta16" x="30" y="232">6 · lesson + separate lesson action</text>
+    <text class="meta16" x="30" y="262">7 · primary next action (first viewport priority)</text><text class="meta16" x="30" y="292">8 · four labeled navigation routes</text>
+
+    <rect x="28" y="330" width="474" height="240" rx="22" fill="#F3EEFF"/>
+    <text class="head" x="50" y="370">TYPOGRAPHY</text>
+    <text class="font t16" x="50" y="410">label / body / nav · 16sp</text>
+    <text class="font t20" x="50" y="450">title / CTA · 20sp</text>
+    <text class="font t24" x="50" y="496">amount · 24sp</text>
+    <path d="M50 518 H480" stroke="#C7B8E5"/>
+    <text class="font t32" x="50" y="556">200%: 32 / 40 / 48sp</text>
+
+    <rect x="28" y="598" width="474" height="300" rx="22" fill="#EEF8F4"/>
+    <text class="head" x="50" y="638">ADAPTATION RULES</text>
+    <text class="meta16" x="50" y="676">• scene shrinks before text or targets</text>
+    <text class="meta16" x="50" y="710">• image uses xMidYMid meet</text>
+    <text class="meta16" x="50" y="744">• full character; no ear/paw/tail crop</text>
+    <text class="meta16" x="50" y="778">• every hit target ≥48dp</text>
+    <text class="meta16" x="50" y="812">• no ellipsis, fit-text or scale cap</text>
+    <text class="meta16" x="50" y="846">• 200% nav reflows to 2×2</text>
+    <text class="meta16" x="50" y="880">• scroll is fallback, never a PASS waiver</text>
+
+    <rect x="28" y="926" width="474" height="270" rx="22" fill="#FFF5D9"/>
+    <text class="head" x="50" y="966">FOLD / REVIEW</text>
+    <text class="meta16" x="50" y="1004">A: all components fit; runtime review pending.</text>
+    <text class="meta16" x="50" y="1040">B: all components fit with reduced scene.</text>
+    <text class="meta16" x="50" y="1076">C: all components fit only with small scene</text>
+    <text class="meta16" x="70" y="1102">and 2×2 nav; product review required.</text>
+    <text class="meta16" x="50" y="1138">D: honest stacked finance + 48sp values</text>
+    <text class="meta16" x="70" y="1164">push care, lesson and nav after fold.</text>
+
+    <rect x="28" y="1224" width="474" height="244" rx="22" fill="#FFF0ED" stroke="#B94545" stroke-width="2"/>
+    <text class="head" x="50" y="1264" fill="#9E3434">CONFLICT / review required</text>
+    <text class="meta16" x="50" y="1304">360×640 / 200% cannot simultaneously keep:</text>
+    <text class="meta16" x="50" y="1340">• honest 32/40/48sp typography;</text>
+    <text class="meta16" x="50" y="1374">• every §2.5.3 summary component;</text>
+    <text class="meta16" x="50" y="1408">• full-body Finni and ≥48dp targets.</text>
+    <text class="meta16" x="50" y="1444">Scroll exposes content but does not resolve it.</text>
+
+    <rect x="28" y="1496" width="474" height="226" rx="22" fill="#2E2940"/>
+    <text class="head white" x="50" y="1538">STATUS</text>
+    <text class="meta16 white" x="50" y="1578">QA-005 · NOT RUN</text>
+    <text class="meta16 white" x="50" y="1614">QA-006 · NOT RUN</text>
+    <text class="meta16 white" x="50" y="1650">No renderer/device/TalkBack evidence.</text>
+    <text class="meta16 white" x="50" y="1686">V3 is a design review candidate, not PASS.</text>
+
+    <text class="meta" x="30" y="1750">Scene preview is reference-inspired ImageGen art, not</text>
+    <text class="meta" x="30" y="1772">identity-preserving final art.</text>
+  </g>
+</svg>

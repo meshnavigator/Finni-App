@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1300" height="1000" viewBox="0 0 1300 1000" role="img" aria-labelledby="title desc">
+  <title id="title">S6-002 v3 — polished ACTIVE Home 390×844</title>
+  <desc id="desc">Полированный макет Home с полнофигурным Финни, финансовым блоком, целью, care, уроком, отдельным CTA и активной нижней навигацией. Проектные SRS-данные явно отмечены как не реализованные. Технические safe outlines вынесены в отдельную панель.</desc>
+  <metadata>artifact=S6-002-v3-active-design; viewport=390x844; font-scale=100%; status=design-for-review; qa-005=not-run; qa-006=not-run; data=SRS-design-fixture-not-implemented; scene=design/S6-002_v3_scene-preview.png</metadata>
+  <defs>
+    <linearGradient id="canvas" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F4F0FF"/>
+      <stop offset="0.55" stop-color="#EAF8F4"/>
+      <stop offset="1" stop-color="#FFF2E4"/>
+    </linearGradient>
+    <linearGradient id="finance" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#163B48"/>
+      <stop offset="1" stop-color="#255F61"/>
+    </linearGradient>
+    <linearGradient id="cta" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#7A4EE0"/>
+      <stop offset="1" stop-color="#A15DDA"/>
+    </linearGradient>
+    <filter id="phoneShadow" x="-25%" y="-20%" width="150%" height="160%">
+      <feDropShadow dx="0" dy="4" stdDeviation="7" flood-color="#433A5A" flood-opacity="0.18"/>
+      <feDropShadow dx="0" dy="18" stdDeviation="24" flood-color="#433A5A" flood-opacity="0.14"/>
+    </filter>
+    <filter id="surfaceShadow" x="-20%" y="-30%" width="140%" height="170%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#24434A" flood-opacity="0.10"/>
+      <feDropShadow dx="0" dy="9" stdDeviation="12" flood-color="#24434A" flood-opacity="0.10"/>
+    </filter>
+    <clipPath id="phoneClip"><rect x="0" y="0" width="390" height="844" rx="34"/></clipPath>
+    <clipPath id="sceneClip"><rect x="16" y="252" width="358" height="300" rx="24"/></clipPath>
+    <style>
+      .ui { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: #24323A; }
+      .body16 { font-size: 16px; font-weight: 560; }
+      .title20 { font-size: 20px; font-weight: 760; }
+      .amount24 { font-size: 24px; font-weight: 780; font-variant-numeric: tabular-nums; }
+      .meta { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; font-size: 14px; fill: #5D5969; }
+      .meta16 { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; font-size: 16px; fill: #494557; }
+      .metaTitle { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; font-size: 22px; font-weight: 760; fill: #292538; }
+      .white { fill: #FFFFFF; }
+      .muted { fill: #66747B; }
+      .tabular { font-variant-numeric: tabular-nums; }
+    </style>
+  </defs>
+
+  <rect width="1300" height="1000" fill="url(#canvas)"/>
+  <circle cx="1148" cy="118" r="124" fill="#FFFFFF" opacity="0.36"/>
+  <circle cx="1170" cy="860" r="180" fill="#FFFFFF" opacity="0.28"/>
+  <text class="metaTitle" x="64" y="48">S6-002 · ACTIVE HOME · V3</text>
+  <text class="meta16" x="64" y="72">390×844 dp · 100% · polished design candidate · QA-005/006 NOT RUN</text>
+
+  <!-- Polished phone: no safe/debug outlines over the composition. -->
+  <g transform="translate(64 94)" filter="url(#phoneShadow)">
+    <rect width="390" height="844" rx="34" fill="#F7FBFA"/>
+    <g clip-path="url(#phoneClip)">
+      <rect width="390" height="844" fill="#F7FBFA"/>
+      <rect width="390" height="24" fill="#173640"/>
+      <text class="ui body16 white" x="18" y="49">Финни</text>
+      <text class="ui body16 muted" x="18" y="72">День 1 · ACTIVE</text>
+      <rect x="326" y="28" width="48" height="48" rx="16" fill="#E9F3F0"/>
+      <circle cx="350" cy="46" r="7" fill="#245C61"/>
+      <path d="M338 66 Q350 54 362 66" fill="none" stroke="#245C61" stroke-width="3" stroke-linecap="round"/>
+
+      <g filter="url(#surfaceShadow)">
+        <rect x="16" y="88" width="358" height="84" rx="24" fill="url(#finance)"/>
+      </g>
+      <path d="M195 101 V159" stroke="#FFFFFF" stroke-opacity="0.25"/>
+      <text class="ui body16 white" x="34" y="116">Доступно</text>
+      <text class="ui amount24 white" x="34" y="150">100 монет</text>
+      <text class="ui body16 white" x="214" y="116">Копилка</text>
+      <text class="ui amount24 white" x="214" y="150">0 монет</text>
+
+      <g filter="url(#surfaceShadow)">
+        <rect x="16" y="180" width="358" height="64" rx="20" fill="#FFF4D9"/>
+      </g>
+      <circle cx="44" cy="212" r="18" fill="#F0B94D"/>
+      <path d="M35 218 L43 207 L51 218 M43 207 L50 198" fill="none" stroke="#66491D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <text class="ui body16" x="72" y="205">Цель · GL-01</text>
+      <text class="ui body16" x="72" y="229">Воздушный змей</text>
+      <text class="ui title20 tabular" x="307" y="220" text-anchor="middle">150</text>
+
+      <rect x="16" y="252" width="358" height="300" rx="24" fill="#DDEEE9"/>
+      <g clip-path="url(#sceneClip)">
+        <rect x="16" y="252" width="358" height="300" fill="#DDEEE9"/>
+        <image href="design/S6-002_v3_scene-preview.png" x="16" y="252" width="358" height="300" preserveAspectRatio="xMidYMid meet"/>
+        <rect x="16" y="252" width="358" height="300" fill="none" stroke="#FFFFFF" stroke-opacity="0.5"/>
+      </g>
+
+      <g filter="url(#surfaceShadow)">
+        <rect x="16" y="560" width="358" height="48" rx="16" fill="#E9F3F0"/>
+      </g>
+      <circle cx="42" cy="584" r="10" fill="#3B7D72"/>
+      <path d="M38 584 L41 587 L47 579" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <text class="ui body16" x="62" y="590">Еда и уход</text>
+      <text class="ui body16" x="354" y="590" text-anchor="end" fill="#4C3B86">Открыть план</text>
+
+      <g filter="url(#surfaceShadow)">
+        <rect x="16" y="616" width="358" height="72" rx="20" fill="#FFFFFF"/>
+      </g>
+      <text class="ui body16" x="32" y="642">LS-P02 · Покупки</text>
+      <text class="ui body16" x="32" y="670">Детектив предложений</text>
+      <rect x="278" y="628" width="80" height="48" rx="16" fill="#E9E2FA"/>
+      <text class="ui body16" x="318" y="658" text-anchor="middle" fill="#5B3AB0">Открыть</text>
+
+      <rect x="16" y="696" width="358" height="52" rx="18" fill="url(#cta)"/>
+      <text class="ui title20 white" x="195" y="729" text-anchor="middle">Продолжить день</text>
+
+      <rect x="0" y="756" width="390" height="64" fill="#FFFFFF"/>
+      <rect x="8" y="760" width="82" height="56" rx="18" fill="#E9E2FA"/>
+      <g class="ui body16" text-anchor="middle">
+        <path d="M41 780 L49 773 L57 780 V789 H41 Z" fill="#6C49C8"/>
+        <text x="49" y="809" fill="#5B3AB0">Домик</text>
+        <path d="M129 775 H153 V792 H129 Z M134 771 V779 M148 771 V779" fill="none" stroke="#51646B" stroke-width="2"/>
+        <text x="141" y="809">План</text>
+        <path d="M222 775 H244 L241 791 H225 Z M226 795 A3 3 0 1 0 226.1 795 M239 795 A3 3 0 1 0 239.1 795" fill="none" stroke="#51646B" stroke-width="2"/>
+        <text x="233" y="809">Покупки</text>
+        <path d="M326 777 Q342 769 350 781 V793 H322 V781 Q322 777 326 777 Z" fill="none" stroke="#51646B" stroke-width="2"/>
+        <text x="336" y="809">Копилка</text>
+      </g>
+      <rect x="0" y="820" width="390" height="24" fill="#173640"/>
+    </g>
+    <rect width="390" height="844" rx="34" fill="none" stroke="#173640" stroke-width="2"/>
+  </g>
+
+  <!-- Separate technical panel; never overlaid on the polished phone. -->
+  <g id="technical-panel" transform="translate(510 94)">
+    <rect width="726" height="844" rx="32" fill="#FFFFFF" fill-opacity="0.88" stroke="#D8D2E5"/>
+    <rect x="28" y="28" width="670" height="72" rx="20" fill="#2E2840"/>
+    <text class="metaTitle white" x="52" y="60">DESIGN DATA — NOT IMPLEMENTED</text>
+    <text class="meta16 white" x="52" y="84">SRS fixture: B=100 · S=0 · GL-01/150 · LS-P02 available</text>
+
+    <text class="metaTitle" x="32" y="142">Polished composition</text>
+    <text class="meta16" x="32" y="171">• one finance block, goal, care, lesson and separate CTA</text>
+    <text class="meta16" x="32" y="197">• all ordinary UI text uses 16 / 20 / 24sp</text>
+    <text class="meta16" x="32" y="223">• every control target ≥48dp; active tab uses shape + icon + label</text>
+    <text class="meta16" x="32" y="249">• local scene uses “meet”: full character proportions are preserved</text>
+
+    <rect x="32" y="282" width="318" height="382" rx="24" fill="#F2F7F5" stroke="#B8CEC7"/>
+    <text class="metaTitle" x="52" y="316">TECHNICAL PANEL</text>
+    <text class="meta" x="52" y="341">safe outlines live here, not over polished UI</text>
+    <rect x="66" y="366" width="250" height="250" rx="20" fill="#DDEEE9" stroke="#9CBEB5"/>
+    <path d="M176 423 L153 389 Q145 375 162 383 L188 408 M215 408 L240 383 Q257 375 249 392 L228 425" fill="#F0B975" stroke="#70513D" stroke-width="3"/>
+    <ellipse cx="202" cy="444" rx="48" ry="42" fill="#F0B975" stroke="#70513D" stroke-width="3"/>
+    <ellipse cx="202" cy="526" rx="52" ry="70" fill="#F0B975" stroke="#70513D" stroke-width="3"/>
+    <ellipse cx="165" cy="589" rx="19" ry="12" fill="#E1A65F"/><ellipse cx="239" cy="589" rx="19" ry="12" fill="#E1A65F"/>
+    <path d="M148 385 Q202 355 259 388 Q285 432 270 498 Q288 555 254 606 L148 606 Q117 553 134 499 Q117 434 148 385 Z" fill="none" stroke="#6C49C8" stroke-width="2.5" stroke-dasharray="7 6"/>
+    <text class="meta" x="80" y="644">full-body safe silhouette · no persistent HUD overlap</text>
+
+    <rect x="382" y="282" width="316" height="382" rx="24" fill="#FBF6FF" stroke="#D3C2EA"/>
+    <text class="metaTitle" x="404" y="316">Measurements</text>
+    <text class="meta16" x="404" y="354">Viewport</text><text class="meta16 tabular" x="668" y="354" text-anchor="end">390×844 dp</text>
+    <text class="meta16" x="404" y="388">Header</text><text class="meta16 tabular" x="668" y="388" text-anchor="end">56 dp</text>
+    <text class="meta16" x="404" y="422">Finance</text><text class="meta16 tabular" x="668" y="422" text-anchor="end">84 dp</text>
+    <text class="meta16" x="404" y="456">Goal</text><text class="meta16 tabular" x="668" y="456" text-anchor="end">64 dp</text>
+    <text class="meta16" x="404" y="490">Scene</text><text class="meta16 tabular" x="668" y="490" text-anchor="end">300 dp</text>
+    <text class="meta16" x="404" y="524">Care target</text><text class="meta16 tabular" x="668" y="524" text-anchor="end">48 dp</text>
+    <text class="meta16" x="404" y="558">Lesson</text><text class="meta16 tabular" x="668" y="558" text-anchor="end">72 dp</text>
+    <text class="meta16" x="404" y="592">Primary CTA</text><text class="meta16 tabular" x="668" y="592" text-anchor="end">52 dp</text>
+    <text class="meta16" x="404" y="626">Nav targets</text><text class="meta16 tabular" x="668" y="626" text-anchor="end">97.5×64 dp</text>
+
+    <rect x="32" y="694" width="666" height="118" rx="22" fill="#FFF3D9"/>
+    <text class="metaTitle" x="52" y="730">Artwork boundary</text>
+    <text class="meta16" x="52" y="760">The embedded local PNG is a reference-inspired ImageGen preview,</text>
+    <text class="meta16" x="52" y="786">not identity-preserving final art. Renderer and extreme poses remain unverified.</text>
+  </g>
+</svg>

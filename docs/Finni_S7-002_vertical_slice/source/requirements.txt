@@ -1,0 +1,4 @@
+# Reproduced R2 build: CPython 3.12.14 on Windows x64.
+numpy==2.5.3
+Pillow==12.3.0
+trimesh==4.12.2

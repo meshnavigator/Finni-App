@@ -1,0 +1,294 @@
+{
+  "package": "Finni_S7-002_R4",
+  "status": "candidate_not_art_pass_or_production",
+  "blender": "5.2.2 LTS",
+  "reference": {
+    "path": "C:\\00.MIDAS\\PROJECTS\\28. HackApp. 2026\\docs\\Finni_3D_Addendum_v1.0\\reference\\finni-home-approved.png",
+    "sha256": "84f8dfa0c2c6b86cb4fe25efdc051c3b764fc794a2bf1b08f1f240474f107211",
+    "bundled": false,
+    "role": "mandatory_REF-001_review_only"
+  },
+  "geometry": {
+    "method": "new R4 fused voxel-remeshed organic shell plus joined custom fur wedges; no R3 character geometry imported",
+    "target": "cohesive seated fluffy kitten/fox character"
+  },
+  "rig": {
+    "jointNames": [
+      "Joint.Root",
+      "Joint.Spine",
+      "Joint.Neck",
+      "Joint.Head",
+      "Joint.Ear.L",
+      "Joint.Ear.R",
+      "Joint.Eye.L",
+      "Joint.Eye.R",
+      "Joint.Lid.L",
+      "Joint.Lid.R",
+      "Joint.Paw.L",
+      "Joint.Paw.R",
+      "Joint.Tail.Base",
+      "Joint.Tail.Mid",
+      "Joint.Tail.Tip"
+    ],
+    "jointCount": 15,
+    "separateChest": true,
+    "rootTranslationLocked": true
+  },
+  "actions": [
+    {
+      "name": "idle",
+      "frames": 150,
+      "seconds": 5.0,
+      "rootLocked": true
+    },
+    {
+      "name": "blink",
+      "frames": 42,
+      "seconds": 1.4,
+      "rootLocked": true
+    },
+    {
+      "name": "joy",
+      "frames": 66,
+      "seconds": 2.2,
+      "rootLocked": true
+    },
+    {
+      "name": "curiosity",
+      "frames": 60,
+      "seconds": 2.0,
+      "rootLocked": true
+    }
+  ],
+  "glb": {
+    "path": "Finni_R4.glb",
+    "sha256": "f7d0f42c91c0312af1fbab305c7bf6da1a5b51a14318953811632e95d435f408",
+    "bytes": 1721176,
+    "triangles": 35986,
+    "triangleLimit": 40000,
+    "meshes": 29,
+    "primitives": 30,
+    "nodes": 45,
+    "skins": 1,
+    "joints": 15,
+    "animations": [
+      "blink",
+      "curiosity",
+      "idle",
+      "joy"
+    ],
+    "chestSeparate": true,
+    "materials": 15,
+    "embeddedImages": 18,
+    "pbrBaseColorMaterials": 6,
+    "pbrNormalMaterials": 6,
+    "primitivesWithUV": 11,
+    "rootTranslationLocked": true,
+    "rootRestTranslation": [
+      0.0,
+      0.11999999731779099,
+      0.0
+    ]
+  },
+  "renders": {
+    "camera": [
+      941,
+      1672
+    ],
+    "stills": [
+      "renders/neutral.png",
+      "renders/idle_extreme.png",
+      "renders/blink_extreme.png",
+      "renders/joy_extreme.png",
+      "renders/curiosity_extreme.png"
+    ]
+  },
+  "budgets": {
+    "displayedTriangles": 35986,
+    "limit": 40000,
+    "status": "PASS"
+  },
+  "artAcceptance": "NOT GRANTED — technical evidence only; owner review, device runtime and provenance/release decision remain open.",
+  "files": [
+    {
+      "path": "Finni_R4.blend",
+      "sha256": "33a2ab5c3a11a52e3d6a88b5b15ed06d0c5871032393fde8e7110eeddbbf2f99",
+      "bytes": 672215
+    },
+    {
+      "path": "Finni_R4.blend1",
+      "sha256": "6808bb80a870025576ba47f55423c76ae879702fa51fc9c96c8e6dbf2f694556",
+      "bytes": 547799
+    },
+    {
+      "path": "Finni_R4.glb",
+      "sha256": "f7d0f42c91c0312af1fbab305c7bf6da1a5b51a14318953811632e95d435f408",
+      "bytes": 1721176
+    },
+    {
+      "path": "README.md",
+      "sha256": "bc104f64ce4c19464694a69bb7a52cc86c50d026c2e0692c7e2a6ffce2b372b8",
+      "bytes": 1024
+    },
+    {
+      "path": "renders/blink_extreme.png",
+      "sha256": "fa3ff4a0b7d3f38d1958a06beeb2588b94eb4bf641110ddad8291a6fa41aadf7",
+      "bytes": 1853460
+    },
+    {
+      "path": "renders/curiosity_extreme.png",
+      "sha256": "d384b0c7b04084d395c93d2575966eb190c2e6212d423df3978927e53521f3c9",
+      "bytes": 1882648
+    },
+    {
+      "path": "renders/idle_extreme.png",
+      "sha256": "5f9a11547fb6b03740dfa1a2887df239c8093e21bcb7f1b1189d1bdb79947837",
+      "bytes": 1853944
+    },
+    {
+      "path": "renders/joy_extreme.png",
+      "sha256": "817b162c69700a634fb8c4cf0930a80d0880c8aeb213408600597e7c3bc3d3a3",
+      "bytes": 1874887
+    },
+    {
+      "path": "renders/neutral.png",
+      "sha256": "3f40354603e2e5c3c6ae29ed57a86b556f04cab0163d9fecbeb0dc5b0f825cf0",
+      "bytes": 1851299
+    },
+    {
+      "path": "source/add_r4_uvs.py",
+      "sha256": "8a48f153ba8bd23f040b8bfaa85fa913a989fdc2c281f5076a442ea20243fa92",
+      "bytes": 2549
+    },
+    {
+      "path": "source/build_finni_r4.py",
+      "sha256": "b5c1ca887296131f237d7e115a2de8a41688cdaedc1f3a6da533e730deca564c",
+      "bytes": 35794
+    },
+    {
+      "path": "source/finalize_r4_evidence.py",
+      "sha256": "adfdeed5543795a04106cc68a9e8e9cd13589ed5a768410760dde824be9debeb",
+      "bytes": 8001
+    },
+    {
+      "path": "source/finalize_r4_v2.py",
+      "sha256": "1c186bad19b685300fbd87577abd30fbaa4a37b54a19774a9c9649bcc86e2bba",
+      "bytes": 5576
+    },
+    {
+      "path": "source/rebuild_r4.py",
+      "sha256": "d076b574347bfa00a2e55ef35a884a7d05aa3a24b294d914ed20692163a78e0c",
+      "bytes": 2240
+    },
+    {
+      "path": "source/rebuild_r4_v2.py",
+      "sha256": "2ff8f17ab98d0a0263c3af9ac3af8ddc5d560a7682b01c7a97e9b90930ab85e4",
+      "bytes": 2279
+    },
+    {
+      "path": "source/refresh_r4_verify.py",
+      "sha256": "0f4da60d73154372ddd667195c75127fab45754b0a4589950db7b34b80456ff8",
+      "bytes": 2503
+    },
+    {
+      "path": "textures/collar_albedo.png",
+      "sha256": "f9371d13240e803e06616c785d7be6d9de788612ceb0a2ec0545563af2582345",
+      "bytes": 38856
+    },
+    {
+      "path": "textures/collar_normal.png",
+      "sha256": "64f974841010d4188cdcdb97ded95ef4cd6fed59cfc66d02b9c326effdd5b6ac",
+      "bytes": 42359
+    },
+    {
+      "path": "textures/collar_roughness.png",
+      "sha256": "dcc62afd29037c0ee4a71a401a1fc22a899db87dd7c031cf229cb7f9e35d9454",
+      "bytes": 8174
+    },
+    {
+      "path": "textures/cream_albedo.png",
+      "sha256": "5cb5deb64122f018853654c26bc986ddc51b6c0906229faf1a88bddf2824b455",
+      "bytes": 57892
+    },
+    {
+      "path": "textures/cream_normal.png",
+      "sha256": "64f974841010d4188cdcdb97ded95ef4cd6fed59cfc66d02b9c326effdd5b6ac",
+      "bytes": 42359
+    },
+    {
+      "path": "textures/cream_roughness.png",
+      "sha256": "5e0547a99be0c77e4eda83565c0fc38bcbbb12cf161c4330447227c2dcc7ca2f",
+      "bytes": 8175
+    },
+    {
+      "path": "textures/orange_albedo.png",
+      "sha256": "40dcee0f079915d221334eb3ee789ffd6b3e45efdcdd4560ea043beae73de0b2",
+      "bytes": 52737
+    },
+    {
+      "path": "textures/orange_normal.png",
+      "sha256": "64f974841010d4188cdcdb97ded95ef4cd6fed59cfc66d02b9c326effdd5b6ac",
+      "bytes": 42359
+    },
+    {
+      "path": "textures/orange_roughness.png",
+      "sha256": "0889178a2c37d282bc0c512b2b20091f2b49f7d00f361d2f60664eb8e7d3e6f6",
+      "bytes": 3852
+    },
+    {
+      "path": "textures/rug_albedo.png",
+      "sha256": "430cbfe149702ebceb3a3a6f328b89ed6fe096960d39c39db81ca2182a7935e8",
+      "bytes": 31241
+    },
+    {
+      "path": "textures/rug_normal.png",
+      "sha256": "64f974841010d4188cdcdb97ded95ef4cd6fed59cfc66d02b9c326effdd5b6ac",
+      "bytes": 42359
+    },
+    {
+      "path": "textures/rug_roughness.png",
+      "sha256": "c27c23a063b341ac671843b231c270c77132f4ba3ff26911862783e7a0f3083b",
+      "bytes": 8331
+    },
+    {
+      "path": "textures/wall_albedo.png",
+      "sha256": "facdccdaebf3e7cfdaefb41c4cc914e2ee1a387bdfa171bfcc7911995bc109d5",
+      "bytes": 48987
+    },
+    {
+      "path": "textures/wall_normal.png",
+      "sha256": "64f974841010d4188cdcdb97ded95ef4cd6fed59cfc66d02b9c326effdd5b6ac",
+      "bytes": 42359
+    },
+    {
+      "path": "textures/wall_roughness.png",
+      "sha256": "a4578cda3f241a762ca68a91ddd6839ee3f9a90eb6d2cde930af8b5a8efe2b6a",
+      "bytes": 6131
+    },
+    {
+      "path": "textures/wood_albedo.png",
+      "sha256": "fbc85319db8b4e659d36c139e5676850fa2d98cb5fcfca4b6fc483a1434d087c",
+      "bytes": 43950
+    },
+    {
+      "path": "textures/wood_normal.png",
+      "sha256": "64f974841010d4188cdcdb97ded95ef4cd6fed59cfc66d02b9c326effdd5b6ac",
+      "bytes": 42359
+    },
+    {
+      "path": "textures/wood_roughness.png",
+      "sha256": "8f4e0e9f6de583625129cc0510a3868eecff9822d4ca9e7e8c34509b8e59e30f",
+      "bytes": 8333
+    },
+    {
+      "path": "VERIFY.md",
+      "sha256": "014c044f530a7e11e45af9116f3625804ae04cdb19c61b5b8dff7a2ad23a6828",
+      "bytes": 2145
+    }
+  ],
+  "validation": {
+    "glbStructuralContract": "PASS",
+    "rootTranslation": "PASS (all exported samples identical; rest offset [0.0, 0.11999999731779099, 0.0])",
+    "khronosValidator": "NOT RUN — no installed local gltf-validator module was found; no package was downloaded."
+  }
+}

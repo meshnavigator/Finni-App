@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1560" height="1580" viewBox="0 0 1560 1580" role="img" aria-labelledby="title desc">
+  <title id="title">S6-002: функциональные wireframe Home/HUD</title>
+  <desc id="desc">Восемь отдельных состояний Home в 360 на 640 dp и font scale 200 процентов. Это функциональная схема, а не финальный 3D-art. Все переменные обозначены model tokens в фигурных скобках.</desc>
+  <metadata>artifact=S6-002_HOME_HUD_WIREFRAMES; kind=functional-wireframe; reference=REF-001 artistic-direction-only; target=360x640dp fontScale=200%; no-final-3d-art</metadata>
+  <style>
+    .page { fill: #f7f3eb; }
+    .frame { fill: #fffdf9; stroke: #473b37; stroke-width: 2; }
+    .safe { fill: #f3e6d4; }
+    .header { fill: #4f6e67; }
+    .hud { fill: #fff8ed; stroke: #bd9a76; stroke-width: 1; }
+    .scene { fill: #dcebe6; }
+    .floor { fill: #c6a983; }
+    .card { fill: #ffffff; stroke: #c9b7a4; stroke-width: 1; }
+    .cta { fill: #d86a54; }
+    .nav { fill: #fbf0e2; }
+    .overlay { fill: #332825; fill-opacity: .7; }
+    .error { fill: #fff6f3; stroke: #c94d3d; stroke-width: 2; }
+    .muted { fill: #716865; }
+    .label { font: 700 10px Arial, sans-serif; fill: #3d3531; letter-spacing: .15px; }
+    .value { font: 700 15px Arial, sans-serif; fill: #2b2522; font-variant-numeric: tabular-nums; }
+    .small { font: 400 9px Arial, sans-serif; fill: #514945; }
+    .tiny { font: 400 8px Arial, sans-serif; fill: #514945; }
+    .white { font: 700 10px Arial, sans-serif; fill: #ffffff; }
+    .state { font: 700 16px Arial, sans-serif; fill: #2b2522; }
+    .note { font: 400 12px Arial, sans-serif; fill: #514945; }
+    .focus { fill: none; stroke: #184b8a; stroke-width: 2; stroke-dasharray: 4 3; }
+  </style>
+  <defs>
+    <g id="pet" aria-label="Полнофигурный Финни в safe-frustum">
+      <ellipse cx="180" cy="274" rx="66" ry="12" fill="#93745c" fill-opacity=".24"/>
+      <path d="M138 214 L126 178 Q123 155 145 174 L159 197 M222 197 L238 171 Q255 154 252 181 L239 216" fill="#d8a86b" stroke="#694b3c" stroke-width="3" stroke-linejoin="round"/>
+      <ellipse cx="180" cy="210" rx="48" ry="43" fill="#e5b978" stroke="#694b3c" stroke-width="3"/>
+      <ellipse cx="162" cy="204" rx="5" ry="7" fill="#2d2523"/>
+      <ellipse cx="198" cy="204" rx="5" ry="7" fill="#2d2523"/>
+      <ellipse cx="180" cy="220" rx="8" ry="6" fill="#694b3c"/>
+      <path d="M171 228 Q180 236 189 228" fill="none" stroke="#694b3c" stroke-width="2" stroke-linecap="round"/>
+      <ellipse cx="180" cy="253" rx="50" ry="48" fill="#e5b978" stroke="#694b3c" stroke-width="3"/>
+      <ellipse cx="148" cy="288" rx="16" ry="10" fill="#d8a86b" stroke="#694b3c" stroke-width="3"/>
+      <ellipse cx="212" cy="288" rx="16" ry="10" fill="#d8a86b" stroke="#694b3c" stroke-width="3"/>
+      <path d="M226 250 Q260 241 253 274" fill="none" stroke="#694b3c" stroke-width="7" stroke-linecap="round"/>
+    </g>
+    <g id="hud-grid">
+      <rect class="hud" x="16" y="94" width="156" height="68" rx="16"/>
+      <rect class="hud" x="188" y="94" width="156" height="68" rx="16"/>
+      <rect class="hud" x="16" y="170" width="156" height="68" rx="16"/>
+      <rect class="hud" x="188" y="170" width="156" height="68" rx="16"/>
+      <text class="label" x="28" y="115">БАЛАНС</text><text class="value" x="28" y="141">{balance}</text>
+      <text class="label" x="200" y="115">НАКОПЛЕНИЯ</text><text class="value" x="200" y="141">{savings}</text>
+      <text class="label" x="28" y="191">ЦЕЛЬ</text><text class="value" x="28" y="217">{goalLabel}</text>
+      <text class="label" x="200" y="191">СОСТОЯНИЕ</text><text class="value" x="200" y="217">{careStatus}</text>
+    </g>
+    <g id="base-home">
+      <rect class="frame" x="0" y="0" width="360" height="640" rx="24"/>
+      <rect class="safe" x="0" y="0" width="360" height="22" rx="24"/>
+      <rect class="header" x="0" y="22" width="360" height="62"/>
+      <text class="white" x="16" y="48">{petName}</text><text class="white" x="16" y="66">{calendarLabel}</text>
+      <rect x="220" y="33" width="66" height="40" rx="12" fill="#ffffff" fill-opacity=".2"/>
+      <text class="white" x="228" y="57">Прогресс</text>
+      <text class="white" x="294" y="57">Взрослым</text>
+      <use href="#hud-grid"/>
+      <rect class="scene" x="16" y="250" width="328" height="126" rx="24"/>
+      <path class="floor" d="M16 333 Q100 310 180 338 Q260 312 344 333 L344 376 L16 376 Z"/>
+      <use href="#pet" transform="translate(0 72)"/>
+      <text class="tiny" x="24" y="366">fixed camera · полный Финни · scene input только без overlay</text>
+      <rect class="card" x="16" y="388" width="328" height="64" rx="16"/>
+      <text class="label" x="28" y="411">АКТИВНОЕ ЗАНЯТИЕ</text><text class="value" x="28" y="434">{activeLessonLabel}</text>
+      <text class="label" x="276" y="427">Задания</text>
+      <rect class="cta" x="16" y="464" width="328" height="52" rx="16"/>
+      <text class="white" x="126" y="495">{primaryActionLabel}</text>
+      <rect class="nav" x="0" y="532" width="360" height="76"/>
+      <text class="label" x="20" y="568">Домик</text><text class="label" x="110" y="568">План</text><text class="label" x="190" y="568">Покупки</text><text class="label" x="280" y="568">Копилка</text>
+      <rect class="safe" x="0" y="608" width="360" height="32" rx="24"/>
+      <text class="tiny" x="108" y="628">safe area · 48 dp tab hit areas</text>
+    </g>
+  </defs>
+  <rect class="page" x="0" y="0" width="1560" height="1580"/>
+  <text class="state" x="44" y="30">S6-002 · FUNCTIONAL WIREFRAME — НЕ ФИНАЛЬНЫЙ 3D-ART</text>
+  <text class="note" x="44" y="50">Все кадры: 360×640 dp · font scale 200% · values = model tokens, не фиктивные данные · Финни полностью в camera-safe зоне.</text>
+
+  <g transform="translate(40 72)">
+    <use href="#base-home"/>
+    <rect class="overlay" x="0" y="0" width="360" height="640" rx="24"/>
+    <text class="state" x="116" y="56" fill="#ffffff">LOADING</text>
+    <rect class="card" x="40" y="264" width="280" height="104" rx="24"/>
+    <text class="label" x="67" y="300">ЗАГРУЗКА ДАННЫХ</text><text class="small" x="67" y="324">HUD и scene input выключены</text><text class="small" x="67" y="344">без сумм и placeholder-целей</text>
+  </g>
+  <g transform="translate(420 72)">
+    <use href="#base-home"/>
+    <rect class="overlay" x="0" y="0" width="360" height="640" rx="24"/>
+    <text class="state" x="130" y="56" fill="#ffffff">ERROR</text>
+    <rect class="error" x="32" y="248" width="296" height="164" rx="24"/>
+    <text class="label" x="56" y="283">НЕ УДАЛОСЬ ПРОЧИТАТЬ ДАННЫЕ</text><text class="value" x="56" y="313">{storageError}</text>
+    <rect class="cta" x="56" y="336" width="248" height="52" rx="16"/><text class="white" x="143" y="367">Повторить</text>
+    <text class="tiny" x="56" y="403">scene/nav заблокированы; Back закрывает overlay</text>
+  </g>
+  <g transform="translate(800 72)">
+    <use href="#base-home"/>
+    <text class="state" x="104" y="56">NO_PROFILE</text>
+    <rect class="card" x="32" y="246" width="296" height="142" rx="24"/>
+    <text class="label" x="54" y="274">ЗНАКОМСТВО</text><text class="value" x="54" y="302">{petName input}</text>
+    <text class="small" x="54" y="324">{draftAppearance}</text><text class="small" x="54" y="342">маршруты появятся после профиля</text>
+    <rect class="cta" x="54" y="354" width="252" height="52" rx="16"/><text class="white" x="139" y="385">Продолжить</text>
+    <rect class="overlay" x="0" y="532" width="360" height="76"/>
+    <text class="small" x="66" y="575" fill="#ffffff">Финансовые маршруты ещё недоступны</text>
+  </g>
+  <g transform="translate(1180 72)">
+    <use href="#base-home"/>
+    <text class="state" x="132" y="56">READY</text>
+    <text class="tiny" x="102" y="483">CTA: начать день из модели</text>
+    <rect class="focus" x="16" y="464" width="328" height="52" rx="16"/>
+  </g>
+
+  <g transform="translate(40 736)">
+    <use href="#base-home"/>
+    <text class="state" x="132" y="56">DRAFT</text>
+    <text class="tiny" x="106" y="483">CTA: составить/продолжить план</text>
+    <text class="tiny" x="42" y="579">План активен; purchases/savings read-only по модели</text>
+  </g>
+  <g transform="translate(420 736)">
+    <use href="#base-home"/>
+    <text class="state" x="130" y="56">ACTIVE</text>
+    <text class="tiny" x="104" y="483">CTA: продолжить день из модели</text>
+    <text class="tiny" x="77" y="579">Маршруты не блокируются номером шага</text>
+  </g>
+  <g transform="translate(800 736)">
+    <use href="#base-home"/>
+    <text class="state" x="128" y="56">CLOSED</text>
+    <text class="tiny" x="105" y="483">CTA: посмотреть итоги</text>
+    <text class="tiny" x="92" y="579">Финансовые действия read-only по lifecycle</text>
+  </g>
+  <g transform="translate(1180 736)">
+    <use href="#base-home"/>
+    <text class="state" x="119" y="56">WAITING</text>
+    <rect class="card" x="40" y="252" width="280" height="54" rx="16"/>
+    <text class="label" x="62" y="277">СЛЕДУЮЩАЯ ДОСТУПНОСТЬ</text><text class="value" x="62" y="296">{nextEligibleDate}</text>
+    <text class="tiny" x="112" y="483">CTA только если её дала модель</text>
+    <text class="tiny" x="69" y="579">нет вымышленного «завтра» или таймера</text>
+  </g>
+
+  <g transform="translate(40 1400)">
+    <text class="state" x="0" y="0">Breakpoint strip · та же иерархия, больше места получает сцена, а не новые дублирующие controls</text>
+    <g transform="translate(0 20)">
+      <rect class="frame" x="0" y="0" width="360" height="108" rx="18"/><rect class="header" x="0" y="0" width="360" height="24" rx="18"/>
+      <rect class="hud" x="12" y="32" width="78" height="34" rx="10"/><rect class="hud" x="96" y="32" width="78" height="34" rx="10"/><rect class="hud" x="180" y="32" width="78" height="34" rx="10"/><rect class="hud" x="264" y="32" width="84" height="34" rx="10"/>
+      <rect class="scene" x="12" y="74" width="336" height="22" rx="11"/><text class="label" x="14" y="18">360×640: 2×2 HUD при 200%, content-scroll</text>
+    </g>
+    <g transform="translate(390 20)">
+      <rect class="frame" x="0" y="0" width="390" height="108" rx="18"/><rect class="header" x="0" y="0" width="390" height="24" rx="18"/>
+      <rect class="hud" x="12" y="32" width="86" height="34" rx="10"/><rect class="hud" x="104" y="32" width="86" height="34" rx="10"/><rect class="hud" x="196" y="32" width="86" height="34" rx="10"/><rect class="hud" x="288" y="32" width="90" height="34" rx="10"/>
+      <rect class="scene" x="12" y="74" width="366" height="22" rx="11"/><text class="label" x="14" y="18">390×844: height → full-Finni scene</text>
+    </g>
+    <g transform="translate(812 20)">
+      <rect class="frame" x="0" y="0" width="412" height="108" rx="18"/><rect class="header" x="0" y="0" width="412" height="24" rx="18"/>
+      <rect class="hud" x="16" y="32" width="88" height="34" rx="10"/><rect class="hud" x="110" y="32" width="88" height="34" rx="10"/><rect class="hud" x="204" y="32" width="88" height="34" rx="10"/><rect class="hud" x="298" y="32" width="98" height="34" rx="10"/>
+      <rect class="scene" x="16" y="74" width="380" height="22" rx="11"/><text class="label" x="16" y="18">412×915: width/height → scene &amp; rhythm</text>
+    </g>
+  </g>
+  <text class="note" x="40" y="1560">Static/reduced-motion fallback: тот же порядок и actions; no camera movement, no scale or pulse. Все UI targets минимум 48×48 dp в рабочей реализации.</text>
+</svg>

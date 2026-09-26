@@ -1,0 +1,46 @@
+{
+  "assetId": "PET-MASTER-S7-002-SLICE",
+  "revision": "R2",
+  "replaces": {
+    "revision": "R1",
+    "status": "rejected",
+    "reason": "Chest prop replaced a rig joint in skin and idle channel"
+  },
+  "referenceId": "REF-001",
+  "referenceSha256": "84f8dfa0c2c6b86cb4fe25efdc051c3b764fc794a2bf1b08f1f240474f107211",
+  "units": "meters",
+  "axis": "Y-up, +Z character front",
+  "visualIntent": {
+    "character": "large full-body soft stylized 3D pet; orange/cream fur; oversized expressive eyes; large tail; friendly proportions",
+    "room": "small warm cozy fragment for scale/light checks; environment secondary to character",
+    "forbidden": "no decorative text on chest/props; no injury/sickness visuals; no real brands"
+  },
+  "characterApproxHeightM": 1.58,
+  "animationClips": [
+    {
+      "id": "CLIP-001",
+      "name": "idle",
+      "duration": 4.0,
+      "loop": true
+    },
+    {
+      "id": "CLIP-002",
+      "name": "blink",
+      "duration": 0.24,
+      "loop": false
+    },
+    {
+      "id": "CLIP-003",
+      "name": "interest",
+      "duration": 1.6,
+      "loop": false
+    },
+    {
+      "id": "CLIP-007",
+      "name": "joy",
+      "duration": 1.2,
+      "loop": false
+    }
+  ],
+  "notes": "Vertical slice candidate only; not the 27 combinations, full AN-001–016 set, or finished room."
+}
