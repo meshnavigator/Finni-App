@@ -1,3 +1,4 @@
+import { assertSharedControlTargets } from './ui-control-contract.mjs';
 import assert from 'node:assert/strict';
 import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -291,11 +292,11 @@ test('period result UI wires close confirmation, saved summary and accessibility
   assert.match(runtime, /new CommerceRepository\(mode, database, this\.\#executor\)/);
   assert.match(runtime, /await this\.\#executor\.close\(\)/);
   assert.match(root, /screen === 'result'/);
-  assert.match(root, /runSnapshot\([\s\S]*runtime\.closePeriod\(current\)/);
+  assert.match(root, /runtime\.closePeriodReceipt\(current\)/);
   assert.match(screen, /ПРЕДВАРИТЕЛЬНЫЙ ИТОГ/);
   assert.match(screen, /ИТОГ ДНЯ/);
   assert.match(screen, /Вернуться к дню/);
   assert.match(screen, /Финни не заболеет и ничего не потеряет/);
   assert.match(screen, /accessibilityLiveRegion="polite"/);
-  assert.match(screen, /minHeight: 48/g);
+  assertSharedControlTargets(screen);
 });

@@ -122,7 +122,6 @@ export default function BudgetPlanScreen(props: Readonly<{
   snapshot: AppSnapshot;
   busy: boolean;
   message: string | null;
-  onBack: () => void;
   onConfirm: (values: Plan, acknowledgedLowNeed: boolean) => void;
   onAllocate: (values: Plan) => void;
 }>) {
@@ -186,7 +185,6 @@ export default function BudgetPlanScreen(props: Readonly<{
             disabled={props.busy || !draft.confirmEnabled || !draft.values}
             onPress={() => draft.values && props.onConfirm(draft.values, acknowledgedLowNeed)}
           />
-          <Button label="Вернуться в домик" onPress={props.onBack} secondary />
         </ScrollView>
       </SafeAreaView>
     );
@@ -243,51 +241,50 @@ export default function BudgetPlanScreen(props: Readonly<{
           </View>
         )}
         {props.message && <Text style={styles.error}>{props.message}</Text>}
-        <Button label="Вернуться в домик" onPress={props.onBack} secondary />
       </ScrollView>
     </SafeAreaView>
   );
 }
 
 const colors = {
-  ink: '#14324A',
-  muted: '#4B6878',
-  sky: '#EAF6FB',
-  teal: '#146B78',
-  pale: '#F7FBFC',
-  line: '#C7DEE5',
+  ink: '#3D352D',
+  muted: '#665444',
+  sky: '#F6F0E6',
+  teal: '#AE482A',
+  pale: '#FFFCF6',
+  line: '#E4D6C1',
   coral: '#B54135',
-  yellow: '#FFF3C7',
+  yellow: '#F1E5CB',
 };
 
 const styles = StyleSheet.create({
   page: { flex: 1, backgroundColor: colors.sky },
-  content: { gap: 12, padding: 18, paddingBottom: 36 },
-  eyebrow: { color: colors.teal, fontSize: 13, fontWeight: '800', letterSpacing: 1.4 },
-  title: { color: colors.ink, fontSize: 25, fontWeight: '800' },
+  content: { gap: 12, padding: 18, paddingBottom: 20 },
+  eyebrow: { color: colors.teal, fontSize: 13, fontWeight: '600', letterSpacing: 1.4 },
+  title: { color: colors.ink, fontSize: 25, fontWeight: '600' },
   body: { color: colors.muted, fontSize: 16, lineHeight: 22 },
   caption: { color: colors.muted, fontSize: 14, lineHeight: 19 },
   editorList: { gap: 10 },
-  categoryCard: { backgroundColor: '#FFFFFF', borderColor: colors.line, borderRadius: 14, borderWidth: 1, gap: 8, padding: 12 },
-  categoryTitle: { color: colors.ink, fontSize: 17, fontWeight: '800' },
+  categoryCard: { backgroundColor: '#FFFCF6', borderColor: colors.line, borderRadius: 22, borderWidth: 1, gap: 8, padding: 12 },
+  categoryTitle: { color: colors.ink, fontSize: 17, fontWeight: '600' },
   editorRow: { alignItems: 'center', flexDirection: 'row', gap: 8 },
-  stepButton: { alignItems: 'center', borderColor: colors.teal, borderRadius: 12, borderWidth: 1, justifyContent: 'center', minHeight: 48, minWidth: 60 },
-  stepText: { color: colors.teal, fontSize: 16, fontWeight: '800' },
-  amountInput: { backgroundColor: colors.pale, borderColor: colors.line, borderRadius: 12, borderWidth: 1, color: colors.ink, flex: 1, fontSize: 19, fontWeight: '800', minHeight: 48, paddingHorizontal: 12, textAlign: 'center' },
-  summary: { backgroundColor: colors.yellow, borderRadius: 14, gap: 4, padding: 12 },
-  summaryText: { color: colors.ink, fontSize: 16, fontWeight: '800' },
-  warning: { backgroundColor: colors.yellow, borderColor: '#D5A623', borderRadius: 12, borderWidth: 1, justifyContent: 'center', minHeight: 48, padding: 12 },
+  stepButton: { alignItems: 'center', borderColor: colors.teal, borderRadius: 18, borderWidth: 1, justifyContent: 'center', minHeight: 48, minWidth: 60 },
+  stepText: { color: colors.teal, fontSize: 16, fontWeight: '600' },
+  amountInput: { backgroundColor: colors.pale, borderColor: colors.line, borderRadius: 18, borderWidth: 1, color: colors.ink, flex: 1, fontSize: 19, fontWeight: '600', minHeight: 48, paddingVertical: 10, paddingHorizontal: 12, textAlign: 'center' },
+  summary: { backgroundColor: colors.yellow, borderRadius: 22, gap: 4, padding: 12 },
+  summaryText: { color: colors.ink, fontSize: 16, fontWeight: '600' },
+  warning: { backgroundColor: colors.yellow, borderColor: '#9B7847', borderRadius: 18, borderWidth: 1, justifyContent: 'center', minHeight: 48, padding: 12 },
   warningText: { color: colors.ink, fontSize: 14, fontWeight: '700', lineHeight: 19 },
   error: { color: colors.coral, fontSize: 14, fontWeight: '700' },
-  button: { alignItems: 'center', backgroundColor: colors.teal, borderRadius: 14, justifyContent: 'center', minHeight: 48, paddingHorizontal: 16 },
+  button: { alignItems: 'center', backgroundColor: colors.teal, borderRadius: 22, justifyContent: 'center', minHeight: 48, paddingVertical: 10, paddingHorizontal: 16 },
   buttonSecondary: { backgroundColor: 'transparent', borderColor: colors.teal, borderWidth: 1.5 },
-  buttonText: { color: '#FFFFFF', fontSize: 16, fontWeight: '800' },
+  buttonText: { color: '#FFFFFF', fontSize: 16, fontWeight: '600' },
   buttonSecondaryText: { color: colors.teal },
   disabled: { opacity: 0.45 },
-  pressed: { opacity: 0.72 },
-  factCard: { backgroundColor: '#FFFFFF', borderColor: colors.line, borderRadius: 14, borderWidth: 1, gap: 3, padding: 12 },
+  pressed: { transform: [{ scale: .96 }] },
+  factCard: { backgroundColor: '#FFFCF6', borderColor: colors.line, borderRadius: 22, borderWidth: 1, gap: 3, padding: 12 },
   factLine: { color: colors.muted, fontSize: 14 },
-  factValue: { color: colors.ink, fontSize: 16, fontWeight: '800' },
+  factValue: { color: colors.ink, fontSize: 16, fontWeight: '600' },
   historyLine: { color: colors.muted, fontSize: 14, lineHeight: 19 },
-  additionPanel: { backgroundColor: colors.pale, borderColor: colors.line, borderRadius: 14, borderWidth: 1, gap: 10, padding: 12 },
+  additionPanel: { backgroundColor: colors.pale, borderColor: colors.line, borderRadius: 22, borderWidth: 1, gap: 10, padding: 12 },
 });

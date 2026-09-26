@@ -50,7 +50,28 @@ Prompt:
 ## Limits
 
 The tool did not provide an exact backend model identifier, seed or reproducible
-edit layers. The production PNG files are exact copies of the generated masters;
-`build_assets.py` verifies their presence and hashes but does not regenerate
-them. Named owner art/rights approval, small-size legibility, physical-device
-decode and memory budgets remain open.
+edit layers. The five OBJ production PNG files are exact copies of their generated
+masters; `build_assets.py` leaves those bytes unchanged. The eleven catalog
+runtime PNGs are deterministic 192×192 exports of separate exact masters.
+The owner accepted the eleven catalog illustrations on 2026-09-23.
+The owner confirmed visual-use authority for these drawings on the same basis
+as the accepted S7-004 images (contest and public APK scope). The source
+record is the owner's declaration, not an independent legal opinion.
+Physical-device decode and memory budgets remain Sprint 10 checks.
+
+## Catalog replacement v3, 2026-09-23
+
+The owner accepted Home composition and these five OBJ images, and rejected
+the previous 11 code-drawn IT/GL thumbnails as too primitive. Eleven separate
+built-in `image_gen` calls produced the new transparent catalog masters.
+Their exact prompts, output filenames and SHA-256 hashes are recorded in
+`masters/exact-prompts.json` and `masters/source-manifest.json`. The two
+accepted OBJ images used as initial style references were OBJ-CARE and
+OBJ-CHEST. Later calls used the recent painterly outputs as style references.
+
+The master PNG bytes are copied unchanged to `masters/`.
+`build_assets.py` verifies their hashes and exports centered 192×192 RGBA
+runtime thumbnails by alpha-bounds crop and LANCZOS resize. The original
+imagegen backend model identifier and seed were not exposed by the tool.
+The owner accepted all eleven catalog illustrations on 2026-09-23.
+Physical-device review is deferred and does not block S8-002.

@@ -1,3 +1,4 @@
+import { assertSharedControlTargets } from './ui-control-contract.mjs';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
@@ -41,7 +42,7 @@ test('LessonShell exposes hints and the full action-to-next-step contract', () =
   assert.match(source, /Короткая справка/);
   assert.match(source, /returnLabel/);
   assert.match(source, /onHelp/);
-  assert.match(source, /minHeight: 48/);
+  assertSharedControlTargets(source);
   assert.doesNotMatch(source, /onRevealHint\([^)]*onComplete/);
 });
 

@@ -1,4 +1,6 @@
-import { Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import DetailBack from './DetailBack.tsx';
+import { palette, screenStyles as ui } from './screen-theme.ts';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 const glossary = Object.freeze([
   ['Бюджет', 'План: сколько монет есть и на что ты хочешь их использовать.'],
@@ -15,10 +17,11 @@ const glossary = Object.freeze([
 
 export default function HelpScreen(props: Readonly<{ onBack: () => void }>) {
   return (
-    <SafeAreaView style={styles.page}>
+    <View style={styles.page}>
       <ScrollView contentContainerStyle={styles.content}>
+        <DetailBack onPress={props.onBack} label="Закрыть справку" />
         <Text style={styles.eyebrow}>СПРАВКА</Text>
-        <Text style={styles.title}>Короткий словарь</Text>
+        <Text accessibilityRole="header" style={styles.title}>Короткий словарь</Text>
         <Text style={styles.intro}>Настоящие деньги здесь не используются. Все монеты — часть игры.</Text>
         {glossary.map(([term, definition]) => (
           <View key={term} accessible accessibilityLabel={`${term}. ${definition}`} style={styles.card}>
@@ -30,19 +33,13 @@ export default function HelpScreen(props: Readonly<{ onBack: () => void }>) {
           <Text style={styles.buttonText}>Вернуться туда, где я был</Text>
         </Pressable>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  page: { flex: 1, backgroundColor: '#EAF6FB' },
-  content: { gap: 10, padding: 18, paddingBottom: 36 },
-  eyebrow: { color: '#146B78', fontSize: 13, fontWeight: '800', letterSpacing: 1.4 },
-  title: { color: '#14324A', fontSize: 25, fontWeight: '800' },
-  intro: { color: '#4B6878', fontSize: 15, lineHeight: 21 },
-  card: { backgroundColor: '#FFFFFF', borderColor: '#C7DEE5', borderRadius: 12, borderWidth: 1, gap: 4, padding: 12 },
-  term: { color: '#14324A', fontSize: 16, fontWeight: '800' },
-  definition: { color: '#4B6878', fontSize: 15, lineHeight: 21 },
-  button: { alignItems: 'center', backgroundColor: '#146B78', borderRadius: 12, justifyContent: 'center', minHeight: 48, paddingHorizontal: 14 },
-  buttonText: { color: '#FFFFFF', fontSize: 16, fontWeight: '800' },
+  page: ui.page, content: ui.content, eyebrow: ui.eyebrow, title: ui.title,
+  intro: { ...ui.body, backgroundColor: palette.soft, borderRadius: 18, padding: 14 },
+  card: ui.card, term: ui.cardTitle, definition: ui.body,
+  button: ui.button, buttonText: ui.buttonText,
 });

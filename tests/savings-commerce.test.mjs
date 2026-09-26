@@ -63,11 +63,13 @@ test('deposit and confirmed withdrawal conserve funds and produce ordered histor
   const { database, commerce } = await setup();
   const depositPreview = await commerce.previewSavings('profile', 'deposit', amount(40));
   assert.deepEqual(depositPreview.after, { available: 60, savings: 40 });
-  await commerce.transfer(transfer('DepositSavings', 'deposit-40', 0, 40), '2026-09-21T00:00:01.000Z');
+  const deposited = await commerce.transfer(transfer('DepositSavings', 'deposit-40', 0, 40), '2026-09-21T00:00:01.000Z');
+  assert.equal(deposited.result.ok && deposited.result.feedback.petReaction, 'inspired');
 
   const withdrawalPreview = await commerce.previewSavings('profile', 'withdraw', amount(15));
   assert.deepEqual(withdrawalPreview.after, { available: 75, savings: 25 });
-  await commerce.transfer(transfer('WithdrawSavings', 'withdraw-15', 1, 15), '2026-09-21T00:00:02.000Z');
+  const withdrawn = await commerce.transfer(transfer('WithdrawSavings', 'withdraw-15', 1, 15), '2026-09-21T00:00:02.000Z');
+  assert.equal(withdrawn.result.ok && withdrawn.result.feedback.petReaction, 'calm');
 
   const insufficient = await commerce.previewSavings('profile', 'withdraw', amount(30));
   assert.equal(insufficient.after, null);
@@ -146,9 +148,9 @@ test('runtime boundary and accessible savings/history screens are wired', () => 
   assert.match(runtime, /async history/);
   assert.match(root, /screen === 'savings'/);
   assert.match(root, /screen === 'history'/);
-  assert.match(root, /runtime\.depositSavings\(current/);
-  assert.match(root, /runtime\.withdrawSavings\(current/);
-  assert.match(root, /runtime\.claimGoal\(current/);
+  assert.match(root, /runtime\.depositSavingsReceipt\(current/);
+  assert.match(root, /runtime\.withdrawSavingsReceipt\(current/);
+  assert.match(root, /runtime\.claimGoalReceipt\(current/);
   assert.match(savings, /accessibilityLiveRegion="polite"/);
   assert.match(savings, /Снять выбор цели/);
   assert.match(savings, /История операций/);

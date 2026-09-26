@@ -1,0 +1,89 @@
+{
+  "tool": "built-in image_gen",
+  "date": "2026-09-23",
+  "styleReferences": [
+    "OBJ-CARE",
+    "OBJ-CHEST",
+    "accepted S8-002 room objects"
+  ],
+  "sharedPrompt": "One isolated, recognizable object for each canonical IT/GL ID. Match the accepted room objects in painterly storybook 2.5D material, warm honey wood, cream, copper, muted coral and teal, gentle golden light, three-quarter view, true alpha transparency, no character/room/UI card/text/logo.",
+  "assets": [
+    {
+      "assetId": "IT-01",
+      "path": "it_01_master.png",
+      "sha256": "04cac53c5220d3884f074982390e9f401d43f3db8a263a2dc3e5de8ce4a0518a",
+      "generatedFile": "exec-439ce6e9-2932-487c-b078-d8ba7c5931d2.png",
+      "subject": "Cream ceramic pet bowl filled with wholesome dry kibble."
+    },
+    {
+      "assetId": "IT-02",
+      "path": "it_02_master.png",
+      "sha256": "87001d88aa4fc91290d0b530e0f4b6022121b1b9cb2544efa81e14ed989cae5a",
+      "generatedFile": "exec-9c658d67-dfa3-4c76-ad25-16c6d082c253.png",
+      "subject": "Cream ceramic pet bowl with premium wet pet food and small garnish."
+    },
+    {
+      "assetId": "IT-03",
+      "path": "it_03_master.png",
+      "sha256": "451d4dfafd65d2dae8bbc4bd1a9f601dbefac823009d9a8d1053a09edea3619d",
+      "generatedFile": "exec-930faba7-a102-49d6-b86f-ade9dcbf6856.png",
+      "subject": "Handheld honey-wood pet grooming brush with natural bristles."
+    },
+    {
+      "assetId": "IT-04",
+      "path": "it_04_master.png",
+      "sha256": "702b2ebfe7eec31aef6e2bd514efacf4a5924f7d18a2a9e3bd3f87df06a0e39f",
+      "generatedFile": "exec-81051658-33a0-424b-b8b1-b971992ff00f.png",
+      "subject": "Honey-wood pet-care caddy with bottle, cloth and comb."
+    },
+    {
+      "assetId": "IT-05",
+      "path": "it_05_master.png",
+      "sha256": "d07763069f5b2b1797c86d6f4a978992f4f658edf6199a8e06d060b70f152907",
+      "generatedFile": "exec-db221b21-0368-4095-8b88-014411592d9b.png",
+      "subject": "Small stitched fabric pet play ball in coral, cream and teal."
+    },
+    {
+      "assetId": "IT-06",
+      "path": "it_06_master.png",
+      "sha256": "6bad6f8906d6002fbc0e0ab0eaf8e1dcaa42cddda44f3bbdd8c5c63ffc5f04d5",
+      "generatedFile": "exec-ef129c71-1db7-4d8c-80f0-cb2c955720e0.png",
+      "subject": "Closed teal cloth storybook with decorative leaf and star, no text."
+    },
+    {
+      "assetId": "IT-07",
+      "path": "it_07_master.png",
+      "sha256": "6381530405a3e048850a41ef45968b736179e6bd9db634954235c1549e69cf60",
+      "generatedFile": "exec-aef22247-61ac-441f-81b6-12e2c3016fd3.png",
+      "subject": "Folded teal pet harness with rolled cream leash and copper clip."
+    },
+    {
+      "assetId": "IT-08",
+      "path": "it_08_master.png",
+      "sha256": "7ef1c360ba68b520a5932541621713681cf66e8430814d2acf68edebcf783549",
+      "generatedFile": "exec-0aeac859-4231-4776-be74-e7ac2864a21d.png",
+      "subject": "Party hat and short fabric pennant garland in a honey-wood tray."
+    },
+    {
+      "assetId": "GL-01",
+      "path": "gl_01_master.png",
+      "sha256": "e55edb97f7dffabf2640844a48dd2cce1c4c41e069871d5fd4eac702b36cdbf3",
+      "generatedFile": "exec-1f7173ea-ad90-48bd-a6d9-395a967aac7d.png",
+      "subject": "Diamond fabric flying kite with wooden spars, ribbon tail and spool."
+    },
+    {
+      "assetId": "GL-02",
+      "path": "gl_02_master.png",
+      "sha256": "409dd045efcc4468e90e97d26b2300c850f989aaf05ce5526ef0bc23103abf27",
+      "generatedFile": "exec-8c7aa162-ec08-43d2-925d-7a4737686add.png",
+      "subject": "Child kick scooter with teal deck, cream grips and two wheels."
+    },
+    {
+      "assetId": "GL-03",
+      "path": "gl_03_master.png",
+      "sha256": "5fde32b497cb4fed4ca1c8903babc947741aa7051b8a405eb06c9fae0f8e6c4e",
+      "generatedFile": "exec-38f1f8bd-4bb1-4917-a487-89635b17992c.png",
+      "subject": "Indoor honey-wood cat house with round entrance and cream cushion."
+    }
+  ]
+}

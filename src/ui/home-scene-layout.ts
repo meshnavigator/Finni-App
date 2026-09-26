@@ -1,0 +1,35 @@
+import { FINNI_ANCHORS, FINNI_CANVAS, FINNI_STAGE_SCALE, type FinniStage } from './finni-layer-contract.ts';
+
+export type SceneRect = Readonly<{ x: number; y: number; width: number; height: number }>;
+/** Union of alpha bounds of all accepted neutral/blink/expression canvases. */
+export const HOME_PET_BOUNDS = Object.freeze({ left: 210, top: 712, right: 714, bottom: 1264 });
+
+export function homePetFrame(region: SceneRect, stage: FinniStage) {
+  const { feet } = FINNI_ANCHORS;
+  // Reserve breathing clearance and fit stage 3; growth never changes the floor anchor.
+  const base = Math.max(0, Math.min((region.width - 8) / 520, (region.height - 12) / 568)) / FINNI_STAGE_SCALE[3];
+  const scale = base * FINNI_STAGE_SCALE[stage];
+  const anchorX = region.x + region.width / 2;
+  const anchorY = region.y + region.height - 4;
+  return Object.freeze({
+    width: FINNI_CANVAS.width * scale,
+    height: FINNI_CANVAS.height * scale,
+    left: anchorX - feet.x * scale,
+    top: anchorY - feet.y * scale,
+    scale,
+    anchorX,
+    anchorY,
+  });
+}
+
+/** Optical head framing at large text sizes; the accepted canvas is never edited. */
+export function homePetPortraitFrame(region: SceneRect) {
+  const scale = Math.min((region.width - 4) / 430, (region.height - 8) / 365);
+  return Object.freeze({
+    width: FINNI_CANVAS.width * scale,
+    height: FINNI_CANVAS.height * scale,
+    left: region.x + region.width / 2 - FINNI_ANCHORS.feet.x * scale,
+    top: region.y + 6 - HOME_PET_BOUNDS.top * scale,
+    scale,
+  });
+}

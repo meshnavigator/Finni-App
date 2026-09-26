@@ -1,28 +1,28 @@
-# S8-002 room and catalog package v2
+# S8-002 room and catalog package v3
 
-Status: **engineering candidate; independent art and Android runtime acceptance open**.
+Status: **Home composition, five OBJ assets and eleven catalog illustrations
+accepted by owner on 2026-09-23**.
 
-Five functional OBJ cutouts now use warm painterly imagegen masters. Their exact
-origins and prompts are recorded in `IMAGEGEN_PROVENANCE.md`. The 8 item and
-3 goal illustrations remain code-drawn and require the same art review.
+The first 8 IT and 3 GL code-drawn thumbnails were rejected as too primitive.
+Version 3 replaces them with individual painterly imagegen illustrations in
+the same material and light language as the five accepted room objects.
 
 ## Source and export
 
 - `ROOM-BASE` reuses the immutable accepted `FINNI-ROOM-CLEAN-V1` PNG from
   `FINNI-2D-MASTER-V1`. Its editable OpenRaster source is
   `docs/Finni_S7-004_2D_MASTER_v1/source/finni_home_layered_master_v1.ora`.
-- `build_assets.py` is the editable source for 11 catalog illustrations.
-  `python -B build_assets.py` exports those 192×192 RGBA PNG with 4×
-  supersampling and records exact SHA-256 for all 16 local files. Five OBJ
-  imagegen masters are retained as exact PNG files and never redrawn by it.
-- No image or font is fetched at build or runtime. The 11 code-native
-  illustrations use original project geometry; five OBJ are AI-generated.
-  No third-party font, trademark or baked-in UI copy is intentionally embedded.
-  Product/art owner approval of the exact package remains open. The accepted base-room rights
-  and generation provenance remain in S7-004's `PROVENANCE.md` and owner verdict.
-- The 11 code-native illustrations use ink `#285164`, teal `#479C9C`,
-  cream `#FFF2D5`, gold `#E5AC4E`, coral `#DB8172`, blue `#78B8CA`.
-  The five OBJ use warm wood, cream and copper. All files have RGBA alpha.
+- `masters/*.png` are the exact 11 catalog imagegen outputs. Their hashes,
+  source filenames and subjects are in `masters/source-manifest.json`; exact
+  prompts are in `masters/exact-prompts.json`.
+- `python -B build_assets.py` checks every master hash and deterministically
+  exports 192×192 RGBA `png/it_*.png` and `png/gl_*.png` with 12 px minimum
+  content padding. Five accepted OBJ PNG remain byte-for-byte unchanged.
+- No image or font is fetched at build or runtime. No baked-in UI copy,
+  third-party font or trademark is intentionally embedded. The base-room
+  provenance remains in the accepted S7-004 package. The owner confirmed
+  visual-use authority for these drawings on the same basis as S7-004
+  (contest and public APK scope); provenance and hashes are recorded.
 
 ## Binding and states
 
@@ -58,13 +58,15 @@ purchase, transfer money or change a goal: all taps navigate to existing UI.
 | --- | --- |
 | Catalog ID coverage and SHA-256 | PASS: `tests/room-assets.test.mjs` |
 | Android Metro export/import | PASS: 19 local assets bundled, including all 16 S8-002 PNG files |
-| Code-native re-export equality, all 16 RGBA decodes/hashes | PASS; imagegen masters are exact-byte inputs |
+| Catalog master hashes, 192×192 RGBA exports and all 16 local hashes | PASS: `tests/room-assets.test.mjs` |
 | Unknown item/goal ID | Source contract: `null` fallback; no dynamic Metro require |
 | Decode error in room object | Source contract: signed fallback in `RoomObjectsLayer`; Android run open |
 | Offline import | All sources are local; signed offline APK run open |
-| Visual composition, Finni clearance, light/material match | Open after S8-001 scene integration |
-| Independent art/rights acceptance | Open; no owner verdict issued for this new package |
+| Home composition and five OBJ visuals | Owner accepted on 2026-09-23 |
+| Eleven new catalog visuals | Owner accepted on 2026-09-23; 64 dp sheet in `artifacts/sprint-8/S8-002-catalog-v3` |
+| Physical-device run | Deferred to Sprint 10 by owner; not an S8-002 blocker |
+| Other screen sizes, offline and release run | Open |
 
 This package does not modify the historical 3D addendum manifest in the
-governance tree. Its new `asset-manifest.json` is the proposed S6-001 binding
-record for S8-002 integration.
+governance tree. Its `asset-manifest.json` is the local S8-002 binding record.
+The owner has accepted the new catalog art; remaining emulator/offline and release checks are tracked separately.

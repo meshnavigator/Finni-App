@@ -1,5 +1,7 @@
+import DetailBack from './DetailBack.tsx';
+import { palette, screenStyles as ui } from './screen-theme.ts';
 import { useEffect, useRef, useState } from 'react';
-import { Alert, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import {
   ADULT_ACCESSIBLE_QUESTION,
   ADULT_HOLD_DURATION_MS,
@@ -40,10 +42,11 @@ function AdultGate(props: Readonly<{ onUnlock: () => void; onExit: () => void }>
   };
 
   return (
-    <SafeAreaView style={styles.page}>
-      <ScrollView contentContainerStyle={styles.content}>
+    <View style={styles.page}>
+      <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={styles.content}>
+        <DetailBack onPress={props.onExit} />
         <Text style={styles.eyebrow}>РАЗДЕЛ ДЛЯ ВЗРОСЛОГО</Text>
-        <Text style={styles.title}>Защита от случайного входа</Text>
+        <Text accessibilityRole="header" style={styles.title}>Защита от случайного входа</Text>
         <Text style={styles.body}>Это простой барьер, а не проверка возраста, личности или родительских прав.</Text>
         <Pressable
           accessibilityHint="Удерживайте около трёх секунд. Для TalkBack доступен арифметический вариант ниже."
@@ -55,12 +58,12 @@ function AdultGate(props: Readonly<{ onUnlock: () => void; onExit: () => void }>
         >
           <Text style={styles.holdText}>{progress > 0 ? `Удерживайте… ${progress}%` : 'Удерживать 3 секунды'}</Text>
         </Pressable>
-        <Pressable accessibilityRole="button" onPress={() => setAlternative((value) => !value)} style={styles.secondary}>
+        <Pressable accessibilityRole="button" accessibilityState={{ expanded: alternative }} onPress={() => setAlternative((value) => !value)} style={styles.secondary}>
           <Text style={styles.secondaryText}>Доступный вариант без удержания</Text>
         </Pressable>
         {alternative && (
           <View style={styles.card}>
-            <Text style={styles.cardTitle}>{ADULT_ACCESSIBLE_QUESTION}</Text>
+            <Text accessibilityRole="header" style={styles.cardTitle}>{ADULT_ACCESSIBLE_QUESTION}</Text>
             <TextInput
               accessibilityLabel="Ответ на простой арифметический вопрос"
               keyboardType="number-pad"
@@ -70,6 +73,7 @@ function AdultGate(props: Readonly<{ onUnlock: () => void; onExit: () => void }>
             />
             <Pressable
               accessibilityRole="button"
+              accessibilityState={{ disabled: !isAdultAccessibleAnswer(answer) }}
               disabled={!isAdultAccessibleAnswer(answer)}
               onPress={props.onUnlock}
               style={[styles.primary, !isAdultAccessibleAnswer(answer) && styles.disabled]}
@@ -82,7 +86,7 @@ function AdultGate(props: Readonly<{ onUnlock: () => void; onExit: () => void }>
           <Text style={styles.secondaryText}>Вернуться</Text>
         </Pressable>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -117,26 +121,27 @@ export default function AdultScreen(props: Readonly<{
     [{ text: 'Отмена', style: 'cancel' }, { text: 'Удалить выбранный режим', style: 'destructive', onPress: props.onDeleteSelected }],
   );
   return (
-    <SafeAreaView style={styles.page}>
+    <View style={styles.page}>
       <ScrollView onScrollBeginDrag={props.onActivity} contentContainerStyle={styles.content}>
+        <DetailBack onPress={props.onExit} label="Выйти из взрослого раздела" disabled={props.busy} />
         <Text style={styles.eyebrow}>ВЗРОСЛОМУ</Text>
-        <Text style={styles.title}>Факты о прогрессе</Text>
+        <Text accessibilityRole="header" style={styles.title}>Факты о прогрессе</Text>
         <Text style={styles.body}>Финни помогает ребёнку пробовать планирование, покупки и накопления в локальной игре. Это не оценка способностей и не исследование развития ребёнка.</Text>
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>Текущий режим</Text>
+          <Text accessibilityRole="header" style={styles.cardTitle}>Текущий режим</Text>
           <Text style={styles.value}>{modeLabel}</Text>
-          <Text style={styles.body}>Данные normal и demo хранятся раздельно только на устройстве.</Text>
+          <Text style={styles.body}>Обычная игра и демонстрация хранятся раздельно только на этом устройстве.</Text>
         </View>
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>Сводка без рейтинга</Text>
+          <Text accessibilityRole="header" style={styles.cardTitle}>Сводка без рейтинга</Text>
           <Text style={styles.body}>Стадия питомца: {lifecycle?.petStage ?? 1} из 3</Text>
           <Text style={styles.body}>Завершено игровых дней: {lifecycle?.closedPeriods ?? 0}</Text>
           <Text style={styles.body}>Шагов роста: {lifecycle?.lifetimeGrowth ?? 0}</Text>
           <Text style={styles.body}>Текущая мечта: {goal ? `${goal.name}, ${goal.cost} монет` : 'не выбрана'}</Text>
-          <Text style={styles.body}>Завершённые занятия: данных пока нет — учебный модуль ещё не подключён.</Text>
+          <Text style={styles.body}>Завершённые занятия и сохранённые разборы доступны в «Прогрессе».</Text>
         </View>
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>Восприятие</Text>
+          <Text accessibilityRole="header" style={styles.cardTitle}>Восприятие</Text>
           <Text style={styles.body}>Настройки сохраняются на устройстве и не влияют на деньги, награды или рост.</Text>
           <Pressable
             accessibilityLabel="Движение Финни"
@@ -160,49 +165,38 @@ export default function AdultScreen(props: Readonly<{
           </Pressable>
         </View>
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>Для разговора</Text>
+          <Text accessibilityRole="header" style={styles.cardTitle}>Для разговора</Text>
           <Text style={styles.body}>«Как ты выбрал, на что потратить и что оставить?»</Text>
         </View>
         {props.message && <Text accessibilityLiveRegion="polite" style={styles.error}>{props.message}</Text>}
-        <Pressable accessibilityRole="button" disabled={props.busy || props.mode === 'normal'} onPress={() => props.onSwitchMode('normal')} style={[styles.primary, (props.busy || props.mode === 'normal') && styles.disabled]}>
+        <Pressable accessibilityRole="button" accessibilityState={{ disabled: props.busy || props.mode === 'normal' }} disabled={props.busy || props.mode === 'normal'} onPress={() => props.onSwitchMode('normal')} style={[styles.primary, (props.busy || props.mode === 'normal') && styles.disabled]}>
           <Text style={styles.primaryText}>Перейти в обычную игру</Text>
         </Pressable>
-        <Pressable accessibilityRole="button" disabled={props.busy || props.mode === 'demo'} onPress={() => props.onSwitchMode('demo')} style={[styles.primary, (props.busy || props.mode === 'demo') && styles.disabled]}>
+        <Pressable accessibilityRole="button" accessibilityState={{ disabled: props.busy || props.mode === 'demo' }} disabled={props.busy || props.mode === 'demo'} onPress={() => props.onSwitchMode('demo')} style={[styles.primary, (props.busy || props.mode === 'demo') && styles.disabled]}>
           <Text style={styles.primaryText}>Открыть демонстрацию</Text>
         </Pressable>
-        <Pressable accessibilityRole="button" disabled={props.busy || props.mode !== 'demo'} onPress={confirmReset} style={[styles.danger, (props.busy || props.mode !== 'demo') && styles.disabled]}>
+        <Pressable accessibilityRole="button" accessibilityState={{ disabled: props.busy || props.mode !== 'demo' }} disabled={props.busy || props.mode !== 'demo'} onPress={confirmReset} style={[styles.danger, (props.busy || props.mode !== 'demo') && styles.disabled]}>
           <Text style={styles.dangerText}>Сбросить демонстрацию</Text>
         </Pressable>
-        <Pressable accessibilityRole="button" disabled={props.busy} onPress={confirmDelete} style={[styles.danger, props.busy && styles.disabled]}>
+        <Pressable accessibilityRole="button" accessibilityState={{ disabled: props.busy }} disabled={props.busy} onPress={confirmDelete} style={[styles.danger, props.busy && styles.disabled]}>
           <Text style={styles.dangerText}>Удалить данные выбранного режима</Text>
         </Pressable>
         <Pressable accessibilityRole="button" onPress={props.onExit} style={styles.secondary}>
           <Text style={styles.secondaryText}>Выйти из взрослого раздела</Text>
         </Pressable>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  page: { flex: 1, backgroundColor: '#EAF6FB' },
-  content: { gap: 12, padding: 18, paddingBottom: 36 },
-  eyebrow: { color: '#146B78', fontSize: 13, fontWeight: '800', letterSpacing: 1.4 },
-  title: { color: '#14324A', fontSize: 25, fontWeight: '800' },
-  body: { color: '#4B6878', fontSize: 15, lineHeight: 21 },
-  card: { backgroundColor: '#FFFFFF', borderColor: '#C7DEE5', borderRadius: 14, borderWidth: 1, gap: 7, padding: 13 },
-  cardTitle: { color: '#14324A', fontSize: 17, fontWeight: '800' },
-  value: { color: '#146B78', fontSize: 18, fontWeight: '900' },
-  input: { backgroundColor: '#FFFFFF', borderColor: '#C7DEE5', borderRadius: 12, borderWidth: 1.5, color: '#14324A', fontSize: 18, minHeight: 48, paddingHorizontal: 14 },
-  holdButton: { alignItems: 'center', backgroundColor: '#146B78', borderRadius: 14, justifyContent: 'center', minHeight: 72, paddingHorizontal: 16 },
-  holdText: { color: '#FFFFFF', fontSize: 18, fontWeight: '900' },
-  primary: { alignItems: 'center', backgroundColor: '#146B78', borderRadius: 12, justifyContent: 'center', minHeight: 48, paddingHorizontal: 14 },
-  primaryText: { color: '#FFFFFF', fontSize: 16, fontWeight: '800' },
-  secondary: { alignItems: 'center', borderColor: '#146B78', borderRadius: 12, borderWidth: 1.5, justifyContent: 'center', minHeight: 48, paddingHorizontal: 14 },
-  secondaryText: { color: '#146B78', fontSize: 16, fontWeight: '800' },
-  danger: { alignItems: 'center', borderColor: '#B54135', borderRadius: 12, borderWidth: 1.5, justifyContent: 'center', minHeight: 48, paddingHorizontal: 14 },
-  dangerText: { color: '#B54135', fontSize: 16, fontWeight: '800' },
-  error: { color: '#B54135', fontSize: 14, fontWeight: '700' },
-  disabled: { opacity: 0.42 },
-  pressed: { opacity: 0.72 },
+  page: ui.page, content: ui.content, eyebrow: ui.eyebrow, title: ui.title, body: ui.body,
+  card: ui.card, cardTitle: ui.cardTitle,
+  value: { color: palette.accent, fontSize: 20, fontWeight: '600' }, input: ui.input,
+  holdButton: { ...ui.button, minHeight: 80 }, holdText: { ...ui.buttonText, fontSize: 18, fontVariant: ['tabular-nums'] },
+  primary: ui.button, primaryText: ui.buttonText,
+  secondary: { ...ui.button, ...ui.secondary }, secondaryText: { ...ui.buttonText, ...ui.secondaryText },
+  danger: { ...ui.button, backgroundColor: palette.errorSurface, borderColor: palette.error, borderWidth: 1 },
+  dangerText: { ...ui.buttonText, color: palette.error },
+  error: ui.error, disabled: ui.disabled, pressed: ui.pressed,
 });

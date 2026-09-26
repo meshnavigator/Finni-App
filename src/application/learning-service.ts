@@ -40,6 +40,8 @@ export class LearningService {
     return this.#repository.createAttempt(startLessonAttempt(input));
   }
 
+  listHomeHistory(profileId: string) { return this.#repository.listHomeHistory(profileId); }
+
   read(attemptId: string): Promise<LessonAttempt> {
     return this.#repository.readAttempt(attemptId);
   }

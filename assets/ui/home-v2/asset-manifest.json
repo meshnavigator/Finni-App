@@ -1,0 +1,86 @@
+{
+  "packageId": "HOME-UI-V2",
+  "source": "Original repo-native line drawings; reproducible build-icons.py",
+  "assets": [
+    {
+      "path": "arrow.png",
+      "size": [
+        96,
+        96
+      ],
+      "sha256": "dae8a81efa5ab70fb73c7af5f0eb7a994b83a44a2ead9a2907cd2e098b83a49a"
+    },
+    {
+      "path": "book.png",
+      "size": [
+        96,
+        96
+      ],
+      "sha256": "f16038f9d43ab5da4db0d961f8eff74afefbbf150ecb05aee9a763508d6b7b0a"
+    },
+    {
+      "path": "care.png",
+      "size": [
+        96,
+        96
+      ],
+      "sha256": "428bbacc64afa216a79ad595e0131d7156c88b4bf08d4e1d7907c8e15c9a5de6"
+    },
+    {
+      "path": "food.png",
+      "size": [
+        96,
+        96
+      ],
+      "sha256": "d384976afe9e8205b06ada98f84b6cf72f327deb80aa196e63f0b170fe6d6c6f"
+    },
+    {
+      "path": "home.png",
+      "size": [
+        96,
+        96
+      ],
+      "sha256": "103317a6e3d3c8e5e99806643a902854b8bae37a7925c6e3203420f17b9e1871"
+    },
+    {
+      "path": "menu.png",
+      "size": [
+        96,
+        96
+      ],
+      "sha256": "26e6843024d50693e974aa9fb800e9d113f7fd4a874023fd4882333790585e9f"
+    },
+    {
+      "path": "mood.png",
+      "size": [
+        96,
+        96
+      ],
+      "sha256": "52e0e23e704aedb878e9114efc83ec8380cc75f14aaacf3b43bc25115ddacd25"
+    },
+    {
+      "path": "plan.png",
+      "size": [
+        96,
+        96
+      ],
+      "sha256": "c45fa780e33ac2d1f07852bedb9189c0be78e042d4fef4f900bb3350efb38b25"
+    },
+    {
+      "path": "savings.png",
+      "size": [
+        96,
+        96
+      ],
+      "sha256": "eb012b6cf342e6512719b40ae103f0b118ae38770001131d18911579862a97ca"
+    },
+    {
+      "path": "shop.png",
+      "size": [
+        96,
+        96
+      ],
+      "sha256": "db01b5d24a77ea72ec501433a012beb5a6489ef2a4d031b06c52385cbcd54f2d"
+    }
+  ]
+}

@@ -1,3 +1,4 @@
+import { assertSharedControlTargets } from './ui-control-contract.mjs';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
@@ -16,7 +17,7 @@ test('allocation and basket renderers expose canonical editable learning actions
   assert.match(renderer, /onRevealEvidence/);
   assert.match(renderer, /Открыть сведения/);
   assert.match(renderer, /Цена указана за всю упаковку/);
-  assert.match(renderer, /minHeight: 48/);
+  assertSharedControlTargets(renderer);
   assert.doesNotMatch(renderer, /selectedIds|revealedIds|remainder/);
 });
 

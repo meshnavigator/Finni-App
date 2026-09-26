@@ -44,6 +44,7 @@ test('rapid taps keep at most one optional reaction and stale completion cannot 
 });
 
 test('goal and stage skip display committed presentation and invalidate old timer', () => {
+  assert.equal(FINNI_ANIMATION_SET['AN-013'].staticExpression, 'inspired');
   for (const clip of ['AN-013', 'AN-014']) {
     const committed = { ...presentation, stage: 3, expression: 'inspired' };
     let state = play(initial(), clip, committed);

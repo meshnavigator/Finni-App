@@ -1,26 +1,32 @@
+import DetailBack from './DetailBack.tsx';
+import { palette, screenStyles as ui } from './screen-theme.ts';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   AppState,
+  BackHandler,
+  Image,
   KeyboardAvoidingView,
   Modal,
   Platform,
   Pressable,
-  SafeAreaView,
   ScrollView,
   StatusBar as NativeStatusBar,
   StyleSheet,
   Text,
   TextInput,
-  useWindowDimensions,
   View,
+  useWindowDimensions,
 } from 'react-native';
+import { SafeAreaView as RootSafeAreaView } from 'react-native-safe-area-context';
+import { RootNavigation, RootMenu, MoreScreen } from './RootNavigation.tsx';
+import { isRootRoute, usesLargeNavigation, type RootRoute } from './root-navigation.ts';
 import { AdultAccessSession } from '../application/adult-access.ts';
 import type { AppRuntime, AppSnapshot } from '../application/app-runtime.ts';
 import { ProductionAppController } from '../application/production-app-controller.ts';
+import { ReceiptPresentationController, type PresentationEvent } from '../application/receipt-presentation.ts';
 import {
   errorScreenModel,
-  homeResponsiveLayout,
   homeScreenModel,
   loadingScreenModel,
   onboardingScreenModel,
@@ -35,9 +41,9 @@ import {
   type PetShapeId,
 } from '../domain/pet-profile.ts';
 import type { Plan } from '../domain/economy.ts';
-import type { Mode } from '../domain/contracts.ts';
+import type { CommandReceipt, Mode } from '../domain/contracts.ts';
 import type { HintLevel, LessonAttempt, LessonEvaluation } from '../domain/lesson.ts';
-import { LOCAL_DEMO_LESSONS, type LocalLessonPresentation, type LessonVariantPresentation } from '../content/local-lesson-catalog.ts';
+import { LOCAL_DEMO_LESSONS, HOME_LESSON_ORDER, type LocalLessonPresentation, type LessonVariantPresentation } from '../content/local-lesson-catalog.ts';
 import AdultScreen from './AdultScreen.tsx';
 import BudgetPlanScreen from './BudgetPlanScreen.tsx';
 import HelpScreen from './HelpScreen.tsx';
@@ -45,8 +51,11 @@ import HistoryScreen from './HistoryScreen.tsx';
 import PeriodResultScreen from './PeriodResultScreen.tsx';
 import SavingsScreen from './SavingsScreen.tsx';
 import ShopScreen from './ShopScreen.tsx';
-import FinniHomeScene from './FinniHomeScene.tsx';
-import RoomObjectsLayer from './RoomObjectsLayer.tsx';
+import { type HomeReaction } from './FinniHomeScene.tsx';
+import HomeScreen from './HomeScreen.tsx';
+import { recommendHomeLesson } from '../application/home-lesson.ts';
+import { FINNI_APPEARANCE_ASSETS } from './finni-appearance-assets.ts';
+import { renderedFinniAppearance } from './finni-appearance-policy.ts';
 import LessonShell from './LessonShell.tsx';
 import { LessonRendererRegistry } from './lesson-renderer-registry.ts';
 import { AllocationRenderer, BasketRenderer } from './budget-purchase-renderers.tsx';
@@ -56,7 +65,7 @@ import { lessonReturnLabel, lessonReturnScreen, nextLessonVariant } from './less
 import type { LessonDiscovery } from '../persistence/lesson-repository.ts';
 import type { PresentationPreferences } from '../persistence/app-control-sqlite.ts';
 
-type Screen = 'intro' | 'pet' | 'home' | 'plan' | 'shop' | 'savings' | 'history' | 'result' | 'adult' | 'section' | 'lesson-catalog' | 'lesson';
+type Screen = 'intro' | 'pet' | 'more' | 'home' | 'plan' | 'shop' | 'savings' | 'history' | 'result' | 'adult' | 'section' | 'lesson-catalog' | 'lesson';
 type Phase = 'loading' | 'ready' | 'error';
 
 const EMPTY_SNAPSHOT: AppSnapshot = Object.freeze({
@@ -65,6 +74,10 @@ const EMPTY_SNAPSHOT: AppSnapshot = Object.freeze({
   budget: null,
   commerce: null,
 });
+
+function homeReaction(event: PresentationEvent | null): HomeReaction | null {
+  return event ? { id: event.id, expression: event.expression, skippable: event.skippable } : null;
+}
 
 const lessonRenderers = new LessonRendererRegistry()
   .register('allocation', AllocationRenderer)
@@ -108,6 +121,26 @@ export function PetAvatar(props: Readonly<{
   size?: number;
 }>) {
   const size = props.size ?? 96;
+  const renderedAppearance = renderedFinniAppearance(props);
+  const [failedAppearance, setFailedAppearance] = useState<string | null>(null);
+  if (renderedAppearance && failedAppearance !== renderedAppearance) {
+    return (
+      <View
+        accessible
+        accessibilityLabel={`${props.name}: ${PET_SHAPES.find((item) => item.id === props.shapeId)?.label}, ${PET_PATTERNS.find((item) => item.id === props.patternId)?.label}`}
+        style={{ height: size, width: size }}
+        testID={`pet-preview-${renderedAppearance.replace('/', '-')}`}
+      >
+        <Image
+          accessibilityIgnoresInvertColors
+          onError={() => setFailedAppearance(renderedAppearance)}
+          resizeMode="contain"
+          source={FINNI_APPEARANCE_ASSETS[renderedAppearance].preview}
+          style={{ height: size, width: size }}
+        />
+      </View>
+    );
+  }
   const pointy = props.shapeId === 'pointy';
   const floppy = props.shapeId === 'floppy';
   return (
@@ -154,24 +187,24 @@ export function PetAvatar(props: Readonly<{
 
 function LoadingScreen() {
   return (
-    <SafeAreaView style={styles.centered} accessibilityLabel="Загрузка приложения">
+    <RootSafeAreaView style={styles.page}><StatusBar style="dark" /><ScrollView contentContainerStyle={styles.centered} accessibilityLabel="Загрузка приложения">
       <PetAvatar name="Финни" shapeId="round" patternId="plain" size={104} />
-      <Text style={styles.title}>{loadingScreenModel.title}</Text>
+      <Text accessibilityRole="header" style={styles.title}>{loadingScreenModel.title}</Text>
       <Text style={styles.body}>{loadingScreenModel.message}</Text>
-    </SafeAreaView>
+    </ScrollView></RootSafeAreaView>
   );
 }
 
 function ErrorScreen(props: Readonly<{ message?: string; onRetry: () => void; onAdult?: () => void }>) {
   const model = errorScreenModel(props.message);
   return (
-    <SafeAreaView style={styles.centered} accessibilityLabel="Ошибка загрузки">
+    <RootSafeAreaView style={styles.page}><StatusBar style="dark" /><ScrollView contentContainerStyle={styles.centered} accessibilityLabel="Ошибка загрузки">
       <Text style={styles.errorIcon}>!</Text>
-      <Text style={styles.title}>{model.title}</Text>
+      <Text accessibilityRole="header" style={styles.title}>{model.title}</Text>
       <Text style={styles.body}>{model.message}</Text>
       <ActionButton label={model.action} onPress={props.onRetry} />
       {props.onAdult && <ActionButton label="Удалить повреждённые данные" onPress={props.onAdult} secondary />}
-    </SafeAreaView>
+    </ScrollView></RootSafeAreaView>
   );
 }
 
@@ -182,11 +215,11 @@ function IntroScreen(props: Readonly<{
   onAdult?: () => void;
 }>) {
   return (
-    <SafeAreaView style={styles.page}>
+    <View style={styles.page}>
       <ScrollView contentContainerStyle={styles.introContent}>
         <PetAvatar name="Финни" shapeId="round" patternId="spots" size={96} />
         <Text style={styles.eyebrow}>ПИТОМЕЦ ФИННИ</Text>
-        <Text style={styles.title}>{onboardingScreenModel.title}</Text>
+        <Text accessibilityRole="header" style={styles.title}>{onboardingScreenModel.title}</Text>
         <Text style={styles.body}>Выбирай сам — Финни поможет увидеть результат.</Text>
         <View style={styles.directionList}>
           {onboardingScreenModel.directions.map((item, index) => (
@@ -216,7 +249,7 @@ function IntroScreen(props: Readonly<{
           </Pressable>
         )}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -236,9 +269,9 @@ function HelpOverlay(props: Readonly<{ onClose: () => void }>) {
       statusBarTranslucent={false}
       visible
     >
-      <View accessibilityViewIsModal style={styles.helpOverlay} testID="home-help-overlay">
+      <RootSafeAreaView accessibilityViewIsModal style={styles.helpOverlay} testID="home-help-overlay">
         <HelpScreen onBack={props.onClose} />
-      </View>
+      </RootSafeAreaView>
     </Modal>
   );
 }
@@ -260,7 +293,7 @@ function ChoiceButton(props: Readonly<{
       ]}
     >
       <Text style={[styles.choiceText, props.selected && styles.choiceTextSelected]}>
-        {props.label}
+        {props.selected ? '✓ ' : ''}{props.label}
       </Text>
     </Pressable>
   );
@@ -277,8 +310,10 @@ function PetBuilder(props: Readonly<{
   const [shapeId, setShapeId] = useState<PetShapeId>(props.initial?.shapeId ?? 'round');
   const [patternId, setPatternId] = useState<PetPatternId>(props.initial?.patternId ?? 'plain');
   const validation = petNameError(name);
+  const { fontScale } = useWindowDimensions();
+  const largeChoices = usesLargeNavigation(fontScale);
   return (
-    <SafeAreaView style={styles.page}>
+    <View style={styles.page}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         style={styles.flex}
@@ -287,11 +322,13 @@ function PetBuilder(props: Readonly<{
           keyboardShouldPersistTaps="handled"
           contentContainerStyle={styles.builderContent}
         >
+          <DetailBack onPress={props.onCancel} label={props.initial ? "Назад" : "К знакомству"} disabled={props.busy} />
           <Text style={styles.eyebrow}>{props.initial ? 'О ПИТОМЦЕ' : 'НОВЫЙ ДРУГ'}</Text>
-          <Text style={styles.title}>{props.initial ? 'Настрой питомца' : 'Как выглядит Финни?'}</Text>
-          <PetAvatar name={name || 'Питомец'} shapeId={shapeId} patternId={patternId} size={112} />
+          <Text accessibilityRole="header" style={styles.title}>{props.initial ? 'Имя и внешность' : 'Как выглядит Финни?'}</Text>
+          <View style={styles.builderPreview}><PetAvatar name={name || 'Питомец'} shapeId={shapeId} patternId={patternId} size={136} /></View>
+          <View style={styles.profileForm}>
           <Text style={styles.fieldLabel}>Форма</Text>
-          <View accessibilityRole="radiogroup" style={styles.choiceRow}>
+          <View accessibilityRole="radiogroup" style={[styles.choiceRow, largeChoices && styles.choiceColumn]}>
             {PET_SHAPES.map((shape) => (
               <ChoiceButton
                 key={shape.id}
@@ -302,7 +339,7 @@ function PetBuilder(props: Readonly<{
             ))}
           </View>
           <Text style={styles.fieldLabel}>Узор</Text>
-          <View accessibilityRole="radiogroup" style={styles.choiceRow}>
+          <View accessibilityRole="radiogroup" style={[styles.choiceRow, largeChoices && styles.choiceColumn]}>
             {PET_PATTERNS.map((pattern) => (
               <ChoiceButton
                 key={pattern.id}
@@ -322,8 +359,9 @@ function PetBuilder(props: Readonly<{
             style={[styles.input, validation && styles.inputError]}
             value={name}
           />
-          {validation && <Text style={styles.validation}>{validation}</Text>}
-          {props.saveError && <Text style={styles.validation}>{props.saveError}</Text>}
+          {validation && <Text accessibilityLiveRegion="polite" style={styles.validation}>{validation}</Text>}
+          {props.saveError && <Text accessibilityLiveRegion="polite" style={styles.validation}>{props.saveError}</Text>}
+          </View>
           <ActionButton
             label={props.busy ? 'Сохраняем…' : 'Готово'}
             disabled={props.busy || Boolean(validation)}
@@ -332,220 +370,88 @@ function PetBuilder(props: Readonly<{
           <ActionButton label="Отмена" onPress={props.onCancel} secondary />
         </ScrollView>
       </KeyboardAvoidingView>
-    </SafeAreaView>
-  );
-}
-
-function Metric(props: Readonly<{ label: string; value: string }>) {
-  return (
-    <View style={styles.metric} accessible accessibilityLabel={`${props.label}: ${props.value}`}>
-      <Text style={styles.metricLabel}>{props.label}</Text>
-      <Text style={styles.metricValue}>{props.value}</Text>
     </View>
   );
 }
 
-function HomeScreen(props: Readonly<{
-  snapshot: AppSnapshot;
-  busy: boolean;
-  notice: string | null;
-  scenePaused: boolean;
-  motionEnabled: boolean;
-  onOpenDay: () => void;
-  onResults: () => void;
-  onEditPet: () => void;
-  onHelp: () => void;
-  onLesson: () => void;
-  onSection: (title: string) => void;
-}>) {
-  const viewport = useWindowDimensions();
-  const profile = props.snapshot.profile!;
-  const lifecycle = props.snapshot.lifecycle!;
-  const model = homeScreenModel(profile, lifecycle);
-  const selectedGoal = props.snapshot.commerce?.selectedGoal ?? null;
-  const purchased = props.snapshot.commerce?.purchases ?? [];
-  const foodReady = purchased.some(({ item }) => item.slot === 'food');
-  const careReady = purchased.some(({ item }) => item.slot === 'care');
-  const careLabel = foodReady && careReady
-    ? 'Еда и уход готовы'
-    : foodReady ? 'Еда готова, уход ещё нужен'
-      : careReady ? 'Уход готов, еда ещё нужна'
-        : model.careLabel;
-  const layout = homeResponsiveLayout(viewport);
-  const primary = () => {
-    if (model.action.route === 'open-day') props.onOpenDay();
-    else if (model.action.route === 'plan') props.onSection('План');
-    else if (model.action.route === 'day' || model.action.route === 'results') props.onResults();
-    else props.onSection(model.action.label);
-  };
-  const primaryAction = (
-    <ActionButton
-      label={props.busy ? 'Открываем день…' : model.action.label}
-      disabled={props.busy || !model.action.enabled}
-      onPress={primary}
-    />
-  );
-  const sceneHeight = Math.max(layout.sceneMinHeight, layout.mode === 'ordinary' ? 220 : 180);
-  const petScene = (
-    <View>
-      <View style={[styles.roomFrame, { height: sceneHeight }]}>
-        <FinniHomeScene
-          accessibilityLabel={`Финни дома, стадия ${lifecycle.petStage}. ${careLabel}. Настроение: спокойно`}
-          careLabel={careLabel}
-          height={sceneHeight}
-          paused={props.scenePaused}
-          motionEnabled={props.motionEnabled}
-          showCaption={false}
-          stage={lifecycle.petStage}
-        />
-        <RoomObjectsLayer
-          selectedGoalId={selectedGoal?.id ?? null}
-          onOpenPlanner={() => props.onSection('План')}
-          onOpenSavings={() => props.onSection('Копилка')}
-          onOpenShop={() => props.onSection('Покупки')}
-          plannerEnabled={model.planAvailable}
-          savingsEnabled={model.savingsAvailable}
-          shopEnabled={model.spendingAvailable}
-        />
-      </View>
-      <Text style={styles.roomStatus}>{careLabel}</Text>
-    </View>
-  );
-  return (
-    <SafeAreaView style={[styles.page, styles.homePage]}>
-      <ScrollView
-        accessibilityLabel={layout.reviewConflict
-          ? 'Домик Финни. Увеличенный текст: доступен прокручиваемый вариант; одновременная видимость всех элементов требует review.'
-          : 'Домик Финни'}
-        contentContainerStyle={[styles.homeContent, layout.mode !== 'ordinary' && styles.homeContentLargeText]}
-      >
-        <View style={styles.homeHeader}>
-          <Pressable
-            accessibilityRole="button"
-            accessibilityLabel={`О питомце: ${model.petName}`}
-            hitSlop={8}
-            onPress={props.onEditPet}
-            style={styles.petNameButton}
-          >
-            <Text numberOfLines={2} style={styles.homeName}>{model.petName}</Text>
-            <Text style={styles.caption}>О питомце</Text>
-          </Pressable>
-          <View style={styles.headerActions}>
-            <Pressable accessibilityRole="button" onPress={() => props.onSection('Прогресс')} style={styles.textButton}>
-              <Text style={styles.textButtonLabel}>Прогресс</Text>
-            </Pressable>
-            <Pressable accessibilityRole="button" onPress={props.onHelp} style={styles.textButton}>
-              <Text style={styles.textButtonLabel}>Как играть</Text>
-            </Pressable>
-          </View>
-        </View>
-        <Text style={styles.dayLabel}>{model.dayLabel}</Text>
-        <View style={styles.moneyRow}>
-          <Metric label="Доступно" value={model.availableLabel} />
-          <Metric label="Копилка" value={model.savingsLabel} />
-        </View>
-        <View style={styles.summaryCard}>
-          <Text style={styles.summaryLabel}>ТЕКУЩАЯ ЦЕЛЬ</Text>
-          <Text style={styles.summaryValue}>{selectedGoal?.name ?? model.goalLabel}</Text>
-        </View>
-        <Pressable accessibilityRole="button" onPress={props.onLesson} style={styles.lessonCard}>
-          <Text style={styles.summaryLabel}>АКТИВНОЕ ЗАНЯТИЕ</Text>
-          <Text style={styles.summaryValue}>{model.lessonLabel}</Text>
-        </Pressable>
-        {layout.reviewConflict && (
-          <Text accessibilityLiveRegion="polite" style={styles.reviewConflict}>
-            Проверка макета: при 200% доступен прокручиваемый вариант; одновременная видимость всех обязательных элементов требует review.
-          </Text>
-        )}
-        {props.notice && <Text style={styles.notice}>{props.notice}</Text>}
-        {layout.primaryBeforeScene && primaryAction}
-        {petScene}
-        {!layout.primaryBeforeScene && primaryAction}
-        <View style={[styles.nav, layout.mode !== 'ordinary' && styles.navLargeText]} accessibilityRole="tablist">
-          {[
-            ['Домик', true],
-            ['План', model.planAvailable],
-            ['Покупки', model.spendingAvailable],
-            ['Копилка', model.savingsAvailable],
-          ].map(([label, enabled]) => (
-            <Pressable
-              key={String(label)}
-              accessibilityRole="tab"
-              accessibilityState={{ selected: label === 'Домик', disabled: !enabled }}
-              disabled={!enabled}
-              onPress={() => props.onSection(String(label))}
-              style={[styles.navItem, layout.mode !== 'ordinary' && styles.navItemLargeText, !enabled && styles.navItemDisabled]}
-            >
-              <Text style={[styles.navLabel, label === 'Домик' && styles.navLabelActive]}>
-                {label}
-              </Text>
-            </Pressable>
-          ))}
-        </View>
-        <Pressable
-          accessibilityHint="Открывает раздел с защитным барьером для взрослого"
-          accessibilityRole="button"
-          onPress={() => props.onSection('Для взрослого')}
-          style={styles.adultButton}
-        >
-          <Text style={styles.adultLabel}>Для взрослого</Text>
-        </Pressable>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
 function SectionScreen(props: Readonly<{ title: string; onBack: () => void }>) {
   return (
-    <SafeAreaView style={styles.centered}>
+    <View style={styles.centered}>
       <Text style={styles.eyebrow}>РАЗДЕЛ</Text>
-      <Text style={styles.title}>{props.title}</Text>
+      <Text accessibilityRole="header" style={styles.title}>{props.title}</Text>
       <Text style={styles.body}>Основа навигации готова. Действия откроются, когда выполнены денежные предусловия.</Text>
       <ActionButton label="Вернуться в домик" onPress={props.onBack} />
-    </SafeAreaView>
+    </View>
   );
 }
 
 function LessonCatalogScreen(props: Readonly<{
   lessons: readonly LocalLessonPresentation[];
+  busy: boolean;
+  message: string | null;
   onSelect: (lesson: LessonVariantPresentation) => void;
   onBack: () => void;
+  backLabel: string;
 }>) {
+  const scroll = useRef<ScrollView>(null);
+  useEffect(() => {
+    if (props.message) scroll.current?.scrollTo({ y: 0, animated: false });
+  }, [props.message]);
   return (
-    <SafeAreaView style={styles.page} accessibilityLabel="Каталог учебных занятий">
-      <ScrollView contentContainerStyle={styles.introContent}>
+    <View style={styles.page} accessibilityLabel="Каталог учебных занятий">
+      <ScrollView ref={scroll} contentContainerStyle={styles.catalogContent}>
+        <DetailBack onPress={props.onBack} label={props.backLabel} />
+        {props.message && <Text accessibilityLiveRegion="polite" style={ui.error}>{props.message}</Text>}
         <Text style={styles.eyebrow}>УЧЕБНЫЕ ЗАНЯТИЯ</Text>
-        <Text style={styles.title}>Выбери пример</Text>
-        <Text style={styles.body}>Это задания для тренировки: покупки и переводы из копилки здесь не выполняются.</Text>
+        <Text accessibilityRole="header" style={styles.title}>Выбери пример</Text>
+        <Text style={ui.body}>Это задания для тренировки: покупки и переводы из копилки здесь не выполняются.</Text>
         {props.lessons.map((lesson) => (
           <View key={lesson.definition.lessonId} style={styles.lessonCard}>
-            <Text style={styles.summaryValue}>{lesson.title}</Text>
+            <Text accessibilityRole="header" style={styles.catalogTitle}>{lesson.title}</Text>
             {lesson.variants.map((variant, index) => (
               <Pressable
                 key={variant.definition.variantId}
                 accessibilityRole="button"
+                accessibilityState={{ disabled: props.busy }}
+                disabled={props.busy}
                 accessibilityLabel={`${lesson.title}. Ситуация ${index + 1}. ${variant.intro}`}
                 onPress={() => props.onSelect(variant)}
-                style={styles.variantButton}
+                style={({ pressed }) => [styles.variantButton, pressed && ui.pressed]}
               >
-                <Text style={styles.variantTitle}>Ситуация {index + 1}</Text>
+                <View style={styles.variantHeading}><Text style={styles.variantTitle}>Ситуация {index + 1}</Text><Text accessible={false} style={styles.variantArrow}>›</Text></View>
                 <Text style={styles.caption}>{variant.intro}</Text>
               </Pressable>
             ))}
           </View>
         ))}
-        <ActionButton label="Вернуться в домик" onPress={props.onBack} secondary />
+        <ActionButton label={props.backLabel} onPress={props.onBack} secondary />
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
 export default function AppRoot() {
   const controller = useRef<ProductionAppController | null>(null);
+  const presentation = useRef(new ReceiptPresentationController());
+  const commandBusy = useRef(false);
   const adultAccess = useRef(new AdultAccessSession());
   const returnScreen = useRef<Screen>('home');
+  const [detailOrigin, setDetailOrigin] = useState<RootRoute>('home');
+  const { fontScale } = useWindowDimensions();
+  const largeNavigation = usesLargeNavigation(fontScale);
+  const [rootMenuOpen, setRootMenuOpen] = useState(false);
   const [phase, setPhase] = useState<Phase>('loading');
   const [screen, setScreen] = useState<Screen>('intro');
   const [snapshot, setSnapshot] = useState<AppSnapshot | null>(null);
+  const [reaction, setReaction] = useState<HomeReaction | null>(null);
+  const clearReaction = useCallback((id: number) => {
+    const next = homeReaction(presentation.current.complete(id));
+    setReaction((current) => current?.id === id ? next : current);
+  }, []);
+  const cancelReaction = useCallback((id: number) => {
+    presentation.current.cancelActive(id);
+    setReaction((current) => current?.id === id ? null : current);
+  }, []);
   const [mode, setMode] = useState<Mode>('normal');
   const [presentationPreferences, setPresentationPreferences] = useState<PresentationPreferences>({ motionEnabled: true, soundEnabled: true });
   const [adultUnlocked, setAdultUnlocked] = useState(false);
@@ -558,9 +464,30 @@ export default function AppRoot() {
   const [lessonPresentation, setLessonPresentation] = useState<LessonVariantPresentation | null>(null);
   const [revealedEvidenceIds, setRevealedEvidenceIds] = useState<readonly string[]>([]);
   const [lessonRewardReason, setLessonRewardReason] = useState<null | 'GRANTED' | 'TRAINING' | 'PERIOD_NOT_ACTIVE' | 'ALREADY_GRANTED'>(null);
+  const [lessonRewardEvent, setLessonRewardEvent] = useState<PresentationEvent | null>(null);
   const [lessonDiscoveries, setLessonDiscoveries] = useState<readonly LessonDiscovery[]>([]);
   const [helpOpen, setHelpOpen] = useState(false);
   const [boot, setBoot] = useState(0);
+  const root = isRootRoute(screen);
+  const previousScreen = useRef<Screen>(screen);
+  useEffect(() => {
+    if (previousScreen.current !== screen) {
+      if (screen === 'home') setReaction(homeReaction(presentation.current.next()));
+      else {
+        presentation.current.cancel();
+        setReaction(null);
+      }
+      previousScreen.current = screen;
+    }
+  }, [screen]);
+  const navigateRoot = (route: RootRoute) => {
+    if (busy) return;
+    setRootMenuOpen(false);
+    setMessage(null);
+    setScreen(route);
+  };
+  const editPet = (origin: RootRoute) => { setDetailOrigin(origin); setMessage(null); setScreen('pet'); };
+  const openCatalog = (origin: RootRoute) => { setDetailOrigin(origin); setMessage(null); setScreen('lesson-catalog'); };
 
   const lockAdult = () => {
     adultAccess.current.lock();
@@ -592,6 +519,8 @@ export default function AppRoot() {
     const start = async () => {
       setPhase('loading');
       setMessage(null);
+      presentation.current = new ReceiptPresentationController();
+      setReaction(null);
       try {
         await controller.current?.close();
         controller.current = null;
@@ -601,6 +530,7 @@ export default function AppRoot() {
           if (!cancelled) {
             setAdultUnlocked(false);
             setHelpOpen(false);
+            setRootMenuOpen(false);
             setSnapshot(null);
             setScreen('intro');
           }
@@ -610,6 +540,8 @@ export default function AppRoot() {
           return;
         }
         controller.current = initialized.controller;
+        presentation.current.bind(initialized.controller.session());
+        setReaction(null);
         setPresentationPreferences(await initialized.controller.presentationPreferences());
         setAdultRecoveryAvailable(true);
         setMode(initialized.controller.mode());
@@ -658,7 +590,10 @@ export default function AppRoot() {
         ? await controller.current.runSnapshot((runtime) => runtime.updatePet(snapshot.profile!, appearance))
         : await controller.current.runSnapshot((runtime) => runtime.createProfile(appearance));
       setSnapshot(loaded);
-      setScreen('home');
+      presentation.current.bind(controller.current.session());
+      presentation.current.cancel();
+      setReaction(null);
+      setScreen(snapshot?.profile ? detailOrigin : 'home');
     } catch {
       setMessage('Не получилось сохранить. Проверь данные и попробуй ещё раз.');
     } finally {
@@ -706,17 +641,28 @@ export default function AppRoot() {
   };
 
   const updateCommerce = async (
-    action: (runtime: AppRuntime, current: AppSnapshot) => Promise<AppSnapshot>,
+    action: (runtime: AppRuntime, current: AppSnapshot) => Promise<CommandReceipt>,
     errorMessage: string,
   ) => {
-    if (!controller.current || !snapshot) return;
+    if (!controller.current || !snapshot || commandBusy.current) return;
+    commandBusy.current = true;
+    const currentController = controller.current;
+    const captured = currentController.session();
+    let committed = false;
     setBusy(true);
     setMessage(null);
     try {
-      setSnapshot(await controller.current.runSnapshot((runtime) => action(runtime, snapshot)));
+      const receipt = await currentController.submit((runtime) => action(runtime, snapshot));
+      if (!receipt.result.ok) throw new Error('Command rejected');
+      committed = true;
+      const loaded = await currentController.load();
+      setSnapshot(loaded);
+      presentation.current.accept(receipt, captured, loaded.lifecycle?.revision ?? -1);
+      if (screen === 'home') setReaction(homeReaction(presentation.current.next()));
     } catch {
-      setMessage(errorMessage);
+      setMessage(committed ? 'Действие сохранено. Не удалось обновить экран — открой приложение снова.' : errorMessage);
     } finally {
+      commandBusy.current = false;
       setBusy(false);
     }
   };
@@ -747,7 +693,7 @@ export default function AppRoot() {
   const leaveAdult = () => {
     lockAdult();
     setMessage(null);
-    setScreen(snapshot?.profile ? 'home' : 'intro');
+    setScreen(snapshot?.profile ? returnScreen.current : 'intro');
   };
 
   const switchMode = async (target: Mode) => {
@@ -760,8 +706,10 @@ export default function AppRoot() {
     setMessage(null);
     try {
       const loaded = await controller.current.switchMode(target);
+      presentation.current.bind(controller.current.session());
       setMode(target);
       setSnapshot(loaded);
+      setReaction(null);
       lockAdult();
       setScreen(loaded.profile ? 'home' : 'intro');
     } catch {
@@ -781,7 +729,9 @@ export default function AppRoot() {
     setMessage(null);
     try {
       const loaded = await controller.current.runAdmin(operation);
+      presentation.current.bind(controller.current.session());
       setSnapshot(loaded);
+      setReaction(null);
       setMode(controller.current.mode());
       lockAdult();
       setScreen('intro');
@@ -830,6 +780,7 @@ export default function AppRoot() {
       setLessonPresentation(presentation);
       setRevealedEvidenceIds([]);
       setLessonRewardReason(null);
+      setLessonRewardEvent(null);
       setScreen('lesson');
     } catch {
       setMessage('Занятие не открылось. Монеты твоего дня не изменились.');
@@ -855,22 +806,32 @@ export default function AppRoot() {
   };
 
   const completeLesson = async () => {
-    if (!snapshot || !lessonAttempt || !lessonEvaluation || !controller.current) return;
+    if (!snapshot || !lessonAttempt || !lessonEvaluation || !controller.current || commandBusy.current) return;
+    commandBusy.current = true;
+    const currentController = controller.current;
+    const captured = currentController.session();
+    let committed = false;
     setBusy(true);
     setMessage(null);
     try {
-      const receipt = await controller.current.submit((runtime) => runtime.completeLesson(snapshot, lessonAttempt.attemptId, lessonEvaluation.evaluationId));
+      const receipt = await currentController.submit((runtime) => runtime.completeLesson(snapshot, lessonAttempt.attemptId, lessonEvaluation.evaluationId));
       if (!receipt.result.ok) throw new Error('Lesson completion failed');
+      committed = true;
       setLessonRewardReason(receipt.result.data.reward.reason);
       setLessonAttempt((current) => current ? { ...current, phase: 'completed' } : current);
       try {
-        setSnapshot(await controller.current.load());
+        const loaded = await currentController.load();
+        setSnapshot(loaded);
+        if (presentation.current.accept(receipt, captured, loaded.lifecycle?.revision ?? -1)) {
+          setLessonRewardEvent(presentation.current.next());
+        }
       } catch {
         setMessage('Занятие сохранено. Не удалось обновить день — открой приложение снова.');
       }
     } catch {
-      setMessage('Завершение не сохранилось. Попробуй ещё раз.');
+      if (!committed) setMessage('Завершение не сохранилось. Попробуй ещё раз.');
     } finally {
+      commandBusy.current = false;
       setBusy(false);
     }
   };
@@ -880,6 +841,8 @@ export default function AppRoot() {
     : null;
   const leaveLesson = () => {
     if (busy) return;
+    if (lessonRewardEvent) presentation.current.cancelActive(lessonRewardEvent.id);
+    setLessonRewardEvent(null);
     setMessage(null);
     if (!lessonTarget) {
       setScreen('lesson-catalog');
@@ -890,6 +853,29 @@ export default function AppRoot() {
     }
   };
 
+  useEffect(() => {
+    if (screen !== 'home' || !controller.current) return;
+    let current = true;
+    void controller.current.load().then((loaded) => { if (current) setSnapshot(loaded); }).catch(() => { if (current) setMessage('Не удалось обновить домик. Подтверждённые данные сохранены.'); });
+    return () => { current = false; };
+  }, [screen, mode]);
+
+  useEffect(() => {
+    const subscription = BackHandler.addEventListener('hardwareBackPress', () => {
+      if (busy) return true;
+      if (screen === 'home' || screen === 'intro') return false;
+      if (rootMenuOpen) { setRootMenuOpen(false); return true; }
+      if (screen === 'adult') { adultAccess.current.lock(); setAdultUnlocked(false); }
+      setMessage(null);
+      if (screen === 'lesson') { leaveLesson(); return true; }
+      const back = screen === 'history' || screen === 'adult' ? returnScreen.current
+        : screen === 'pet' || screen === 'lesson-catalog' ? detailOrigin : 'home';
+      setScreen(snapshot?.profile ? back : 'intro');
+      return true;
+    });
+    return () => subscription.remove();
+  });
+
   if (phase === 'loading') return <LoadingScreen />;
   if (phase === 'error') return (
     <ErrorScreen
@@ -899,8 +885,11 @@ export default function AppRoot() {
   );
 
   return (
-    <>
+    <RootSafeAreaView style={{ flex: 1, backgroundColor: '#F6F0E6' }} edges={['top', 'right', 'bottom', 'left']}>
       <StatusBar style="dark" />
+      <View style={{ flex: 1 }} accessibilityElementsHidden={rootMenuOpen || helpOpen || (screen === 'home' && Boolean(message))}
+        importantForAccessibility={rootMenuOpen || helpOpen || (screen === 'home' && message) ? 'no-hide-descendants' : 'auto'}
+        pointerEvents={rootMenuOpen || helpOpen || (screen === 'home' && message) ? 'none' : 'auto'}>
       {screen === 'intro' && <IntroScreen onAdult={openAdult} onContinue={() => setScreen('pet')} />}
       {screen === 'pet' && (
         <PetBuilder
@@ -912,20 +901,32 @@ export default function AppRoot() {
           } : undefined}
           busy={busy}
           saveError={message}
-          onCancel={() => setScreen(snapshot?.profile ? 'home' : 'intro')}
+          onCancel={() => setScreen(snapshot?.profile ? detailOrigin : 'intro')}
           onSave={(appearance) => void savePet(appearance)}
         />
       )}
       {screen === 'home' && snapshot?.profile && snapshot.lifecycle && (
         <HomeScreen
+          key={`${mode}-${snapshot.profile.id}`}
           snapshot={snapshot}
+          demo={mode === 'demo'}
+          lessonTitle={recommendHomeLesson(mode, snapshot.lifecycle.periodIndex, snapshot.homeLessons ?? [], LOCAL_DEMO_LESSONS, HOME_LESSON_ORDER)?.title ?? null}
+          onDismissNotice={() => setMessage(null)}
           busy={busy}
           notice={message}
-          scenePaused={helpOpen}
+          scenePaused={helpOpen || rootMenuOpen}
           motionEnabled={presentationPreferences.motionEnabled}
-          onEditPet={() => { setMessage(null); setScreen('pet'); }}
-          onHelp={() => setHelpOpen(true)}
-          onLesson={() => { setMessage(null); setScreen('lesson-catalog'); }}
+          reaction={reaction}
+          onReactionFinished={clearReaction}
+          onReactionCancelled={cancelReaction}
+          onEditPet={() => editPet('home')}
+          onMenu={() => setRootMenuOpen(true)}
+          onLesson={() => {
+            setDetailOrigin('home');
+            const lesson = recommendHomeLesson(mode, snapshot.lifecycle!.periodIndex, snapshot.homeLessons ?? [], LOCAL_DEMO_LESSONS, HOME_LESSON_ORDER);
+            if (lesson) void openLesson(lesson);
+            else openCatalog('home');
+          }}
           onOpenDay={() => void openDay()}
           onResults={() => { setMessage(null); setScreen('result'); }}
           onSection={openSection}
@@ -934,18 +935,19 @@ export default function AppRoot() {
       {screen === 'lesson-catalog' && (
         <LessonCatalogScreen
           lessons={LOCAL_DEMO_LESSONS}
-          onBack={() => setScreen('home')}
+          busy={busy}
+          message={message}
+          backLabel={detailOrigin === 'more' ? 'Вернуться в «Ещё»' : 'Вернуться в домик'}
+          onBack={() => setScreen(detailOrigin)}
           onSelect={(lesson) => void openLesson(lesson)}
         />
       )}
-      {helpOpen && <HelpOverlay onClose={() => setHelpOpen(false)} />}
       {screen === 'plan' && snapshot?.profile && snapshot.lifecycle && (
         <BudgetPlanScreen
           snapshot={snapshot}
           busy={busy}
           message={message}
           onAllocate={(values) => void allocateIncome(values)}
-          onBack={() => { setMessage(null); setScreen('home'); }}
           onConfirm={(values, acknowledged) =>
             void confirmBudgetPlan(values, acknowledged)}
         />
@@ -954,11 +956,10 @@ export default function AppRoot() {
         <ShopScreen
           snapshot={snapshot}
           busy={busy}
-          onBack={() => setScreen('home')}
           onPreview={(itemId) => controller.current!.submit((runtime) => runtime.previewPurchase(snapshot, itemId))}
           onPurchase={(itemId, acknowledged) => {
             void updateCommerce(
-              (runtime, current) => runtime.purchase(current, itemId, acknowledged),
+              (runtime, current) => runtime.purchaseReceipt(current, itemId, acknowledged),
               'Покупка не выполнена. Деньги не изменились.',
             );
           }}
@@ -969,21 +970,20 @@ export default function AppRoot() {
           snapshot={snapshot}
           busy={busy}
           message={message}
-          onBack={() => { setMessage(null); setScreen('home'); }}
           onClaim={(goalId) => void updateCommerce(
-            (runtime, current) => runtime.claimGoal(current, goalId),
+            (runtime, current) => runtime.claimGoalReceipt(current, goalId),
             'Цель не получена. Монеты не изменились.',
           )}
           onHistory={() => void openHistory('savings')}
           onPreview={(kind, value) => controller.current!.submit((runtime) => runtime.previewSavings(snapshot, kind, value))}
           onSelectGoal={(goalId) => void updateCommerce(
-            (runtime, current) => runtime.selectGoal(current, goalId),
+            (runtime, current) => runtime.selectGoalReceipt(current, goalId),
             'Цель не изменилась. Попробуй ещё раз.',
           )}
           onTransfer={(kind, value) => void updateCommerce(
             (runtime, current) => kind === 'deposit'
-              ? runtime.depositSavings(current, value)
-              : runtime.withdrawSavings(current, value),
+              ? runtime.depositSavingsReceipt(current, value)
+              : runtime.withdrawSavingsReceipt(current, value),
             'Перевод не выполнен. Монеты не изменились.',
           )}
         />
@@ -1007,7 +1007,7 @@ export default function AppRoot() {
           message={message}
           onBack={() => { setMessage(null); setScreen('home'); }}
           onClosePeriod={() => void updateCommerce(
-            (runtime, current) => runtime.closePeriod(current),
+            (runtime, current) => runtime.closePeriodReceipt(current),
             'Итог не сохранился. День остался открытым.',
           )}
         />
@@ -1042,6 +1042,7 @@ export default function AppRoot() {
           registry={lessonRenderers}
           busy={busy}
           rewardReason={lessonRewardReason}
+          rewardEvent={lessonRewardEvent}
           message={message}
           onSolutionChange={(solution) => void withLesson((runtime, attempt) => runtime.saveLesson(attempt.attemptId, solution))}
           revealedEvidenceIds={revealedEvidenceIds}
@@ -1056,57 +1057,71 @@ export default function AppRoot() {
         />
       )}
       {screen === 'section' && <SectionScreen title={sectionTitle} onBack={() => setScreen('home')} />}
-    </>
+      {screen === 'more' && snapshot?.profile && snapshot.lifecycle && <MoreScreen
+        name={snapshot.profile.name} day={homeScreenModel(snapshot.profile, snapshot.lifecycle).dayLabel} demo={mode === 'demo'} busy={busy} notice={message}
+        onLessons={() => openCatalog('more')} onProgress={() => void openHistory('more')} onPet={() => editPet('more')}
+        onHelp={() => setHelpOpen(true)} onAdult={openAdult} />}
+      {root && !largeNavigation && <RootNavigation selected={screen} disabled={busy} onNavigate={navigateRoot} />}
+      {root && largeNavigation && screen !== 'home' && <Pressable accessibilityRole="button" accessibilityLabel="Меню"
+        onPress={() => setRootMenuOpen(true)} style={styles.rootMenuButton} testID="root-menu-button"><Text style={styles.rootMenuText}>Меню</Text></Pressable>}
+      </View>
+      {helpOpen && <HelpOverlay onClose={() => setHelpOpen(false)} />}
+      {root && <RootMenu visible={rootMenuOpen} selected={screen} onClose={() => setRootMenuOpen(false)} onNavigate={navigateRoot} />}
+    </RootSafeAreaView>
   );
 }
 
 const colors = {
-  ink: '#14324A',
-  muted: '#4B6878',
-  sky: '#EAF6FB',
-  teal: '#146B78',
-  pale: '#F7FBFC',
-  line: '#C7DEE5',
-  coral: '#D95D4F',
-  yellow: '#F7C85E',
+  ink: palette.ink, muted: palette.muted, sky: palette.background,
+  teal: palette.accent, pale: palette.surface, line: palette.line,
+  coral: palette.error, yellow: palette.soft,
 };
 
 const styles = StyleSheet.create({
+  rootMenuButton: { minHeight: 56, margin: 10, padding: 10, borderRadius: 18, backgroundColor: '#FFFCF6', alignItems: 'center', justifyContent: 'center' },
+  rootMenuText: { color: '#3D352D', fontSize: 16, lineHeight: 22 },
   flex: { flex: 1 },
   page: { flex: 1, backgroundColor: colors.sky },
   homePage: { paddingTop: Platform.OS === 'android' ? NativeStatusBar.currentHeight ?? 0 : 0 },
-  centered: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 12, padding: 24, backgroundColor: colors.sky },
-  introContent: { alignItems: 'center', gap: 10, padding: 20, paddingBottom: 28 },
-  builderContent: { alignItems: 'center', gap: 8, padding: 18, paddingBottom: 36 },
+  centered: { flexGrow: 1, alignItems: 'center', justifyContent: 'center', gap: 16, padding: 24, backgroundColor: colors.sky },
+  introContent: { alignItems: 'center', gap: 16, padding: 20, paddingBottom: 28 },
+  catalogContent: ui.content,
+  catalogTitle: ui.cardTitle,
+  variantHeading: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+  variantArrow: { color: palette.muted, fontSize: 26 },
+  builderPreview: { alignSelf: 'center', padding: 12, borderRadius: 28, backgroundColor: palette.soft },
+  profileForm: { ...ui.card, gap: 12 },
+  choiceColumn: { flexDirection: 'column' },
+  builderContent: { gap: 14, padding: 18, paddingBottom: 28 },
   homeContent: { gap: 8, minHeight: '100%', paddingHorizontal: 14, paddingBottom: 8 },
   homeContentLargeText: { paddingBottom: 24 },
-  eyebrow: { color: colors.teal, fontSize: 13, fontWeight: '800', letterSpacing: 1.5 },
-  title: { color: colors.ink, fontSize: 25, fontWeight: '800', textAlign: 'center' },
-  body: { color: colors.muted, fontSize: 16, lineHeight: 22, maxWidth: 340, textAlign: 'center' },
-  caption: { color: colors.muted, fontSize: 13, lineHeight: 17 },
+  eyebrow: { ...ui.eyebrow },
+  title: { ...ui.title },
+  body: { ...ui.body },
+  caption: { ...ui.body },
   roomFrame: { position: 'relative', width: '100%' },
   roomStatus: { color: colors.muted, fontSize: 13, lineHeight: 18, marginTop: 5 },
-  cardTitle: { color: colors.ink, fontSize: 16, fontWeight: '800' },
-  action: { alignItems: 'center', alignSelf: 'stretch', backgroundColor: colors.teal, borderRadius: 14, justifyContent: 'center', minHeight: 48, paddingHorizontal: 16 },
-  actionSecondary: { backgroundColor: 'transparent', borderColor: colors.teal, borderWidth: 1.5 },
+  cardTitle: { ...ui.cardTitle },
+  action: { ...ui.button, alignSelf: 'stretch' },
+  actionSecondary: { ...ui.secondary },
   actionDisabled: { opacity: 0.45 },
-  actionText: { color: '#FFFFFF', fontSize: 16, fontWeight: '800' },
-  actionSecondaryText: { color: colors.teal },
-  pressed: { opacity: 0.72 },
+  actionText: { ...ui.buttonText },
+  actionSecondaryText: { ...ui.secondaryText },
+  pressed: { ...ui.pressed },
   errorIcon: { backgroundColor: colors.coral, borderRadius: 30, color: '#FFFFFF', fontSize: 28, fontWeight: '900', lineHeight: 56, overflow: 'hidden', textAlign: 'center', width: 56 },
   directionList: { alignSelf: 'stretch', gap: 8, marginVertical: 4 },
-  directionCard: { alignItems: 'center', backgroundColor: colors.pale, borderColor: colors.line, borderRadius: 14, borderWidth: 1, flexDirection: 'row', gap: 12, minHeight: 58, paddingHorizontal: 12 },
-  directionNumber: { backgroundColor: colors.yellow, borderRadius: 18, color: colors.ink, fontSize: 16, fontWeight: '900', lineHeight: 36, textAlign: 'center', width: 36 },
-  expertLink: { color: colors.muted, fontSize: 13, marginTop: 4, textDecorationLine: 'underline' },
-  choiceRow: { flexDirection: 'row', gap: 7, width: '100%' },
-  choice: { alignItems: 'center', backgroundColor: colors.pale, borderColor: colors.line, borderRadius: 12, borderWidth: 1, flex: 1, justifyContent: 'center', minHeight: 48, paddingHorizontal: 4 },
-  choiceSelected: { backgroundColor: '#D5EEF0', borderColor: colors.teal, borderWidth: 2 },
-  choiceText: { color: colors.ink, fontSize: 13, fontWeight: '700', textAlign: 'center' },
-  choiceTextSelected: { color: colors.teal },
-  fieldLabel: { alignSelf: 'flex-start', color: colors.ink, fontSize: 15, fontWeight: '800', marginTop: 3 },
-  input: { alignSelf: 'stretch', backgroundColor: '#FFFFFF', borderColor: colors.line, borderRadius: 12, borderWidth: 1.5, color: colors.ink, fontSize: 17, minHeight: 48, paddingHorizontal: 14 },
+  directionCard: { ...ui.card, flexDirection: 'row', alignItems: 'flex-start', gap: 12 },
+  directionNumber: { backgroundColor: colors.yellow, borderRadius: 18, color: colors.ink, fontSize: 16, fontWeight: '600', textAlign: 'center', minWidth: 36, padding: 6 },
+  expertLink: { color: colors.muted, fontSize: 16, textDecorationLine: 'underline', textAlign: 'center' },
+  choiceRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, width: '100%' },
+  choice: { ...ui.button, ...ui.secondary, flexGrow: 1, paddingHorizontal: 12, borderRadius: 14 },
+  choiceSelected: { ...ui.selected },
+  choiceText: { ...ui.buttonText, color: colors.ink },
+  choiceTextSelected: { color: colors.ink },
+  fieldLabel: { color: colors.ink, fontSize: 16, fontWeight: '600', marginTop: 4 },
+  input: { ...ui.input },
   inputError: { borderColor: colors.coral },
-  validation: { alignSelf: 'stretch', color: colors.coral, fontSize: 14, fontWeight: '700' },
+  validation: { ...ui.error },
   petFrame: { alignItems: 'center', justifyContent: 'center' },
   petHead: { alignItems: 'center', backgroundColor: '#F1B86B', borderColor: colors.ink, borderRadius: 42, borderWidth: 3, height: '72%', justifyContent: 'center', overflow: 'hidden', width: '76%' },
   petHeadPointy: { borderRadius: 24 },
@@ -1136,9 +1151,9 @@ const styles = StyleSheet.create({
   summaryCard: { backgroundColor: '#FFF8E4', borderRadius: 12, justifyContent: 'center', minHeight: 48, paddingHorizontal: 12 },
   summaryLabel: { color: colors.muted, fontSize: 11, fontWeight: '800', letterSpacing: 0.6 },
   summaryValue: { color: colors.ink, fontSize: 15, fontWeight: '800' },
-  variantButton: { backgroundColor: '#F7FBFC', borderColor: '#C7DEE5', borderRadius: 12, borderWidth: 1, justifyContent: 'center', minHeight: 48, padding: 10 },
-  variantTitle: { color: '#146B78', fontSize: 15, fontWeight: '800' },
-  lessonCard: { backgroundColor: '#FFFFFF', borderColor: colors.line, borderRadius: 12, borderWidth: 1, justifyContent: 'center', minHeight: 56, paddingHorizontal: 12 },
+  variantButton: { backgroundColor: colors.sky, borderRadius: 14, justifyContent: 'center', minHeight: 56, gap: 6, padding: 12 },
+  variantTitle: { color: colors.teal, fontSize: 16, fontWeight: '600', flex: 1 },
+  lessonCard: { ...ui.card },
   notice: { color: colors.coral, fontSize: 13, fontWeight: '700' },
   reviewConflict: { backgroundColor: '#FFF1EF', borderColor: colors.coral, borderRadius: 12, borderWidth: 1, color: '#7A3028', fontSize: 14, fontWeight: '800', lineHeight: 19, padding: 10 },
   nav: { backgroundColor: '#FFFFFF', borderColor: colors.line, borderRadius: 14, borderWidth: 1, flexDirection: 'row', minHeight: 56 },
@@ -1150,5 +1165,5 @@ const styles = StyleSheet.create({
   navLabelActive: { color: colors.teal, fontWeight: '900' },
   adultButton: { alignItems: 'center', alignSelf: 'center', justifyContent: 'center', minHeight: 48, paddingHorizontal: 16 },
   adultLabel: { color: colors.muted, fontSize: 13, textDecorationLine: 'underline' },
-  helpOverlay: { flex: 1 },
+  helpOverlay: { flex: 1, backgroundColor: palette.background },
 });

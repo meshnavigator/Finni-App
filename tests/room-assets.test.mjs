@@ -33,3 +33,19 @@ test('all local PNG bindings have matching hashes and valid PNG signatures', () 
     assert.match(runtime, new RegExp(path.basename(source.path).replaceAll('.', '\\.')));
   }
 });
+
+
+test('catalog thumbnails come from hashed imagegen masters with RGBA 192px exports', () => {
+  const catalogAssets = manifest.assets.filter((asset) => asset.itemId || asset.goalId);
+  assert.equal(catalogAssets.length, 11);
+  for (const asset of catalogAssets) {
+    assert.equal(asset.sourceType, 'imagegen-export', asset.assetId);
+    assert.deepEqual(asset.dimensions, [192, 192], asset.assetId);
+    const master = path.resolve(packageDir, asset.masterPath);
+    assert.equal(sha256(master), asset.masterSha256, asset.assetId);
+    const bytes = readFileSync(path.resolve(packageDir, asset.path));
+    assert.equal(bytes.readUInt32BE(16), 192, asset.assetId);
+    assert.equal(bytes.readUInt32BE(20), 192, asset.assetId);
+    assert.equal(bytes[25], 6, asset.assetId); // PNG color type 6 = RGBA
+  }
+});

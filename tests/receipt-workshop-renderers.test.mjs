@@ -1,3 +1,4 @@
+import { assertSharedControlTargets } from './ui-control-contract.mjs';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
@@ -22,7 +23,7 @@ test('B03 renderer presents both costs, owned materials and common plan without 
   assert.match(source, /Сделать/);
   assert.match(source, /Купить готовый/);
   assert.match(source, /Что получится по плану/);
-  assert.match(source, /minHeight: 48/);
+  assertSharedControlTargets(source);
   assert.doesNotMatch(source, /ConfirmPurchase|DepositSavings|executeMoneyCommand/);
   assert.match(root, /\.register\('receipt_audit', ReceiptAuditRenderer\)/);
   assert.match(root, /\.register\('resource_choice', ResourceChoiceRenderer\)/);

@@ -1,3 +1,4 @@
+import { palette, screenStyles as ui } from './screen-theme.ts';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import {
   SAVINGS_SCHEDULE,
@@ -51,7 +52,7 @@ function Choice(props: Readonly<{
       onPress={props.onPress}
       style={[styles.choice, props.selected && styles.choiceSelected, props.disabled && styles.disabled]}
     >
-      <Text style={styles.choiceText}>{props.label}</Text>
+      <Text style={styles.choiceText}>{props.selected ? '✓ ' : ''}{props.label}</Text>
     </Pressable>
   );
 }
@@ -70,7 +71,7 @@ function Schedule(props: LessonRendererProps) {
     : null;
   return (
     <View style={styles.card}>
-      <Text style={styles.title}>Три будущих игровых дня</Text>
+      <Text accessibilityRole="header" style={styles.title}>Три будущих игровых дня</Text>
       <Text style={styles.body}>В копилке {initialSavings}. Мечта стоит {goalCost}.</Text>
       {[0, 1, 2].map((index) => (
         <Field
@@ -102,7 +103,7 @@ function WithdrawalPreview(props: LessonRendererProps) {
   const action = props.solution.action === 'buy' || props.solution.action === 'postpone' ? props.solution.action : null;
   return (
     <View style={styles.card}>
-      <Text style={styles.title}>Посмотри последствия выбора</Text>
+      <Text accessibilityRole="header" style={styles.title}>Посмотри последствия выбора</Text>
       <Text style={styles.body}>Учебный кошелёк: {available}. Копилка: {savings}. Мечта: {goalCost}.</Text>
       <Field
         disabled={props.disabled}
@@ -137,16 +138,9 @@ export default function SavingsLessonRenderer(props: LessonRendererProps) {
 }
 
 const styles = StyleSheet.create({
-  card: { backgroundColor: '#FFFFFF', borderColor: '#C7DEE5', borderRadius: 14, borderWidth: 1, gap: 10, padding: 14 },
-  title: { color: '#14324A', fontSize: 18, fontWeight: '800' },
-  body: { color: '#4B6878', fontSize: 16, lineHeight: 22 },
-  field: { gap: 4 },
-  label: { color: '#14324A', fontSize: 15, fontWeight: '700' },
-  input: { backgroundColor: '#F4FAFC', borderColor: '#91B9C5', borderRadius: 10, borderWidth: 1, color: '#14324A', fontSize: 18, minHeight: 48, paddingHorizontal: 12 },
-  preview: { backgroundColor: '#FFF3C7', borderRadius: 10, color: '#14324A', fontSize: 15, fontWeight: '700', padding: 10 },
-  choice: { alignItems: 'center', borderColor: '#146B78', borderRadius: 12, borderWidth: 1.5, justifyContent: 'center', minHeight: 48, paddingHorizontal: 12 },
-  choiceSelected: { backgroundColor: '#DFF2F2' },
-  choiceText: { color: '#146B78', fontSize: 16, fontWeight: '800' },
-  note: { color: '#4B6878', fontSize: 14, lineHeight: 19 },
-  disabled: { opacity: 0.45 },
+  card: ui.card, title: ui.cardTitle, body: ui.body,
+  field: { gap: 6 }, label: { color: palette.ink, fontSize: 16, fontWeight: '600' }, input: ui.input,
+  preview: { ...ui.body, backgroundColor: palette.soft, borderRadius: 14, color: palette.ink, padding: 12, fontVariant: ['tabular-nums'] },
+  choice: { ...ui.button, ...ui.secondary, borderRadius: 14 }, choiceSelected: ui.selected,
+  choiceText: { ...ui.buttonText, color: palette.ink }, note: ui.body, disabled: ui.disabled,
 });

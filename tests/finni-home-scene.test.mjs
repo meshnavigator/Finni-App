@@ -7,6 +7,7 @@ import { FINNI_ANCHORS, FINNI_CANVAS, FINNI_STAGE_SCALE } from '../src/ui/finni-
 const root = new URL('../', import.meta.url);
 const app = await readFile(new URL('App.tsx', root), 'utf8');
 const appRoot = await readFile(new URL('src/ui/AppRoot.tsx', root), 'utf8');
+const awaitHome = await readFile(new URL('src/ui/HomeScreen.tsx', root), 'utf8');
 const scene = await readFile(new URL('src/ui/FinniHomeScene.tsx', root), 'utf8');
 const manifest = JSON.parse(
   await readFile(new URL('assets/2d/master/FINNI-2D-MASTER-V1/asset-manifest.json', root), 'utf8'),
@@ -19,10 +20,11 @@ const expected = new Map([
 ]);
 
 test('default app has one production root and no 3D diagnostic route', () => {
-  assert.match(app, /return <AppRoot \/>/);
+  assert.match(app, /<SafeAreaProvider[^>]*><AppRoot \/><\/SafeAreaProvider>/);
   assert.doesNotMatch(app, /HomeSceneSpike|FINNI_3D|Filament|Worklets/);
-  assert.match(appRoot, /<FinniHomeScene/);
-  assert.match(appRoot, /scenePaused=\{helpOpen\}/);
+  assert.match(appRoot, /<HomeScreen/);
+  assert.match(awaitHome, /<FinniHomeScene/);
+  assert.match(appRoot, /scenePaused=\{helpOpen \|\| rootMenuOpen\}/);
 });
 
 test('production master copies match accepted S7-004 hashes', async () => {
@@ -61,4 +63,14 @@ test('three stage frames preserve the same room floor contact', () => {
     assert.ok(Math.abs(top + scale * footY - footY) < 1e-12);
   }
   assert.deepEqual(Object.keys(FINNI_STAGE_SCALE), ['1', '2', '3']);
+});
+
+test('first blink waits for its decoded frame without swapping image sources', () => {
+  assert.match(scene, /loadedBlinkAppearance === appearanceId/);
+  assert.match(scene, /onLoad=\{\(\) => setLoadedBlinkAppearance\(appearanceId\)\}/);
+  assert.match(scene, /source=\{sources\.neutral\}/);
+  assert.match(scene, /source=\{sources\.blink\}/);
+  assert.match(scene, /opacity: showBlink \? 0 : 1/);
+  assert.match(scene, /opacity: showBlink \? 1 : 0/);
+  assert.doesNotMatch(scene, /source=\{animationActive/);
 });

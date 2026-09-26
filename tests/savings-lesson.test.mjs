@@ -1,3 +1,4 @@
+import { assertSharedControlTargets } from './ui-control-contract.mjs';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
@@ -115,7 +116,7 @@ test('savings renderer exposes both canonical SRS scenarios and a non-mutating p
   assert.ok(!source.includes("? 'buy' : 'postpone'"));
   assert.match(source, /parameters\.mode/);
   assert.match(source, /Это preview: монеты твоего игрового дня не меняются/);
-  assert.match(source, /minHeight: 48/);
+  assertSharedControlTargets(source);
   assert.doesNotMatch(source, /repository|ledger|TransferToSavings/);
 });
 

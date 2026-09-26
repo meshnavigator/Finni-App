@@ -1,5 +1,6 @@
+import { SafeAreaProvider, initialWindowMetrics } from 'react-native-safe-area-context';
 import AppRoot from './src/ui/AppRoot.tsx';
 
 export default function App() {
-  return <AppRoot />;
+  return <SafeAreaProvider initialMetrics={initialWindowMetrics}><AppRoot /></SafeAreaProvider>;
 }

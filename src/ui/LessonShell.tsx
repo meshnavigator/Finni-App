@@ -1,6 +1,7 @@
+import DetailBack from './DetailBack.tsx';
+import { palette, screenStyles as ui } from './screen-theme.ts';
 import {
   Pressable,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -12,6 +13,7 @@ import type {
   LessonEvaluation,
   LessonRewardReason,
 } from '../domain/lesson.ts';
+import type { PresentationEvent } from '../application/receipt-presentation.ts';
 import {
   LessonRendererRegistry,
   type LessonRendererProps,
@@ -36,8 +38,9 @@ function ActionButton(props: Readonly<{
       accessibilityState={{ disabled: Boolean(props.disabled) }}
       disabled={props.disabled}
       onPress={props.onPress}
-      style={[
+      style={({ pressed }) => [
         styles.button,
+        pressed && !props.disabled && ui.pressed,
         props.secondary && styles.buttonSecondary,
         props.disabled && styles.disabled,
       ]}
@@ -52,9 +55,11 @@ function ActionButton(props: Readonly<{
   );
 }
 
-function rewardText(reason: LessonRewardReason | null): string | null {
+function rewardText(reason: LessonRewardReason | null, event: PresentationEvent | null): string | null {
   if (reason === null) return null;
-  if (reason === 'GRANTED') return 'Получено 20 монет за первое занятие сегодня.';
+  if (reason === 'GRANTED') return event
+    ? `Финни радуется! Получено ${event.after.available - event.before.available} монет за первое занятие сегодня.`
+    : 'Получено 20 монет за первое занятие сегодня.';
   if (reason === 'ALREADY_GRANTED') return 'Награда за занятие сегодня уже получена.';
   return 'Это тренировочное прохождение без награды.';
 }
@@ -66,6 +71,7 @@ export default function LessonShell(props: Readonly<{
   registry: LessonRendererRegistry;
   busy: boolean;
   rewardReason: LessonRewardReason | null;
+  rewardEvent: PresentationEvent | null;
   message: string | null;
   onSolutionChange: LessonRendererProps['onChange'];
   revealedEvidenceIds: readonly string[];
@@ -89,15 +95,16 @@ export default function LessonShell(props: Readonly<{
   const completeLabel = evaluation?.outcome === 'needs_review'
     ? 'Завершить с разбором'
     : 'Завершить занятие';
-  const reward = rewardText(props.rewardReason);
+  const reward = rewardText(props.rewardReason, props.rewardEvent);
 
   return (
-    <SafeAreaView style={styles.page}>
-      <ScrollView contentContainerStyle={styles.content}>
+    <View style={styles.page}>
+      <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={styles.content}>
+        <DetailBack onPress={props.onBack} label={props.returnLabel} disabled={props.busy} />
         <Text style={styles.eyebrow}>ЗАНЯТИЕ</Text>
-        <Text style={styles.title}>{props.copy.title}</Text>
+        <Text accessibilityRole="header" style={styles.title}>{props.copy.title}</Text>
         <Text style={styles.body}>{props.copy.intro}</Text>
-        <Text style={styles.levelLabel}>L0 · Ситуация для твоего решения</Text>
+        <Text style={styles.levelLabel}>Ситуация для твоего решения</Text>
         <View style={styles.notice}>
           <Text style={styles.noticeText}>
             В примере свои монеты. Монеты твоего дня не тратятся.
@@ -150,7 +157,7 @@ export default function LessonShell(props: Readonly<{
 
         {evaluation && props.attempt.phase !== 'draft' && (
           <View style={styles.result}>
-            <Text style={styles.resultTitle}>Что получилось</Text>
+            <Text accessibilityRole="header" style={styles.resultTitle}>Что получилось</Text>
             <Text style={styles.body}>{evaluation.consequence}</Text>
             {!explanationVisible && (
               <ActionButton
@@ -161,9 +168,9 @@ export default function LessonShell(props: Readonly<{
             )}
             {explanationVisible && (
               <>
-                <Text style={styles.resultTitle}>Почему так</Text>
+                <Text accessibilityRole="header" style={styles.resultTitle}>Почему так</Text>
                 <Text style={styles.body}>{evaluation.explanation}</Text>
-                <Text style={styles.resultTitle}>Следующий шаг</Text>
+                <Text accessibilityRole="header" style={styles.resultTitle}>Следующий шаг</Text>
                 <Text style={styles.body}>{evaluation.nextStep}</Text>
                 {props.attempt.mechanic === 'receipt_audit' && evaluation.calculation.awaitingSellerResponse === true && (
                   <ActionButton
@@ -194,42 +201,22 @@ export default function LessonShell(props: Readonly<{
         {props.attempt.phase === 'completed' && (
           <Text style={styles.body}>Мы сохранили это открытие в прогрессе. Его можно посмотреть без нового начисления монет.</Text>
         )}
-{props.message && <Text style={styles.error}>{props.message}</Text>}
-        {reward && <Text style={styles.reward}>{reward}</Text>}
+        {props.message && <Text accessibilityLiveRegion="polite" style={styles.error}>{props.message}</Text>}
+        {reward && <Text accessibilityLiveRegion="polite" style={styles.reward}>{reward}</Text>}
         <ActionButton label={props.returnLabel} onPress={props.onBack} disabled={props.busy} secondary />
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
-const colors = {
-  ink: '#14324A',
-  muted: '#4B6878',
-  sky: '#EAF6FB',
-  teal: '#146B78',
-  line: '#C7DEE5',
-  yellow: '#FFF3C7',
-  coral: '#B54135',
-};
-
 const styles = StyleSheet.create({
-  page: { flex: 1, backgroundColor: colors.sky },
-  content: { gap: 12, padding: 18, paddingBottom: 36 },
-  eyebrow: { color: colors.teal, fontSize: 13, fontWeight: '800', letterSpacing: 1.4 },
-  title: { color: colors.ink, fontSize: 25, fontWeight: '800' },
-  body: { color: colors.muted, fontSize: 16, lineHeight: 22 },
-  levelLabel: { color: colors.teal, fontSize: 14, fontWeight: '800' },
-  notice: { backgroundColor: colors.yellow, borderRadius: 14, gap: 4, padding: 12 },
-  noticeText: { color: colors.ink, fontSize: 14, fontWeight: '700', lineHeight: 19 },
-  hints: { gap: 8 },
-  hintText: { backgroundColor: '#FFFFFF', borderColor: colors.line, borderRadius: 12, borderWidth: 1, color: colors.ink, fontSize: 15, lineHeight: 21, padding: 12 },
-  result: { backgroundColor: '#FFFFFF', borderColor: colors.line, borderRadius: 14, borderWidth: 1, gap: 8, padding: 14 },
-  resultTitle: { color: colors.ink, fontSize: 17, fontWeight: '800' },
-  error: { color: colors.coral, fontSize: 14, fontWeight: '700' },
-  reward: { backgroundColor: colors.yellow, borderRadius: 12, color: colors.ink, fontSize: 15, fontWeight: '800', padding: 12 },
-  button: { alignItems: 'center', backgroundColor: colors.teal, borderRadius: 14, justifyContent: 'center', minHeight: 48, paddingHorizontal: 16 },
-  buttonSecondary: { backgroundColor: 'transparent', borderColor: colors.teal, borderWidth: 1.5 },
-  buttonText: { color: '#FFFFFF', fontSize: 16, fontWeight: '800' },
-  buttonSecondaryText: { color: colors.teal },
-  disabled: { opacity: 0.45 },
+  page: ui.page, content: ui.content, eyebrow: ui.eyebrow, title: ui.title, body: ui.body,
+  levelLabel: { color: palette.ink, fontSize: 16, fontWeight: '600' },
+  notice: { backgroundColor: palette.soft, borderRadius: 18, gap: 8, padding: 14 },
+  noticeText: ui.body, hints: { gap: 10 },
+  hintText: { ...ui.body, ...ui.card },
+  result: ui.card, resultTitle: ui.cardTitle, error: ui.error,
+  reward: { ...ui.body, backgroundColor: palette.soft, borderRadius: 18, color: palette.ink, padding: 14 },
+  button: ui.button, buttonSecondary: ui.secondary,
+  buttonText: ui.buttonText, buttonSecondaryText: ui.secondaryText, disabled: ui.disabled,
 });

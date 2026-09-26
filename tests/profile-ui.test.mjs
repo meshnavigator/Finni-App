@@ -161,28 +161,18 @@ test('profile creation is single, update keeps identity, and restart restores a 
   await reopened.close();
 });
 
-test('compact home source keeps safe-area padding, scroll fallback and 48 dp interaction targets', () => {
-  const source = readFileSync(new URL('../src/ui/AppRoot.tsx', import.meta.url), 'utf8');
-  assert.match(source, /StatusBar as NativeStatusBar/);
-  assert.match(source, /style=\{\[styles\.page, styles\.homePage\]\}/);
-  assert.match(source, /paddingTop: Platform\.OS === 'android' \? NativeStatusBar\.currentHeight \?\? 0 : 0/);
-  assert.match(source, /homeResponsiveLayout\(viewport\)/);
-  assert.match(source, /layout\.reviewConflict/);
-  assert.match(source, /primaryBeforeScene && primaryAction/);
-  assert.match(source, /layout\.mode !== 'ordinary' && styles\.navLargeText/);
-  assert.match(source, /layout\.mode !== 'ordinary' && styles\.navItemLargeText/);
-  assert.match(source, /contentContainerStyle=\{\[styles\.homeContent, layout\.mode !== 'ordinary' && styles\.homeContentLargeText\]\}/);
-  assert.match(source, /minHeight: 48/g);
-  assert.match(source, /accessibilityHint="Открывает раздел с защитным барьером для взрослого"/);
-  assert.match(source, /Доступно/);
-  assert.match(source, /Копилка/);
-  assert.match(source, /ТЕКУЩАЯ ЦЕЛЬ/);
-  assert.match(source, /АКТИВНОЕ ЗАНЯТИЕ/);
-  assert.match(source, /Для взрослого/);
-  assert.match(source, /function HelpOverlay/);
-  assert.match(source, /onRequestClose=\{props\.onClose\}/);
-  assert.match(source, /testID="home-help-overlay"/);
-  assert.match(source, /\{helpOpen && <HelpOverlay onClose=\{\(\) => setHelpOpen\(false\)\} \/>\}/);
-  assert.match(source, /layout\.reviewConflict && \(/);
-  assert.match(source, /одновременная видимость всех обязательных элементов требует review/);
+test('Home keeps native modal/back isolation and complete financial labels', () => {
+  const source = readFileSync(new URL('../src/ui/HomeScreen.tsx', import.meta.url), 'utf8');
+  assert.match(source, /importantForAccessibility=\{props\.notice \? 'no-hide-descendants'/);
+  assert.match(source, /minHeight: 48/);
+  for (const label of ['Доступно', 'Копилка', 'Цель', 'Занятие']) assert.ok(source.includes(label));
+  assert.doesNotMatch(source, /numberOfLines|maxFontSizeMultiplier|reviewConflict/);
+  const app = readFileSync(new URL('../src/ui/AppRoot.tsx', import.meta.url), 'utf8');
+  assert.match(app, /react-native-safe-area-context/);
+  assert.match(app, /importantForAccessibility=\{rootMenuOpen \|\| helpOpen/);
+  const navigation = readFileSync(new URL('../src/ui/RootNavigation.tsx', import.meta.url), 'utf8');
+  assert.match(navigation, /onRequestClose=\{onClose\}/);
+  assert.match(navigation, /Для взрослого/);
+  assert.match(app, /function HelpOverlay/);
+  assert.match(app, /onRequestClose=\{props\.onClose\}/);
 });

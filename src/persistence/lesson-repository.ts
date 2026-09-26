@@ -49,6 +49,8 @@ export type LessonDiscovery = Readonly<{
   completedAt: string;
 }>;
 
+export type HomeLessonHistory = Readonly<{ lessonId: string; phase: LessonAttempt['phase']; sequence: number }>;
+
 type CompletionRow = Readonly<{
   attempt_id: string;
   evaluation_id: string;
@@ -215,6 +217,15 @@ export class LessonRepository {
 
   close(): Promise<void> {
     return this.#ownsExecutor ? this.#executor.close() : Promise.resolve();
+  }
+
+  listHomeHistory(profileId: string): Promise<readonly HomeLessonHistory[]> {
+    return this.#executor.run(async (database) => {
+      const rows = await database.getAllAsync<Readonly<{ lesson_id: string; phase: LessonAttempt['phase']; sequence: number }>>(
+        'SELECT lesson_id, phase, MAX(rowid) AS sequence FROM lesson_attempt WHERE profile_id = ? GROUP BY lesson_id, phase ORDER BY sequence DESC', profileId,
+      );
+      return Object.freeze(rows.map((row) => Object.freeze({ lessonId: row.lesson_id, phase: row.phase, sequence: row.sequence })));
+    });
   }
 
   readAttempt(attemptId: string): Promise<LessonAttempt> {

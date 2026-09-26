@@ -29,7 +29,6 @@ type Props = Readonly<{
   onSelectGoal: (goalId: string | null) => void;
   onClaim: (goalId: string) => void;
   onHistory: () => void;
-  onBack: () => void;
 }>;
 
 function Button(props: Readonly<{
@@ -133,6 +132,13 @@ export default function SavingsScreen(props: Props) {
         <Text style={styles.balance}>В кошельке: {lifecycle.available}</Text>
         <Text accessibilityLiveRegion="polite" style={styles.notice}>{props.message ?? notice}</Text>
 
+        {selected && <View style={styles.goalCard}>
+          <Text style={styles.cardTitle}>Мечта · {selected.name}</Text>
+          {lifecycle.savings < selected.cost
+            ? <Text style={styles.caption}>Осталось накопить {selected.cost - lifecycle.savings}</Text>
+            : <Button disabled={props.busy} label="Получить цель" onPress={claim} />}
+        </View>}
+
         <View style={styles.transferCard}>
           <Text style={styles.cardTitle}>Перевести монеты</Text>
           <TextInput
@@ -171,47 +177,41 @@ export default function SavingsScreen(props: Props) {
 
         {selected && (
           <>
-            <Button
-              disabled={props.busy || lifecycle.savings < selected.cost}
-              label={lifecycle.savings < selected.cost ? `Осталось накопить ${selected.cost - lifecycle.savings}` : 'Получить цель'}
-              onPress={claim}
-            />
             <Button disabled={props.busy} label="Снять выбор цели" onPress={() => selectGoal(null)} secondary />
           </>
         )}
         <Button label="История операций" onPress={props.onHistory} secondary />
-        <Button label="Вернуться в домик" onPress={props.onBack} secondary />
       </ScrollView>
     </SafeAreaView>
   );
 }
 
 const colors = {
-  ink: '#14324A', muted: '#4B6878', sky: '#EAF6FB', teal: '#146B78', pale: '#F7FBFC', line: '#C7DEE5', yellow: '#FFF3C7',
+  ink: '#3D352D', muted: '#665444', sky: '#F6F0E6', teal: '#AE482A', pale: '#FFFCF6', line: '#E4D6C1', yellow: '#F1E5CB',
 };
 
 const styles = StyleSheet.create({
   page: { flex: 1, backgroundColor: colors.sky },
-  content: { gap: 12, padding: 18, paddingBottom: 36 },
-  eyebrow: { color: colors.teal, fontSize: 13, fontWeight: '800', letterSpacing: 1.4 },
-  title: { color: colors.ink, fontSize: 25, fontWeight: '800' },
+  content: { gap: 12, padding: 18, paddingBottom: 20 },
+  eyebrow: { color: colors.teal, fontSize: 13, fontWeight: '600', letterSpacing: 1.4 },
+  title: { color: colors.ink, fontSize: 25, fontWeight: '600' },
   balance: { color: colors.ink, fontSize: 17, fontWeight: '700' },
   notice: { color: colors.muted, fontSize: 14, lineHeight: 20 },
-  transferCard: { backgroundColor: '#FFFFFF', borderColor: colors.line, borderRadius: 14, borderWidth: 1, gap: 10, padding: 12 },
-  cardTitle: { color: colors.ink, fontSize: 18, fontWeight: '800' },
-  input: { backgroundColor: colors.pale, borderColor: colors.line, borderRadius: 12, borderWidth: 1, color: colors.ink, fontSize: 18, fontWeight: '800', minHeight: 48, paddingHorizontal: 12 },
+  transferCard: { backgroundColor: '#FFFCF6', borderColor: colors.line, borderRadius: 22, borderWidth: 1, gap: 10, padding: 12 },
+  cardTitle: { color: colors.ink, fontSize: 18, fontWeight: '600' },
+  input: { backgroundColor: colors.pale, borderColor: colors.line, borderRadius: 18, borderWidth: 1, color: colors.ink, fontSize: 18, fontWeight: '600', minHeight: 48, paddingVertical: 10, paddingHorizontal: 12 },
   row: { flexDirection: 'row', gap: 8 },
   flex: { flex: 1 },
-  goalCard: { backgroundColor: '#FFFFFF', borderColor: colors.line, borderRadius: 14, borderWidth: 1, gap: 7, padding: 12 },
-  goalSelected: { backgroundColor: colors.yellow, borderColor: '#D5A623' },
+  goalCard: { backgroundColor: '#FFFCF6', borderColor: colors.line, borderRadius: 22, borderWidth: 1, gap: 7, padding: 12 },
+  goalSelected: { backgroundColor: colors.yellow, borderColor: '#9B7847' },
   goalHeader: { alignItems: 'center', flexDirection: 'row', gap: 10 },
   goalThumbnail: { height: 64, width: 64 },
-  goalName: { flex: 1, color: colors.ink, fontSize: 16, fontWeight: '800' },
+  goalName: { flex: 1, color: colors.ink, fontSize: 16, fontWeight: '600' },
   caption: { color: colors.muted, fontSize: 14, lineHeight: 19 },
-  button: { alignItems: 'center', backgroundColor: colors.teal, borderRadius: 12, justifyContent: 'center', minHeight: 48, paddingHorizontal: 12 },
+  button: { alignItems: 'center', backgroundColor: colors.teal, borderRadius: 18, justifyContent: 'center', minHeight: 48, paddingVertical: 10, paddingHorizontal: 12 },
   buttonSecondary: { backgroundColor: 'transparent', borderColor: colors.teal, borderWidth: 1.5 },
-  buttonText: { color: '#FFFFFF', fontSize: 15, fontWeight: '800', textAlign: 'center' },
+  buttonText: { color: '#FFFFFF', fontSize: 15, fontWeight: '600', textAlign: 'center' },
   buttonSecondaryText: { color: colors.teal },
   disabled: { opacity: 0.45 },
-  pressed: { opacity: 0.72 },
+  pressed: { transform: [{ scale: .96 }] },
 });

@@ -38,7 +38,7 @@ export const FINNI_ANIMATION_SET: Readonly<Record<FinniClipId, FinniClip>> = Obj
   'AN-010': { id: 'AN-010', kind: 'result', priority: 80, durationMs: 1600, staticExpression: 'happy', skippable: false, recipe: 'brush' },
   'AN-011': { id: 'AN-011', kind: 'result', priority: 80, durationMs: 500, staticExpression: 'neutral', skippable: false, recipe: 'planner' },
   'AN-012': { id: 'AN-012', kind: 'result', priority: 80, durationMs: 800, staticExpression: 'neutral', skippable: false, recipe: 'symbolic-coins' },
-  'AN-013': { id: 'AN-013', kind: 'milestone', priority: 70, durationMs: 3000, staticExpression: 'happy', skippable: true, recipe: 'goal-reveal' },
+  'AN-013': { id: 'AN-013', kind: 'milestone', priority: 70, durationMs: 3000, staticExpression: 'inspired', skippable: true, recipe: 'goal-reveal' },
   'AN-014': { id: 'AN-014', kind: 'milestone', priority: 70, durationMs: 2200, staticExpression: 'inspired', skippable: true, recipe: 'stage-swap' },
 });
 

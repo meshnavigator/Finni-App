@@ -19,6 +19,7 @@ export type LessonVariantPresentation = Readonly<{
 
 export type LocalLessonPresentation = LessonVariantPresentation & Readonly<{
   variants: readonly LessonVariantPresentation[];
+  unlockPeriod: number;
 }>;
 
 const rawManifest = require('../../content/bundles/1.2.0/manifest.json') as unknown;
@@ -70,8 +71,10 @@ function catalogEntry(lessonId: (typeof DEMO_LESSON_IDS)[number]): LocalLessonPr
   const variants = Object.freeze(lesson.variants.map((variant) => presentation(lessonId, variant.id)));
   const defaultPresentation = variants.find((item) => item.definition.variantId === lesson.defaultVariantId);
   if (!defaultPresentation) throw new TypeError(`Default variant for ${lessonId} is missing`);
-  return Object.freeze({ ...defaultPresentation, variants });
+  return Object.freeze({ ...defaultPresentation, variants, unlockPeriod: lesson.unlockPeriod });
 }
 
 /** Eight lesson topics, with every validated built-in variant selectable in the demo. */
 export const LOCAL_DEMO_LESSONS = Object.freeze(DEMO_LESSON_IDS.map(catalogEntry));
+/** Manifest order is the recommendation order; presentation registry may group topics differently. */
+export const HOME_LESSON_ORDER = Object.freeze(LOCAL_BUNDLE.manifest.lessonIds);

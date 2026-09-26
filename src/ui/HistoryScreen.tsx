@@ -1,5 +1,7 @@
+import DetailBack from './DetailBack.tsx';
+import { palette, screenStyles as ui } from './screen-theme.ts';
 import { useState } from 'react';
-import { Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LOCAL_DEMO_LESSONS } from '../content/local-lesson-catalog.ts';
 import type { LessonDiscovery } from '../persistence/lesson-repository.ts';
 import { discoveryAction, discoveryHelp, discoveryOutcome } from './lesson-discovery-summary.ts';
@@ -32,25 +34,26 @@ export default function HistoryScreen(props: Readonly<{
   const goal = commerce?.selectedGoal;
   const [openDiscoveryId, setOpenDiscoveryId] = useState<string | null>(null);
   return (
-    <SafeAreaView style={styles.page}>
+    <View style={styles.page}>
       <ScrollView contentContainerStyle={styles.content}>
+        <DetailBack onPress={props.onBack} />
         <Text style={styles.eyebrow}>ПРОГРЕСС И ИСТОРИЯ</Text>
-        <Text style={styles.title}>Что уже получилось</Text>
+        <Text accessibilityRole="header" style={styles.title}>Что уже получилось</Text>
 
         <View style={styles.card} accessible accessibilityLabel={`Стадия Финни ${lifecycle.petStage} из 3`}>
-          <Text style={styles.cardTitle}>Финни растёт вместе с решениями</Text>
+          <Text accessibilityRole="header" style={styles.cardTitle}>Финни растёт вместе с решениями</Text>
           <Text style={styles.value}>Стадия {lifecycle.petStage} из 3</Text>
           <Text style={styles.caption}>Завершено игровых дней: {lifecycle.closedPeriods}</Text>
         </View>
 
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>Текущая мечта</Text>
+          <Text accessibilityRole="header" style={styles.cardTitle}>Текущая мечта</Text>
           <Text style={styles.value}>{goal ? `${goal.name} · ${goal.cost} монет` : 'Мечта пока не выбрана'}</Text>
           <Text style={styles.caption}>В копилке: {lifecycle.savings}</Text>
         </View>
 
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>Совместные открытия</Text>
+          <Text accessibilityRole="header" style={styles.cardTitle}>Совместные открытия</Text>
           <Text style={styles.caption}>Здесь записаны разобранные учебные ситуации. Подсказки показывают только то, что открывали в приложении.</Text>
           {props.discoveries.length === 0 && (
             <Text style={styles.empty}>Здесь появятся ситуации, которые мы разберём вместе.</Text>
@@ -66,9 +69,9 @@ export default function HistoryScreen(props: Readonly<{
                   accessibilityRole="button"
                   accessibilityState={{ expanded }}
                   onPress={() => setOpenDiscoveryId(expanded ? null : id)}
-                  style={styles.discoveryToggle}
+                  style={({ pressed }) => [styles.discoveryToggle, expanded && styles.discoveryOpen, pressed && ui.pressed]}
                 >
-                  <Text style={styles.cardTitle}>{title}</Text>
+                  <Text accessibilityRole="header" style={styles.cardTitle}>{title}</Text>
                   <Text style={styles.caption}>{discoveryOutcome(discovery)} · {expanded ? 'Скрыть' : 'Посмотреть'}</Text>
                 </Pressable>
                 {expanded && (
@@ -93,7 +96,7 @@ export default function HistoryScreen(props: Readonly<{
         </View>
 
         <View style={styles.card}>
-          <Text style={styles.cardTitle}>Последний закрытый день</Text>
+          <Text accessibilityRole="header" style={styles.cardTitle}>Последний закрытый день</Text>
           {summary ? (
             <>
               <Text style={styles.value}>+{summary.periodGrowth} шагов роста</Text>
@@ -105,7 +108,7 @@ export default function HistoryScreen(props: Readonly<{
           ) : <Text style={styles.empty}>Закрытых дней пока нет. Первый итог появится после завершения игрового дня.</Text>}
         </View>
 
-        <Text style={styles.sectionTitle}>Операции</Text>
+        <Text accessibilityRole="header" style={styles.sectionTitle}>Операции</Text>
         {history.length === 0 && <Text style={styles.empty}>Операций пока нет.</Text>}
         {history.map((entry) => {
           const title = operationLabels[entry.type] ?? entry.reasonCode;
@@ -116,7 +119,7 @@ export default function HistoryScreen(props: Readonly<{
               accessibilityLabel={`${title}. Сумма ${entry.amount}. Кошелёк ${signed(entry.deltaAvailable)}. Копилка ${signed(entry.deltaSavings)}.`}
               style={styles.operation}
             >
-              <Text style={styles.cardTitle}>{title}</Text>
+              <Text accessibilityRole="header" style={styles.cardTitle}>{title}</Text>
               <Text style={styles.caption}>Сумма {entry.amount} · кошелёк {signed(entry.deltaAvailable)} · копилка {signed(entry.deltaSavings)}</Text>
             </View>
           );
@@ -129,27 +132,22 @@ export default function HistoryScreen(props: Readonly<{
           <Text style={styles.primaryText}>Вернуться</Text>
         </Pressable>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  page: { flex: 1, backgroundColor: '#EAF6FB' },
-  content: { gap: 12, padding: 18, paddingBottom: 36 },
-  eyebrow: { color: '#146B78', fontSize: 13, fontWeight: '800', letterSpacing: 1.4 },
-  title: { color: '#14324A', fontSize: 25, fontWeight: '800' },
-  sectionTitle: { color: '#14324A', fontSize: 20, fontWeight: '800', marginTop: 4 },
-  card: { backgroundColor: '#FFFFFF', borderColor: '#C7DEE5', borderRadius: 14, borderWidth: 1, gap: 6, padding: 13 },
-  operation: { backgroundColor: '#F7FBFC', borderColor: '#C7DEE5', borderRadius: 12, borderWidth: 1, gap: 4, padding: 12 },
-  discovery: { backgroundColor: '#F7FBFC', borderColor: '#C7DEE5', borderRadius: 12, borderWidth: 1 },
-  discoveryToggle: { justifyContent: 'center', minHeight: 48, padding: 12 },
-  discoveryDetail: { gap: 8, padding: 12, paddingTop: 0 },
-  cardTitle: { color: '#14324A', fontSize: 16, fontWeight: '800' },
-  value: { color: '#146B78', fontSize: 18, fontWeight: '900' },
-  caption: { color: '#4B6878', fontSize: 14, lineHeight: 20 },
-  empty: { color: '#4B6878', fontSize: 15, lineHeight: 21 },
-  primary: { alignItems: 'center', backgroundColor: '#146B78', borderRadius: 12, justifyContent: 'center', minHeight: 48, paddingHorizontal: 14 },
-  primaryText: { color: '#FFFFFF', fontSize: 16, fontWeight: '800' },
-  secondary: { alignItems: 'center', borderColor: '#146B78', borderRadius: 12, borderWidth: 1.5, justifyContent: 'center', minHeight: 48, paddingHorizontal: 14 },
-  secondaryText: { color: '#146B78', fontSize: 16, fontWeight: '800' },
+  page: ui.page, content: ui.content, eyebrow: ui.eyebrow, title: ui.title,
+  sectionTitle: { ...ui.cardTitle, fontSize: 22, marginTop: 8 },
+  card: ui.card,
+  operation: { ...ui.card, gap: 6 },
+  discovery: { backgroundColor: palette.background, borderRadius: 14, borderColor: palette.line, borderWidth: 1 },
+  discoveryToggle: { justifyContent: 'center', minHeight: 56, gap: 6, padding: 12, borderRadius: 14 },
+  discoveryOpen: { backgroundColor: palette.selected },
+  discoveryDetail: { gap: 12, padding: 12 },
+  cardTitle: ui.cardTitle,
+  value: { color: palette.accent, fontSize: 22, fontWeight: '600', fontVariant: ['tabular-nums'] },
+  caption: ui.body, empty: { ...ui.body, backgroundColor: palette.soft, borderRadius: 14, padding: 12 },
+  primary: ui.button, primaryText: ui.buttonText,
+  secondary: { ...ui.button, ...ui.secondary }, secondaryText: { ...ui.buttonText, ...ui.secondaryText },
 });

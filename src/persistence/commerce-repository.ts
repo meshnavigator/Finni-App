@@ -183,7 +183,7 @@ export class CommerceRepository {
       await this.ledger(database, envelope, envelope.payload.periodId, type, preview.amount, kind === 'deposit' ? -preview.amount : preview.amount, kind === 'deposit' ? preview.amount : -preview.amount, type, { kind, amount: preview.amount }, committedAt);
       await database.runAsync('UPDATE wallet_projection SET available = ?, savings = ? WHERE profile_id = ?', preview.after.available, preview.after.savings, envelope.meta.profileId);
       await this.reviseAudit(database, envelope, revision, type, { amount: preview.amount }, committedAt);
-      return Object.freeze({ data: preview, before, after: preview.after, revision, feedback: Object.freeze({ code: type, params: Object.freeze({ amount: preview.amount }), petReaction: 'calm' as const }) });
+      return Object.freeze({ data: preview, before, after: preview.after, revision, feedback: Object.freeze({ code: type, params: Object.freeze({ amount: preview.amount }), petReaction: kind === 'deposit' ? 'inspired' as const : 'calm' as const }) });
     });
   }
 
