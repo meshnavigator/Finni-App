@@ -10,7 +10,7 @@ import type { SceneRect } from './home-scene-layout.ts';
 
 export type HomeScreenProps = Readonly<{
   snapshot: AppSnapshot; busy: boolean; notice: string | null; scenePaused: boolean;
-  motionEnabled: boolean; reaction: HomeReaction | null; lessonTitle: string | null; demo: boolean;
+  motionEnabled: boolean; soundEnabled: boolean; reaction: HomeReaction | null; lessonTitle: string | null; demo: boolean;
   onReactionFinished: (id: number) => void; onReactionCancelled: (id: number) => void;
   onDismissNotice: () => void; onOpenDay: () => void; onResults: () => void; onEditPet: () => void;
   onMenu: () => void; onLesson: () => void; onSection: (title: string) => void;
@@ -124,7 +124,7 @@ export default function HomeScreen(props: HomeScreenProps) {
         <View pointerEvents="none" importantForAccessibility="no-hide-descendants" style={large ? [styles.portrait, { width: portraitSize, height: portraitSize }] : StyleSheet.absoluteFill}>
           <FinniHomeScene key={profile.shapeId + '-' + profile.patternId} accessibilityLabel={profile.name + '. ' + food + '. ' + care + '. ' + mood}
             careLabel={food + '. ' + care} height={large ? portraitSize : sceneSize.height} paused={props.scenePaused || Boolean(props.notice)}
-            motionEnabled={props.motionEnabled} stage={life.petStage} appearance={profile} reaction={props.reaction}
+            motionEnabled={props.motionEnabled} soundEnabled={props.soundEnabled} stage={life.petStage} appearance={profile} reaction={props.reaction}
             onReactionFinished={props.onReactionFinished} onReactionCancelled={props.onReactionCancelled}
             showCaption={false} sceneStyle="quiet" portrait={large} fullscreen petRegion={petRegion} hideSkip skipReactionId={skipReactionId} />
         </View>

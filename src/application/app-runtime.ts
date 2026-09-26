@@ -1,4 +1,4 @@
-import { NormalClock } from '../domain/clocks.ts';
+import { NormalClock, VirtualClock } from '../domain/clocks.ts';
 import type { Plan } from '../domain/economy.ts';
 import { counter, positiveAmount } from '../domain/numeric.ts';
 import type { PetAppearance } from '../domain/pet-profile.ts';
@@ -28,6 +28,7 @@ import {
 import { evaluateAllocation, evaluateBasket } from '../lessons/budget-purchase-lessons.ts';
 import { evaluateReceiptAudit, evaluateResourceChoice } from '../lessons/receipt-workshop-lessons.ts';
 import { evaluateSavings } from '../domain/savings-lesson.ts';
+import { DEMO_INITIAL_DATE } from './demo-scenario.ts';
 
 export type AppSnapshot = Readonly<{
   profile: ProfileSnapshot | null;
@@ -164,7 +165,7 @@ export class AppRuntime {
     await this.#profiles.createProfile({
       appearance,
       timeZone,
-      calendarDate: clock.calendarDate(),
+      calendarDate: this.#mode === 'demo' ? DEMO_INITIAL_DATE : clock.calendarDate(),
       createdAt: clock.nowUtc().toISOString(),
     });
     return this.load();
@@ -182,7 +183,9 @@ export class AppRuntime {
     if (!snapshot.profile || !snapshot.lifecycle) {
       throw new TypeError('Профиль ещё не создан');
     }
-    const clock = new NormalClock(snapshot.profile.timeZone);
+    const clock = this.#mode === 'demo'
+      ? new VirtualClock(snapshot.lifecycle.calendarDate, snapshot.profile.timeZone)
+      : new NormalClock(snapshot.profile.timeZone);
     await this.#lifecycle.openPeriod(
       Object.freeze({
         type: 'OpenPeriod' as const,
@@ -207,10 +210,15 @@ export class AppRuntime {
     values: Plan,
     acknowledgedLowNeed: boolean,
   ): Promise<AppSnapshot> {
+    await this.confirmPlanReceipt(snapshot, values, acknowledgedLowNeed);
+    return this.load();
+  }
+
+  confirmPlanReceipt(snapshot: AppSnapshot, values: Plan, acknowledgedLowNeed: boolean): Promise<CommandReceipt> {
     if (!snapshot.profile || !snapshot.lifecycle?.periodId) {
       throw new TypeError('Период ещё не открыт');
     }
-    await this.#lifecycle.confirmPlan(
+    return this.#lifecycle.confirmPlan(
       Object.freeze({
         type: 'ConfirmPlan' as const,
         meta: Object.freeze({
@@ -228,7 +236,6 @@ export class AppRuntime {
       }),
       new Date().toISOString(),
     );
-    return this.load();
   }
 
   async allocateAdditionalIncome(
@@ -260,6 +267,24 @@ export class AppRuntime {
 
   async closePeriod(snapshot: AppSnapshot): Promise<AppSnapshot> {
     await this.closePeriodReceipt(snapshot);
+    return this.load();
+  }
+
+  async advanceDemoDay(snapshot: AppSnapshot): Promise<AppSnapshot> {
+    if (this.#mode !== 'demo' || !snapshot.profile || snapshot.lifecycle?.state !== 'WAITING') {
+      throw new TypeError('Следующий демо-день доступен после закрытия текущего дня');
+    }
+    await this.#lifecycle.advanceDemoDay(Object.freeze({
+      type: 'AdvanceDemoDay' as const,
+      meta: Object.freeze({
+        commandId: identifier('advance-demo-day'),
+        profileId: snapshot.profile.id,
+        mode: this.#mode,
+        expectedRevision: counter(snapshot.lifecycle.revision),
+        sessionEpoch: counter(0),
+      }),
+      payload: Object.freeze({}),
+    }), new Date().toISOString());
     return this.load();
   }
 

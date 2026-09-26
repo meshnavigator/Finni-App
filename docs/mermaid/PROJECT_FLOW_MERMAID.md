@@ -17,6 +17,8 @@ flowchart TD
     UI -->|Прогресс| Discoveries[Совместные открытия<br/>исходная завершённая попытка + evaluation]
     Discoveries -->|следующий вариант той же темы| LessonCatalog
     UI --> Scene[FinniHomeScene<br/>local Image + Animated + stage anchor]
+    Result -->|успешный receipt: clip ID и точные значения| Presentation[ReceiptPresentationController<br/>generation / priority / cancel]
+    Presentation -->|FINNI_ANIMATION_SET| Scene
     CatalogArt[S8-002 local item/goal/object assets<br/>canonical IDs + SHA-256] --> Scene
     UI --> RoomObjects[RoomObjectsLayer<br/>signed 72 dp navigation]
     RoomObjects -->|navigation only| UI
@@ -46,6 +48,8 @@ flowchart TD
     Tx --> Result[Persisted snapshot / receipt / ошибка]
     Result --> UI
     Adult[Adult screen<br/>hold or arithmetic unlock] --> Controller
+    Adult -->|WAITING + подтверждение следующего demo-дня| Runtime
+    Runtime -->|VirtualClock: дата +1 без реального ожидания| LifecycleRepo
     Adult -->|motion / sound independently| Prefs[Presentation preferences]
     Prefs --> ControlDB
     Prefs -->|motion enabled| Scene
@@ -102,9 +106,14 @@ flowchart TD
   `Finni App/src/ui/room-assets.ts` → `tests/room-assets.test.mjs`;
 - S8-003 animation rules and persisted preferences →
   `Finni App/src/ui/finni-animation-set.ts`,
+  `Finni App/src/ui/FinniHomeScene.tsx`,
+  `Finni App/src/application/receipt-presentation.ts`,
   `Finni App/src/persistence/app-control-sqlite.ts` →
   `tests/finni-animation-set.test.mjs`,
   `tests/finni-presentation-preferences.test.mjs`;
+- demo virtual clock / adult next-day → `Finni App/src/application/demo-scenario.ts`,
+  `Finni App/src/application/app-runtime.ts`, `Finni App/src/ui/AdultScreen.tsx`
+  → `tests/demo-runtime.test.mjs`;
 - immutable initial plan, additions and plan/fact →
   `Finni App/src/persistence/budget-plan-repository.ts` →
   `Finni App/src/application/budget-plan-model.ts` →
@@ -132,8 +141,8 @@ flowchart LR
     Command --> Persist[Атомарный commit]
     Persist --> Result[Persisted result<br/>commandId + profile + mode + epoch + revision]
     Result --> HUD[Точные данные HUD]
-    Result -. успешная команда .-> Controller[AppRoot reaction state]
-    Controller -. реакция и cancel/skip .-> Scene[FinniHomeScene<br/>RN core Image + Animated]
+    Result -. успешная команда .-> Controller[AppRoot reaction state<br/>clip ID из receipt]
+    Controller -. FINNI_ANIMATION_SET: priority / cancel / skip .-> Scene[FinniHomeScene<br/>RN core Image + Animated]
     HUD --> Screen[Единая screen model]
     Scene --> Screen
     Panel[Модальная панель] -. блокирует visual input .-> Screen

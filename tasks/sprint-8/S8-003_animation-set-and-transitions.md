@@ -59,3 +59,14 @@ motion/sound AN-016 реализованы как инженерный конт�
 ## Прогресс 2026-09-25 — runtime реакций
 
 В Home подключены happy/thoughtful/inspired по успешным событиям. Goal/stage skip, замена старой реакции, отмена при навигации/модальной паузе/background и static equivalent для reduced motion реализованы. Android API 26 debug+Metro: thoughtful/inspired/happy и skip/cancel записаны на видео; 27/27 сочетаний Home 9×3 прошли. Доказательства: `Finni App/artifacts/sprint-8/S8-001-expression-runtime/QA.md`. Реестр AN-001–016 не считается целиком визуально принятым: видео покрывает реакцию лица, но не все full-body clip recipes. Физическое устройство, signed/offline и S10 gate остаются открытыми.
+
+## Прогресс 2026-09-26 — подключение реестра
+
+`FinniHomeScene` подключена к `FINNI_ANIMATION_SET` и применяет правила
+очереди, приоритета, отмены, пропуска, скрытия и reduced motion. Persisted
+receipts передают конкретный clip ID; ConfirmPlan тоже создаёт presentation
+event после commit. Доступные предметные ассеты используются для эффектов
+плана, монет и цели. Для отсутствующих совместимых поз лап, еды и ухода
+остаётся статичное состояние с принятым выражением лица. Полный набор
+визуальных движений AN-001–014 и device-video приёмка всё ещё открыты;
+новые позы требуют отдельного art gate для девяти внешностей и трёх стадий.

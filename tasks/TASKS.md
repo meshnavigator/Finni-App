@@ -66,9 +66,9 @@ Roadmap построен по официальному ТЗ, образоват�
 
 ## Спринт 4: фиксация и M1 — 28–29 сентября
 
-- [ ] [S4-001](sprint-4/S4-001_demo-fixture-and-appendix-a.md) — Собрать demo и маршрут Приложения А
+- [ ] [S4-001](sprint-4/S4-001_demo-fixture-and-appendix-a.md) — Demo, пятидневная fixture и маршрут A.1–A.12 реализованы; фактический release APK-прогон открыт
 - [ ] [S4-002](sprint-4/S4-002_accessibility-and-visual-polish.md) — Проверить доступность и обязательный UI
-- [ ] [S4-003](sprint-4/S4-003_security-offline-backup-and-licenses.md) — Аудит безопасности, офлайн и лицензий
+- [ ] [S4-003](sprint-4/S4-003_security-offline-backup-and-licenses.md) — Backup/release permissions исправлены в source; новый APK, офлайн и лицензии открыты
 - [ ] [S4-004](sprint-4/S4-004_device-performance-regression.md) — Физическая и производительная регрессия
 - [ ] [S4-005](sprint-4/S4-005_docs-traceability-and-store-draft.md) — Документация, трассируемость и карточка
 - [ ] [S4-006](sprint-4/S4-006_m1-package-freeze-and-access.md) — Зафиксировать и передать M1
@@ -141,7 +141,7 @@ S8-001 и S8-002 начаты параллельно, S8-003 начата пос
 
 - [ ] [S8-001](sprint-8/S8-001_finni-variants-stages-rig.md) — В работе: матрица 3×3 ear-seams-v3 художественно принята; neutral/blink и API26 smoke PASS; happy/thoughtful/inspired и итоговая проверка 27 сочетаний во всех позах открыты
 - [ ] [S8-002](sprint-8/S8-002_room-objects-and-catalog-assets.md) — В работе: Home, 5 OBJ и 8 IT/3 GL v3 художественно приняты, права заявлены владельцем; API 26 эмулятор пройден, physical-device отложен до S10, offline/release QA открыты
-- [ ] [S8-003](sprint-8/S8-003_animation-set-and-transitions.md) — В работе: AN-001–016 engineering rules/settings; visual clips и device QA открыты
+- [ ] [S8-003](sprint-8/S8-003_animation-set-and-transitions.md) — Реестр AN подключён к Home и receipts; недостающие позы и device QA открыты
 
 **Контрольная точка:** editable layers, deterministic exports, 27 сочетаний,
 room/catalog assets, animation matrix, rights и runtime import validation PASS.

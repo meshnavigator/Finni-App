@@ -132,3 +132,29 @@ test('milestones outrank ordinary effects and completion never runs a domain com
   assert.equal(presentation.next(), null);
   assert.equal(presentation.accept(receipt('practice', 'CompleteLesson', 5, {}, 'LESSON_TRAINING'), normal, 5), false);
 });
+
+test('committed receipts select the corresponding animation without changing money', () => {
+  const controller = new ReceiptPresentationController();
+  controller.bind(normal);
+  const receipt = (commandId, commandType, data = {}, params = {}) => ({
+    commandId, commandType, profileId: 'profile', mode: 'normal', businessIdentity: commandId,
+    result: { ok: true, data, before: { available: 70, savings: 30 }, after: { available: 70, savings: 30 },
+      revision: 1, feedback: { code: 'DONE', params, petReaction: 'happy' } },
+  });
+  for (const [id, type, data, params, clip, objectId] of [
+    ['plan', 'ConfirmPlan', {}, {}, 'AN-011', null],
+    ['food', 'ConfirmPurchase', { item: { id: 'IT-01', slot: 'food' } }, {}, 'AN-009', 'IT-01'],
+    ['care', 'ConfirmPurchase', { item: { id: 'IT-02', slot: 'care' } }, {}, 'AN-010', 'IT-02'],
+    ['activity', 'ConfirmPurchase', { item: { id: 'IT-03', slot: 'activity' } }, {}, 'AN-007', 'IT-03'],
+    ['save', 'DepositSavings', {}, {}, 'AN-012', null],
+    ['goal', 'ClaimGoal', {}, { goalId: 'GL-01' }, 'AN-013', 'GL-01'],
+    ['stage', 'ClosePeriod', { summary: { stageBefore: 1, stageAfter: 2 } }, {}, 'AN-014', null],
+  ]) {
+    assert.equal(controller.accept(receipt(id, type, data, params), normal, 1), true);
+    const event = controller.next();
+    assert.equal(event.clip, clip);
+    assert.equal(event.objectId, objectId);
+    assert.deepEqual(event.before, event.after);
+    controller.complete(event.id);
+  }
+});

@@ -1,16 +1,78 @@
 {
+  "schemaVersion": 2,
   "mode": "demo",
   "initialDate": "2026-09-17",
+  "goalId": "GL-01",
   "periods": [
-    { "index": 1, "calendarDate": "2026-09-17", "income": 100 },
-    { "index": 2, "calendarDate": "2026-09-18", "income": 100 },
-    { "index": 3, "calendarDate": "2026-09-19", "income": 100 },
-    { "index": 4, "calendarDate": "2026-09-20", "income": 100 },
-    { "index": 5, "calendarDate": "2026-09-21", "income": 100 }
+    {
+      "index": 1,
+      "calendarDate": "2026-09-17",
+      "income": 100,
+      "plan": [40, 20, 40],
+      "lessons": ["LS-P02", "LS-B01"],
+      "purchases": ["IT-01", "IT-03", "IT-05"],
+      "rejectedPurchase": "IT-08",
+      "deposit": 40,
+      "claimGoal": null,
+      "expected": { "available": 20, "savings": 40, "lifetimeGrowth": 3, "stage": 1 }
+    },
+    {
+      "index": 2,
+      "calendarDate": "2026-09-18",
+      "income": 100,
+      "plan": [40, 20, 40],
+      "lessons": ["LS-B02", "LS-P03"],
+      "purchases": ["IT-01", "IT-03", "IT-08"],
+      "rejectedPurchase": null,
+      "deposit": 0,
+      "claimGoal": null,
+      "expected": { "available": 10, "savings": 40, "lifetimeGrowth": 4, "stage": 1 }
+    },
+    {
+      "index": 3,
+      "calendarDate": "2026-09-19",
+      "income": 100,
+      "plan": [40, 20, 50],
+      "lessons": ["LS-P01"],
+      "purchases": ["IT-01", "IT-03", "IT-05"],
+      "rejectedPurchase": null,
+      "deposit": 50,
+      "claimGoal": null,
+      "expected": { "available": 20, "savings": 90, "lifetimeGrowth": 7, "stage": 2 }
+    },
+    {
+      "index": 4,
+      "calendarDate": "2026-09-20",
+      "income": 100,
+      "plan": [40, 30, 50],
+      "lessons": ["LS-S01", "LS-B03"],
+      "purchases": ["IT-01", "IT-03", "IT-06"],
+      "rejectedPurchase": null,
+      "deposit": 50,
+      "claimGoal": null,
+      "expected": { "available": 20, "savings": 140, "lifetimeGrowth": 10, "stage": 2 }
+    },
+    {
+      "index": 5,
+      "calendarDate": "2026-09-21",
+      "income": 100,
+      "plan": [40, 20, 40],
+      "lessons": ["LS-S02"],
+      "purchases": ["IT-01", "IT-03", "IT-05"],
+      "rejectedPurchase": null,
+      "deposit": 40,
+      "claimGoal": "GL-01",
+      "expected": { "available": 40, "savings": 30, "lifetimeGrowth": 13, "stage": 3 }
+    }
   ],
   "expected": {
     "realWaits": 0,
     "incomeEntries": 5,
-    "available": 500
+    "incomeOnlyAvailable": 500,
+    "completedLessons": 8,
+    "rewardEntries": 5,
+    "finalAvailable": 40,
+    "finalSavings": 30,
+    "finalStage": 3
   }
 }

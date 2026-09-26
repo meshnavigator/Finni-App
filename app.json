@@ -11,6 +11,7 @@
     "android": {
       "package": "com.meshnavigator.finni",
       "versionCode": 1,
+      "allowBackup": false,
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/android-icon-foreground.png",
@@ -30,7 +31,8 @@
             "minSdkVersion": 26
           }
         }
-      ]
+      ],
+      "./plugins/with-finni-android-security"
     ]
   }
 }

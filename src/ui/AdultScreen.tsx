@@ -103,6 +103,7 @@ export default function AdultScreen(props: Readonly<{
   onActivity: () => void;
   onExit: () => void;
   onSwitchMode: (mode: Mode) => void;
+  onNextDemoDay: () => void;
   onResetDemo: () => void;
   onDeleteSelected: () => void;
 }>) {
@@ -114,6 +115,11 @@ export default function AdultScreen(props: Readonly<{
     'Сбросить демонстрацию?',
     'Будут удалены только профиль, история и монеты демонстрации. Обычная игра останется без изменений.',
     [{ text: 'Отмена', style: 'cancel' }, { text: 'Сбросить демо', style: 'destructive', onPress: props.onResetDemo }],
+  );
+  const confirmNextDemoDay = () => Alert.alert(
+    'Следующий демо-день?',
+    'Текущий день уже закрыт. Виртуальная дата перейдёт на один день вперёд без изменения денег. Новый доход появится после открытия дня.',
+    [{ text: 'Отмена', style: 'cancel' }, { text: 'Продолжить', onPress: props.onNextDemoDay }],
   );
   const confirmDelete = () => Alert.alert(
     `Удалить данные: ${modeLabel}?`,
@@ -140,6 +146,23 @@ export default function AdultScreen(props: Readonly<{
           <Text style={styles.body}>Текущая мечта: {goal ? `${goal.name}, ${goal.cost} монет` : 'не выбрана'}</Text>
           <Text style={styles.body}>Завершённые занятия и сохранённые разборы доступны в «Прогрессе».</Text>
         </View>
+        {props.mode === 'demo' && lifecycle && (
+          <View style={styles.card}>
+            <Text accessibilityRole="header" style={styles.cardTitle}>Управление демонстрацией</Text>
+            <Text style={styles.body}>День {lifecycle.periodIndex ?? 0} · виртуальная дата {lifecycle.calendarDate}</Text>
+            <Text style={styles.body}>Сначала закройте день в его итогах. Затем переведите виртуальную дату и откройте новый день в Домике.</Text>
+            <Pressable
+              accessibilityRole="button"
+              accessibilityState={{ disabled: props.busy || lifecycle.state !== 'WAITING' }}
+              disabled={props.busy || lifecycle.state !== 'WAITING'}
+              onPress={confirmNextDemoDay}
+              style={[styles.primary, (props.busy || lifecycle.state !== 'WAITING') && styles.disabled]}
+              testID="adult-next-demo-day"
+            >
+              <Text style={styles.primaryText}>Следующий демо-день</Text>
+            </Pressable>
+          </View>
+        )}
         <View style={styles.card}>
           <Text accessibilityRole="header" style={styles.cardTitle}>Восприятие</Text>
           <Text style={styles.body}>Настройки сохраняются на устройстве и не влияют на деньги, награды или рост.</Text>

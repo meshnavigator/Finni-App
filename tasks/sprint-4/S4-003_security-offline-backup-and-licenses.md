@@ -36,3 +36,24 @@
 ## Out of scope
 - юридическое заключение по публикации;
 - телеметрия, реклама и облако.
+
+## Прогресс 2026-09-26 — Android manifest
+
+Два ранее собранных release APK содержали INTERNET, READ/WRITE_EXTERNAL_STORAGE,
+SYSTEM_ALERT_WINDOW и VIBRATE; `allowBackup=true` без правил исключения.
+В исходном приложении не обнаружено необходимости в сети, внешнем хранилище,
+overlay или вибрации. Основной manifest теперь запрещает backup и задаёт
+правила исключения для cloud backup и device transfer, включая SQLite БД и
+их sidecar-файлы. Release overlay удаляет пять разрешений; debug сохраняет
+INTERNET для Metro. Expo config plugin восстанавливает изменения после
+`prebuild --clean`.
+
+Объединённый debug manifest проверен: INTERNET сохранён, backup выключен.
+С временным тестовым signing environment собран release-вариант APK, SHA-256
+`143F6920C418F7811E1B2F2F0B5BAF4DE1E8AFD0277106C08E7705644648D444`:
+в упакованном manifest осталась только служебная permission, backup выключен,
+оба XML-ресурса включены. На Android API 26 APK открылся после перезапуска
+при Airplane mode и отключённом Wi-Fi. Подробности и границы
+[QA evidence](../../Finni%20App/artifacts/sprint-4/M1-security-api26-qa/README.md).
+Поставочный APK с внешним release-ключом, uninstall/reinstall/backup-restore,
+secret scan, SBOM и лицензии остаются открытыми; задача не закрыта.

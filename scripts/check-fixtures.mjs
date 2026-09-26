@@ -1,4 +1,6 @@
 import { readFile } from 'node:fs/promises';
+import { DEMO_INITIAL_DATE } from '../src/application/demo-scenario.ts';
+import { catalogItem, savingsGoal } from '../src/domain/catalog.ts';
 
 const launchFixtures = JSON.parse(
   await readFile(new URL('../fixtures/launch-scenarios.json', import.meta.url), 'utf8'),
@@ -57,14 +59,19 @@ if (economy.counterexamples.recovery.newSaving.join(',') !== '40,0,0,5') {
 }
 
 if (
+  demo.schemaVersion !== 2 ||
   demo.mode !== 'demo' ||
+  demo.initialDate !== DEMO_INITIAL_DATE ||
   demo.periods.length !== 5 ||
   demo.expected.realWaits !== 0 ||
   demo.expected.incomeEntries !== 5 ||
-  demo.expected.available !== 500
+  demo.expected.incomeOnlyAvailable !== 500
 ) {
-  throw new Error('Demo fixture должна фиксировать пять периодов без ожидания.');
+  throw new Error('Demo fixture должна фиксировать runtime дату и пять периодов без ожидания.');
 }
+let available = 0;
+let savings = 0;
+const completedLessons = new Set();
 for (const [offset, period] of demo.periods.entries()) {
   const expected = new Date(`${demo.initialDate}T00:00:00.000Z`);
   expected.setUTCDate(expected.getUTCDate() + offset);
@@ -75,6 +82,42 @@ for (const [offset, period] of demo.periods.entries()) {
   ) {
     throw new Error('Demo fixture нарушает последовательность VirtualClock/дохода.');
   }
+  const economyPeriod = economy.fivePeriods[offset];
+  if (period.plan.join(',') !== economyPeriod.plan.join(',')) {
+    throw new Error(`План demo-дня ${period.index} отличается от economy-v2.`);
+  }
+  for (const lessonId of period.lessons) {
+    if (completedLessons.has(lessonId)) throw new Error(`Повторное занятие в demo: ${lessonId}`);
+    completedLessons.add(lessonId);
+  }
+  const purchases = period.purchases.map(catalogItem);
+  const need = purchases.filter((item) => item.category === 'need').reduce((sum, item) => sum + item.price, 0);
+  const want = purchases.filter((item) => item.category === 'want').reduce((sum, item) => sum + item.price, 0);
+  if (need !== economyPeriod.actual.need || want !== economyPeriod.actual.want ||
+      period.deposit !== economyPeriod.actual.deposit) {
+    throw new Error(`Покупки или взнос demo-дня ${period.index} отличаются от economy-v2.`);
+  }
+  if (period.rejectedPurchase &&
+      catalogItem(period.rejectedPurchase).price <= available + period.income + economyPeriod.reward - need) {
+    throw new Error('Попытка покупки в demo должна действительно не хватать средств.');
+  }
+  const claim = period.claimGoal ? savingsGoal(period.claimGoal).cost : 0;
+  if (claim !== economyPeriod.actual.claim || (period.claimGoal && period.claimGoal !== demo.goalId)) {
+    throw new Error(`Получение цели demo-дня ${period.index} отличается от economy-v2.`);
+  }
+  available += period.income + economyPeriod.reward - need - want - period.deposit;
+  savings += period.deposit - claim;
+  if (available !== period.expected.available || savings !== period.expected.savings ||
+      period.expected.lifetimeGrowth !== economyPeriod.expected.lifetimeGrowth ||
+      period.expected.stage !== economyPeriod.expected.stage) {
+    throw new Error(`Итог demo-дня ${period.index} отличается от эталона.`);
+  }
+}
+if (completedLessons.size !== demo.expected.completedLessons ||
+    demo.expected.rewardEntries !== demo.periods.length ||
+    available !== demo.expected.finalAvailable || savings !== demo.expected.finalSavings ||
+    demo.periods.at(-1).expected.stage !== demo.expected.finalStage) {
+  throw new Error('Финал demo-маршрута не совпадает с эталоном SRS §19.');
 }
 
-console.log('Fixtures bootstrap, economy-v2 и demo lifecycle валидны.');
+console.log('Fixtures bootstrap, economy-v2 и demo A.1–A.12 валидны.');

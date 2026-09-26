@@ -798,3 +798,42 @@ Missing/corrupt image fallback и loading100/200%: 4 PASS на отдельно�
 Интеграционные тесты покрывают реальную SQLite идемпотентность, storage rollback, crash-after-commit до доставки, stale context, cancel и приоритеты. Configured Verify, offline x86_64 QA APK и native API 26 smoke прошли. На отдельном AVD старый APK создал schema 2, профиль, wallet 100/0 и `OpenPeriod`; сохранённая копия schema 2 повторно восстановлена в старом приложении для проверки точного финального APK hash `4e1d7b5f2ac2bf54349758ecda2d2d83b9dca2b333903f0e59bb7134a4e40651`. Install-over мигрировал базу до schema 6. Profile, wallet, period и исходный receipt совпали до/после; SQLite integrity `ok`. На финальном APK покупка IT-01 дала 70/0 и реакцию после commit; после restart сохранились один `ConfirmPurchase` и спокойное состояние без replay. Завершение LS-B01 показало награду 20 из receipt перед возвратом к плану; после restart wallet 90/0, один `CompleteLesson` receipt, одна `LESSON_REWARD` ledger entry и без повтора реакции. Evidence: `Finni App/artifacts/sprint-9/S9-002-receipt-presentation/README.md`. Этим закрыт ранее отмеченный пробел native old-schema install-over S9-003/004; historical пометка об отсутствии повторения в предыдущем пакете остаётся верной для того момента.
 
 По DEC-2026-09-26-014 реализация Sprint 9 готова к S10-001. S9-001/003/004 остаются `partial` по внешним device/TalkBack/performance/независимым проверкам, S9-002 — `done`. Итоговый PASS Sprint 9 будет определён после S10-001/002; эти проверки больше не требуют собственного предварительного PASS. SQL schema, экономика и публичные command contracts не изменились. Физическое устройство, spoken TalkBack, 15-minute stress, независимые art/product и детское/методическое ревью не объявляются пройденными.
+
+## 2026-09-26 — demo M1, Android backup и runtime анимаций
+
+Demo-профиль получает фиксированную виртуальную дату 17.09.2026. `AppRuntime`
+открывает demo-периоды по `VirtualClock`; взрослая панель после проверки
+доступа и подтверждения вызывает `advanceDemoDay` только из WAITING.
+Пятидневная fixture версии 2 описывает восемь занятий, планы, основные
+покупки, взносы и получение GL-01; эталон после пятого дня — B40/S30 и
+стадия 3. `docs/M1_DEMO_ROUTE.md` задаёт пошаговую проверку A.1–A.12.
+Валидатор fixture и три SQLite-прогона по пяти дням с restart/reset и
+изоляцией normal/demo прошли. На тестово подписанном release-варианте
+Android API 26 проверены взрослый переход 17→18.09, сохранение B20/S40 до
+открытия следующего дня и начисление B120/S40 после него. Полный ручной
+маршрут A.1–A.12 на поставочном release APK ещё не засвидетельствован.
+
+Аудит двух прежних release APK обнаружил INTERNET, внешнее хранилище,
+SYSTEM_ALERT_WINDOW и VIBRATE, а также `allowBackup=true`. В исходном коде
+нет соответствующих production-функций. Main manifest теперь запрещает
+backup и ссылается на правила исключения cloud backup/device transfer для
+локальных данных; release overlay удаляет пять разрешений. Debug manifest
+сохраняет INTERNET для Metro. Expo config plugin восстанавливает эту
+конфигурацию после clean prebuild. Объединённый debug manifest проверен.
+Тестово подписанный release-вариант APK (SHA-256
+`143F6920C418F7811E1B2F2F0B5BAF4DE1E8AFD0277106C08E7705644648D444`)
+содержит только служебную permission, `allowBackup=false` и оба XML-ресурса.
+На Android API 26 пройден перезапуск с Airplane mode и отключённым Wi-Fi.
+Поставочная подпись, удаление/восстановление, SBOM и лицензии S4-003 остаются
+открытыми. Evidence: `Finni App/artifacts/sprint-4/M1-security-api26-qa/README.md`.
+
+`FinniHomeScene` использует реестр `FINNI_ANIMATION_SET` для lifecycle
+клипов и получает clip ID из сохранённых receipts. ConfirmPlan теперь
+порождает presentation event после commit; планер, монеты и цель используют
+имеющиеся предметные ассеты. Прерывание, пропуск, скрытие и reduced motion
+управляются presentation state, не меняя ledger. Принятые выражения лица
+остаются статическим эквивалентом там, где нет совместимой позы. Полный
+визуальный набор AN-001–014 не принят: отсутствуют отдельные утверждённые
+позы приветствия, еды и ухода, а device-video gate нового подключения не
+выполнен. Accepted-решения не менялись; смена user flow отражена в общей
+диаграмме.

@@ -76,7 +76,8 @@ const EMPTY_SNAPSHOT: AppSnapshot = Object.freeze({
 });
 
 function homeReaction(event: PresentationEvent | null): HomeReaction | null {
-  return event ? { id: event.id, expression: event.expression, skippable: event.skippable } : null;
+  return event ? { id: event.id, expression: event.expression, clip: event.clip, objectId: event.objectId,
+    value: event.after.savings - event.before.savings, skippable: event.skippable } : null;
 }
 
 const lessonRenderers = new LessonRendererRegistry()
@@ -615,16 +616,10 @@ export default function AppRoot() {
   };
 
   const confirmBudgetPlan = async (values: Plan, acknowledgedLowNeed: boolean) => {
-    if (!controller.current || !snapshot) return;
-    setBusy(true);
-    setMessage(null);
-    try {
-      setSnapshot(await controller.current.runSnapshot((runtime) => runtime.confirmPlan(snapshot, values, acknowledgedLowNeed)));
-    } catch {
-      setMessage('План не сохранился. Проверь суммы и попробуй ещё раз.');
-    } finally {
-      setBusy(false);
-    }
+    await updateCommerce(
+      (runtime, current) => runtime.confirmPlanReceipt(current, values, acknowledgedLowNeed),
+      'План не сохранился. Проверь суммы и попробуй ещё раз.',
+    );
   };
 
   const allocateIncome = async (values: Plan) => {
@@ -715,6 +710,26 @@ export default function AppRoot() {
     } catch {
       setMessage('Режим не переключился. Данные не смешаны; попробуйте ещё раз.');
     } finally {
+      setBusy(false);
+    }
+  };
+
+  const advanceDemoDay = async () => {
+    if (!controller.current || !snapshot || mode !== 'demo' || busy || commandBusy.current) return;
+    if (!adultAccess.current.recordActivity(Date.now())) {
+      setAdultUnlocked(false);
+      return;
+    }
+    commandBusy.current = true;
+    setBusy(true);
+    setMessage(null);
+    try {
+      setSnapshot(await controller.current.runSnapshot((runtime) => runtime.advanceDemoDay(snapshot)));
+      setMessage('Демо-дата переведена. Откройте следующий день в Домике.');
+    } catch {
+      setMessage('Демо-дата не изменилась. Закройте текущий день и попробуйте ещё раз.');
+    } finally {
+      commandBusy.current = false;
       setBusy(false);
     }
   };
@@ -916,6 +931,7 @@ export default function AppRoot() {
           notice={message}
           scenePaused={helpOpen || rootMenuOpen}
           motionEnabled={presentationPreferences.motionEnabled}
+          soundEnabled={presentationPreferences.soundEnabled}
           reaction={reaction}
           onReactionFinished={clearReaction}
           onReactionCancelled={cancelReaction}
@@ -1030,6 +1046,7 @@ export default function AppRoot() {
           }}
           onExit={leaveAdult}
           onSwitchMode={(target) => void switchMode(target)}
+          onNextDemoDay={() => void advanceDemoDay()}
           onResetDemo={() => void runAdmin('RESET_PROFILE')}
           onDeleteSelected={() => void runAdmin('DELETE_PROFILE')}
         />

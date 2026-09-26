@@ -1,4 +1,5 @@
 import type { CommandReceipt, Mode, MoneySnapshot } from '../domain/contracts.ts';
+import type { FinniClipId } from '../ui/finni-animation-set.ts';
 
 export type PresentationSession = Readonly<{
   profileId: string | null;
@@ -17,29 +18,35 @@ export type PresentationEvent = Readonly<{
   before: MoneySnapshot;
   after: MoneySnapshot;
   expression: 'happy' | 'thoughtful' | 'inspired';
+  clip: FinniClipId;
+  objectId: string | null;
   skippable: boolean;
   priority: number;
 }>;
 
-function effectFor(receipt: CommandReceipt): Pick<PresentationEvent, 'expression' | 'skippable' | 'priority'> | null {
+function effectFor(receipt: CommandReceipt): Pick<PresentationEvent, 'expression' | 'clip' | 'objectId' | 'skippable' | 'priority'> | null {
   if (!receipt.result.ok) return null;
   switch (receipt.commandType) {
-    case 'ConfirmPurchase': return { expression: 'happy', skippable: false, priority: 80 };
+    case 'ConfirmPurchase': {
+      const item = (receipt.result.data as { item?: { id?: string; slot?: string } }).item;
+      return { expression: 'happy', clip: item?.slot === 'food' ? 'AN-009' : item?.slot === 'care' ? 'AN-010' : 'AN-007', objectId: item?.id ?? null, skippable: false, priority: 80 };
+    }
+    case 'ConfirmPlan': return { expression: 'inspired', clip: 'AN-011', objectId: null, skippable: false, priority: 80 };
     case 'SelectGoal': return receipt.result.feedback.params.goalId === 'none'
-      ? null : { expression: 'thoughtful', skippable: false, priority: 70 };
-    case 'DepositSavings': return { expression: 'inspired', skippable: false, priority: 80 };
-    case 'WithdrawSavings': return { expression: 'thoughtful', skippable: false, priority: 80 };
-    case 'ClaimGoal': return { expression: 'inspired', skippable: true, priority: 100 };
+      ? null : { expression: 'thoughtful', clip: 'AN-006', objectId: null, skippable: false, priority: 70 };
+    case 'DepositSavings': return { expression: 'inspired', clip: 'AN-012', objectId: null, skippable: false, priority: 80 };
+    case 'WithdrawSavings': return { expression: 'thoughtful', clip: 'AN-012', objectId: null, skippable: false, priority: 80 };
+    case 'ClaimGoal': return { expression: 'inspired', clip: 'AN-013', objectId: String(receipt.result.feedback.params.goalId ?? ''), skippable: true, priority: 100 };
     case 'CompleteLesson': return receipt.result.feedback.code === 'LESSON_REWARD_GRANTED'
-      ? { expression: 'happy', skippable: false, priority: 80 } : null;
+      ? { expression: 'happy', clip: 'AN-007', objectId: null, skippable: false, priority: 80 } : null;
     case 'ClosePeriod': {
       const summary = (receipt.result.data as { summary?: { stageBefore?: number; stageAfter?: number; periodGrowth?: number } }).summary;
       if (summary && typeof summary.stageBefore === 'number' && typeof summary.stageAfter === 'number'
         && summary.stageAfter > summary.stageBefore) {
-        return { expression: 'inspired', skippable: true, priority: 100 };
+        return { expression: 'inspired', clip: 'AN-014', objectId: null, skippable: true, priority: 100 };
       }
       return summary && typeof summary.periodGrowth === 'number' && summary.periodGrowth > 0
-        ? { expression: 'happy', skippable: false, priority: 80 } : null;
+        ? { expression: 'happy', clip: 'AN-007', objectId: null, skippable: false, priority: 80 } : null;
     }
     default: return null;
   }
