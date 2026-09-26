@@ -1,0 +1,21 @@
+{
+  "mode": "built-in image_gen",
+  "useCase": "precise-object-edit",
+  "reference": "assets/2d/variants/FINNI-MATRIX-V1/pointy-plain/neutral.png",
+  "selected": {
+    "happy": {
+      "file": "input/happy-imagegen.png",
+      "prompt": "Use case: precise-object-edit. Asset type: expressive face state for an existing children's app character. Edit target: the supplied transparent full-body Finni image. Create the HAPPY expression. Preserve the original image exactly outside the face: ear shapes, fur, body, paws, tail, collar, medal, pose, lighting, canvas placement, transparency and silhouette must remain identical. Within the face, make the joy clearly stronger than neutral: cheerful open smiling mouth and delighted slightly smiling eyes, retaining Finni's exact identity, golden irises, soft semi-realistic 3D fur and warm colors. Keep the nose position, head size and gaze. Transparent background, no new objects, no text, no watermark. Return one full-body image."
+    },
+    "thoughtful": {
+      "file": "input/thoughtful-imagegen.png",
+      "prompt": "Use case: precise-object-edit. Edit the most recent full-size transparent Finni image as the target. Create THOUGHTFUL. The only allowed differences are pupils/gaze, eyebrows and mouth within the central face. Preserve the exact 941×1672 framing and original head, ears, body, paws, tail, collar, medal, fur texture, alpha silhouette and all pixel positions. Finni should look quietly curious and thinking: pupils looking slightly up-left, one eyebrow a little raised, mouth now a small closed pensive smile. Keep both eyes open, same size and identity. Do not enlarge or reposition the character, head or ears. Transparent background. No extra props or text."
+    },
+    "inspired": {
+      "file": "input/inspired-imagegen.png",
+      "prompt": "Use case: precise-object-edit. Asset type: expressive face state for an existing children's app character. Edit target: the supplied transparent full-body Finni image. Create the INSPIRED expression. Preserve the original image exactly outside the face: ear shapes, fur, body, paws, tail, collar, medal, pose, lighting, canvas placement, transparency and silhouette must remain identical. Within the face, show bright inspiration: wide sparkling golden eyes looking slightly upward, lifted brows, excited open smile. Keep Finni's exact identity, semi-realistic soft fur and warm colors. Keep the nose position, head size and body placement. Transparent background, no new objects, no text, no watermark. Return one full-body image.",
+      "reference": "input/inspired-reference-thoughtful.png",
+      "replaces": "rejected/inspired-v1-similar-to-happy.png"
+    }
+  }
+}
