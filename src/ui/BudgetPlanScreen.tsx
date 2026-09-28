@@ -7,6 +7,7 @@ import {
   Text,
   TextInput,
   View,
+  useWindowDimensions,
 } from 'react-native';
 import type { AppSnapshot } from '../application/app-runtime.ts';
 import {
@@ -61,13 +62,14 @@ function CategoryEditor(props: Readonly<{
   field: FieldKey;
   value: string;
   onChange: (value: string) => void;
+  compact?: boolean;
 }>) {
   const adjust = (delta: number) => {
     const current = /^\d+$/.test(props.value.trim()) ? Number(props.value) : 0;
     props.onChange(String(Math.max(0, current + delta)));
   };
   return (
-    <View style={styles.categoryCard}>
+    <View style={[styles.categoryCard, props.compact && styles.draftCategoryCard]}>
       <Text style={styles.categoryTitle}>{labels[props.field]}</Text>
       <View style={styles.editorRow}>
         <Pressable
@@ -103,15 +105,17 @@ function CategoryEditor(props: Readonly<{
 function Editors(props: Readonly<{
   fields: PlanDraftFields;
   onChange: (field: FieldKey, value: string) => void;
+  compact?: boolean;
 }>) {
   return (
-    <View style={styles.editorList}>
+    <View style={[styles.editorList, props.compact && styles.draftEditorList]}>
       {(['need', 'want', 'save'] as const).map((field) => (
         <CategoryEditor
           key={field}
           field={field}
           value={props.fields[field]}
           onChange={(value) => props.onChange(field, value)}
+          compact={props.compact}
         />
       ))}
     </View>
@@ -131,6 +135,7 @@ export default function BudgetPlanScreen(props: Readonly<{
   const [acknowledgedLowNeed, setAcknowledgedLowNeed] = useState(false);
   const [showAddition, setShowAddition] = useState(false);
   const [additionFields, setAdditionFields] = useState<PlanDraftFields>(emptyFields);
+  const compactDraft = useWindowDimensions().fontScale <= 1.01;
   const draft = useMemo(
     () => planDraftModel(fields, lifecycle.available, acknowledgedLowNeed),
     [acknowledgedLowNeed, fields, lifecycle.available],
@@ -149,15 +154,16 @@ export default function BudgetPlanScreen(props: Readonly<{
   if (lifecycle.state === 'DRAFT') {
     return (
       <SafeAreaView style={styles.page}>
-        <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={styles.content}>
+        <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={[styles.content, compactDraft && styles.draftContent]}>
           <Text style={styles.eyebrow}>ПЛАН НА ДЕНЬ</Text>
           <Text style={styles.title}>Распредели {lifecycle.available} монет</Text>
-          <Text style={styles.body}>Можно оставить часть суммы свободной и изменить план до подтверждения.</Text>
+          <Text style={[styles.body, compactDraft && styles.draftBody]}>Можно оставить часть суммы свободной и изменить план до подтверждения.</Text>
           <Editors
             fields={fields}
             onChange={(field, value) => change(setFields, fields, field, value)}
+            compact={compactDraft}
           />
-          <View style={styles.summary}>
+          <View style={[styles.summary, compactDraft && styles.draftSummary]}>
             <Text style={styles.summaryText}>Распределено: {draft.distributed}</Text>
             <Text style={styles.summaryText}>Осталось: {draft.remaining}</Text>
           </View>
@@ -172,7 +178,7 @@ export default function BudgetPlanScreen(props: Readonly<{
               accessibilityRole="checkbox"
               accessibilityState={{ checked: acknowledgedLowNeed }}
               onPress={() => setAcknowledgedLowNeed((value) => !value)}
-              style={styles.warning}
+              style={[styles.warning, compactDraft && styles.draftWarning]}
             >
               <Text style={styles.warningText}>
                 {acknowledgedLowNeed ? '✓ ' : ''}На необходимое меньше 40. Я понимаю и хочу продолжить.
@@ -260,20 +266,26 @@ const colors = {
 const styles = StyleSheet.create({
   page: { flex: 1, backgroundColor: colors.sky },
   content: { gap: 12, padding: 18, paddingBottom: 20 },
+  draftContent: { gap: 5, paddingHorizontal: 16, paddingTop: 8, paddingBottom: 4 },
   eyebrow: { color: colors.teal, fontSize: 13, fontWeight: '600', letterSpacing: 1.4 },
   title: { color: colors.ink, fontSize: 25, fontWeight: '600' },
   body: { color: colors.muted, fontSize: 16, lineHeight: 22 },
+  draftBody: { fontSize: 14, lineHeight: 18 },
   caption: { color: colors.muted, fontSize: 14, lineHeight: 19 },
   editorList: { gap: 10 },
+  draftEditorList: { gap: 5 },
   categoryCard: { backgroundColor: '#FFFCF6', borderColor: colors.line, borderRadius: 22, borderWidth: 1, gap: 8, padding: 12 },
+  draftCategoryCard: { gap: 4, paddingVertical: 8, paddingHorizontal: 10 },
   categoryTitle: { color: colors.ink, fontSize: 17, fontWeight: '600' },
   editorRow: { alignItems: 'center', flexDirection: 'row', gap: 8 },
   stepButton: { alignItems: 'center', borderColor: colors.teal, borderRadius: 18, borderWidth: 1, justifyContent: 'center', minHeight: 48, minWidth: 60 },
   stepText: { color: colors.teal, fontSize: 16, fontWeight: '600' },
   amountInput: { backgroundColor: colors.pale, borderColor: colors.line, borderRadius: 18, borderWidth: 1, color: colors.ink, flex: 1, fontSize: 19, fontWeight: '600', minHeight: 48, paddingVertical: 10, paddingHorizontal: 12, textAlign: 'center' },
   summary: { backgroundColor: colors.yellow, borderRadius: 22, gap: 4, padding: 12 },
+  draftSummary: { gap: 2, padding: 8 },
   summaryText: { color: colors.ink, fontSize: 16, fontWeight: '600' },
   warning: { backgroundColor: colors.yellow, borderColor: '#9B7847', borderRadius: 18, borderWidth: 1, justifyContent: 'center', minHeight: 48, padding: 12 },
+  draftWarning: { padding: 8 },
   warningText: { color: colors.ink, fontSize: 14, fontWeight: '700', lineHeight: 19 },
   error: { color: colors.coral, fontSize: 14, fontWeight: '700' },
   button: { alignItems: 'center', backgroundColor: colors.teal, borderRadius: 22, justifyContent: 'center', minHeight: 48, paddingVertical: 10, paddingHorizontal: 16 },
