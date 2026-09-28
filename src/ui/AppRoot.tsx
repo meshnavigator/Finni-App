@@ -307,12 +307,19 @@ function PetBuilder(props: Readonly<{
   onSave: (appearance: PetAppearance) => void;
   onCancel: () => void;
 }>) {
-  const [name, setName] = useState(props.initial?.name ?? 'Финни');
+  const name = props.initial?.name ?? 'Финни';
+  const nameInput = useRef<TextInput>(null);
+  const [nameDraft, setNameDraft] = useState(name);
+  const [nameDialogOpen, setNameDialogOpen] = useState(false);
   const [shapeId, setShapeId] = useState<PetShapeId>(props.initial?.shapeId ?? 'round');
   const [patternId, setPatternId] = useState<PetPatternId>(props.initial?.patternId ?? 'plain');
   const validation = petNameError(name);
+  const draftValidation = petNameError(nameDraft);
   const { fontScale } = useWindowDimensions();
   const largeChoices = usesLargeNavigation(fontScale);
+  const closeNameDialog = () => {
+    if (!props.busy) setNameDialogOpen(false);
+  };
   return (
     <View style={styles.page}>
       <KeyboardAvoidingView
@@ -351,15 +358,16 @@ function PetBuilder(props: Readonly<{
             ))}
           </View>
           <Text style={styles.fieldLabel}>Придумай имя питомцу</Text>
-          <TextInput
-            accessibilityLabel="Игровое имя питомца"
-            autoCapitalize="sentences"
-            maxLength={32}
-            onChangeText={setName}
-            placeholder="Финни"
-            style={[styles.input, validation && styles.inputError]}
-            value={name}
-          />
+          <Pressable
+            accessibilityLabel={`Игровое имя питомца: ${name}. Изменить`}
+            accessibilityRole="button"
+            disabled={props.busy}
+            onPress={() => { setNameDraft(name); setNameDialogOpen(true); }}
+            style={[styles.input, styles.nameField]}
+          >
+            <Text style={styles.nameFieldText}>{name}</Text>
+            <Text style={styles.nameFieldAction}>Изменить</Text>
+          </Pressable>
           {validation && <Text accessibilityLiveRegion="polite" style={styles.validation}>{validation}</Text>}
           {props.saveError && <Text accessibilityLiveRegion="polite" style={styles.validation}>{props.saveError}</Text>}
           </View>
@@ -371,6 +379,50 @@ function PetBuilder(props: Readonly<{
           <ActionButton label="Отмена" onPress={props.onCancel} secondary />
         </ScrollView>
       </KeyboardAvoidingView>
+      <Modal
+        accessibilityViewIsModal
+        animationType="fade"
+        onRequestClose={closeNameDialog}
+        onShow={() => nameInput.current?.focus()}
+        transparent
+        visible={nameDialogOpen}
+      >
+        <RootSafeAreaView style={styles.nameDialogBackdrop}>
+          <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={styles.flex}
+          >
+            <ScrollView
+              contentContainerStyle={styles.nameDialogContent}
+              keyboardShouldPersistTaps="handled"
+            >
+              <View style={styles.nameDialogCard} testID="pet-name-dialog">
+                <Text accessibilityRole="header" style={styles.title}>Имя питомца</Text>
+                <Text style={styles.fieldLabel}>Новое имя</Text>
+                <TextInput
+                  accessibilityLabel="Новое имя питомца"
+                  autoCapitalize="sentences"
+                  maxLength={32}
+                  onChangeText={setNameDraft}
+                  placeholder="Финни"
+                  ref={nameInput}
+                  selectTextOnFocus
+                  style={[styles.input, draftValidation && styles.inputError]}
+                  value={nameDraft}
+                />
+                {draftValidation && <Text accessibilityLiveRegion="polite" style={styles.validation}>{draftValidation}</Text>}
+                {props.saveError && <Text accessibilityLiveRegion="polite" style={styles.validation}>{props.saveError}</Text>}
+                <ActionButton
+                  label={props.busy ? 'Сохраняем…' : 'Сохранить'}
+                  disabled={props.busy || Boolean(draftValidation)}
+                  onPress={() => props.onSave(petAppearance({ name: nameDraft, shapeId, patternId }))}
+                />
+                <ActionButton label="Отмена" disabled={props.busy} onPress={closeNameDialog} secondary />
+              </View>
+            </ScrollView>
+          </KeyboardAvoidingView>
+        </RootSafeAreaView>
+      </Modal>
     </View>
   );
 }
@@ -1108,6 +1160,12 @@ const styles = StyleSheet.create({
   variantArrow: { color: palette.muted, fontSize: 26 },
   builderPreview: { alignSelf: 'center', padding: 12, borderRadius: 28, backgroundColor: palette.soft },
   profileForm: { ...ui.card, gap: 12 },
+  nameField: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', minHeight: 52 },
+  nameFieldText: { color: colors.ink, fontSize: 16, flexShrink: 1 },
+  nameFieldAction: { color: colors.teal, fontSize: 15, fontWeight: '600', marginLeft: 12 },
+  nameDialogBackdrop: { flex: 1, backgroundColor: 'rgba(35, 31, 28, 0.48)' },
+  nameDialogContent: { flexGrow: 1, justifyContent: 'center', padding: 18 },
+  nameDialogCard: { ...ui.card, alignSelf: 'center', gap: 12, maxWidth: 440, width: '100%' },
   choiceColumn: { flexDirection: 'column' },
   builderContent: { gap: 14, padding: 18, paddingBottom: 28 },
   homeContent: { gap: 8, minHeight: '100%', paddingHorizontal: 14, paddingBottom: 8 },
