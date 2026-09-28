@@ -1,0 +1,21 @@
+{
+  "plays": 48,
+  "terminals": 48,
+  "everyPlayExactlyOneTerminal": true,
+  "unmatchedTerminalIds": [],
+  "cancelIds": [
+    2,
+    5,
+    6,
+    7
+  ],
+  "metroErrors": [],
+  "sessions": 1,
+  "sourceSha256": {
+    "src/ui/FinniHomeScene.tsx": "a8c7475a8d36e88a735664b7dbda8dfc22874a7b14b10e4cad322380c3ea5179",
+    "src/ui/FinniPuppet.tsx": "93a06181c2b82c82d40605883801a16f60810463ad891d0d480dadf80d8dc5bf",
+    "src/ui/finni-animation-set.ts": "0c5e5c38d82b9da7a70d798e798b43a84d6daeb752eb1a1dd75150fe8732eafb",
+    "src/ui/finni-body-motion.ts": "0c396cec9b7355ef69d844948f27cf73fe1c272dad64eb19e640ecc27ee09aa7",
+    "artifacts/sprint-8/S8-003-body-runtime/AnimationReview.tsx": "84db5a01c4dfaab31217edb7785f50f5d042235fcf68712b44f2b3506370e723"
+  }
+}

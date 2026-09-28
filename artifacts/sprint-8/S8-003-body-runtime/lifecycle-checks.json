@@ -1,0 +1,6 @@
+{
+  "motionOffIdlePixelStable": true,
+  "resultStaticScreenshot": "motion-off-result.png",
+  "modalCancelScreenshot": "modal-cancel.png",
+  "goalSkipScreenshot": "skip-goal.png"
+}

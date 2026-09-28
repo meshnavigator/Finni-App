@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
   FINNI_ANIMATION_SET,
+  createFinniReactionCompletion,
   finniAnimationFrame,
   initialFinniAnimationState,
   reduceFinniAnimation,
@@ -88,4 +89,17 @@ test('motion, system preference and sound are independent of committed state', (
   assert.equal(finniAnimationFrame(state).expression, 'happy');
   assert.equal(finniAnimationFrame(state).idle, false);
   assert.equal(finniAnimationFrame(state).blink, false);
+});
+
+
+test('reaction completion excludes cleanup after finish and stale timers after cancel', () => {
+  const calls = [];
+  const first = createFinniReactionCompletion(1);
+  assert.equal(first(id => calls.push(['finish', id])), true);
+  assert.equal(first(id => calls.push(['cancel', id])), false);
+  const next = createFinniReactionCompletion(2);
+  assert.equal(next(id => calls.push(['cancel', id])), true);
+  assert.equal(next(id => calls.push(['finish', id])), false);
+  assert.equal(createFinniReactionCompletion(null)(() => assert.fail('no reaction')), false);
+  assert.deepEqual(calls, [['finish', 1], ['cancel', 2]]);
 });

@@ -1,0 +1,240 @@
+{
+  "device": "Android API26 emulator-5554 1080x1920 density420",
+  "scope": "debug APK + Metro; QA controls around production FinniHomeScene",
+  "records": [
+    {
+      "clip": "AN-003",
+      "appearance": "pointy/plain",
+      "stage": 2,
+      "screenshot": "clip-AN-003.png"
+    },
+    {
+      "clip": "AN-004",
+      "appearance": "pointy/plain",
+      "stage": 2,
+      "screenshot": "clip-AN-004.png"
+    },
+    {
+      "clip": "AN-005",
+      "appearance": "pointy/plain",
+      "stage": 2,
+      "screenshot": "clip-AN-005.png"
+    },
+    {
+      "clip": "AN-006",
+      "appearance": "pointy/plain",
+      "stage": 2,
+      "screenshot": "clip-AN-006.png"
+    },
+    {
+      "clip": "AN-007",
+      "appearance": "pointy/plain",
+      "stage": 2,
+      "screenshot": "clip-AN-007.png"
+    },
+    {
+      "clip": "AN-008",
+      "appearance": "pointy/plain",
+      "stage": 2,
+      "screenshot": "clip-AN-008.png"
+    },
+    {
+      "clip": "AN-009",
+      "appearance": "pointy/plain",
+      "stage": 2,
+      "screenshot": "clip-AN-009.png"
+    },
+    {
+      "clip": "AN-010",
+      "appearance": "pointy/plain",
+      "stage": 2,
+      "screenshot": "clip-AN-010.png"
+    },
+    {
+      "clip": "AN-011",
+      "appearance": "pointy/plain",
+      "stage": 2,
+      "screenshot": "clip-AN-011.png"
+    },
+    {
+      "clip": "AN-012",
+      "appearance": "pointy/plain",
+      "stage": 2,
+      "screenshot": "clip-AN-012.png"
+    },
+    {
+      "clip": "AN-013",
+      "appearance": "pointy/plain",
+      "stage": 2,
+      "screenshot": "clip-AN-013.png"
+    },
+    {
+      "clip": "AN-014",
+      "appearance": "pointy/plain",
+      "stage": 2,
+      "screenshot": "clip-AN-014.png"
+    },
+    {
+      "clip": "AN-004",
+      "appearance": "pointy/plain",
+      "stage": 2,
+      "screenshot": "matrix-pointy-plain-s2.png"
+    },
+    {
+      "clip": "AN-004",
+      "appearance": "pointy/spots",
+      "stage": 2,
+      "screenshot": "matrix-pointy-spots-s2.png"
+    },
+    {
+      "clip": "AN-004",
+      "appearance": "pointy/stripes",
+      "stage": 2,
+      "screenshot": "matrix-pointy-stripes-s2.png"
+    },
+    {
+      "clip": "AN-004",
+      "appearance": "round/plain",
+      "stage": 2,
+      "screenshot": "matrix-round-plain-s2.png"
+    },
+    {
+      "clip": "AN-004",
+      "appearance": "round/spots",
+      "stage": 2,
+      "screenshot": "matrix-round-spots-s2.png"
+    },
+    {
+      "clip": "AN-004",
+      "appearance": "round/stripes",
+      "stage": 2,
+      "screenshot": "matrix-round-stripes-s2.png"
+    },
+    {
+      "clip": "AN-004",
+      "appearance": "floppy/plain",
+      "stage": 2,
+      "screenshot": "matrix-floppy-plain-s2.png"
+    },
+    {
+      "clip": "AN-004",
+      "appearance": "floppy/spots",
+      "stage": 2,
+      "screenshot": "matrix-floppy-spots-s2.png"
+    },
+    {
+      "clip": "AN-004",
+      "appearance": "floppy/stripes",
+      "stage": 2,
+      "screenshot": "matrix-floppy-stripes-s2.png"
+    },
+    {
+      "clip": "AN-004",
+      "appearance": "pointy/plain",
+      "stage": 3,
+      "screenshot": "matrix-pointy-plain-s3.png"
+    },
+    {
+      "clip": "AN-004",
+      "appearance": "pointy/spots",
+      "stage": 3,
+      "screenshot": "matrix-pointy-spots-s3.png"
+    },
+    {
+      "clip": "AN-004",
+      "appearance": "pointy/stripes",
+      "stage": 3,
+      "screenshot": "matrix-pointy-stripes-s3.png"
+    },
+    {
+      "clip": "AN-004",
+      "appearance": "round/plain",
+      "stage": 3,
+      "screenshot": "matrix-round-plain-s3.png"
+    },
+    {
+      "clip": "AN-004",
+      "appearance": "round/spots",
+      "stage": 3,
+      "screenshot": "matrix-round-spots-s3.png"
+    },
+    {
+      "clip": "AN-004",
+      "appearance": "round/stripes",
+      "stage": 3,
+      "screenshot": "matrix-round-stripes-s3.png"
+    },
+    {
+      "clip": "AN-004",
+      "appearance": "floppy/plain",
+      "stage": 3,
+      "screenshot": "matrix-floppy-plain-s3.png"
+    },
+    {
+      "clip": "AN-004",
+      "appearance": "floppy/spots",
+      "stage": 3,
+      "screenshot": "matrix-floppy-spots-s3.png"
+    },
+    {
+      "clip": "AN-004",
+      "appearance": "floppy/stripes",
+      "stage": 3,
+      "screenshot": "matrix-floppy-stripes-s3.png"
+    },
+    {
+      "clip": "AN-004",
+      "appearance": "pointy/plain",
+      "stage": 1,
+      "screenshot": "matrix-pointy-plain-s1.png"
+    },
+    {
+      "clip": "AN-004",
+      "appearance": "pointy/spots",
+      "stage": 1,
+      "screenshot": "matrix-pointy-spots-s1.png"
+    },
+    {
+      "clip": "AN-004",
+      "appearance": "pointy/stripes",
+      "stage": 1,
+      "screenshot": "matrix-pointy-stripes-s1.png"
+    },
+    {
+      "clip": "AN-004",
+      "appearance": "round/plain",
+      "stage": 1,
+      "screenshot": "matrix-round-plain-s1.png"
+    },
+    {
+      "clip": "AN-004",
+      "appearance": "round/spots",
+      "stage": 1,
+      "screenshot": "matrix-round-spots-s1.png"
+    },
+    {
+      "clip": "AN-004",
+      "appearance": "round/stripes",
+      "stage": 1,
+      "screenshot": "matrix-round-stripes-s1.png"
+    },
+    {
+      "clip": "AN-004",
+      "appearance": "floppy/plain",
+      "stage": 1,
+      "screenshot": "matrix-floppy-plain-s1.png"
+    },
+    {
+      "clip": "AN-004",
+      "appearance": "floppy/spots",
+      "stage": 1,
+      "screenshot": "matrix-floppy-spots-s1.png"
+    },
+    {
+      "clip": "AN-004",
+      "appearance": "floppy/stripes",
+      "stage": 1,
+      "screenshot": "matrix-floppy-stripes-s1.png"
+    }
+  ]
+}

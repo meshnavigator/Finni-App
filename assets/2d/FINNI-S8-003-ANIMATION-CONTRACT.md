@@ -1,18 +1,25 @@
-# FINNI-S8-003 animation contract v1
+# FINNI-S8-003 animation contract v2
 
-Status: engineering sequence contract. Visual and device acceptance remain open.
+Status: body choreography and new gesture art accepted by the owner, 2026-09-28.
+Engineering regression is recorded in the final native report; physical-device/performance gates remain open.
 
 ## Source and layer binding
 
 `src/ui/finni-animation-set.ts` is the versioned registry and transition reducer.
 It consumes `FINNI-S8-001-LAYER-CONTRACT.md` and its full-canvas layer IDs,
-expressions, fixed feet anchor and stage scale. Existing accepted
-`FINNI-2D-MASTER-V1` neutral/blink PNGs remain the only production pet image
-sources known to this branch; this contract creates no replacement artwork.
-Recipes requiring ears, tail, arms, object overlays or additional expressions
-remain awaiting matching S8-001/S8-002 exports and visual QA. They must not be
-represented by a whole-pet bounce or by reusing neutral art as a purported
-finished clip.
+expressions, fixed feet anchor and stage scale. `FinniPuppet` uses native
+Image/Animated and deterministic group exports from accepted FINNI-MATRIX-V1
+and FINNI-EXPRESSIONS-V1. `export-puppet-groups.py` preserves selected source
+RGBA pixels and records SHA256 lineage. Head, torso and tail transform separately;
+breathing does not inflate the head or move feet. No renderer dependency is added.
+
+`FINNI-GESTURE-V1` supplies three new generated lower-body wave poses; accepted
+heads/ears/expressions stay above them. The owner accepted these poses and the demonstrated animation art on
+2026-09-28; owner-acceptance.json binds that approval to exact source/export hashes. Original generated masters and alpha exports are both retained. The
+discarded five-legged draft is never registered. All nine appearances and stage
+scales share the same anchor recipe. Full-size assets decode before playback;
+blink heads are preloaded. Head/neck overlap avoids detached parts and sampling
+seams between independently resized partition masks.
 
 ## Sequences and timing guidelines
 
@@ -33,6 +40,15 @@ finished clip.
 | AN-013 | goal item reveal | 3000 ms | happy plus claimed item |
 | AN-014 | stage image swap | 2200 ms | inspired plus final stage |
 
+`finni-body-motion.ts` owns canvas-space keyframes, executed by Animated on the
+native driver with linear time. Blink gaps vary between 3.7 and 6.2 seconds;
+interest gaps between 14 and 23 seconds. Greeting occurs once per JS session;
+pet touch uses the bounded optional queue. Bowl contact bows the head; a brush
+moves over fur; planner receives a check; three symbolic coins reverse direction
+for withdrawal; goal reveals its item; stage interpolates about fixed feet.
+The large-text portrait uses the accepted static expression, preserving face
+visibility instead of moving it outside the crop.
+
 All timings are creative guidelines, not measured device performance. The
 controller never computes purchases, awards, balances or stage. Callers supply
 the authoritative committed `FinniPresentation` on every `play`; final values
@@ -48,7 +64,8 @@ hold one replacement in the queue; a result drops that queue. Finish callbacks
 carry a generation number, so a cancelled or skipped clip cannot complete a
 newer clip. Screen leave, profile change, modal open and backgrounding cancel
 the effect and queue. After return, the view uses current committed state.
-Goal and stage clips expose skip. Skipping ends only presentation playback.
+Goal and stage clips expose skip. Skipping ends only presentation playback. A per-presentation completion latch
+allows exactly one finish/skip/cancel callback, including effect cleanup.
 
 ## AN-016 settings
 
@@ -64,7 +81,10 @@ is registered until source, license and playback QA exist.
 
 ## Remaining gates
 
-The S8-001/S8-002 production layer/object exports, expression coverage, asset
-manifest paths/hashes/licenses, UI hookup, frame-by-frame video review on the
-target Android device and QA-002/QA-016 visual checks remain open. Unit tests
-cover transition rules, interruption, skip, cancel and rapid taps only.
+Evidence and exact scope: `artifacts/sprint-8/S8-003-body-runtime/README.md`.
+Native API26 emulator captures do not replace physical-device video/performance,
+TalkBack speech or Sprint10 external gates. Owner art acceptance is recorded
+separately and does not assert runtime correctness. The historical Metro TypeError did not reproduce in clean sessions; its old
+stack is unavailable. Final transition/lifecycle evidence and exact limitations
+are recorded in artifacts/sprint-8/S8-003-body-runtime/regression/README.md. No sound
+asset or sound playback was added. Sound preference remains independent.

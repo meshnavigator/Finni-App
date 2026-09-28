@@ -1,0 +1,5 @@
+--------- beginning of main
+--------- beginning of system
+09-28 07:05:50.743  4289  4335 I ReactNativeJS: Running "main" with {"rootTag":1,"initialProps":{},"fabric":true}
+09-28 07:05:51.107  4289  4335 W ReactNativeJS: SafeAreaView has been deprecated and will be removed in a future release. Please use 'react-native-safe-area-context' instead. See https://github.com/AppAndFlow/react-native-safe-area-context
+09-28 07:05:51.776  4289  4335 I ReactNativeJS: QA_SESSION_START

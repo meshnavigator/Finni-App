@@ -94,7 +94,8 @@ export function reduceFinniAnimation(
       // A committed stage/goal is visible immediately, even when playback is blocked.
       const next = { ...state, presentation: event.presentation };
       const clip = FINNI_ANIMATION_SET[event.clip];
-      if (!motionAllowed(state.settings, state) || state.modalOpen || clip.kind === 'ambient') return next;
+      if (!motionAllowed(state.settings, state) || state.modalOpen) return next;
+      if (clip.kind === 'ambient' && (event.clip !== 'AN-003' || state.active || state.presentation.expression !== 'neutral')) return next;
       if (state.active === event.clip && clip.kind === 'optional') return { ...next, queuedOptional: event.clip };
       if (state.active && FINNI_ANIMATION_SET[state.active].priority > clip.priority) {
         return next;
@@ -140,5 +141,16 @@ export function finniAnimationFrame(state: FinniAnimationState): Readonly<{
     interest: neutralIdle,
     soundEnabled: state.settings.soundEnabled,
     canSkip: active !== null && FINNI_ANIMATION_SET[active].skippable,
+  };
+}
+
+/** One terminal notification per presentation, including effect cleanup races. */
+export function createFinniReactionCompletion(id: number | null) {
+  let settled = false;
+  return (callback: (id: number) => void): boolean => {
+    if (id === null || settled) return false;
+    settled = true;
+    callback(id);
+    return true;
   };
 }

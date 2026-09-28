@@ -1,0 +1,389 @@
+{
+  "packageId": "FINNI-PUPPET-V1",
+  "canvas": [
+    941,
+    1672
+  ],
+  "status": "deterministic-export-runtime-review",
+  "sourceArt": "owner-accepted FINNI-MATRIX-V1 and FINNI-EXPRESSIONS-V1",
+  "assets": [
+    {
+      "path": "pointy-plain/neutral-head.png",
+      "sha256": "3841e4e4b68a6346ac535157cdb7257c8db801312ba2b4826bd6759e50da47c2",
+      "source": "assets/2d/variants/FINNI-MATRIX-V1/pointy-plain/neutral.png",
+      "sourceSha256": "1e9fecd57e73284c9d2b978a6f9dc60705697a6df2c3d63b88e2e92793491178",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "pointy-plain/neutral-body.png",
+      "sha256": "56ebae7ff5c26028608f8d454d28088d706f3d54a26afc037317c60ad89fd21f",
+      "source": "assets/2d/variants/FINNI-MATRIX-V1/pointy-plain/neutral.png",
+      "sourceSha256": "1e9fecd57e73284c9d2b978a6f9dc60705697a6df2c3d63b88e2e92793491178",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "pointy-plain/blink-head.png",
+      "sha256": "061a2c65cd61f6a19204ba83bc5d5ef983529642eac7ad2445ef63d81cbc2ce6",
+      "source": "assets/2d/variants/FINNI-MATRIX-V1/pointy-plain/blink.png",
+      "sourceSha256": "62d4d961aecabbc64897570fbdbaf97f0be3e3cc7371f8ea2ece40728dae9bde",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "pointy-plain/happy-head.png",
+      "sha256": "b1ca5aff11249c189c327789aac6b786ac8f9349b87588741b729abf963b4525",
+      "source": "assets/2d/variants/FINNI-EXPRESSIONS-V1/pointy-plain/happy.png",
+      "sourceSha256": "e0f3f9a6fd29703ab5fa8279e8b01bff904cd1a307b9a7f0cb63cbb80ec3c8fe",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "pointy-plain/thoughtful-head.png",
+      "sha256": "33e3f0579b9b62bbddd7554a040ed8f571999d453495563069c0820f30ee98d6",
+      "source": "assets/2d/variants/FINNI-EXPRESSIONS-V1/pointy-plain/thoughtful.png",
+      "sourceSha256": "ed4191f80a45901e368d02411bf3544d2bb3fc29d70325a53aade990f366f180",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "pointy-plain/inspired-head.png",
+      "sha256": "8f9bf3763d755109b51229a37c15ca2c1f438ab583a77829a5bc27b9a16f5111",
+      "source": "assets/2d/variants/FINNI-EXPRESSIONS-V1/pointy-plain/inspired.png",
+      "sourceSha256": "af9e1a310a1bdf06f9effd1b1715b2ab92d47c3012bb811cbfd3b52f2906dd47",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "pointy-spots/neutral-head.png",
+      "sha256": "7d6d6cd7a40f982f1ce38996fe3518304756b2cf4d318fa4058f7ef5b7e9cf2e",
+      "source": "assets/2d/variants/FINNI-MATRIX-V1/pointy-spots/neutral.png",
+      "sourceSha256": "807b6dcb362b6b18037cfad6f115764287ca8453b44fb98ee79dcef242b78d61",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "pointy-spots/neutral-body.png",
+      "sha256": "cf89a0e0d9c43fef6b6d1d299cd9bd83bd0db1b5f7818dfc45c45ea3375624cd",
+      "source": "assets/2d/variants/FINNI-MATRIX-V1/pointy-spots/neutral.png",
+      "sourceSha256": "807b6dcb362b6b18037cfad6f115764287ca8453b44fb98ee79dcef242b78d61",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "pointy-spots/blink-head.png",
+      "sha256": "e17c13220380ce5e5242fb0635831fb65832dcb03c9779a59f32e70c1405db89",
+      "source": "assets/2d/variants/FINNI-MATRIX-V1/pointy-spots/blink.png",
+      "sourceSha256": "f85c4044cec4ed0b53ed5c9210d6fbacbed67edbf61c5758ea74f6ca06c53355",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "pointy-spots/happy-head.png",
+      "sha256": "1357aa38308158e3ab9c2618960c2018598e58e961f98765e2051efbb426177d",
+      "source": "assets/2d/variants/FINNI-EXPRESSIONS-V1/pointy-spots/happy.png",
+      "sourceSha256": "29c0287322b98d3848ad9d9a7979d6cd3823e3b371ffc6b26105a53ef52946ad",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "pointy-spots/thoughtful-head.png",
+      "sha256": "15e1903d5a8def9a4bf84f18b6a86307f46b68050ae38cb384c47a93afa30dd9",
+      "source": "assets/2d/variants/FINNI-EXPRESSIONS-V1/pointy-spots/thoughtful.png",
+      "sourceSha256": "bdc507e029a30996014ae26e67f1c13d1446b9ba61378cdd75f8c63fefc18157",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "pointy-spots/inspired-head.png",
+      "sha256": "4f62379c98fef15e8de8e014288937e737590584f0d452ebcb9b3c0257610724",
+      "source": "assets/2d/variants/FINNI-EXPRESSIONS-V1/pointy-spots/inspired.png",
+      "sourceSha256": "7852d8f751cb8fc1c0dd289a0570f89664236cf6bdd2491d55c11c254045a956",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "pointy-stripes/neutral-head.png",
+      "sha256": "7d268eac3bacdae0bd82af181d90d59bdb98876410c4d41cdf04dabbcdb222a8",
+      "source": "assets/2d/variants/FINNI-MATRIX-V1/pointy-stripes/neutral.png",
+      "sourceSha256": "069c4ba20660d06b27c9ddbf8ed4eb9bb016a262fc1e5d460f6f32bb15b93a23",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "pointy-stripes/neutral-body.png",
+      "sha256": "3fe5e4977e86bd9d15b2840f7946b5f71dc96402d3a051fe53dea29a1ae3694c",
+      "source": "assets/2d/variants/FINNI-MATRIX-V1/pointy-stripes/neutral.png",
+      "sourceSha256": "069c4ba20660d06b27c9ddbf8ed4eb9bb016a262fc1e5d460f6f32bb15b93a23",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "pointy-stripes/blink-head.png",
+      "sha256": "1130892638261b368464cd1414849089efa5e4ae9289828b8e84ca5a335f9260",
+      "source": "assets/2d/variants/FINNI-MATRIX-V1/pointy-stripes/blink.png",
+      "sourceSha256": "2a10058f53a168037e8d027f8c06179579cf5aba0982881ed042f8b3303e6865",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "pointy-stripes/happy-head.png",
+      "sha256": "03dafd3c18a7ab8822e40e1251db49bb8258c631715ea8c1419c9e334a083e17",
+      "source": "assets/2d/variants/FINNI-EXPRESSIONS-V1/pointy-stripes/happy.png",
+      "sourceSha256": "5a0defc88e7d1d743bc87adf008812392af138e6d9a03a353d9f7e1fb0de60d8",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "pointy-stripes/thoughtful-head.png",
+      "sha256": "07747fcdc2105fd94206a43fc1aa3799c7320018634ab83ffe24479d2765fa2e",
+      "source": "assets/2d/variants/FINNI-EXPRESSIONS-V1/pointy-stripes/thoughtful.png",
+      "sourceSha256": "5d96ba8817ed403407204c3ff206f7925feccd0a5617843844fa61e9b1e93c4f",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "pointy-stripes/inspired-head.png",
+      "sha256": "1974febf775957ca512c1ff56c24ca0b2b8d91b3a5007c994da1bde17c1c137c",
+      "source": "assets/2d/variants/FINNI-EXPRESSIONS-V1/pointy-stripes/inspired.png",
+      "sourceSha256": "c2f138a772056a4b36d84aa15dc1c10e4b4fd01114511dc04893d4fabfd867fe",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "round-plain/neutral-head.png",
+      "sha256": "eb8e5de858aeebf6e449c6ae0a42b07c832f62a1ed2329d62f0a1cca786d0e73",
+      "source": "assets/2d/variants/FINNI-MATRIX-V1/round-plain/neutral.png",
+      "sourceSha256": "d5fcbaa49d4869ad18930e1cd73245afa768df1e4a7d00cc5185e135cd4010a9",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "round-plain/neutral-body.png",
+      "sha256": "99c9ab0a75a5b4af1a6f256a1e36243cb100a1c16946237b906987ac22974f43",
+      "source": "assets/2d/variants/FINNI-MATRIX-V1/round-plain/neutral.png",
+      "sourceSha256": "d5fcbaa49d4869ad18930e1cd73245afa768df1e4a7d00cc5185e135cd4010a9",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "round-plain/blink-head.png",
+      "sha256": "ef0805823646c885696e917109d0538b26291e8b7f615b83c13d8e28b6dcdbd5",
+      "source": "assets/2d/variants/FINNI-MATRIX-V1/round-plain/blink.png",
+      "sourceSha256": "6a8353688a5a071ae7b733fa2e02df0f94e20f6fad97bc80318a961aa13cb5c5",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "round-plain/happy-head.png",
+      "sha256": "022d318a8daa48e0b73857811a44c64e6a7ba31078770220bd3d707d4a9329f0",
+      "source": "assets/2d/variants/FINNI-EXPRESSIONS-V1/round-plain/happy.png",
+      "sourceSha256": "283bf2adb58d078ab417f11841afbda3a0299cae04d3adc903d54ed60010493f",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "round-plain/thoughtful-head.png",
+      "sha256": "71f9d53f82fd80d65a1b21642d62f9b10758eb8d55bd23a4277010b15ff9b927",
+      "source": "assets/2d/variants/FINNI-EXPRESSIONS-V1/round-plain/thoughtful.png",
+      "sourceSha256": "ce126a42e0439adfac4245873aa32295e878bcf1cdf00e9d0b92cc69512690a9",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "round-plain/inspired-head.png",
+      "sha256": "f322806775bdc55bb171903078dd71ae6492707b711f3f4b639c95d93948a8b2",
+      "source": "assets/2d/variants/FINNI-EXPRESSIONS-V1/round-plain/inspired.png",
+      "sourceSha256": "5cdf964103c5579903b19db7539d1175fc1977ea227413404069f8b5e09b22f0",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "round-spots/neutral-head.png",
+      "sha256": "80bcd89ef2812fb88602b85b91403fbfc34fee3c14e2ec028fe9ef4c9a75385d",
+      "source": "assets/2d/variants/FINNI-MATRIX-V1/round-spots/neutral.png",
+      "sourceSha256": "0a8b0f19f4a57f7bf5189803547993c60d745a8350ac50d6b64dc3fe99dea69f",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "round-spots/neutral-body.png",
+      "sha256": "ee4af14763647997f15feaea9a086a8408d4a998542c79f20f7273b0582d1e9a",
+      "source": "assets/2d/variants/FINNI-MATRIX-V1/round-spots/neutral.png",
+      "sourceSha256": "0a8b0f19f4a57f7bf5189803547993c60d745a8350ac50d6b64dc3fe99dea69f",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "round-spots/blink-head.png",
+      "sha256": "ac47d17de14b16ab4514d6fc2e5eaa45c42a12a6e0130363dada186fc7dcf7bb",
+      "source": "assets/2d/variants/FINNI-MATRIX-V1/round-spots/blink.png",
+      "sourceSha256": "0e8ae1b29130678eacb6631ac6dcece0801bc8ec4bafd2b1f48c6ddffaf6dbe5",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "round-spots/happy-head.png",
+      "sha256": "f58f21f3a74d163d8720d7b9022a833fccc34f27efd5c870196d610130b3bd9e",
+      "source": "assets/2d/variants/FINNI-EXPRESSIONS-V1/round-spots/happy.png",
+      "sourceSha256": "6a1ceeecc1d7c00271697955b91b21df897d1299b9415a9890e3d5d8cd646557",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "round-spots/thoughtful-head.png",
+      "sha256": "76a932160b5d37d40bf53a8fbcbfd15771efa26b53eefa959755bc583d66f536",
+      "source": "assets/2d/variants/FINNI-EXPRESSIONS-V1/round-spots/thoughtful.png",
+      "sourceSha256": "34712d31461759fd9becc160d9762ee0fe1d2fa43aabe2652761965fc5b7aa69",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "round-spots/inspired-head.png",
+      "sha256": "f71f694b3bd68553dc79e56db981cdf05d7c8068232a2d23914be175008194a3",
+      "source": "assets/2d/variants/FINNI-EXPRESSIONS-V1/round-spots/inspired.png",
+      "sourceSha256": "294d797b91e3ebbc3d6f8a462de669bec10693774cfbbf8b4a9bfa0723b181e0",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "round-stripes/neutral-head.png",
+      "sha256": "629082af42f3bc3e4ed260fc734403ce2f1fc3b91a9c2810de32d0ce68cb134b",
+      "source": "assets/2d/variants/FINNI-MATRIX-V1/round-stripes/neutral.png",
+      "sourceSha256": "978ecf5fda90f1b42d6cf5ed1a1fec9e19eff1739df35809d8d644988801f12b",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "round-stripes/neutral-body.png",
+      "sha256": "2dd5d1e162bbc5bddce01992778926d7209a2be13e5167baa9163024675a96fe",
+      "source": "assets/2d/variants/FINNI-MATRIX-V1/round-stripes/neutral.png",
+      "sourceSha256": "978ecf5fda90f1b42d6cf5ed1a1fec9e19eff1739df35809d8d644988801f12b",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "round-stripes/blink-head.png",
+      "sha256": "fba3dbeee360407f1b5468bd5e7d22a73896eb03fa7cdb58d69ac669388db9fa",
+      "source": "assets/2d/variants/FINNI-MATRIX-V1/round-stripes/blink.png",
+      "sourceSha256": "8a9e19bce64d54c52d650352c1c7bd67e37eebece9a26039a80320c7067d77b1",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "round-stripes/happy-head.png",
+      "sha256": "c7818f5d2299cb26199ed9718cd04b0a99450b9d1d440d215cdb1cf816bea1e3",
+      "source": "assets/2d/variants/FINNI-EXPRESSIONS-V1/round-stripes/happy.png",
+      "sourceSha256": "81aee9e5809442a610db3e674f8c01274ffbf15360c506ca7cb8fa7c3ec6a30f",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "round-stripes/thoughtful-head.png",
+      "sha256": "2f65e0a644e23a0185a3fe0806835a4e31f0828f5229d18d0d65bccc60006093",
+      "source": "assets/2d/variants/FINNI-EXPRESSIONS-V1/round-stripes/thoughtful.png",
+      "sourceSha256": "e7167732de54e7443ce7be3ca61c7b95ee8c754b05be589e46ef50649e7ed8bf",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "round-stripes/inspired-head.png",
+      "sha256": "0b1ad73ebfb3312e32adc6632bf8b070ba440fe78533d2b7ea95061d8d5af28d",
+      "source": "assets/2d/variants/FINNI-EXPRESSIONS-V1/round-stripes/inspired.png",
+      "sourceSha256": "41fe8d7f58ab02831550e80c0d48c950498dd64cb20a53f23d7e4c6d7cd26c19",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "floppy-plain/neutral-head.png",
+      "sha256": "d0a7eaf517e3a9bdf5b205c10690d34faf8d462238c374a23ca16c8b7b2e78c6",
+      "source": "assets/2d/variants/FINNI-MATRIX-V1/floppy-plain/neutral.png",
+      "sourceSha256": "2108dd8827569cdc599928b429e77cefec0ec4fe8215525ff2eca7d127003522",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "floppy-plain/neutral-body.png",
+      "sha256": "2e09e036cf48a0116a646cfb57602080bbaa28705c4dc48131fc85c968b0fa48",
+      "source": "assets/2d/variants/FINNI-MATRIX-V1/floppy-plain/neutral.png",
+      "sourceSha256": "2108dd8827569cdc599928b429e77cefec0ec4fe8215525ff2eca7d127003522",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "floppy-plain/blink-head.png",
+      "sha256": "46293f46fe0660467c342dcf323e238e01f68486ee43dee1e2885f75a0afb494",
+      "source": "assets/2d/variants/FINNI-MATRIX-V1/floppy-plain/blink.png",
+      "sourceSha256": "6af05329170d66669f7c2dbe7dfb11bdcf1f52af30d61ffd6be926939647ceba",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "floppy-plain/happy-head.png",
+      "sha256": "3707a08abaa0fe2a3bb91cadb3551a85d730aa8149e6f50d816c6ae60443dea5",
+      "source": "assets/2d/variants/FINNI-EXPRESSIONS-V1/floppy-plain/happy.png",
+      "sourceSha256": "c08b6a2004b11fb785ec4b362dd74a466a2f0a27005076f2c7d795347c273aff",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "floppy-plain/thoughtful-head.png",
+      "sha256": "9112e11b0bd9f32cb80d13ce84575007341171409388e1176db7dc69460a99be",
+      "source": "assets/2d/variants/FINNI-EXPRESSIONS-V1/floppy-plain/thoughtful.png",
+      "sourceSha256": "de22496e0dfea2f01718e9b17ee2f11e407dde7cfe04d4d098af4c2ae1e4d0e6",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "floppy-plain/inspired-head.png",
+      "sha256": "0292192d1698cf5d1d9bf9f45248dd60d7636d5c610096e616e9fc1823cc159b",
+      "source": "assets/2d/variants/FINNI-EXPRESSIONS-V1/floppy-plain/inspired.png",
+      "sourceSha256": "83d177304c5982d9cef3276ff7bce9e75bfb745efab86a16e91c84ceb9cea423",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "floppy-spots/neutral-head.png",
+      "sha256": "e6c8a8e2785ff6660313ef8a0ce6794b12255a332bbd4ae467e93aa1c3691afd",
+      "source": "assets/2d/variants/FINNI-MATRIX-V1/floppy-spots/neutral.png",
+      "sourceSha256": "4ac666178c3eb4e2af0bd5d0a8ad40ce05477f39ebfd886d37b0fd0be274fa2d",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "floppy-spots/neutral-body.png",
+      "sha256": "c43c3de4b1c22f98a1acb4196e4c154a2c75812fbca1221fd92ff8a833ac69ed",
+      "source": "assets/2d/variants/FINNI-MATRIX-V1/floppy-spots/neutral.png",
+      "sourceSha256": "4ac666178c3eb4e2af0bd5d0a8ad40ce05477f39ebfd886d37b0fd0be274fa2d",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "floppy-spots/blink-head.png",
+      "sha256": "41649525d8483d949c36ed74c5ce96f6a32bfec9e0ac860d13a0f8e62a31c9f0",
+      "source": "assets/2d/variants/FINNI-MATRIX-V1/floppy-spots/blink.png",
+      "sourceSha256": "741dc9d7922f416058a7cac0394a83ce91c03c83ac3c16a09e2e04c0549df559",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "floppy-spots/happy-head.png",
+      "sha256": "155cdfd483bf2dfe5b32a212a60e7bc26f375af3f11ceb2f1b811e343f0ccc23",
+      "source": "assets/2d/variants/FINNI-EXPRESSIONS-V1/floppy-spots/happy.png",
+      "sourceSha256": "7454ccc77e8fb008218d20f17b617660283b43fdb68fb5b7317e39f46d47fc80",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "floppy-spots/thoughtful-head.png",
+      "sha256": "7d7b1a99dcd108ea8e374e6535e65ee5dba2e11cffde96dd50a9c6b7b67c10f3",
+      "source": "assets/2d/variants/FINNI-EXPRESSIONS-V1/floppy-spots/thoughtful.png",
+      "sourceSha256": "354d355ea9aced4015a87e389e551693a36a4dd8bb16cd65e21940e5fabdd986",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "floppy-spots/inspired-head.png",
+      "sha256": "326e7d156c97ff5b616555a3a8445d188df0aa751e4ef7b13c586b4f319b0e8e",
+      "source": "assets/2d/variants/FINNI-EXPRESSIONS-V1/floppy-spots/inspired.png",
+      "sourceSha256": "c1caf553580d44f0745d3ddc89cfb5efa9671f1a68dee20715126f64f9090308",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "floppy-stripes/neutral-head.png",
+      "sha256": "9a0ebe124e5585978c40c59eae81b6b06801fc65c330cd79b986550b2d04427a",
+      "source": "assets/2d/variants/FINNI-MATRIX-V1/floppy-stripes/neutral.png",
+      "sourceSha256": "9caf7d1ace1d02cc9e3f207c09f8d2741ce2fe71917cd6f00dd71bde1eeb3d99",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "floppy-stripes/neutral-body.png",
+      "sha256": "ca36b1c9a1f3834cdc62962f91ee65c01052c7990cd8148124d0948f359ad8a3",
+      "source": "assets/2d/variants/FINNI-MATRIX-V1/floppy-stripes/neutral.png",
+      "sourceSha256": "9caf7d1ace1d02cc9e3f207c09f8d2741ce2fe71917cd6f00dd71bde1eeb3d99",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "floppy-stripes/blink-head.png",
+      "sha256": "46e12c9a0300ed9c2ff9cf47d37dc218fdd73eb3a5fc89813d4ca7dc367a0cf8",
+      "source": "assets/2d/variants/FINNI-MATRIX-V1/floppy-stripes/blink.png",
+      "sourceSha256": "5a68366764f25970031241c09f28722c44db0122e5ef6adfa38c94dbe5f9d52c",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "floppy-stripes/happy-head.png",
+      "sha256": "08b1d464aa2c5430162cebc0043f2ae3ec00cf3653230505a9a51a216118f539",
+      "source": "assets/2d/variants/FINNI-EXPRESSIONS-V1/floppy-stripes/happy.png",
+      "sourceSha256": "d3a23c13302fece18c6ff4568d7f092dea1dbfd751bf7dc52c9faa5d37ed8214",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "floppy-stripes/thoughtful-head.png",
+      "sha256": "391b93f8c40e2e347f9572f648082b0752a3fad1005f51f6e8b2dee4a38773fb",
+      "source": "assets/2d/variants/FINNI-EXPRESSIONS-V1/floppy-stripes/thoughtful.png",
+      "sourceSha256": "0ddcbaf637ffa99d8066df55f85ae1c053838176c33160be2c59a725c28a57f5",
+      "selectedPixelDifference": 0
+    },
+    {
+      "path": "floppy-stripes/inspired-head.png",
+      "sha256": "6bab5f4c67b43ae579155f3bfe331af79134e17a4a5b8db960e7afa5aa26535e",
+      "source": "assets/2d/variants/FINNI-EXPRESSIONS-V1/floppy-stripes/inspired.png",
+      "sourceSha256": "347a35a766f69f2d5939284617a1290f5b4f0df986bbd6c013ab796a140f64bd",
+      "selectedPixelDifference": 0
+    }
+  ]
+}

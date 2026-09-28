@@ -1,8 +1,9 @@
-import { useEffect, useReducer, useRef, useState } from 'react';
+import { useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import {
   AccessibilityInfo,
   Animated,
   AppState,
+  Easing,
   type AppStateStatus,
   Image,
   Pressable,
@@ -16,14 +17,16 @@ import { homePetFrame, homePetPortraitFrame, type SceneRect } from './home-scene
 import { FINNI_APPEARANCE_ASSETS } from './finni-appearance-assets.ts';
 import { homeFinniAppearance, type FinniAppearance } from './finni-appearance-policy.ts';
 import { FINNI_EXPRESSION_ASSETS } from './finni-expression-assets.ts';
-import { FINNI_ANIMATION_SET, finniAnimationFrame, initialFinniAnimationState, reduceFinniAnimation, type FinniClipId } from './finni-animation-set.ts';
-import { goalSource, itemSource, OBJECT_SOURCES } from './room-assets.ts';
+import { FINNI_ANIMATION_SET, createFinniReactionCompletion, finniAnimationFrame, initialFinniAnimationState, reduceFinniAnimation, type FinniClipId } from './finni-animation-set.ts';
+import FinniPuppet from './FinniPuppet.tsx';
+import { BLINK_GAPS_MS, INTEREST_GAPS_MS } from './finni-body-motion.ts';
 
 const ROOM_SOURCE = require('../../assets/2d/master/FINNI-2D-MASTER-V1/room_clean_v1.png');
 
 const IDLE_DURATION_MS = FINNI_ANIMATION_SET['AN-001'].durationMs;
 const BLINK_FRAME_MS = FINNI_ANIMATION_SET['AN-002'].durationMs;
 const BLINK_CYCLE_FRAMES = 24;
+let sessionGreeted = false;
 export type HomeReaction = Readonly<{
   id: number;
   expression: Extract<FinniExpression, 'happy' | 'thoughtful' | 'inspired'>;
@@ -55,13 +58,17 @@ export default function FinniHomeScene(props: Readonly<{
   skipReactionId?: number | null;
 }>) {
   const { reaction, onReactionFinished, onReactionCancelled } = props;
+  const reactionId = reaction?.id ?? null;
+  const completeReaction = useMemo(() => createFinniReactionCompletion(reactionId), [reactionId]);
   const [appState, setAppState] = useState<AppStateStatus>(AppState.currentState);
   const [reduceMotion, setReduceMotion] = useState(false);
   const [blinkPhase, setBlinkPhase] = useState(0);
   const [decodeError, setDecodeError] = useState(false);
   const [loadedBlinkAppearance, setLoadedBlinkAppearance] = useState<string | null>(null);
   const [loadedExpression, setLoadedExpression] = useState<string | null>(null);
+  const [loadedPuppet, setLoadedPuppet] = useState<string | null>(null);
   const skippedReactionId = useRef<number | null>(null);
+  const interestIndex = useRef(0);
   const [animation, dispatch] = useReducer(reduceFinniAnimation, null, () => initialFinniAnimationState(
     { stage: props.stage, shapeId: props.appearance.shapeId, patternId: props.appearance.patternId, expression: 'neutral' },
     { motionEnabled: props.motionEnabled, soundEnabled: props.soundEnabled, systemReduceMotion: false },
@@ -87,6 +94,10 @@ export default function FinniHomeScene(props: Readonly<{
   };
 
   const petMotion = props.portrait ? {} : props.petRegion ? { transformOrigin: [FINNI_ANCHORS.feet.x * (petFrame as ReturnType<typeof homePetFrame>).scale, FINNI_ANCHORS.feet.y * (petFrame as ReturnType<typeof homePetFrame>).scale, 0], transform: [{ scaleY: translateY.interpolate({ inputRange: [-4, 0], outputRange: [1.006, 1] }) }] } : {};
+  const usePuppet = !!props.petRegion && !props.portrait;
+  const puppetReady = loadedPuppet === `${appearanceId}/${frame.expression}`;
+  const puppetVisible = motionActive && usePuppet && puppetReady;
+  const playOptional = (clip: FinniClipId) => dispatch({ type: 'play', clip, presentation: animation.presentation });
 
   useEffect(() => {
     void AccessibilityInfo.isReduceMotionEnabled().then(setReduceMotion);
@@ -143,17 +154,53 @@ export default function FinniHomeScene(props: Readonly<{
         }),
       ]),
     );
-    const blinkTimer = setInterval(() => {
-      setBlinkPhase((value) => (value + 1) % BLINK_CYCLE_FRAMES);
-    }, BLINK_FRAME_MS);
+    let blinkIndex = 0;
+    let blinkTimer: ReturnType<typeof setTimeout>;
+    let openTimer: ReturnType<typeof setTimeout>;
+    const nextBlink = () => {
+      blinkTimer = setTimeout(() => {
+        setBlinkPhase(BLINK_CYCLE_FRAMES - 1);
+        openTimer = setTimeout(() => { setBlinkPhase(0); nextBlink(); }, BLINK_FRAME_MS);
+      }, BLINK_GAPS_MS[blinkIndex++ % BLINK_GAPS_MS.length]);
+    };
+    nextBlink();
     idle.start();
 
     return () => {
       idle.stop();
-      clearInterval(blinkTimer);
+      clearTimeout(blinkTimer);
+      clearTimeout(openTimer);
+      setBlinkPhase(0);
       translateY.setValue(0);
     };
   }, [animationActive, translateY]);
+
+  useEffect(() => {
+    if (!motionActive || reaction || sessionGreeted) return;
+    sessionGreeted = true;
+    dispatch({ type: 'play', clip: 'AN-004', presentation: animation.presentation });
+  }, [motionActive, reaction, animation.presentation]);
+
+  useEffect(() => {
+    if (!animationActive) return;
+    let timer: ReturnType<typeof setTimeout>;
+    const schedule = () => {
+      timer = setTimeout(() => {
+        dispatch({ type: 'play', clip: 'AN-003', presentation: animation.presentation });
+        schedule();
+      }, INTEREST_GAPS_MS[interestIndex.current++ % INTEREST_GAPS_MS.length]);
+    };
+    schedule();
+    return () => clearTimeout(timer);
+  }, [animationActive, animation.presentation]);
+
+  useEffect(() => {
+    if (!frame.clip || reaction || (usePuppet && !puppetReady)) return;
+    const clip = frame.clip;
+    const generation = animation.generation;
+    const timer = setTimeout(() => dispatch({ type: 'finish', clip, generation }), FINNI_ANIMATION_SET[clip].durationMs);
+    return () => clearTimeout(timer);
+  }, [frame.clip, animation.generation, reaction, usePuppet, puppetReady]);
 
   useEffect(() => {
     expressionOpacity.stopAnimation();
@@ -174,44 +221,47 @@ export default function FinniHomeScene(props: Readonly<{
   useEffect(() => {
     effectProgress.stopAnimation();
     effectProgress.setValue(0);
-    if (!frame.clip || !motionActive) return;
+    if (!frame.clip || !motionActive || (usePuppet && !puppetReady)) return;
     const transition = Animated.timing(effectProgress, {
       duration: FINNI_ANIMATION_SET[frame.clip].durationMs,
+      easing: Easing.linear,
       toValue: 1,
       useNativeDriver: true,
     });
     transition.start();
     return () => transition.stop();
-  }, [effectProgress, frame.clip, animation.generation, motionActive]);
+  }, [effectProgress, frame.clip, animation.generation, motionActive, usePuppet, puppetReady]);
 
   useEffect(() => {
     if (!reaction) return;
-    const id = reaction.id;
     if (props.paused || appState !== 'active' || decodeError) {
-      onReactionCancelled?.(id);
+      completeReaction(completedId => onReactionCancelled?.(completedId));
       return;
     }
-    if (!expressionReady) return;
+    if (!expressionReady || (motionActive && usePuppet && !puppetReady)) return;
     const generation = animation.generation;
     const timer = setTimeout(() => {
-      dispatch({ type: 'finish', clip: reaction.clip, generation });
-      onReactionFinished?.(id);
+      completeReaction(completedId => {
+        dispatch({ type: 'finish', clip: reaction.clip, generation });
+        onReactionFinished?.(completedId);
+      });
     }, motionActive ? FINNI_ANIMATION_SET[reaction.clip].durationMs : 900);
     return () => clearTimeout(timer);
-  }, [appState, decodeError, expressionReady, onReactionCancelled, onReactionFinished, props.paused, reaction, motionActive, animation.generation]);
+  }, [completeReaction, appState, decodeError, expressionReady, onReactionCancelled, onReactionFinished, props.paused, reaction, motionActive, animation.generation, usePuppet, puppetReady]);
 
   useEffect(() => {
     if (!reaction || props.skipReactionId !== reaction.id || skippedReactionId.current === reaction.id) return;
     skippedReactionId.current = reaction.id;
-    dispatch({ type: 'skip', clip: reaction.clip as 'AN-013' | 'AN-014', generation: animation.generation });
-    onReactionFinished?.(reaction.id);
-  }, [props.skipReactionId, reaction, animation.generation, onReactionFinished]);
+    completeReaction(id => {
+      dispatch({ type: 'skip', clip: reaction.clip as 'AN-013' | 'AN-014', generation: animation.generation });
+      onReactionFinished?.(id);
+    });
+  }, [completeReaction, props.skipReactionId, reaction, animation.generation, onReactionFinished]);
 
   useEffect(() => {
-    if (!reaction) return;
-    const id = reaction.id;
-    return () => onReactionCancelled?.(id);
-  }, [onReactionCancelled, reaction]);
+    if (reactionId === null) return;
+    return () => { completeReaction(id => onReactionCancelled?.(id)); };
+  }, [completeReaction, onReactionCancelled, reactionId]);
 
   if (decodeError) {
     return (
@@ -249,7 +299,7 @@ export default function FinniHomeScene(props: Readonly<{
         onError={() => setDecodeError(true)}
         resizeMode="contain"
         source={sources.neutral}
-        style={[styles.petLayer, petFrame, { opacity: showBlink ? 0 : 1, ...petMotion }]}
+        style={[styles.petLayer, petFrame, { opacity: puppetVisible || showBlink ? 0 : 1, ...petMotion }]}
       />
       <Animated.Image
         key={`${appearanceId}-blink`}
@@ -259,7 +309,7 @@ export default function FinniHomeScene(props: Readonly<{
         onLoad={() => setLoadedBlinkAppearance(appearanceId)}
         resizeMode="contain"
         source={sources.blink}
-        style={[styles.petLayer, petFrame, { opacity: showBlink ? 1 : 0, ...petMotion }]}
+        style={[styles.petLayer, petFrame, { opacity: !puppetVisible && showBlink ? 1 : 0, ...petMotion }]}
       />
       {reaction && expressionKey && (
         <Animated.Image
@@ -270,30 +320,33 @@ export default function FinniHomeScene(props: Readonly<{
           onLoad={() => setLoadedExpression(expressionKey)}
           resizeMode="contain"
           source={FINNI_EXPRESSION_ASSETS[appearanceId][frame.expression as 'happy' | 'thoughtful' | 'inspired']}
-          style={[styles.petLayer, petFrame, { opacity: expressionReady ? expressionOpacity : 0 }]}
+          style={[styles.petLayer, petFrame, { opacity: !puppetVisible && expressionReady ? expressionOpacity : 0 }]}
           testID={`finni-expression-${frame.expression}`}
         />
       )}
-      {reaction && frame.clip && motionActive && ['AN-009', 'AN-010', 'AN-011', 'AN-012', 'AN-013', 'AN-014'].includes(frame.clip) && (
+      {motionActive && usePuppet && <View pointerEvents="none" style={[styles.petLayer, petFrame, { opacity: puppetReady ? 1 : 0 }]}>
+        <FinniPuppet appearance={appearanceId} expression={frame.expression} blink={showBlink}
+          clip={frame.clip} progress={effectProgress} breath={translateY}
+          width={(petFrame as ReturnType<typeof homePetFrame>).width} height={(petFrame as ReturnType<typeof homePetFrame>).height}
+          stage={props.stage} objectId={reaction?.objectId ?? null} value={reaction?.value ?? 0} onReady={setLoadedPuppet} onError={() => setDecodeError(true)} />
+      </View>}
+      {props.petRegion && <Pressable accessibilityRole="button" accessibilityLabel={`${props.accessibilityLabel}. Поздороваться с Финни`}
+        onPress={() => playOptional('AN-005')} style={{ position: 'absolute', left: props.petRegion.x, top: props.petRegion.y, width: props.petRegion.width, height: props.petRegion.height }} testID="finni-touch" />}
+      {reaction && frame.clip && motionActive && ['AN-012', 'AN-014'].includes(frame.clip) && (
         <Animated.View pointerEvents="none" style={[styles.effect, {
           opacity: effectProgress.interpolate({ inputRange: [0, 0.15, 0.75, 1], outputRange: [0, 1, 1, 0] }),
           transform: [{ translateY: effectProgress.interpolate({ inputRange: [0, 1], outputRange: [9, -9] }) }],
         }]} testID={`finni-effect-${frame.clip}`}>
-          {(frame.clip === 'AN-009' || frame.clip === 'AN-010') && reaction.objectId && itemSource(reaction.objectId) &&
-            <Image source={itemSource(reaction.objectId)!} resizeMode="contain" style={styles.effectImage} />}
-          {frame.clip === 'AN-011' && <Image source={OBJECT_SOURCES['OBJ-PLANNER']} resizeMode="contain" style={styles.effectImage} />}
-          {frame.clip === 'AN-012' && <View style={styles.coins}>{[0, 1, 2].map((index) =>
-            <Image key={index} source={OBJECT_SOURCES['OBJ-COIN']} resizeMode="contain" style={styles.coinImage} />)}</View>}
-          {frame.clip === 'AN-013' && reaction.objectId && goalSource(reaction.objectId) &&
-            <Image source={goalSource(reaction.objectId)!} resizeMode="contain" style={styles.effectImage} />}
           {frame.clip === 'AN-014' && <Text style={styles.effectLabel}>Новая ступень · {props.stage}</Text>}
           {frame.clip === 'AN-012' && <Text style={styles.effectLabel}>{reaction.value > 0 ? '+' : ''}{reaction.value} монет</Text>}
         </Animated.View>
       )}
       {!props.hideSkip && reaction?.skippable && frame.canSkip && motionActive && (
         <Pressable accessibilityRole="button" onPress={() => {
-          dispatch({ type: 'skip', clip: reaction.clip as 'AN-013' | 'AN-014', generation: animation.generation });
-          onReactionFinished?.(reaction.id);
+          completeReaction(id => {
+            dispatch({ type: 'skip', clip: reaction.clip as 'AN-013' | 'AN-014', generation: animation.generation });
+            onReactionFinished?.(id);
+          });
         }} style={styles.skip} testID="finni-reaction-skip">
           <Text style={styles.skipText}>Пропустить анимацию</Text>
         </Pressable>

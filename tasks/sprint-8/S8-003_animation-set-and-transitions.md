@@ -70,3 +70,55 @@ event после commit. Доступные предметные ассеты и
 остаётся статичное состояние с принятым выражением лица. Полный набор
 визуальных движений AN-001–014 и device-video приёмка всё ещё открыты;
 новые позы требуют отдельного art gate для девяти внешностей и трёх стадий.
+
+## Прогресс 2026-09-28 — full-body runtime candidate
+
+По прямому поручению владельца, DIRECT Astra Medium, реализованы движения
+головы/туловища/хвоста, новые lower-body жесты трёх окрасов, bowl/brush/planner/
+coins/goal/stage recipes. Все формы ушей и мимика используют принятую графику.
+Native renderer сохраняет fixed feet, preloads, bounded optional queue,
+pause/cancel/skip и static equivalents; large-text portrait остаётся статичным.
+
+Инженерная реализация и доступный Verify фиксируются в
+`Finni App/artifacts/sprint-8/S8-003-body-runtime/README.md`: 12 AN-003–014
+clip checkpoints и видео на API26 emulator, 27 gesture checkpoints 9×3,
+motion-off pixel stability, lifecycle scenarios, source lineage и configured
+verification. Новое owner art acceptance и физический Android/performance
+не объявляются PASS. Задача остаётся открытой по этим внешним gates.
+
+## Приёмка владельца 2026-09-28 и остаток работ
+
+Владелец явно принял новые позы и анимации в продолжении этой задачи.
+Owner art gate закрыт для представленного результата; точные source/export
+hashes трёх lower-body поз закреплены в FINNI-GESTURE-V1/owner-acceptance.json.
+Это обновляет ранее записанный pending art status, не подтверждая runtime QA.
+
+До инженерного закрытия: атрибутировать Metro TypeError на чистом запуске,
+исправить при воспроизведении и повторить финальные native transition/lifecycle
+сценарии (rapid tap, priority interruption, modal/background/return, skip обеих
+milestone сцен, static equivalents). Проверить рискованные движения головы/
+предметов на трёх формах и крайних стадиях; полный Cartesian sweep не объявлять
+обязательным без нового выявленного риска. Таблица clip × appearance × stage
+должна явно различать PASS и NOT RUN. Детали — README evidence.
+
+Physical API26 video/performance, настоящий TalkBack и release/offline gates
+сохраняются в S10-001/002. По DEC-005 они не препятствуют engineering/art этапу,
+но S8-003 не получает полный PASS по критерию target-device video без evidence.
+Текущий task остаётся открытым: есть и инженерный QA остаток. Нового
+архитектурного решения нет; IMPLEMENTATION_DECISIONS не меняется.
+
+## Инженерная регрессия 2026-09-28
+
+Исправлен подтверждённый повторный cancel после finish/skip из cleanup.
+Финальные native сессии: 60 reactions/60 unique terminal callbacks; priority,
+rapid taps, modal/background, оба skip, motion off/system reduced motion
+проверены. TypeError не воспроизвёлся в чистом запуске ещё до исправления;
+историческая причина неизвестна без прежнего stack. Сохранён новый clean log.
+Повторены 12 clip checkpoints и 24 head/neck/prop risk checkpoints с шестью
+пересъёмками; отдельные короткие snapshots не подтверждают активную фазу,
+точные ограничения перечислены в regression/README.md. Новых visual blockers
+не обнаружено. Полный npm run verify PASS: 155 tests, lint/typecheck/content/fixtures.
+
+Инженерный scope запроса выполнен; задача остаётся открытой только по полному
+целевому device/release gate и указанным границам evidence, без ложного device
+PASS. Follow-up уже назначен S10-001/002; новый дублирующий task не создаётся.
