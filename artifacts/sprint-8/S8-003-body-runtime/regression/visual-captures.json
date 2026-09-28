@@ -1,0 +1,290 @@
+[
+  {
+    "clip": "AN-003",
+    "shape": "pointy",
+    "pattern": "plain",
+    "stage": 2,
+    "file": "final-AN-003.png",
+    "scope": "final sweep"
+  },
+  {
+    "clip": "AN-004",
+    "shape": "pointy",
+    "pattern": "plain",
+    "stage": 2,
+    "file": "final-AN-004.png",
+    "scope": "final sweep"
+  },
+  {
+    "clip": "AN-005",
+    "shape": "pointy",
+    "pattern": "plain",
+    "stage": 2,
+    "file": "final-AN-005.png",
+    "scope": "final sweep"
+  },
+  {
+    "clip": "AN-006",
+    "shape": "pointy",
+    "pattern": "plain",
+    "stage": 2,
+    "file": "final-AN-006.png",
+    "scope": "final sweep"
+  },
+  {
+    "clip": "AN-007",
+    "shape": "pointy",
+    "pattern": "plain",
+    "stage": 2,
+    "file": "final-AN-007.png",
+    "scope": "final sweep"
+  },
+  {
+    "clip": "AN-008",
+    "shape": "pointy",
+    "pattern": "plain",
+    "stage": 2,
+    "file": "final-AN-008.png",
+    "scope": "final sweep"
+  },
+  {
+    "clip": "AN-009",
+    "shape": "pointy",
+    "pattern": "plain",
+    "stage": 2,
+    "file": "final-AN-009.png",
+    "scope": "final sweep"
+  },
+  {
+    "clip": "AN-010",
+    "shape": "pointy",
+    "pattern": "plain",
+    "stage": 2,
+    "file": "final-AN-010.png",
+    "scope": "final sweep"
+  },
+  {
+    "clip": "AN-011",
+    "shape": "pointy",
+    "pattern": "plain",
+    "stage": 2,
+    "file": "final-AN-011.png",
+    "scope": "final sweep"
+  },
+  {
+    "clip": "AN-012",
+    "shape": "pointy",
+    "pattern": "plain",
+    "stage": 2,
+    "file": "final-AN-012.png",
+    "scope": "final sweep"
+  },
+  {
+    "clip": "AN-013",
+    "shape": "pointy",
+    "pattern": "plain",
+    "stage": 2,
+    "file": "final-AN-013.png",
+    "scope": "final sweep"
+  },
+  {
+    "clip": "AN-014",
+    "shape": "pointy",
+    "pattern": "plain",
+    "stage": 2,
+    "file": "final-AN-014.png",
+    "scope": "final sweep"
+  },
+  {
+    "clip": "AN-006",
+    "shape": "pointy",
+    "pattern": "plain",
+    "stage": 3,
+    "file": "risk-pointy-s3-AN-006.png",
+    "scope": "head neck prop risk"
+  },
+  {
+    "clip": "AN-009",
+    "shape": "pointy",
+    "pattern": "plain",
+    "stage": 3,
+    "file": "risk-pointy-s3-AN-009.png",
+    "scope": "head neck prop risk"
+  },
+  {
+    "clip": "AN-010",
+    "shape": "pointy",
+    "pattern": "plain",
+    "stage": 3,
+    "file": "risk-pointy-s3-AN-010.png",
+    "scope": "head neck prop risk"
+  },
+  {
+    "clip": "AN-014",
+    "shape": "pointy",
+    "pattern": "plain",
+    "stage": 3,
+    "file": "risk-pointy-s3-AN-014.png",
+    "scope": "head neck prop risk"
+  },
+  {
+    "clip": "AN-006",
+    "shape": "round",
+    "pattern": "plain",
+    "stage": 3,
+    "file": "risk-round-s3-AN-006.png",
+    "scope": "head neck prop risk"
+  },
+  {
+    "clip": "AN-009",
+    "shape": "round",
+    "pattern": "plain",
+    "stage": 3,
+    "file": "risk-round-s3-AN-009.png",
+    "scope": "head neck prop risk"
+  },
+  {
+    "clip": "AN-010",
+    "shape": "round",
+    "pattern": "plain",
+    "stage": 3,
+    "file": "risk-round-s3-AN-010.png",
+    "scope": "head neck prop risk"
+  },
+  {
+    "clip": "AN-014",
+    "shape": "round",
+    "pattern": "plain",
+    "stage": 3,
+    "file": "risk-round-s3-AN-014.png",
+    "scope": "head neck prop risk"
+  },
+  {
+    "clip": "AN-006",
+    "shape": "floppy",
+    "pattern": "plain",
+    "stage": 3,
+    "file": "risk-floppy-s3-AN-006.png",
+    "scope": "head neck prop risk"
+  },
+  {
+    "clip": "AN-009",
+    "shape": "floppy",
+    "pattern": "plain",
+    "stage": 3,
+    "file": "risk-floppy-s3-AN-009.png",
+    "scope": "head neck prop risk"
+  },
+  {
+    "clip": "AN-010",
+    "shape": "floppy",
+    "pattern": "plain",
+    "stage": 3,
+    "file": "risk-floppy-s3-AN-010.png",
+    "scope": "head neck prop risk"
+  },
+  {
+    "clip": "AN-014",
+    "shape": "floppy",
+    "pattern": "plain",
+    "stage": 3,
+    "file": "risk-floppy-s3-AN-014.png",
+    "scope": "head neck prop risk"
+  },
+  {
+    "clip": "AN-006",
+    "shape": "pointy",
+    "pattern": "plain",
+    "stage": 1,
+    "file": "risk-pointy-s1-AN-006.png",
+    "scope": "head neck prop risk"
+  },
+  {
+    "clip": "AN-009",
+    "shape": "pointy",
+    "pattern": "plain",
+    "stage": 1,
+    "file": "risk-pointy-s1-AN-009.png",
+    "scope": "head neck prop risk"
+  },
+  {
+    "clip": "AN-010",
+    "shape": "pointy",
+    "pattern": "plain",
+    "stage": 1,
+    "file": "risk-pointy-s1-AN-010.png",
+    "scope": "head neck prop risk"
+  },
+  {
+    "clip": "AN-014",
+    "shape": "pointy",
+    "pattern": "plain",
+    "stage": 1,
+    "file": "risk-pointy-s1-AN-014.png",
+    "scope": "head neck prop risk"
+  },
+  {
+    "clip": "AN-006",
+    "shape": "round",
+    "pattern": "plain",
+    "stage": 1,
+    "file": "risk-round-s1-AN-006.png",
+    "scope": "head neck prop risk"
+  },
+  {
+    "clip": "AN-009",
+    "shape": "round",
+    "pattern": "plain",
+    "stage": 1,
+    "file": "risk-round-s1-AN-009.png",
+    "scope": "head neck prop risk"
+  },
+  {
+    "clip": "AN-010",
+    "shape": "round",
+    "pattern": "plain",
+    "stage": 1,
+    "file": "risk-round-s1-AN-010.png",
+    "scope": "head neck prop risk"
+  },
+  {
+    "clip": "AN-014",
+    "shape": "round",
+    "pattern": "plain",
+    "stage": 1,
+    "file": "risk-round-s1-AN-014.png",
+    "scope": "head neck prop risk"
+  },
+  {
+    "clip": "AN-006",
+    "shape": "floppy",
+    "pattern": "plain",
+    "stage": 1,
+    "file": "risk-floppy-s1-AN-006.png",
+    "scope": "head neck prop risk"
+  },
+  {
+    "clip": "AN-009",
+    "shape": "floppy",
+    "pattern": "plain",
+    "stage": 1,
+    "file": "risk-floppy-s1-AN-009.png",
+    "scope": "head neck prop risk"
+  },
+  {
+    "clip": "AN-010",
+    "shape": "floppy",
+    "pattern": "plain",
+    "stage": 1,
+    "file": "risk-floppy-s1-AN-010.png",
+    "scope": "head neck prop risk"
+  },
+  {
+    "clip": "AN-014",
+    "shape": "floppy",
+    "pattern": "plain",
+    "stage": 1,
+    "file": "risk-floppy-s1-AN-014.png",
+    "scope": "head neck prop risk"
+  }
+]

@@ -1,0 +1,29 @@
+Starting project at C:\00.MIDAS\PROJECTS\28. HackApp. 2026\Finni App
+Starting Metro Bundler
+
+Waiting on http://localhost:8081
+
+An update for expo is available: 57.0.23 → ~57.0.25
+1 other package may need updating. Run npx expo install --check for details.
+Logs for your project will appear below.
+| (node:27948) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+Android Bundled 8174ms index.ts (855 modules)
+ WARN  SafeAreaView has been deprecated and will be removed in a future release. Please use 'react-native-safe-area-context' instead. See https://github.com/AppAndFlow/react-native-safe-area-context
+ INFO  QA_SESSION_START
+ INFO  QA_PLAY {"id":1,"clip":"AN-006"}
+ INFO  QA_TERMINAL {"id":1,"kind":"finish"}
+ INFO  QA_TERMINAL {"id":1,"kind":"cancel"}
+ INFO  QA_PLAY {"id":2,"clip":"AN-009"}
+ INFO  QA_TERMINAL {"id":2,"kind":"finish"}
+ INFO  QA_TERMINAL {"id":2,"kind":"cancel"}
+ INFO  QA_PLAY {"id":3,"clip":"AN-010"}
+ INFO  QA_TERMINAL {"id":3,"kind":"finish"}
+ INFO  QA_TERMINAL {"id":3,"kind":"cancel"}
+ INFO  QA_PLAY {"id":4,"clip":"AN-013"}
+ INFO  QA_TERMINAL {"id":4,"kind":"finish"}
+ INFO  QA_TERMINAL {"id":4,"kind":"cancel"}
+ INFO  QA_PLAY {"id":5,"clip":"AN-014"}
+ INFO  QA_TERMINAL {"id":5,"kind":"finish"}
+ INFO  QA_TERMINAL {"id":5,"kind":"cancel"}
+ INFO  QA_SESSION_START

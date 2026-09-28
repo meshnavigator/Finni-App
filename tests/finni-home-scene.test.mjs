@@ -45,7 +45,8 @@ test('Home scene is local, lifecycle-aware, reduced-motion safe and bounded', ()
   assert.match(scene, /AccessibilityInfo\.isReduceMotionEnabled\(\)/);
   assert.match(scene, /reduceMotionChanged/);
   assert.match(scene, /useNativeDriver: true/);
-  assert.match(scene, /clearInterval\(blinkTimer\)/);
+  assert.match(scene, /clearTimeout\(blinkTimer\)/);
+  assert.match(scene, /clearTimeout\(openTimer\)/);
   assert.match(scene, /idle\.stop\(\)/);
   assert.match(scene, /props\.paused/);
   assert.match(scene, /onError=\{\(\) => setDecodeError\(true\)\}/);
@@ -70,7 +71,7 @@ test('first blink waits for its decoded frame without swapping image sources', (
   assert.match(scene, /onLoad=\{\(\) => setLoadedBlinkAppearance\(appearanceId\)\}/);
   assert.match(scene, /source=\{sources\.neutral\}/);
   assert.match(scene, /source=\{sources\.blink\}/);
-  assert.match(scene, /opacity: showBlink \? 0 : 1/);
-  assert.match(scene, /opacity: showBlink \? 1 : 0/);
+  assert.match(scene, /opacity: puppetVisible \|\| showBlink \? 0 : 1/);
+  assert.match(scene, /opacity: !puppetVisible && showBlink \? 1 : 0/);
   assert.doesNotMatch(scene, /source=\{animationActive/);
 });

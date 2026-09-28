@@ -1,0 +1,47 @@
+{
+  "packageId": "FINNI-GESTURE-V1",
+  "status": "owner-accepted",
+  "source": "Built-in ImageGen; original project character reference",
+  "rights": "Generated for this project from its accepted character reference; no third-party stock used",
+  "export": "Lower-body alpha selection; RGB retained; 8px concealed overlap with accepted head silhouette",
+  "assets": [
+    {
+      "pattern": "plain",
+      "source": "plain.png",
+      "sourceSha256": "29d28a7c215b319bc623154ef3550b0ada6adaab042e5874515253038e87039a",
+      "path": "plain-body.png",
+      "sha256": "9e95f1d8b4a3161fde70b858ac8597ce1303076492cb94630e4ca9593312e07a",
+      "dimensions": [
+        941,
+        1672
+      ]
+    },
+    {
+      "pattern": "spots",
+      "source": "spots.png",
+      "sourceSha256": "3ef2909d302b403fdec08605e1bc1a0c7b448ec1745cfe3e3feb88e30fdbe125",
+      "path": "spots-body.png",
+      "sha256": "a9506319f0d7b9cc7e8aa662a23d6193ec7fcae66eb9228a85731241637b1b7b",
+      "dimensions": [
+        941,
+        1670
+      ]
+    },
+    {
+      "pattern": "stripes",
+      "source": "stripes.png",
+      "sourceSha256": "c83e7d6b1899ce3985d472991970e637b9c91a976287436334150110d978dd69",
+      "path": "stripes-body.png",
+      "sha256": "6ae9be75bb028d03f610a90bffb918e84273a6a163032cd0a28e6b027947bae3",
+      "dimensions": [
+        941,
+        1672
+      ]
+    }
+  ],
+  "ownerAcceptance": {
+    "record": "owner-acceptance.json",
+    "date": "2026-09-28",
+    "scope": "FINNI-GESTURE-V1 plain/spots/stripes lower-body poses and demonstrated AN-001–014 animation art; not runtime/performance/release acceptance"
+  }
+}

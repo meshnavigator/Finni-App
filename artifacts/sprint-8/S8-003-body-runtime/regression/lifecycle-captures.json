@@ -1,0 +1,58 @@
+[
+  {
+    "name": "normal-finish",
+    "time": 1790579982.2543154
+  },
+  {
+    "name": "replacement-finish",
+    "time": 1790579987.711841
+  },
+  {
+    "name": "priority-result",
+    "time": 1790579995.9155786
+  },
+  {
+    "name": "rapid-settled",
+    "time": 1790579999.80457
+  },
+  {
+    "name": "modal-cancel",
+    "time": 1790580003.3354635
+  },
+  {
+    "name": "background-return",
+    "time": 1790580008.98057
+  },
+  {
+    "name": "skip-13",
+    "time": 1790580012.6895115
+  },
+  {
+    "name": "skip-14",
+    "time": 1790580016.1951904
+  },
+  {
+    "name": "motion-off-active",
+    "time": 1790580018.1169572
+  },
+  {
+    "name": "motion-off-idle-a",
+    "time": 1790580019.6621375
+  },
+  {
+    "name": "motion-off-idle-b",
+    "time": 1790580020.771957
+  },
+  {
+    "name": "system-reduce-active",
+    "time": 1790580022.7854161
+  },
+  {
+    "name": "system-reduce-idle-a",
+    "time": 1790580024.3439186
+  },
+  {
+    "name": "system-reduce-idle-b",
+    "time": 1790580025.4025815
+  }
+]

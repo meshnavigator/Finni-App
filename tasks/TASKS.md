@@ -141,7 +141,7 @@ S8-001 и S8-002 начаты параллельно, S8-003 начата пос
 
 - [ ] [S8-001](sprint-8/S8-001_finni-variants-stages-rig.md) — В работе: матрица 3×3 ear-seams-v3 художественно принята; neutral/blink и API26 smoke PASS; happy/thoughtful/inspired и итоговая проверка 27 сочетаний во всех позах открыты
 - [ ] [S8-002](sprint-8/S8-002_room-objects-and-catalog-assets.md) — В работе: Home, 5 OBJ и 8 IT/3 GL v3 художественно приняты, права заявлены владельцем; API 26 эмулятор пройден, physical-device отложен до S10, offline/release QA открыты
-- [ ] [S8-003](sprint-8/S8-003_animation-set-and-transitions.md) — Реестр AN подключён к Home и receipts; недостающие позы и device QA открыты
+- [ ] [S8-003](sprint-8/S8-003_animation-set-and-transitions.md) — AN-001–014 приняты; callback fix и native regression PASS в отчётном scope, physical/release gates открыты
 
 **Контрольная точка:** editable layers, deterministic exports, 27 сочетаний,
 room/catalog assets, animation matrix, rights и runtime import validation PASS.
