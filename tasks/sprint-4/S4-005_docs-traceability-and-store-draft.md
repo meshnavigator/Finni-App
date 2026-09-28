@@ -36,3 +36,21 @@
 ## Out of scope
 - презентация и питч;
 - публикация в RuStore.
+
+## Прогресс 2026-09-28
+
+README обновлён до фактического локального цикла, demo/reset и границ release.
+Добавлены [рабочая матрица 90 FR/NFR/A ID](../../docs/M1_TRACEABILITY.md)
+со ссылками на код/тесты и явными открытыми gate и
+[черновик карточки](../../docs/M1_STORE_DRAFT.md) без публикации.
+`node scripts/check-m1-traceability.mjs` проверил полноту ID и локальные пути;
+`git diff --check` прошёл. Проверка чистой сборки и трёх финальных скриншотов
+ожидает единой версии после S4-001–004.
+
+На Windows `core.autocrlf=true` меняет байты 13 tracked bundle JSON при
+checkout, поэтому текущий raw-byte content validator видит неверные SHA-256
+при чистом Git status. В `.gitattributes` добавлено `content/bundles/** -text`:
+проверка `git checkout-index --temp` для `catalogs/assets.json` получила SHA
+из manifest. Полный Verify на свежем checkout с этим правилом ещё не выполнен;
+существующие checkout требуют отдельного обновления файлов. Задача остаётся
+открытой.

@@ -1,2 +1,5 @@
 # Keep captured evidence byte-for-byte; whitespace can be part of device output and source snapshots.
 artifacts/** whitespace=-blank-at-eol,-blank-at-eof
+
+# Content manifest hashes raw bytes; checkout must preserve the stored bytes.
+content/bundles/** -text
