@@ -57,3 +57,23 @@ INTERNET для Metro. Expo config plugin восстанавливает изм�
 [QA evidence](../../Finni%20App/artifacts/sprint-4/M1-security-api26-qa/README.md).
 Поставочный APK с внешним release-ключом, uninstall/reinstall/backup-restore,
 secret scan, SBOM и лицензии остаются открытыми; задача не закрыта.
+
+## Прогресс 2026-09-28 — source/lockfile/provenance audit
+
+Статический аудит подтвердил release overlay удаления пяти разрешений,
+`allowBackup=false`, XML-исключения для cloud backup и device transfer, отсутствие
+явных сетевых API/SDK в приложении и отсутствие ключевых файлов/типичных token
+signatures в текущем дереве. Исторические пути ключей не найдены. Составлен
+CycloneDX 1.5 npm inventory из lockfile: 744 package instances с version,
+registry URL, integrity и license; 481 non-dev и 263 dev. `npm ci --offline`
+прошёл, configured Verify после временной нормализации Windows CRLF в 12 signed
+content JSON прошёл: lint/typecheck, 155 tests, content, fixtures. Нормализация
+возвращена, diff исходников не содержит. Подробности и ограничения:
+[`S4-003-security-audit`](../../artifacts/sprint-4/S4-003-security-audit/README.md).
+
+Release gate остаётся **OPEN**: полный Git-content/APK secret scan,
+Gradle/binary SBOM, поставочный подписанный APK, полный offline flow,
+delete/uninstall/reinstall/backup-restore на Android и недостающие точные
+сведения NFR-19 о модели/датированных условиях использования AI-материалов
+не подтверждены. Старое API26 QA evidence покрывает только тестово подписанный
+release-вариант и offline restart.
