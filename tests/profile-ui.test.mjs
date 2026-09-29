@@ -163,7 +163,7 @@ test('profile creation is single, update keeps identity, and restart restores a 
 
 test('Home keeps native modal/back isolation and complete financial labels', () => {
   const source = readFileSync(new URL('../src/ui/HomeScreen.tsx', import.meta.url), 'utf8');
-  assert.match(source, /importantForAccessibility=\{props\.notice \? 'no-hide-descendants'/);
+  assert.match(source, /importantForAccessibility=\{props\.notice \|\| growthOpen \? 'no-hide-descendants'/);
   assert.match(source, /minHeight: 48/);
   for (const label of ['Доступно', 'Копилка', 'Цель', 'Занятие']) assert.ok(source.includes(label));
   assert.doesNotMatch(source, /numberOfLines|maxFontSizeMultiplier|reviewConflict/);

@@ -1,6 +1,12 @@
 import { Image, Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ROOT_ROUTES, type RootRoute } from './root-navigation.ts';
+import { homeColors } from './home-colors.ts';
+
+const routeColors = {
+  home: homeColors.teal, plan: homeColors.blue, shop: homeColors.ochre,
+  savings: homeColors.lilac, more: homeColors.neutral,
+} satisfies Record<RootRoute, { ink: string; surface: string }>;
 
 const icons = {
   home: require('../../assets/ui/home-v2/home.png'), plan: require('../../assets/ui/home-v2/plan.png'),
@@ -14,9 +20,9 @@ export function RootNavigation({ selected, onNavigate, list = false, disabled = 
   return <View accessibilityRole="tablist" style={[styles.bar, list && styles.list]} testID="root-navigation">
     {ROOT_ROUTES.map(({ id, label, icon }) => <Pressable key={id} accessibilityRole="tab" accessibilityLabel={label}
       accessibilityState={{ selected: id === selected, disabled }} disabled={disabled} onPress={() => onNavigate(id)}
-      testID={'root-tab-' + id} style={({ pressed }) => [styles.tab, list && styles.listTab, id === selected && styles.selected, pressed && styles.pressed]}>
-      <Image accessible={false} source={icons[icon]} style={styles.icon} />
-      <Text style={[styles.label, list && styles.listLabel, id === selected && styles.selectedLabel]}>{label}</Text>
+      testID={'root-tab-' + id} style={({ pressed }) => [styles.tab, list && styles.listTab, id === selected && { backgroundColor: routeColors[id].surface }, pressed && styles.pressed]}>
+      <Image accessible={false} source={icons[icon]} style={[styles.icon, { tintColor: routeColors[id].ink }]} />
+      <Text style={[styles.label, list && styles.listLabel, id === selected && [styles.selectedLabel, { color: routeColors[id].ink }]]}>{label}</Text>
     </Pressable>)}
   </View>;
 }
@@ -64,7 +70,7 @@ const styles = StyleSheet.create({
   tab: { flex: 1, minWidth: 48, minHeight: 48, paddingVertical: 4, gap: 2, alignItems: 'center', justifyContent: 'center', borderRadius: 17 },
   icon: { width: 24, height: 24 },
   label: { color: '#665444', fontSize: 12, lineHeight: 15, includeFontPadding: false },
-  selected: { backgroundColor: '#EEDFCA' }, selectedLabel: { color: '#603C24', fontWeight: '700' },
+  selectedLabel: { fontWeight: '700' },
   list: { margin: 0, marginHorizontal: 0, marginBottom: 0, padding: 0, flexDirection: 'column', gap: 10, backgroundColor: 'transparent' },
   listTab: { flex: 0, padding: 16, gap: 16, minHeight: 64, flexDirection: 'row', justifyContent: 'flex-start', backgroundColor: '#FFFCF6' },
   listLabel: { fontSize: 16, lineHeight: 22, flexShrink: 1 },

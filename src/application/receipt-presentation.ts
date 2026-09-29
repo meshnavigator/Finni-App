@@ -17,7 +17,7 @@ export type PresentationEvent = Readonly<{
   commandType: CommandReceipt['commandType'];
   before: MoneySnapshot;
   after: MoneySnapshot;
-  expression: 'happy' | 'thoughtful' | 'inspired';
+  expression: 'neutral' | 'happy' | 'thoughtful' | 'inspired';
   clip: FinniClipId;
   objectId: string | null;
   skippable: boolean;
@@ -35,7 +35,7 @@ function effectFor(receipt: CommandReceipt): Pick<PresentationEvent, 'expression
     case 'SelectGoal': return receipt.result.feedback.params.goalId === 'none'
       ? null : { expression: 'thoughtful', clip: 'AN-006', objectId: null, skippable: false, priority: 70 };
     case 'DepositSavings': return { expression: 'inspired', clip: 'AN-012', objectId: null, skippable: false, priority: 80 };
-    case 'WithdrawSavings': return { expression: 'thoughtful', clip: 'AN-012', objectId: null, skippable: false, priority: 80 };
+    case 'WithdrawSavings': return { expression: 'neutral', clip: 'AN-012', objectId: null, skippable: false, priority: 80 };
     case 'ClaimGoal': return { expression: 'inspired', clip: 'AN-013', objectId: String(receipt.result.feedback.params.goalId ?? ''), skippable: true, priority: 100 };
     case 'CompleteLesson': return receipt.result.feedback.code === 'LESSON_REWARD_GRANTED'
       ? { expression: 'happy', clip: 'AN-007', objectId: null, skippable: false, priority: 80 } : null;
@@ -91,6 +91,9 @@ export class ReceiptPresentationController {
       before: receipt.result.before,
       after: receipt.result.after,
     });
+    // Withdrawing is a neutral financial choice: do not replay an older emotion
+    // over or after its factual result (SRS 8.1).
+    if (receipt.commandType === 'WithdrawSavings') this.cancel();
     this.#queue.push(event);
     this.#queue.sort((a, b) => b.priority - a.priority || a.id - b.id);
     if (this.#queue.length > 4) this.#queue.length = 4;

@@ -7,6 +7,7 @@ import ts from 'typescript';
 import { ROOT_ROUTES, isRootRoute, usesLargeNavigation } from '../src/ui/root-navigation.ts';
 import { homeScreenModel } from '../src/application/ui-model.ts';
 import { homeNextStep } from '../src/ui/home-next-step.ts';
+import { homeColors } from '../src/ui/home-colors.ts';
 const require = createRequire(import.meta.url);
 
 // Execute the real JSX with host primitives; layout is verified separately on Android.
@@ -17,13 +18,17 @@ function component(file, dimensions = { width: 360, height: 640, fontScale: 1 })
     compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX },
   }).outputText;
   vm.runInNewContext(source, { module, exports: module.exports, require: (id) => {
-    if (id === 'react') return { useState: (initial) => { const index = cursor++; if (!(index in values)) values[index] = initial; return [values[index], (value) => { values[index] = value; }]; } };
+    if (id === 'react') return {
+      useState: (initial) => { const index = cursor++; if (!(index in values)) values[index] = initial; return [values[index], (value) => { values[index] = value; }]; },
+      useEffect: () => {}, useCallback: (callback) => callback,
+    };
     if (id === 'react/jsx-runtime') return require(id);
     if (id === 'react-native') return { ...Object.fromEntries(['View', 'Text', 'Pressable', 'Image', 'Modal', 'ScrollView'].map((x) => [x, x])), StyleSheet: { create: (x) => x, absoluteFill: {} }, useWindowDimensions: () => dimensions };
     if (id === 'react-native-safe-area-context') return { SafeAreaView: 'SafeAreaView' };
     if (id.endsWith('root-navigation.ts')) return { ROOT_ROUTES, usesLargeNavigation };
     if (id.endsWith('ui-model.ts')) return { homeScreenModel };
     if (id.endsWith('home-next-step.ts')) return { homeNextStep };
+    if (id.endsWith('home-colors.ts')) return { homeColors };
     if (id.endsWith('room-assets.ts')) return { goalSource: () => null };
     if (id.endsWith('FinniHomeScene.tsx')) return 'FinniHomeScene';
     if (id.endsWith('.png')) return id;

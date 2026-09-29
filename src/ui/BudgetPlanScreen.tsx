@@ -17,6 +17,7 @@ import {
   type PlanDraftFields,
 } from '../application/budget-plan-model.ts';
 import type { Plan } from '../domain/economy.ts';
+import { useKeyboardScrollInset } from './use-keyboard-scroll-inset.ts';
 
 type FieldKey = keyof PlanDraftFields;
 
@@ -129,6 +130,7 @@ export default function BudgetPlanScreen(props: Readonly<{
   onConfirm: (values: Plan, acknowledgedLowNeed: boolean) => void;
   onAllocate: (values: Plan) => void;
 }>) {
+  const keyboardInset = useKeyboardScrollInset();
   const lifecycle = props.snapshot.lifecycle!;
   const budget = props.snapshot.budget;
   const [fields, setFields] = useState<PlanDraftFields>(emptyFields);
@@ -154,7 +156,7 @@ export default function BudgetPlanScreen(props: Readonly<{
   if (lifecycle.state === 'DRAFT') {
     return (
       <SafeAreaView style={styles.page}>
-        <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={[styles.content, compactDraft && styles.draftContent]}>
+        <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={[styles.content, compactDraft && styles.draftContent, { paddingBottom: (compactDraft ? 4 : 20) + keyboardInset }]}>
           <Text style={styles.eyebrow}>ПЛАН НА ДЕНЬ</Text>
           <Text style={styles.title}>Распредели {lifecycle.available} монет</Text>
           <Text style={[styles.body, compactDraft && styles.draftBody]}>Можно оставить часть суммы свободной и изменить план до подтверждения.</Text>
@@ -181,7 +183,7 @@ export default function BudgetPlanScreen(props: Readonly<{
               style={[styles.warning, compactDraft && styles.draftWarning]}
             >
               <Text style={styles.warningText}>
-                {acknowledgedLowNeed ? '✓ ' : ''}На необходимое меньше 40. Я понимаю и хочу продолжить.
+                {acknowledgedLowNeed ? '✓ ' : ''}На нужное меньше 40 монет. Всё равно продолжить?
               </Text>
             </Pressable>
           )}
@@ -199,7 +201,7 @@ export default function BudgetPlanScreen(props: Readonly<{
   const rows = budget ? planFactRows(budget) : [];
   return (
     <SafeAreaView style={styles.page}>
-      <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={styles.content}>
+      <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={[styles.content, { paddingBottom: 20 + keyboardInset }]}>
         <Text style={styles.eyebrow}>ПЛАН / ПОЛУЧИЛОСЬ</Text>
         <Text style={styles.title}>План остаётся на месте</Text>
         <Text style={styles.body}>Новый доход показан отдельно и не меняет прошлые решения.</Text>

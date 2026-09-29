@@ -16,6 +16,8 @@ flowchart TD
   Peers --> Home[HomeScreen: обязательная сводка]
   Home --> Money[Деньги / мечта / прогресс / остаток]
   Home --> Scene[Сцена или крупный портрет Финни]
+  Home --> GrowthHelp[Как растёт: условия трёх стадий]
+  Scene --> ReactionLabel[Подпись действия и короткий результат]
   Scene --> Pet[Принятые PNG / expressions / fallback]
   Home --> Skip[Отдельный временный Пропуск]
   Skip --> Pet
@@ -35,14 +37,22 @@ flowchart TD
   Next --> Peers
   Next --> Details
   Money --> Savings[Копилка: видимое получение достигнутой цели]
-  Peers --> Confirm[Native Alert: purchase / transfer / claim]
+  Peers --> Shop[Покупки: категории / статус выбранного варианта]
+  Shop --> ShopDetail[Подробнее: цена / эффект / остаток / причина блокировки]
+  ShopDetail --> Buy[Купить за сумму]
+  Buy --> Commands
+  Peers --> Confirm[Native Alert: transfer / claim]
   Details --> Close[Native Alert: close period]
   Confirm --> Commands[Существующие domain commands]
   Close --> Commands
   Commands --> DB
   DB --> Receipt[Persisted command receipt + snapshot]
   Receipt --> Guard[ReceiptPresentationController: id/profile/mode/epoch/revision]
-  Guard --> Queue[Ограниченная очередь; приоритет goal/stage]
+  Receipt -->|Успешная покупка| Home
+  Guard --> Withdrawal{Снятие из копилки?}
+  Withdrawal -->|Да| Calm[Очистить прежние эмоции; neutral + AN-012]
+  Withdrawal -->|Нет| Queue[Ограниченная очередь; приоритет goal/stage]
+  Calm --> Scene
   Queue --> Scene
   Scene --> Done[Finish / skip / cancel только presentation]
   Root --> Clear[Navigation / mode / profile / reset: clear queue]
@@ -54,6 +64,8 @@ flowchart TD
 ```
 
 Home и общая панель только открывают маршруты. Финансовое подтверждение выполняется внутри существующего экрана; панель не показывается поверх native Alert. Подписанные вкладки постоянны на пяти roots и отражают текущий экран; в крупном режиме используется тот же набор IDs списком. Незавершённая анимация не заменяет меню действием пропуска.
+
+В Покупках «Подробнее» открывает детали без списания. Покупка подтверждается отдельной кнопкой с суммой; занятый дневной слот и нехватка видны в деталях и карточке. После успешного сохранения покупки Home показывает реакцию с подписью. «Как растёт?» на Home объясняет сроки и признаки стадий без изменения формулы роста.
 
 S9-002: реакция после покупки, перевода, цели, награды или смены стадии берётся из сохранённого receipt и нового snapshot. Вход в Home показывает ожидающий финансовый/стадийный эффект; награда занятия показывается на экране LessonShell из точного `before/after`, чтобы сохранить обычный маршрут возврата. Переход на иной маршрут уничтожает очередь или активный эффект. Finish/skip не вызывает команду и не изменяет сумму. Boot загружает snapshot без replay декоративных событий.
 

@@ -38,8 +38,11 @@ test('LessonShell exposes hints and the full action-to-next-step contract', () =
   assert.match(source, /Следующий шаг/);
   assert.match(source, /Завершить с разбором/);
   assert.match(source, /phase !== 'completed'/);
-  assert.match(source, /невалидный ввод нельзя завершить/);
-  assert.match(source, /Короткая справка/);
+  assert.match(source, /Проверь числа в ответе и попробуй ещё раз/);
+  assert.doesNotMatch(source, /невалидный ввод нельзя завершить/);
+  assert.match(source, /Короткая подсказка/);
+  assert.match(source, /'Подсказка' : 'Показать пример'/);
+  assert.doesNotMatch(source, /Подсказка L1|Показать пример L2/);
   assert.match(source, /returnLabel/);
   assert.match(source, /onHelp/);
   assertSharedControlTargets(source);

@@ -42,7 +42,7 @@ export function discoveryAction(discovery: LessonDiscovery): string {
 
 export function discoveryOutcome(discovery: LessonDiscovery): string {
   if (discovery.completionKind === 'reviewed') return 'Завершили с разбором';
-  if (discovery.evaluation.outcome === 'valid_alternative') return 'Допустимый другой вариант';
+  if (discovery.evaluation.outcome === 'valid_alternative') return 'Другой подходящий вариант';
   return 'Разобрали решение';
 }
 

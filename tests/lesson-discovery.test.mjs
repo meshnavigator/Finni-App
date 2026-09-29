@@ -44,7 +44,7 @@ test('discovery copy reports saved choices for all mechanics without claiming ma
     assert.doesNotMatch(discoveryOutcome(item), /освоил|научил|умеешь/i);
   }
   assert.equal(discoveryOutcome(discovery('allocation', {}, 'needs_review')), 'Завершили с разбором');
-  assert.equal(discoveryOutcome(discovery('basket', {}, 'valid_alternative')), 'Допустимый другой вариант');
+  assert.equal(discoveryOutcome(discovery('basket', {}, 'valid_alternative')), 'Другой подходящий вариант');
   assert.match(discoveryHelp(discovery('allocation', {}, 'meets_goal', ['L2'])), /L2/);
   assert.match(discoveryHelp(discovery('allocation', {})), /не открывались/);
 });

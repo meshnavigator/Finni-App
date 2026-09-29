@@ -29,7 +29,7 @@ const BLINK_CYCLE_FRAMES = 24;
 let sessionGreeted = false;
 export type HomeReaction = Readonly<{
   id: number;
-  expression: Extract<FinniExpression, 'happy' | 'thoughtful' | 'inspired'>;
+  expression: FinniExpression;
   clip: FinniClipId;
   objectId: string | null;
   value: number;
