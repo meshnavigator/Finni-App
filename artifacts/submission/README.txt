@@ -3,6 +3,8 @@
 Документация: Finni_Documentation_1.0.0.pdf (18 страниц)
 Подробные документы и редактируемый исходник: Finni_Documentation_1.0.0.zip
 Прототип: ../release/finni-1.0.0-release.apk
+Исходный код: https://github.com/meshnavigator/Finni-App/tree/main
+Метка исходников APK: https://github.com/meshnavigator/Finni-App/tree/v1.0.0
 
 В поля формы на скриншоте следует вставить общедоступные ссылки:
 «Документация» — на PDF; «Прототип» — на APK.
