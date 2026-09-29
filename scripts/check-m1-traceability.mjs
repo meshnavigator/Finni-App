@@ -4,7 +4,8 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const matrix = readFileSync(path.join(root, 'docs/M1_TRACEABILITY.md'), 'utf8');
+const projectRoot = path.resolve(root, '..');
+const matrix = readFileSync(path.join(projectRoot, 'docs/M1_TRACEABILITY.md'), 'utf8');
 const expected = [
   ...Array.from({ length: 56 }, (_, index) => `FR-${String(index + 1).padStart(2, '0')}`),
   ...Array.from({ length: 22 }, (_, index) => `NFR-${String(index + 1).padStart(2, '0')}`),
@@ -19,11 +20,12 @@ const missing = [];
 for (const row of rows) {
   const id = row.split('|')[1].trim();
   const paths = [...row.matchAll(/`([^`]+)`|\]\(\.\.\/([^)]*)\)/g)]
-    .map((match) => match[1] ?? match[2])
+    .map((match) => (match[1] ?? match[2]).replace(/^Finni%20App\//, ''))
     .filter((candidate) => prefixes.some((prefix) => candidate.startsWith(prefix)));
   assert.ok(paths.length > 0 || ['NFR-02', 'NFR-04', 'NFR-05', 'NFR-14', 'NFR-17', 'NFR-18', 'NFR-19', 'NFR-22'].includes(id), `${id}: no source or evidence path`);
   for (const candidate of paths) {
-    if (!existsSync(path.join(root, candidate))) missing.push(`${id}: ${candidate}`);
+    const base = candidate.startsWith('docs/') ? projectRoot : root;
+    if (!existsSync(path.join(base, candidate))) missing.push(`${id}: ${candidate}`);
   }
 }
 assert.deepEqual(missing, [], `Missing matrix paths:\n${missing.join('\n')}`);
