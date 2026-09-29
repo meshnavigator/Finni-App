@@ -3,6 +3,7 @@ import { Image, Modal, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, Vi
 import type { AppSnapshot } from '../application/app-runtime.ts';
 import { CATALOG, type CatalogItem, type PurchaseSlot } from '../domain/catalog.ts';
 import { itemSource } from './room-assets.ts';
+import { petCatalogText } from './pet-copy.ts';
 
 type Preview = Readonly<{ after: { available: number } | null; missing: number | null; occupiedSlot: boolean; planOverrun: boolean }>;
 type Props = Readonly<{
@@ -24,6 +25,7 @@ function Button(props: Readonly<{ label: string; onPress: () => void; disabled?:
 }
 
 export default function ShopScreen(props: Props) {
+  const petName = props.snapshot.profile?.name ?? 'питомец';
   const [selected, setSelected] = useState<CatalogItem | null>(null);
   const [preview, setPreview] = useState<Preview | null>(null);
   const [checking, setChecking] = useState(false);
@@ -69,19 +71,19 @@ export default function ShopScreen(props: Props) {
   return <SafeAreaView style={styles.page}>
     <ScrollView contentContainerStyle={styles.content}>
       <Text accessibilityRole="header" style={styles.title}>Покупки</Text>
-      <Text style={styles.intro}>На день нужны еда и уход для Финни. Занятие — по желанию. В каждой группе можно выбрать только один вариант.</Text>
+      <Text style={styles.intro}>На день нужны еда и уход для питомца «{petName}». Занятие — по желанию. В каждой группе можно выбрать только один вариант.</Text>
       {!active && <Text style={styles.notice}>{draft ? 'Сначала подтверди план на день. Сейчас можно посмотреть покупки.' : 'Покупать снова можно будет в новом игровом дне. Пока можно посмотреть варианты.'}</Text>}
       {CATALOG.map((item) => {
         const picked = chosenInSlot(item.slot);
         const bought = picked?.id === item.id;
-        const status = bought ? 'Куплено сегодня' : picked ? `Сегодня уже выбрано: ${picked.name}` : 'Можно выбрать сегодня';
+        const status = bought ? 'Куплено сегодня' : picked ? `Сегодня уже выбрано: ${petCatalogText(picked.name, petName)}` : 'Можно выбрать сегодня';
         return <View key={item.id} style={[styles.card, bought && styles.boughtCard]}>
           <View style={styles.cardHeader}>
             {itemSource(item.id) && <Image accessibilityIgnoresInvertColors source={itemSource(item.id)!} style={styles.thumbnail} />}
             <View style={styles.cardCopy}>
               <Text style={[styles.category, item.category === 'need' ? styles.need : styles.want]}>{item.category === 'need' ? 'Нужно' : 'По желанию'} · {slotName[item.slot]}</Text>
-              <Text style={styles.name}>{item.name} — {item.price} монет</Text>
-              <Text style={styles.effect}>{item.effect}</Text>
+              <Text style={styles.name}>{petCatalogText(item.name, petName)} — {item.price} монет</Text>
+              <Text style={styles.effect}>{petCatalogText(item.effect, petName)}</Text>
               <Text accessibilityLiveRegion="polite" style={[styles.status, bought && styles.boughtStatus]}>{status}</Text>
             </View>
           </View>
@@ -90,19 +92,19 @@ export default function ShopScreen(props: Props) {
       })}
       <View style={styles.nextCard}>
         <Text style={styles.nextTitle}>Что дальше?</Text>
-        <Text style={styles.intro}>Вернись в Домик: там видно, что нужно Финни сегодня, и какой шаг следующий.</Text>
+        <Text style={styles.intro}>Вернись в Домик: там видно, что нужно питомцу «{petName}» сегодня, и какой шаг следующий.</Text>
         <Button label="В Домик" onPress={props.onHome} />
       </View>
     </ScrollView>
     <Modal visible={Boolean(selected)} transparent animationType="fade" onRequestClose={close} accessibilityViewIsModal>
       <View style={styles.overlay}>
         {selected && <ScrollView style={styles.detail} contentContainerStyle={styles.detailContent}>
-          <Text accessibilityRole="header" style={styles.detailTitle}>{selected.name}</Text>
+          <Text accessibilityRole="header" style={styles.detailTitle}>{petCatalogText(selected.name, petName)}</Text>
           <Text style={styles.detailBody}>{selected.category === 'need' ? 'Нужно для заботы' : 'По желанию'} · {slotName[selected.slot]}</Text>
-          <Text style={styles.detailBody}>{selected.effect}. Цена: {selected.price} монет.</Text>
+          <Text style={styles.detailBody}>{petCatalogText(selected.effect, petName)}. Цена: {selected.price} монет.</Text>
           {chosen ? <Text accessibilityLiveRegion="polite" style={styles.detailBody}>{chosen.id === selected.id
             ? 'Уже куплено сегодня. Завтра можно выбрать снова.'
-            : `Сегодня уже выбрано: ${chosen.name}. Другой вариант можно выбрать завтра.`}</Text>
+            : `Сегодня уже выбрано: ${petCatalogText(chosen.name, petName)}. Другой вариант можно выбрать завтра.`}</Text>
             : !active ? <Text style={styles.detailBody}>{draft ? 'Покупки откроются после подтверждения плана на день.' : 'Новая покупка будет доступна в следующем игровом дне.'}</Text>
             : checking && !preview ? <Text style={styles.detailBody}>Проверяем монеты…</Text>
             : preview?.occupiedSlot ? <Text style={styles.detailBody}>Сегодня этот вид покупки уже выбран.</Text>

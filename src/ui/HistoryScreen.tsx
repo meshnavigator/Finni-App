@@ -6,6 +6,7 @@ import { LOCAL_DEMO_LESSONS } from '../content/local-lesson-catalog.ts';
 import type { LessonDiscovery } from '../persistence/lesson-repository.ts';
 import { discoveryAction, discoveryHelp, discoveryOutcome } from './lesson-discovery-summary.ts';
 import type { AppSnapshot } from '../application/app-runtime.ts';
+import { petCatalogText } from './pet-copy.ts';
 
 const operationLabels: Readonly<Record<string, string>> = Object.freeze({
   PERIOD_INCOME: 'Монеты на новый день',
@@ -28,6 +29,7 @@ export default function HistoryScreen(props: Readonly<{
   onPractice: (lessonId: string, previousVariantId: string) => void;
 }>) {
   const lifecycle = props.snapshot.lifecycle!;
+  const petName = props.snapshot.profile?.name ?? 'питомец';
   const commerce = props.snapshot.commerce;
   const summary = lifecycle.latestSummary;
   const history = commerce?.history ?? [];
@@ -40,15 +42,15 @@ export default function HistoryScreen(props: Readonly<{
         <Text style={styles.eyebrow}>ПРОГРЕСС И ИСТОРИЯ</Text>
         <Text accessibilityRole="header" style={styles.title}>Что уже получилось</Text>
 
-        <View style={styles.card} accessible accessibilityLabel={`Стадия Финни ${lifecycle.petStage} из 3`}>
-          <Text accessibilityRole="header" style={styles.cardTitle}>Финни растёт вместе с решениями</Text>
+        <View style={styles.card} accessible accessibilityLabel={`Стадия питомца ${petName}: ${lifecycle.petStage} из 3`}>
+          <Text accessibilityRole="header" style={styles.cardTitle}>{petName} растёт вместе с решениями</Text>
           <Text style={styles.value}>Стадия {lifecycle.petStage} из 3</Text>
           <Text style={styles.caption}>Завершено игровых дней: {lifecycle.closedPeriods}</Text>
         </View>
 
         <View style={styles.card}>
           <Text accessibilityRole="header" style={styles.cardTitle}>Текущая мечта</Text>
-          <Text style={styles.value}>{goal ? `${goal.name} · ${goal.cost} монет` : 'Мечта пока не выбрана'}</Text>
+          <Text style={styles.value}>{goal ? `${petCatalogText(goal.name, petName)} · ${goal.cost} монет` : 'Мечта пока не выбрана'}</Text>
           <Text style={styles.caption}>В копилке: {lifecycle.savings}</Text>
         </View>
 

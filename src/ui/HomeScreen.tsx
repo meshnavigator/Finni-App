@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from 'react';
-import { Image, Modal, Pressable, ScrollView, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Alert, Image, Modal, Pressable, ScrollView, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import type { AppSnapshot } from '../application/app-runtime.ts';
 import { homeScreenModel } from '../application/ui-model.ts';
 import FinniHomeScene, { type HomeReaction } from './FinniHomeScene.tsx';
@@ -8,12 +8,16 @@ import { homeNextStep } from './home-next-step.ts';
 import { usesLargeNavigation } from './root-navigation.ts';
 import type { SceneRect } from './home-scene-layout.ts';
 import { homeColors } from './home-colors.ts';
+import HomeReactionBanner from './HomeReactionBanner.tsx';
+import { homeReactionMessage } from './home-reaction-copy.ts';
+import { petCatalogText } from './pet-copy.ts';
+import type { HomeLessonStatus } from '../application/home-lesson.ts';
 
 export type HomeScreenProps = Readonly<{
   snapshot: AppSnapshot; busy: boolean; notice: string | null; scenePaused: boolean;
-  motionEnabled: boolean; soundEnabled: boolean; reaction: HomeReaction | null; lessonTitle: string | null; demo: boolean;
+  motionEnabled: boolean; soundEnabled: boolean; reaction: HomeReaction | null; lessonTitle: string | null; lessonStatus: HomeLessonStatus; demo: boolean;
   onReactionFinished: (id: number) => void; onReactionCancelled: (id: number) => void;
-  onDismissNotice: () => void; onOpenDay: () => void; onResults: () => void; onEditPet: () => void;
+  onDismissNotice: () => void; onOpenDay: () => void; onNextDemoDay: () => void; onResults: () => void; onEditPet: () => void;
   onMenu: () => void; onLesson: () => void; onSection: (title: string) => void;
 }>;
 
@@ -21,12 +25,6 @@ const ICONS = {
   book: require('../../assets/ui/home-v2/book.png'),
   food: require('../../assets/ui/home-v2/food.png'), care: require('../../assets/ui/home-v2/care.png'),
   mood: require('../../assets/ui/home-v2/mood.png'), arrow: require('../../assets/ui/home-v2/arrow.png'),
-};
-const REACTION_CAPTIONS: Record<string, string> = {
-  'AN-006': 'Финни задумался о мечте', 'AN-007': 'Финни радуется!',
-  'AN-009': 'Финни ест и радуется!', 'AN-010': 'Финни ухаживает за шерстью!',
-  'AN-011': 'План сохранён. Финни его заметил!', 'AN-012': 'Финни следит за монетами',
-  'AN-013': 'Мечта получена!', 'AN-014': 'Финни вырос: новая стадия!',
 };
 function Icon({ name, size = 24, color }: Readonly<{ name: keyof typeof ICONS; size?: number; color?: string }>) {
   return <Image accessible={false} source={ICONS[name]} style={{ width: size, height: size, tintColor: color }} />;
@@ -48,7 +46,8 @@ export default function HomeScreen(props: HomeScreenProps) {
   const [skipReactionId, setSkipReactionId] = useState<number | null>(null);
   const [failedGoal, setFailedGoal] = useState<string | null>(null);
   const [growthOpen, setGrowthOpen] = useState(false);
-  const [recentCaption, setRecentCaption] = useState<string | null>(null);
+  const [recentReaction, setRecentReaction] = useState<HomeReaction | null>(null);
+  const [captionExiting, setCaptionExiting] = useState(false);
   const [sceneSize, setSceneSize] = useState({ width: viewport.width - 24, height: 260 });
   const canSkip = props.reaction?.skippable && skipReactionId !== props.reaction.id;
   const hasFood = purchases.some(({ item }) => item.slot === 'food');
@@ -56,40 +55,50 @@ export default function HomeScreen(props: HomeScreenProps) {
   const closed = life.state === 'CLOSED' || life.state === 'WAITING';
   const food = hasFood ? 'Еда: есть' : closed ? 'Еда: нет' : 'Еда: выберем';
   const care = hasCare ? 'Уход: есть' : closed ? 'Уход: нет' : 'Уход: выберем';
-  const mood = props.reaction?.expression === 'happy' ? 'Радостно' : props.reaction?.expression === 'thoughtful' ? 'Задумчиво'
-    : props.reaction?.expression === 'inspired' ? 'Вдохновлён' : 'Спокойно';
-  const reactionCaption = props.reaction
-    ? REACTION_CAPTIONS[props.reaction.clip] ?? 'Финни заметил твой выбор!'
-    : recentCaption;
+  const mood = props.reaction?.expression === 'happy' ? 'Радостный' : props.reaction?.expression === 'thoughtful' ? 'Задумчивый'
+    : props.reaction?.expression === 'inspired' ? 'Вдохновлённый' : 'Спокойный';
+  const bannerReaction = props.reaction ?? recentReaction;
+  const bannerMessage = useMemo(() => bannerReaction ? homeReactionMessage(bannerReaction, profile.name) : null,
+    [bannerReaction, profile.name]);
   useEffect(() => {
-    if (!recentCaption) return;
-    const timer = setTimeout(() => setRecentCaption(null), 3000);
-    return () => clearTimeout(timer);
-  }, [recentCaption]);
-  const activeReactionId = props.reaction?.id;
-  const activeReactionClip = props.reaction?.clip;
+    if (!recentReaction || !props.motionEnabled) return;
+    const exitTimer = setTimeout(() => setCaptionExiting(true), 2780);
+    const clearTimer = setTimeout(() => setRecentReaction(null), 3000);
+    return () => { clearTimeout(exitTimer); clearTimeout(clearTimer); };
+  }, [recentReaction, props.motionEnabled]);
+  const activeReaction = props.reaction;
   const onReactionFinished = props.onReactionFinished;
   const onReactionCancelled = props.onReactionCancelled;
   const handleReactionFinished = useCallback((id: number) => {
-    if (activeReactionId === id && activeReactionClip) setRecentCaption(REACTION_CAPTIONS[activeReactionClip] ?? 'Финни заметил твой выбор!');
+    if (activeReaction?.id === id) { setCaptionExiting(false); setRecentReaction(activeReaction); }
     onReactionFinished(id);
-  }, [activeReactionId, activeReactionClip, onReactionFinished]);
+  }, [activeReaction, onReactionFinished]);
   const handleReactionCancelled = useCallback((id: number) => {
-    setRecentCaption(null);
+    setCaptionExiting(false);
+    setRecentReaction(null);
     onReactionCancelled(id);
   }, [onReactionCancelled]);
   const allGoals = (props.snapshot.commerce?.claimedGoalIds.length ?? 0) === 3;
-  const goalName = goal?.name ?? (allGoals ? 'Все мечты получены' : 'Выбери мечту');
+  const goalName = goal ? petCatalogText(goal.name, profile.name) : allGoals ? 'Все мечты получены' : 'Выбери мечту';
   const remaining = goal ? Math.max(0, goal.cost - life.savings) : null;
   const goalImage = goalSource(goal?.id ?? null);
-  const next = homeNextStep({ state: life.state, hasFood, hasCare, hasGoal: Boolean(goal), allGoals, savings: life.savings, large });
+  const next = homeNextStep({ state: life.state, hasFood, hasCare, hasGoal: Boolean(goal), allGoals, savings: life.savings, large, demo: props.demo });
   const runNext = () => {
     if (next.route === 'open-day') props.onOpenDay();
+    else if (next.route === 'advance-demo-day') Alert.alert(
+      'Следующий демо-день?',
+      'Текущий день уже закрыт. Дата перейдёт на один день вперёд. Монеты появятся после кнопки «Начать день».',
+      [{ text: 'Отмена', style: 'cancel' }, { text: 'Продолжить', onPress: props.onNextDemoDay }],
+    );
     else if (next.route === 'results') props.onResults();
     else if (next.route !== 'waiting') props.onSection(next.route);
   };
   const portraitSize = short ? 120 : 152;
-  const blocked = props.busy || !model.action.enabled;
+  const blocked = props.busy || (next.route !== 'advance-demo-day' && !model.action.enabled);
+  const dayLabel = props.demo && life.state === 'READY' && life.periodIndex !== null
+    ? `День ${life.periodIndex + 1} готов` : model.dayLabel;
+  const lessonLabel = !props.lessonTitle ? 'Занятие' : props.lessonStatus === 'completed'
+    ? '✓ Пройдено · повторить' : props.lessonStatus === 'in-progress' ? 'Продолжить занятие' : 'Следующее занятие';
   const petRegion: SceneRect = large
     ? { x: 0, y: 0, width: portraitSize, height: portraitSize }
     : { x: 24, y: short ? 8 : 34, width: Math.max(80, sceneSize.width - 48), height: Math.max(48, sceneSize.height - (short ? 46 : 84)) };
@@ -143,7 +152,7 @@ export default function HomeScreen(props: HomeScreenProps) {
       </View>
 
       <View style={[styles.scene, short && styles.shortScene, large && [styles.largeScene, { height: canSkip ? Math.max(144, portraitSize) : portraitSize }]]} onLayout={({ nativeEvent: { layout } }) => setSceneSize(layout)} testID="home-scene-space">
-        {reactionCaption && <Text pointerEvents="none" accessibilityLiveRegion="polite" style={[styles.reactionCaption, large && styles.largeReactionCaption]}>{reactionCaption}</Text>}
+        <HomeReactionBanner eventId={bannerReaction?.id ?? null} message={bannerMessage} motionEnabled={props.motionEnabled} large={large} exiting={!props.reaction && captionExiting} />
         {!large && <>
           <View pointerEvents="none" style={styles.roomArch} /><View pointerEvents="none" style={styles.roomLight} />
           <View pointerEvents="none" accessible={false} importantForAccessibility="no-hide-descendants" style={styles.roomWindow}>
@@ -151,11 +160,11 @@ export default function HomeScreen(props: HomeScreenProps) {
           </View>
           <View pointerEvents="none" style={styles.roomFloor} />
           <View pointerEvents="none" style={[styles.rug, { top: petRegion.y + petRegion.height - 18 }]} />
-          {!short && <View style={styles.identity}><Text style={styles.petName}>{profile.name}</Text><Text style={styles.caption}>{model.dayLabel}{props.demo ? ' · Демо' : ''}</Text></View>}
+          {!short && <View style={styles.identity}><Text style={styles.petName}>{profile.name}</Text><Text style={styles.caption}>{dayLabel}{props.demo ? ' · Демо' : ''}</Text></View>}
           {canSkip && <View style={styles.sceneMenu}>{skipButton}</View>}
         </>}
         <View pointerEvents="none" importantForAccessibility="no-hide-descendants" style={large ? [styles.portrait, { width: portraitSize, height: portraitSize }] : StyleSheet.absoluteFill}>
-          <FinniHomeScene key={profile.shapeId + '-' + profile.patternId} accessibilityLabel={profile.name + '. ' + food + '. ' + care + '. ' + mood}
+          <FinniHomeScene key={profile.shapeId + '-' + profile.patternId} petName={profile.name} accessibilityLabel={profile.name + '. ' + food + '. ' + care + '. ' + mood}
             careLabel={food + '. ' + care} height={large ? portraitSize : sceneSize.height} paused={props.scenePaused || Boolean(props.notice) || growthOpen}
             motionEnabled={props.motionEnabled} soundEnabled={props.soundEnabled} stage={life.petStage} appearance={profile} reaction={props.reaction}
             onReactionFinished={handleReactionFinished} onReactionCancelled={handleReactionCancelled}
@@ -163,17 +172,17 @@ export default function HomeScreen(props: HomeScreenProps) {
         </View>
         <Pressable accessibilityRole="button" accessibilityLabel={profile.name + ', стадия ' + life.petStage + '. ' + mood + '. Изменить питомца'} onPress={props.onEditPet}
           style={large ? [styles.portraitTarget, { width: portraitSize, height: portraitSize }] : [styles.petTarget, { left: petRegion.x, top: petRegion.y + (short ? 48 : 24), width: petRegion.width, height: Math.max(48, petRegion.height - (short ? 48 : 24)) }]} testID="home-pet-target" />
-        <Pressable accessibilityRole="button" accessibilityLabel="Как растёт Финни" onPress={() => setGrowthOpen(true)}
+        <Pressable accessibilityRole="button" accessibilityLabel={`Как растёт ${profile.name}`} onPress={() => setGrowthOpen(true)}
           style={({ pressed }) => [styles.growthButton, large && styles.largeGrowthButton, pressed && styles.pressed]} testID="home-growth-help">
           <Text style={styles.growthButtonText}>Как растёт?</Text>
         </Pressable>
         {state}
       </View>
 
-      <Pressable accessibilityRole="button" accessibilityHint="Открывает это занятие" disabled={props.busy} accessibilityState={{ disabled: props.busy }} onPress={props.onLesson}
+      <Pressable accessibilityRole="button" accessibilityLabel={`${lessonLabel}. ${props.lessonTitle ?? 'Выбери занятие'}`} accessibilityHint="Открывает это занятие" disabled={props.busy} accessibilityState={{ disabled: props.busy }} onPress={props.onLesson}
         style={({ pressed }) => [styles.lesson, short && !large && styles.shortLesson, large && styles.largeLesson, pressed && styles.pressed]} testID="home-lesson">
         {!large && <View style={styles.lessonIcon}><Icon name="book" size={26} /></View>}
-        <View style={styles.lessonCopy}><Text style={styles.caption}>Занятие</Text><Text style={[styles.lessonTitle, large && styles.largeLessonTitle]}>{props.lessonTitle ?? 'Выбери занятие'}</Text></View>
+        <View style={styles.lessonCopy}><Text style={styles.caption}>{lessonLabel}</Text><Text style={[styles.lessonTitle, large && styles.largeLessonTitle]}>{props.lessonTitle ?? 'Выбери занятие'}</Text></View>
         <View style={large && styles.lessonChevron}><Icon name="arrow" size={20} /></View>
       </Pressable>
       <View style={[styles.footer, large && styles.largeFooter]} testID="home-footer">{large && menuButton}{primary}</View>
@@ -184,9 +193,9 @@ export default function HomeScreen(props: HomeScreenProps) {
     </Modal>
     <Modal visible={growthOpen} transparent onRequestClose={() => setGrowthOpen(false)} accessibilityViewIsModal>
       <View style={styles.noticeOverlay}><ScrollView style={styles.growthCard} contentContainerStyle={styles.growthContent}>
-        <Text accessibilityRole="header" style={styles.growthTitle}>Как растёт Финни?</Text>
+        <Text accessibilityRole="header" style={styles.growthTitle}>Как растёт {profile.name}?</Text>
         <Text style={styles.body}>Сейчас стадия {life.petStage} из 3: {life.petStage === 1 ? 'Малыш' : life.petStage === 2 ? 'Исследователь' : 'Мастер планов'}.</Text>
-        <Text style={styles.body}>Финни делает шаги роста после завершения дня. Помогают еда и уход, выполненный план и новые монеты в копилке. Покупка сама по себе не меняет стадию.</Text>
+        <Text style={styles.body}>{profile.name} делает шаги роста после завершения дня. Помогают еда и уход, выполненный план и новые монеты в копилке. Покупка сама по себе не меняет стадию.</Text>
         <Text style={styles.body}>Исследователем он станет после 2 завершённых дней и 6 шагов роста. Мастером планов — после 5 дней, 12 шагов и новых накоплений хотя бы в 3 днях.</Text>
         <Text style={styles.body}>В итогах дня видно, сколько шагов он получил и почему.</Text>
         <MenuRow label="Понятно" onPress={() => setGrowthOpen(false)} />
@@ -220,8 +229,6 @@ const styles = StyleSheet.create({
   fill: { height: 5, borderRadius: 3, backgroundColor: '#5F7754' },
   scene: { flex: 1, minHeight: 180, borderRadius: 28, backgroundColor: '#EDE2CD', overflow: 'hidden' },
   shortScene: { minHeight: 130 },
-  reactionCaption: { position: 'absolute', zIndex: 4, top: 6, left: 6, right: 6, overflow: 'hidden', borderRadius: 12, padding: 8, backgroundColor: '#FFFCF6', color: '#3D352D', textAlign: 'center', fontSize: 15, lineHeight: 20, fontWeight: '700' },
-  largeReactionCaption: { left: 158, right: 0, top: 0 },
   growthButton: { position: 'absolute', zIndex: 3, right: 6, bottom: 46, minHeight: 40, justifyContent: 'center', borderRadius: 14, paddingHorizontal: 10, backgroundColor: '#FFFCF6' },
   largeGrowthButton: { bottom: 0, right: 0 },
   growthButtonText: { color: '#5C3C2E', fontSize: 14, fontWeight: '700' },

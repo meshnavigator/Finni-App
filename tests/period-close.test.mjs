@@ -296,7 +296,7 @@ test('period result UI wires close confirmation, saved summary and accessibility
   assert.match(screen, /ПРЕДВАРИТЕЛЬНЫЙ ИТОГ/);
   assert.match(screen, /ИТОГ ДНЯ/);
   assert.match(screen, /Вернуться к дню/);
-  assert.match(screen, /Финни не заболеет и ничего не потеряет/);
+  assert.match(screen, /не заболеет и ничего не потеряет/);
   assert.match(screen, /accessibilityLiveRegion="polite"/);
   assertSharedControlTargets(screen);
 });

@@ -56,16 +56,17 @@ function ActionButton(props: Readonly<{
   );
 }
 
-function rewardText(reason: LessonRewardReason | null, event: PresentationEvent | null): string | null {
+function rewardText(reason: LessonRewardReason | null, event: PresentationEvent | null, petName: string): string | null {
   if (reason === null) return null;
   if (reason === 'GRANTED') return event
-    ? `Финни радуется! Получено ${event.after.available - event.before.available} монет за первое занятие сегодня.`
+    ? `${petName} радуется! Получено ${event.after.available - event.before.available} монет за первое занятие сегодня.`
     : 'Получено 20 монет за первое занятие сегодня.';
   if (reason === 'ALREADY_GRANTED') return 'Награда за занятие сегодня уже получена.';
   return 'Это тренировочное прохождение без награды.';
 }
 
 export default function LessonShell(props: Readonly<{
+  petName: string;
   attempt: LessonAttempt;
   evaluation: LessonEvaluation | null;
   copy: ShellCopy;
@@ -97,7 +98,7 @@ export default function LessonShell(props: Readonly<{
   const completeLabel = evaluation?.outcome === 'needs_review'
     ? 'Завершить с разбором'
     : 'Завершить занятие';
-  const reward = rewardText(props.rewardReason, props.rewardEvent);
+  const reward = rewardText(props.rewardReason, props.rewardEvent, props.petName);
 
   return (
     <View style={styles.page}>

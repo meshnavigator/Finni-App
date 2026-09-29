@@ -10,6 +10,7 @@ import {
 import type { AppSnapshot } from '../application/app-runtime.ts';
 import type { Mode } from '../domain/contracts.ts';
 import type { PresentationPreferences } from '../persistence/app-control-sqlite.ts';
+import { petCatalogText } from './pet-copy.ts';
 
 function AdultGate(props: Readonly<{ onUnlock: () => void; onExit: () => void }>) {
   const [progress, setProgress] = useState(0);
@@ -103,23 +104,18 @@ export default function AdultScreen(props: Readonly<{
   onActivity: () => void;
   onExit: () => void;
   onSwitchMode: (mode: Mode) => void;
-  onNextDemoDay: () => void;
   onResetDemo: () => void;
   onDeleteSelected: () => void;
 }>) {
   if (!props.unlocked) return <AdultGate onExit={props.onExit} onUnlock={props.onUnlock} />;
   const lifecycle = props.snapshot.lifecycle;
   const goal = props.snapshot.commerce?.selectedGoal;
+  const petName = props.snapshot.profile?.name ?? 'Питомец';
   const modeLabel = props.mode === 'normal' ? 'обычная игра' : 'демонстрация';
   const confirmReset = () => Alert.alert(
     'Сбросить демонстрацию?',
     'Будут удалены только профиль, история и монеты демонстрации. Обычная игра останется без изменений.',
     [{ text: 'Отмена', style: 'cancel' }, { text: 'Сбросить демо', style: 'destructive', onPress: props.onResetDemo }],
-  );
-  const confirmNextDemoDay = () => Alert.alert(
-    'Следующий демо-день?',
-    'Текущий день уже закрыт. Виртуальная дата перейдёт на один день вперёд без изменения денег. Новый доход появится после открытия дня.',
-    [{ text: 'Отмена', style: 'cancel' }, { text: 'Продолжить', onPress: props.onNextDemoDay }],
   );
   const confirmDelete = () => Alert.alert(
     `Удалить данные: ${modeLabel}?`,
@@ -132,7 +128,7 @@ export default function AdultScreen(props: Readonly<{
         <DetailBack onPress={props.onExit} label="Выйти из взрослого раздела" disabled={props.busy} />
         <Text style={styles.eyebrow}>ВЗРОСЛОМУ</Text>
         <Text accessibilityRole="header" style={styles.title}>Факты о прогрессе</Text>
-        <Text style={styles.body}>Финни помогает ребёнку пробовать планирование, покупки и накопления в локальной игре. Это не оценка способностей и не исследование развития ребёнка.</Text>
+        <Text style={styles.body}>{petName} помогает ребёнку пробовать планирование, покупки и накопления в локальной игре. Это не оценка способностей и не исследование развития ребёнка.</Text>
         <View style={styles.card}>
           <Text accessibilityRole="header" style={styles.cardTitle}>Текущий режим</Text>
           <Text style={styles.value}>{modeLabel}</Text>
@@ -143,31 +139,25 @@ export default function AdultScreen(props: Readonly<{
           <Text style={styles.body}>Стадия питомца: {lifecycle?.petStage ?? 1} из 3</Text>
           <Text style={styles.body}>Завершено игровых дней: {lifecycle?.closedPeriods ?? 0}</Text>
           <Text style={styles.body}>Шагов роста: {lifecycle?.lifetimeGrowth ?? 0}</Text>
-          <Text style={styles.body}>Текущая мечта: {goal ? `${goal.name}, ${goal.cost} монет` : 'не выбрана'}</Text>
+          <Text style={styles.body}>Текущая мечта: {goal ? `${petCatalogText(goal.name, petName)}, ${goal.cost} монет` : 'не выбрана'}</Text>
           <Text style={styles.body}>Завершённые занятия и сохранённые разборы доступны в «Прогрессе».</Text>
         </View>
         {props.mode === 'demo' && lifecycle && (
           <View style={styles.card}>
             <Text accessibilityRole="header" style={styles.cardTitle}>Управление демонстрацией</Text>
             <Text style={styles.body}>День {lifecycle.periodIndex ?? 0} · виртуальная дата {lifecycle.calendarDate}</Text>
-            <Text style={styles.body}>Сначала закройте день в его итогах. Затем переведите виртуальную дату и откройте новый день в Домике.</Text>
-            <Pressable
-              accessibilityRole="button"
-              accessibilityState={{ disabled: props.busy || lifecycle.state !== 'WAITING' }}
-              disabled={props.busy || lifecycle.state !== 'WAITING'}
-              onPress={confirmNextDemoDay}
-              style={[styles.primary, (props.busy || lifecycle.state !== 'WAITING') && styles.disabled]}
-              testID="adult-next-demo-day"
-            >
-              <Text style={styles.primaryText}>Следующий демо-день</Text>
-            </Pressable>
+            <Text style={styles.body}>{lifecycle.state === 'WAITING'
+              ? 'День закрыт. Перейдите в Домик и нажмите «Следующий демо-день».'
+              : lifecycle.state === 'READY'
+                ? 'Следующий день готов. Перейдите в Домик и нажмите «Начать день».'
+                : 'После закрытия дня кнопка «Следующий демо-день» появится в Домике.'}</Text>
           </View>
         )}
         <View style={styles.card}>
           <Text accessibilityRole="header" style={styles.cardTitle}>Восприятие</Text>
           <Text style={styles.body}>Настройки сохраняются на устройстве и не влияют на деньги, награды или рост.</Text>
           <Pressable
-            accessibilityLabel="Движение Финни"
+            accessibilityLabel={`Движение ${petName}`}
             accessibilityRole="switch"
             accessibilityState={{ checked: props.presentationPreferences.motionEnabled, disabled: props.busy }}
             disabled={props.busy}
@@ -177,7 +167,7 @@ export default function AdultScreen(props: Readonly<{
             <Text style={styles.secondaryText}>Движение: {props.presentationPreferences.motionEnabled ? 'включено' : 'выключено'}</Text>
           </Pressable>
           <Pressable
-            accessibilityLabel="Звуки Финни"
+            accessibilityLabel={`Звуки ${petName}`}
             accessibilityRole="switch"
             accessibilityState={{ checked: props.presentationPreferences.soundEnabled, disabled: props.busy }}
             disabled={props.busy}

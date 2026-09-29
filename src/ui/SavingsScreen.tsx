@@ -13,6 +13,7 @@ import {
 import type { AppSnapshot } from '../application/app-runtime.ts';
 import { GOALS } from '../domain/catalog.ts';
 import { goalSource } from './room-assets.ts';
+import { petCatalogText } from './pet-copy.ts';
 import { useKeyboardScrollInset } from './use-keyboard-scroll-inset.ts';
 
 type TransferKind = 'deposit' | 'withdraw';
@@ -69,6 +70,7 @@ export default function SavingsScreen(props: Props) {
     return Number.isSafeInteger(parsed) && parsed > 0 ? parsed : null;
   }, [value]);
   const lifecycle = props.snapshot.lifecycle!;
+  const petName = props.snapshot.profile?.name ?? 'питомец';
   const selected = props.snapshot.commerce?.selectedGoal ?? null;
   const claimed = new Set(props.snapshot.commerce?.claimedGoalIds ?? []);
 
@@ -118,7 +120,7 @@ export default function SavingsScreen(props: Props) {
     if (!selected) return;
     Alert.alert(
       'Получить цель?',
-      `${selected.name}: из копилки спишется ${selected.cost} монет, превышение сохранится.`,
+      `${petCatalogText(selected.name, petName)}: из копилки спишется ${selected.cost} монет, превышение сохранится.`,
       [
         { text: 'Отмена', style: 'cancel' },
         { text: 'Получить', onPress: () => props.onClaim(selected.id) },
@@ -135,7 +137,7 @@ export default function SavingsScreen(props: Props) {
         <Text accessibilityLiveRegion="polite" style={styles.notice}>{props.message ?? notice}</Text>
 
         {selected && <View style={styles.goalCard}>
-          <Text style={styles.cardTitle}>Мечта · {selected.name}</Text>
+          <Text style={styles.cardTitle}>Мечта · {petCatalogText(selected.name, petName)}</Text>
           {lifecycle.savings < selected.cost
             ? <Text style={styles.caption}>Осталось накопить {selected.cost - lifecycle.savings}</Text>
             : <Button disabled={props.busy} label="Получить цель" onPress={claim} />}
@@ -165,7 +167,7 @@ export default function SavingsScreen(props: Props) {
           const saved = Math.min(lifecycle.savings, goal.cost);
           return (
             <View key={goal.id} style={[styles.goalCard, isSelected && styles.goalSelected]}>
-              <View style={styles.goalHeader}>{goalSource(goal.id) && <Image accessibilityIgnoresInvertColors source={goalSource(goal.id)!} style={styles.goalThumbnail} />}<Text style={styles.goalName}>{goal.name} — {goal.cost}</Text></View>
+              <View style={styles.goalHeader}>{goalSource(goal.id) && <Image accessibilityIgnoresInvertColors source={goalSource(goal.id)!} style={styles.goalThumbnail} />}<Text style={styles.goalName}>{petCatalogText(goal.name, petName)} — {goal.cost}</Text></View>
               <Text style={styles.caption}>{isClaimed ? 'Уже получено' : `Накоплено ${saved} из ${goal.cost}`}</Text>
               <Button
                 disabled={props.busy || isSelected || isClaimed}

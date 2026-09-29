@@ -37,6 +37,7 @@ export type HomeReaction = Readonly<{
 }>;
 
 export default function FinniHomeScene(props: Readonly<{
+  petName?: string;
   accessibilityLabel: string;
   careLabel: string;
   height: number;
@@ -57,6 +58,7 @@ export default function FinniHomeScene(props: Readonly<{
   hideSkip?: boolean;
   skipReactionId?: number | null;
 }>) {
+  const petName = props.petName ?? 'Питомец';
   const { reaction, onReactionFinished, onReactionCancelled } = props;
   const reactionId = reaction?.id ?? null;
   const completeReaction = useMemo(() => createFinniReactionCompletion(reactionId), [reactionId]);
@@ -271,7 +273,7 @@ export default function FinniHomeScene(props: Readonly<{
         style={[styles.fallback, props.petRegion ? { position: "absolute", left: props.petRegion.x, top: props.petRegion.y, width: props.petRegion.width, height: props.petRegion.height, padding: 2, justifyContent: "center" } : { height: props.height }]}
         testID="finni-home-scene-fallback"
       >
-        <Text style={[styles.fallbackTitle, props.fullscreen && styles.fullscreenFallbackTitle]}>Финни рядом</Text>
+        <Text style={[styles.fallbackTitle, props.fullscreen && styles.fullscreenFallbackTitle]}>{petName} рядом</Text>
         {!props.fullscreen && <Text style={styles.fallbackText}>{props.careLabel}</Text>}
       </View>
     );
@@ -330,7 +332,7 @@ export default function FinniHomeScene(props: Readonly<{
           width={(petFrame as ReturnType<typeof homePetFrame>).width} height={(petFrame as ReturnType<typeof homePetFrame>).height}
           stage={props.stage} objectId={reaction?.objectId ?? null} value={reaction?.value ?? 0} onReady={setLoadedPuppet} onError={() => setDecodeError(true)} />
       </View>}
-      {props.petRegion && <Pressable accessibilityRole="button" accessibilityLabel={`${props.accessibilityLabel}. Поздороваться с Финни`}
+      {props.petRegion && <Pressable accessibilityRole="button" accessibilityLabel={`${props.accessibilityLabel}. Поздороваться с ${petName}`}
         onPress={() => playOptional('AN-005')} style={{ position: 'absolute', left: props.petRegion.x, top: props.petRegion.y, width: props.petRegion.width, height: props.petRegion.height }} testID="finni-touch" />}
       {reaction && frame.clip && motionActive && ['AN-012', 'AN-014'].includes(frame.clip) && (
         <Animated.View pointerEvents="none" style={[styles.effect, {
@@ -353,7 +355,7 @@ export default function FinniHomeScene(props: Readonly<{
       )}
       {props.showCaption !== false && (
         <View pointerEvents="none" style={styles.caption}>
-          <Text style={styles.captionTitle}>Финни дома</Text>
+          <Text style={styles.captionTitle}>{petName} дома</Text>
           <Text style={styles.captionText}>{props.careLabel}</Text>
         </View>
       )}
