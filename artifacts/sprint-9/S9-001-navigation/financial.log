@@ -1,0 +1,10 @@
+purchase-cancel-isolated PASS
+purchase-confirmed PASS
+care-confirmed PASS
+transfer-cancel-isolated PASS
+transfer-confirmed PASS
+close-cancel-isolated PASS
+Traceback (most recent call last):
+  File "C:\00.MIDAS\PROJECTS\28. HackApp. 2026\Finni App\artifacts\sprint-9\S9-001-navigation\financial.py", line 63, in <module>
+    tap(find(nodes,'home-primary'));detail=capture('result-again');tap(scrollfind(detail,'Завершить день',844));dialog=capture('close-commit-confirm');tap(find(dialog,'Завершить'));capture('close-committed');nodes=back('close-home');money(nodes,40,20);assert any('Завтра' in n.get('content-desc','') or 'Завтра' in n.get('text','') for n in nodes);ok('close-confirmed')
+AssertionError

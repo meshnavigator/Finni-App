@@ -1,0 +1,39 @@
+{
+  "schemaVersion":3,
+  "id":"LS-B02",
+  "title":"План можно изменить заранее",
+  "contentVersion":"1.2.0",
+  "topic":"budget",
+  "format":"standard",
+  "level":2,
+  "observableAction":"Изменить учебный черновик после изменения обязательной потребности.",
+  "explanation":"Пока план не подтверждён, его можно изменить и снова проверить по новым условиям.",
+  "unlockPeriod":2,
+  "competencyIds":["EDU-01","EDU-02","EDU-07"],
+  "sourceRefs":["SRS §13.3","FR-61","FR-64"],
+  "defaultVariantId":"changed-need-60",
+  "returnTarget":"budget",
+  "mechanic":"allocation",
+  "mode":"changed_need",
+  "rendererId":"allocation",
+  "variants":[{
+    "id":"changed-need-60",
+    "params":{"budget":100,"needMinimum":60,"savingTarget":20,"initialPlan":{"need":40,"want":40,"save":20}},
+    "copy":{
+      "intro":"На нужное теперь потребуется 60 вместо 40. Измени учебный план до начала дня.",
+      "hints":["Сравни старую сумму на нужное с новой.","Сохрани не меньше 20 на мечту и проверь общий итог."],
+      "feedback":{
+        "meets_goal":"Новое нужное учтено, на мечту предусмотрено {save}.",
+        "valid_alternative":"Новый план выполняет условие другим способом.",
+        "needs_review":"Проверь новое нужное и намерение накопить.",
+        "invalid_input":"Общий план превышает учебный бюджет."
+      }
+    },
+    "evidence":[],
+    "fixtures":[
+      {"solution":{"need":60,"want":20,"save":20},"expectedOutcome":"meets_goal"},
+      {"solution":{"need":40,"want":40,"save":20},"expectedOutcome":"needs_review"},
+      {"solution":{"need":60,"want":40,"save":20},"expectedOutcome":"invalid_input"}
+    ]
+  }]
+}

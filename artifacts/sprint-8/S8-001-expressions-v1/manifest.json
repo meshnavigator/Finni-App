@@ -1,0 +1,139 @@
+{
+  "packageId": "FINNI-EXPRESSIONS-V1",
+  "basePackage": "FINNI-MATRIX-V1",
+  "canvas": [
+    941,
+    1672
+  ],
+  "feetAnchor": [
+    470,
+    1272
+  ],
+  "stageScales": {
+    "1": 0.86,
+    "2": 1.0,
+    "3": 1.12
+  },
+  "layerOrder": [
+    "room-base",
+    "pet-back",
+    "pet-body",
+    "pet-pattern",
+    "pet-ear-shape",
+    "pet-face",
+    "pet-expression",
+    "pet-accessory",
+    "room-foreground"
+  ],
+  "artStatus": "pending-owner-review",
+  "variants": [
+    {
+      "id": "pointy-plain",
+      "acceptedNeutralSha256": "1e9fecd57e73284c9d2b978a6f9dc60705697a6df2c3d63b88e2e92793491178",
+      "acceptedBlinkSha256": "62d4d961aecabbc64897570fbdbaf97f0be3e3cc7371f8ea2ece40728dae9bde",
+      "acceptedOraSha256": "9904297faf5557efd57d38ff83939ae4d6efef2be9553e1c79a98982f7b4f0f5",
+      "expressions": {
+        "happy": "e0f3f9a6fd29703ab5fa8279e8b01bff904cd1a307b9a7f0cb63cbb80ec3c8fe",
+        "thoughtful": "ed4191f80a45901e368d02411bf3544d2bb3fc29d70325a53aade990f366f180",
+        "inspired": "af9e1a310a1bdf06f9effd1b1715b2ab92d47c3012bb811cbfd3b52f2906dd47"
+      },
+      "expressionsOraSha256": "d881d61566497a3660d1052ed179ff2bdbdcd0df424dc4e0298c5529ce887fe7"
+    },
+    {
+      "id": "pointy-spots",
+      "acceptedNeutralSha256": "807b6dcb362b6b18037cfad6f115764287ca8453b44fb98ee79dcef242b78d61",
+      "acceptedBlinkSha256": "f85c4044cec4ed0b53ed5c9210d6fbacbed67edbf61c5758ea74f6ca06c53355",
+      "acceptedOraSha256": "eb0d493fe3c3668a2f9bffb9539f4e2bda780c453219c7237da3134c2c05ba9f",
+      "expressions": {
+        "happy": "29c0287322b98d3848ad9d9a7979d6cd3823e3b371ffc6b26105a53ef52946ad",
+        "thoughtful": "bdc507e029a30996014ae26e67f1c13d1446b9ba61378cdd75f8c63fefc18157",
+        "inspired": "7852d8f751cb8fc1c0dd289a0570f89664236cf6bdd2491d55c11c254045a956"
+      },
+      "expressionsOraSha256": "796a7538d7be2a94faea590c7283dd830740966a6fd70faf734c12bd42823953"
+    },
+    {
+      "id": "pointy-stripes",
+      "acceptedNeutralSha256": "069c4ba20660d06b27c9ddbf8ed4eb9bb016a262fc1e5d460f6f32bb15b93a23",
+      "acceptedBlinkSha256": "2a10058f53a168037e8d027f8c06179579cf5aba0982881ed042f8b3303e6865",
+      "acceptedOraSha256": "c3e08e9284820cf4ecad709e782adba97d72c5e93982311ed05635f6d873831b",
+      "expressions": {
+        "happy": "5a0defc88e7d1d743bc87adf008812392af138e6d9a03a353d9f7e1fb0de60d8",
+        "thoughtful": "5d96ba8817ed403407204c3ff206f7925feccd0a5617843844fa61e9b1e93c4f",
+        "inspired": "c2f138a772056a4b36d84aa15dc1c10e4b4fd01114511dc04893d4fabfd867fe"
+      },
+      "expressionsOraSha256": "6b6e436e8dfc019867077a373601158844aecbb2c560d969d481e9328ddc8ce7"
+    },
+    {
+      "id": "round-plain",
+      "acceptedNeutralSha256": "d5fcbaa49d4869ad18930e1cd73245afa768df1e4a7d00cc5185e135cd4010a9",
+      "acceptedBlinkSha256": "6a8353688a5a071ae7b733fa2e02df0f94e20f6fad97bc80318a961aa13cb5c5",
+      "acceptedOraSha256": "a842440f507ad526143bc18d7b321fdd321d9b7983f47bf31a271bbee318010c",
+      "expressions": {
+        "happy": "283bf2adb58d078ab417f11841afbda3a0299cae04d3adc903d54ed60010493f",
+        "thoughtful": "ce126a42e0439adfac4245873aa32295e878bcf1cdf00e9d0b92cc69512690a9",
+        "inspired": "5cdf964103c5579903b19db7539d1175fc1977ea227413404069f8b5e09b22f0"
+      },
+      "expressionsOraSha256": "84d7d31a44f0338d887a3ab295f44f6b3f3f19b09671ec194f7491d7669bb822"
+    },
+    {
+      "id": "round-spots",
+      "acceptedNeutralSha256": "0a8b0f19f4a57f7bf5189803547993c60d745a8350ac50d6b64dc3fe99dea69f",
+      "acceptedBlinkSha256": "0e8ae1b29130678eacb6631ac6dcece0801bc8ec4bafd2b1f48c6ddffaf6dbe5",
+      "acceptedOraSha256": "3fbe086ce5cd08e919b3d3b878dfd255657fab4f08133a880bc5e382357baef5",
+      "expressions": {
+        "happy": "6a1ceeecc1d7c00271697955b91b21df897d1299b9415a9890e3d5d8cd646557",
+        "thoughtful": "34712d31461759fd9becc160d9762ee0fe1d2fa43aabe2652761965fc5b7aa69",
+        "inspired": "294d797b91e3ebbc3d6f8a462de669bec10693774cfbbf8b4a9bfa0723b181e0"
+      },
+      "expressionsOraSha256": "ac53f95770b8b45f68fe81d3b8376b2314a463bda2f1c41e39ed6d2f3ad076d8"
+    },
+    {
+      "id": "round-stripes",
+      "acceptedNeutralSha256": "978ecf5fda90f1b42d6cf5ed1a1fec9e19eff1739df35809d8d644988801f12b",
+      "acceptedBlinkSha256": "8a9e19bce64d54c52d650352c1c7bd67e37eebece9a26039a80320c7067d77b1",
+      "acceptedOraSha256": "4c02a1ead31ae18bb953a86b1b27898d56da3a474e65b410da854ec217a8b780",
+      "expressions": {
+        "happy": "81aee9e5809442a610db3e674f8c01274ffbf15360c506ca7cb8fa7c3ec6a30f",
+        "thoughtful": "e7167732de54e7443ce7be3ca61c7b95ee8c754b05be589e46ef50649e7ed8bf",
+        "inspired": "41fe8d7f58ab02831550e80c0d48c950498dd64cb20a53f23d7e4c6d7cd26c19"
+      },
+      "expressionsOraSha256": "07b69cfa1b47310ee13781a7932feeaa019e9d30b1f50bf9797382ae7586f7b8"
+    },
+    {
+      "id": "floppy-plain",
+      "acceptedNeutralSha256": "2108dd8827569cdc599928b429e77cefec0ec4fe8215525ff2eca7d127003522",
+      "acceptedBlinkSha256": "6af05329170d66669f7c2dbe7dfb11bdcf1f52af30d61ffd6be926939647ceba",
+      "acceptedOraSha256": "3a2f8407179b334a4d0817564e9623fbe4d474e9ffc6eabfc4ac08fb4f7a8c68",
+      "expressions": {
+        "happy": "c08b6a2004b11fb785ec4b362dd74a466a2f0a27005076f2c7d795347c273aff",
+        "thoughtful": "de22496e0dfea2f01718e9b17ee2f11e407dde7cfe04d4d098af4c2ae1e4d0e6",
+        "inspired": "83d177304c5982d9cef3276ff7bce9e75bfb745efab86a16e91c84ceb9cea423"
+      },
+      "expressionsOraSha256": "617b9c4356f7e47b226d2cd90f10752670becf839bc3af471179ca9929600e9d"
+    },
+    {
+      "id": "floppy-spots",
+      "acceptedNeutralSha256": "4ac666178c3eb4e2af0bd5d0a8ad40ce05477f39ebfd886d37b0fd0be274fa2d",
+      "acceptedBlinkSha256": "741dc9d7922f416058a7cac0394a83ce91c03c83ac3c16a09e2e04c0549df559",
+      "acceptedOraSha256": "13ebe29273d3d9d7f6d44e78b8139493aeb04b8aa23907cbb5e29c256acb00f2",
+      "expressions": {
+        "happy": "7454ccc77e8fb008218d20f17b617660283b43fdb68fb5b7317e39f46d47fc80",
+        "thoughtful": "354d355ea9aced4015a87e389e551693a36a4dd8bb16cd65e21940e5fabdd986",
+        "inspired": "c1caf553580d44f0745d3ddc89cfb5efa9671f1a68dee20715126f64f9090308"
+      },
+      "expressionsOraSha256": "8fc9275ad396ae78bffae37d61ca610f65034ffd011dc77063a3506105f9e4e1"
+    },
+    {
+      "id": "floppy-stripes",
+      "acceptedNeutralSha256": "9caf7d1ace1d02cc9e3f207c09f8d2741ce2fe71917cd6f00dd71bde1eeb3d99",
+      "acceptedBlinkSha256": "5a68366764f25970031241c09f28722c44db0122e5ef6adfa38c94dbe5f9d52c",
+      "acceptedOraSha256": "75f60888bf765ea5c1b2f5288675b77cd0f565b32a9180ba93654ce412826e0f",
+      "expressions": {
+        "happy": "d3a23c13302fece18c6ff4568d7f092dea1dbfd751bf7dc52c9faa5d37ed8214",
+        "thoughtful": "0ddcbaf637ffa99d8066df55f85ae1c053838176c33160be2c59a725c28a57f5",
+        "inspired": "347a35a766f69f2d5939284617a1290f5b4f0df986bbd6c013ab796a140f64bd"
+      },
+      "expressionsOraSha256": "2c6712d1e4ff4e488a3e7d48880ffaf295c520ca08da5bae567ab662d7bbcd61"
+    }
+  ]
+}

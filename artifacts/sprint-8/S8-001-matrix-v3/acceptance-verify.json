@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "acceptedVariants": 9,
+  "acceptedFrameOraHashes": 27,
+  "unchangedAssetHashes": 198,
+  "packageScriptSyntax": "PASS",
+  "scope": "acceptance metadata/docs only; earlier runtime/image QA retained, not rerun"
+}

@@ -1,0 +1,64 @@
+{
+  "schemaVersion":3,
+  "id":"LS-P02",
+  "title":"Дело о двух предложениях",
+  "contentVersion":"1.2.0",
+  "topic":"purchases",
+  "format":"detective",
+  "level":2,
+  "observableAction":"Сравнить общую цену покрытия одной и той же потребности.",
+  "explanation":"Подходящий вариант зависит от требуемого количества и общей цены, а не от ярлыка товара.",
+  "unlockPeriod":1,
+  "competencyIds":["EDU-03","EDU-04","EDU-09"],
+  "sourceRefs":["SRS §13.5","TC-175","TC-176"],
+  "defaultVariantId":"equal_goods",
+  "returnTarget":"shop",
+  "mechanic":"basket",
+  "mode":"compare_offers",
+  "rendererId":"basket",
+  "variants":[
+    {
+      "id":"equal_goods",
+      "params":{"budget":50,"requiredUnits":{"food":1,"care":1},"offers":[
+        {"id":"food_a","kind":"food","packSize":1,"packPrice":30,"maxPackages":1,"qualityKey":"same","properties":["Одна порция"],"alternativeGroup":"food"},
+        {"id":"food_b","kind":"food","packSize":1,"packPrice":40,"maxPackages":1,"qualityKey":"same","properties":["Одна порция"],"alternativeGroup":"food"},
+        {"id":"care","kind":"care","packSize":1,"packPrice":10,"maxPackages":1,"qualityKey":"standard","properties":["Уход"]}
+      ],"preferLowerCostForEqualCoverage":true},
+      "copy":{"intro":"Нужны еда и уход. Сравни одинаковое количество и общую цену.","hints":["Сравни цену и то, что получим.","Проверь стоимость всего набора и остаток."],"feedback":{"meets_goal":"Покупка за {total} оставляет {remainder}.","valid_alternative":"На нужное хватило, но равное покрытие можно получить дешевле.","needs_review":"Проверь, выполнен ли весь список и верен ли расчёт.","invalid_input":"Выбор нарушает условия корзины или бюджет."}},
+      "evidence":[{"id":"same-properties","text":"Количество и свойства двух упаковок еды одинаковые."}],
+      "fixtures":[
+        {"solution":{"packageCountByOfferId":{"food_a":1,"care":1},"statedTotal":40,"statedRemainder":10},"expectedOutcome":"meets_goal"},
+        {"solution":{"packageCountByOfferId":{"food_b":1,"care":1},"statedTotal":50,"statedRemainder":0},"expectedOutcome":"valid_alternative"},
+        {"solution":{"packageCountByOfferId":{"food_a":1,"food_b":1,"care":1},"statedTotal":80,"statedRemainder":0},"expectedOutcome":"invalid_input"}
+      ]
+    },
+    {
+      "id":"quantity_two",
+      "params":{"budget":50,"requiredUnits":{"pencil":2},"offers":[
+        {"id":"single","kind":"pencil","packSize":1,"packPrice":10,"maxPackages":3,"qualityKey":"same","properties":["Один карандаш"]},
+        {"id":"pack_three","kind":"pencil","packSize":3,"packPrice":25,"maxPackages":1,"qualityKey":"same","properties":["Три карандаша"]}
+      ],"preferLowerCostForEqualCoverage":true},
+      "copy":{"intro":"Нужны 2 карандаша. Сравни два отдельных и набор из трёх.","hints":["Считай общую цену нужного количества.","У набора останется одна лишняя единица."],"feedback":{"meets_goal":"Два отдельных стоят {total}, останется {remainder}.","valid_alternative":"Набор подходит, но содержит {extraUnits} лишнюю единицу.","needs_review":"Проверь количество и остаток.","invalid_input":"Количество упаковок или расчёт недопустимы."}},
+      "evidence":[],
+      "fixtures":[
+        {"solution":{"packageCountByOfferId":{"single":2},"statedTotal":20,"statedRemainder":30},"expectedOutcome":"meets_goal"},
+        {"solution":{"packageCountByOfferId":{"pack_three":1},"statedTotal":25,"statedRemainder":25},"expectedOutcome":"valid_alternative"},
+        {"solution":{"packageCountByOfferId":{"single":4},"statedTotal":40,"statedRemainder":10},"expectedOutcome":"invalid_input"}
+      ]
+    },
+    {
+      "id":"quantity_three",
+      "params":{"budget":50,"requiredUnits":{"pencil":3},"offers":[
+        {"id":"single","kind":"pencil","packSize":1,"packPrice":10,"maxPackages":3,"qualityKey":"same","properties":["Один карандаш"]},
+        {"id":"pack_three","kind":"pencil","packSize":3,"packPrice":25,"maxPackages":1,"qualityKey":"same","properties":["Три карандаша"]}
+      ],"preferLowerCostForEqualCoverage":true},
+      "copy":{"intro":"Теперь нужны 3 карандаша. Сравни общую цену снова.","hints":["Условие изменилось: нужны три.","Сравни 30 и 25 как общую цену."],"feedback":{"meets_goal":"Набор покрывает потребность за {total}.","valid_alternative":"Три отдельных подходят, но общий итог больше.","needs_review":"Проверь количество и расчёт.","invalid_input":"Количество упаковок или расчёт недопустимы."}},
+      "evidence":[],
+      "fixtures":[
+        {"solution":{"packageCountByOfferId":{"pack_three":1},"statedTotal":25,"statedRemainder":25},"expectedOutcome":"meets_goal"},
+        {"solution":{"packageCountByOfferId":{"single":3},"statedTotal":30,"statedRemainder":20},"expectedOutcome":"valid_alternative"},
+        {"solution":{"packageCountByOfferId":{"unknown":1},"statedTotal":0,"statedRemainder":50},"expectedOutcome":"invalid_input"}
+      ]
+    }
+  ]
+}

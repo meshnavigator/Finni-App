@@ -1,0 +1,77 @@
+# S9-001: Интегрировать HomeScene, HUD и адаптивные касания
+
+## Цель
+Заменить временный avatar/home на работающую layered 2D/2.5D HomeScene с точным
+HUD, общей screen model и доступными маршрутами для всех состояний периода.
+
+## Контекст
+Визуальный слой не может владеть финансовыми данными. Панели и обычные React
+Native-компоненты показывают суммы/текст и должны блокировать нажатия в закрытую
+сцену.
+
+## Состав работ
+- подключить layered HomeScene и cutout Финни по DEC-2026-09-19-006;
+- использовать только локальные offline-ресурсы и принятый runtime по S7-005;
+- связать READY/DRAFT/ACTIVE/CLOSED/WAITING/loading/error с S6-002 layouts;
+- заменить `goalLabel/careLabel/lessonLabel` реальными application models;
+- синхронизировать HUD, scene anchors, hit testing, back и modal state;
+- обновить pet editor preview и навигацию обязательных разделов;
+- сохранить lifecycle pause/resume, reduced motion и fallback при отсутствии
+  или ошибке декодирования ресурса.
+
+## Источники
+- DEC-2026-09-19-006 и DEC-2026-09-19-007 (Accepted);
+- S7-004–S7-006, S8-001–S8-003 и S6-002;
+- 3D-дополнение §§5–6, 9–10 только как renderer-neutral требования к HUD,
+  композиции, состояниям и доступности;
+- SRS v1.3 §§9–11.
+
+## Критерии приёмки
+- HUD показывает реальные суммы, цель, состояние и задание;
+- scene input и overlay используют одну модель и не дают tap-through;
+- все обязательные маршруты доступны обычными подписанными элементами;
+- 360×640 и font scale 200% не теряют обязательную сводку;
+- profile/mode/state switch не оставляет старую сцену или данные;
+- missing/corrupt asset и reduced motion дают понятный статичный fallback.
+
+## Зависимости
+- S6-002, S7-005–S7-006, Accepted DEC-2026-09-19-007 и S8-001–S8-003;
+- S2-001–S3-006 для фактических данных.
+
+## Verify
+- component/runtime matrix всех home states;
+- touch/modal/back/safe-area/font-scale tests;
+- physical Android visual run, decode/cache и asset-error recovery;
+- configured Verify, full belief-map rebuild и `git diff --check`.
+
+## Out of scope
+- изменение domain/persistence правил;
+- свободное перемещение сцены и drag-only управление;
+- новые комнаты для остальных разделов.
+
+
+## Реализация и evidence — 2026-09-25
+
+Интеграция реализована по DEC-2026-09-25-012. Технический отчёт: `Finni App/artifacts/sprint-9/S9-001-layout/README.md`;81 HTML и66 native профилей PASS, configured Verify136 tests PASS, offline QA release API26. Финальный smoke и ограничения приведены в отчёте.
+
+Физический Android/performance вынесен владельцем в S10. Полное TalkBack озвучивание не выполнено и не объявляется PASS. Дополнительные native missing/corrupt Image source и object error проверки пройдены, включая восстановление комнаты после возврата Home; evidence и границы QA инъекций — в отчёте. До этих gates задача не помечается безусловно закрытой в реестре; runtime-реализация и доступный Verify завершены.
+
+## Визуальная коррекция после замечания владельца — 2026-09-25
+
+Предыдущие screenshots не приняты владельцем по внешнему виду. Выполнена отдельная переработка HUD, типографики, кнопок и крупного текста с реальными макетами и повторным Android visual review. Новое evidence: Finni App/artifacts/sprint-9/S9-001-redesign/README.md и review/. Геометрическая проверка усилена обнаружением пересечений targets; найденные дефекты короткого экрана исправлены. Новый результат ожидает художественной оценки владельца; прежние технические PASS не используются как подтверждение эстетики. Physical/TalkBack gates не закрываются этим пакетом.
+
+
+## Финальная визуальная доработка материала и short layout — 2026-09-25
+
+Выполнено следующее уточнение владельца: полупрозрачные тёплые панели, уменьшенная высота HUD, цельные предметы с подписями, отдельная композиция 360×640 с более крупным Финни, согласованный 200% режим. Проверка дополнительного 119% профиля выявила и устранила перенос длинных сумм/слова и пересечения targets. Обязательные данные сохраняются без обрезки и ограничения fontScale.
+
+Источники, макеты, исходные Android снимки, результаты Verify и восстановление AVD: Finni App/artifacts/sprint-9/S9-001-polish/README.md. Продуктовый код этого пакета ограничен src/ui/HomeScreen.tsx; предыдущие Sprint 8/9 изменения сохранены. Визуальный результат готов к оценке владельца. Physical/performance/TalkBack gates этим пакетом не закрываются; статус всей S9-001 не повышается до безусловно done.
+
+
+## Структурная переработка Home — 2026-09-25
+
+По согласованному владельцем независимому разбору реализована новая композиция DEC-2026-09-25-013. Финансы/мечта объединены, Финни получил спокойную native-сцену и крупный портрет при 200%, дублирующие room/rail routes убраны, основной CTA отражает фактическое действие. Одно рекомендованное занятие открывается напрямую; полный каталог и вторичные разделы сохранены в меню. Финансовые подтверждения сохранены.
+
+Evidence: Finni App/artifacts/sprint-9/S9-001-structure/README.md и review/. Первым выполнен native 360×640/200% stress prototype; выявленный short overlap устранён. Финальный Verify: 138 tests, 74 native profiles, 11 resource/animation checks, 21 exact-delivery checks и 3 contextual routes, offline APK/API26, full belief map и diff-check PASS. AVD data/settings восстановлены с SHA256-проверкой.
+
+Реализация presentation-пакета завершена; художественная приёмка нового результата не приписана владельцу. Physical/performance остаются S10, TalkBack NOT RUN; общий статус S9-001 не повышается до безусловно done. Изменённая навигация отражена в S9_001_HOME_LAYERS.

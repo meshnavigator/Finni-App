@@ -1,0 +1,10 @@
+{
+  "packageId": "FINNI-2D-MASTER-V1",
+  "sourcePackage": "docs/Finni_S7-004_2D_MASTER_v1",
+  "status": "production-master",
+  "assets": [
+    { "id": "FINNI-ROOM-CLEAN-V1", "path": "room_clean_v1.png", "sha256": "2c76a1e29090e61de615c5e228bf309d34016f89aa74cac9ea1b990821ac6140" },
+    { "id": "FINNI-PET-NEUTRAL-CANVAS-V1", "path": "pet_neutral_canvas_v1.png", "sha256": "8b2932caa23b99ae0d6575105940cda70858619f32333d564847d9b0dcdb6cc0" },
+    { "id": "FINNI-PET-BLINK-CANVAS-V1", "path": "pet_blink_canvas_v1.png", "sha256": "2797ab29e3d6b91d4342f80a71c892a574751513833c569c53e7f8c077b51905" }
+  ]
+}

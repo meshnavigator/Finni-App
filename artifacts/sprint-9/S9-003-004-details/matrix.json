@@ -1,0 +1,1493 @@
+{
+  "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+  "checks": [
+    {
+      "case": "root-final-home",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Мечта · Домик для Финни, 0 из 300 монет, Осталось 300",
+          "bounds": "[26,105][364,180]"
+        },
+        {
+          "label": "Финни, стадия 2. Спокойно. Изменить питомца",
+          "bounds": "[36,260][354,529]"
+        },
+        {
+          "label": "Занятие, На что хватит сегодня?",
+          "bounds": "[12,589][378,657]"
+        },
+        {
+          "label": "Выбрать еду и уход",
+          "bounds": "[12,667][378,717]"
+        },
+        {
+          "label": "Домик",
+          "bounds": "[14,733][85,782]"
+        },
+        {
+          "label": "План",
+          "bounds": "[87,733][158,782]"
+        },
+        {
+          "label": "Покупки",
+          "bounds": "[160,733][230,782]"
+        },
+        {
+          "label": "Копилка",
+          "bounds": "[232,733][303,782]"
+        },
+        {
+          "label": "Ещё",
+          "bounds": "[305,733][376,782]"
+        }
+      ],
+      "scrollClippedTargets": []
+    },
+    {
+      "case": "root-final-plan",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Домик",
+          "bounds": "[14,733][85,782]"
+        },
+        {
+          "label": "План",
+          "bounds": "[87,733][158,782]"
+        },
+        {
+          "label": "Покупки",
+          "bounds": "[160,733][230,782]"
+        },
+        {
+          "label": "Копилка",
+          "bounds": "[232,733][303,782]"
+        },
+        {
+          "label": "Ещё",
+          "bounds": "[305,733][376,782]"
+        }
+      ],
+      "scrollClippedTargets": []
+    },
+    {
+      "case": "root-final-shop",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Посмотреть и купить",
+          "bounds": "[31,231][359,281]"
+        },
+        {
+          "label": "Посмотреть и купить",
+          "bounds": "[31,389][359,439]"
+        },
+        {
+          "label": "Посмотреть и купить",
+          "bounds": "[31,547][359,597]"
+        },
+        {
+          "label": "Домик",
+          "bounds": "[14,733][85,782]"
+        },
+        {
+          "label": "План",
+          "bounds": "[87,733][158,782]"
+        },
+        {
+          "label": "Покупки",
+          "bounds": "[160,733][230,782]"
+        },
+        {
+          "label": "Копилка",
+          "bounds": "[232,733][303,782]"
+        },
+        {
+          "label": "Ещё",
+          "bounds": "[305,733][376,782]"
+        }
+      ],
+      "scrollClippedTargets": [
+        "Посмотреть и купить"
+      ]
+    },
+    {
+      "case": "root-final-savings",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Сумма перевода",
+          "bounds": "[31,342][359,390]"
+        },
+        {
+          "label": "Положить",
+          "bounds": "[31,400][191,448]"
+        },
+        {
+          "label": "Снять",
+          "bounds": "[199,400][359,448]"
+        },
+        {
+          "label": "Сменить цель",
+          "bounds": "[31,620][359,668]"
+        },
+        {
+          "label": "Домик",
+          "bounds": "[14,733][85,782]"
+        },
+        {
+          "label": "План",
+          "bounds": "[87,733][158,782]"
+        },
+        {
+          "label": "Покупки",
+          "bounds": "[160,733][230,782]"
+        },
+        {
+          "label": "Копилка",
+          "bounds": "[232,733][303,782]"
+        },
+        {
+          "label": "Ещё",
+          "bounds": "[305,733][376,782]"
+        }
+      ],
+      "scrollClippedTargets": [
+        "Сменить цель"
+      ]
+    },
+    {
+      "case": "root-final-more",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Все занятия",
+          "bounds": "[18,128][372,192]"
+        },
+        {
+          "label": "Прогресс",
+          "bounds": "[18,206][372,270]"
+        },
+        {
+          "label": "Имя и внешность",
+          "bounds": "[18,284][372,348]"
+        },
+        {
+          "label": "Как играть",
+          "bounds": "[18,362][372,426]"
+        },
+        {
+          "label": "Для взрослого",
+          "bounds": "[18,440][372,504]"
+        },
+        {
+          "label": "Домик",
+          "bounds": "[14,733][85,782]"
+        },
+        {
+          "label": "План",
+          "bounds": "[87,733][158,782]"
+        },
+        {
+          "label": "Покупки",
+          "bounds": "[160,733][230,782]"
+        },
+        {
+          "label": "Копилка",
+          "bounds": "[232,733][303,782]"
+        },
+        {
+          "label": "Ещё",
+          "bounds": "[305,733][376,782]"
+        }
+      ],
+      "scrollClippedTargets": []
+    },
+    {
+      "case": "catalog-final",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Вернуться в «Ещё»",
+          "bounds": "[18,42][201,90]"
+        },
+        {
+          "label": "На что хватит сегодня?. Ситуация 1. Есть 100 учебных монет. На еду и уход нужно 40. Попробуй оставить хотя бы 30 на мечту.",
+          "bounds": "[35,298][355,433]"
+        },
+        {
+          "label": "План можно изменить заранее. Ситуация 1. На нужное теперь потребуется 60 вместо 40. Измени учебный план до начала дня.",
+          "bounds": "[35,516][355,651]"
+        }
+      ],
+      "scrollClippedTargets": [
+        "Как устроить запуск кораблика?. Ситуация 1. Часть материалов уже есть. Сравни сделать и купить готовый кораблик."
+      ]
+    },
+    {
+      "case": "history-final",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Назад",
+          "bounds": "[18,42][107,90]"
+        }
+      ],
+      "scrollClippedTargets": []
+    },
+    {
+      "case": "pet-final",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Назад",
+          "bounds": "[18,42][107,90]"
+        },
+        {
+          "label": "Круглые",
+          "bounds": "[35,415][135,467]"
+        },
+        {
+          "label": "✓ Острые",
+          "bounds": "[143,415][255,467]"
+        },
+        {
+          "label": "Мягкие",
+          "bounds": "[263,415][355,467]"
+        },
+        {
+          "label": "✓ Без узора",
+          "bounds": "[35,517][197,569]"
+        },
+        {
+          "label": "Пятнышки",
+          "bounds": "[205,517][355,569]"
+        },
+        {
+          "label": "Полоски",
+          "bounds": "[35,577][355,629]"
+        },
+        {
+          "label": "Игровое имя питомца",
+          "bounds": "[35,679][355,731]"
+        }
+      ],
+      "scrollClippedTargets": [
+        "Готово",
+        "Отмена"
+      ]
+    },
+    {
+      "case": "help-final",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Закрыть справку",
+          "bounds": "[18,42][191,90]"
+        }
+      ],
+      "scrollClippedTargets": []
+    },
+    {
+      "case": "adult-final",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Назад",
+          "bounds": "[18,42][107,90]"
+        },
+        {
+          "label": "Удерживать для входа. Выполнено 0 процентов",
+          "bounds": "[18,246][372,326]"
+        },
+        {
+          "label": "Доступный вариант без удержания",
+          "bounds": "[18,340][372,392]"
+        },
+        {
+          "label": "Вернуться",
+          "bounds": "[18,406][372,458]"
+        }
+      ],
+      "scrollClippedTargets": []
+    },
+    {
+      "case": "catalog-360-100-top",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Вернуться в «Ещё»",
+          "bounds": "[18,42][201,90]"
+        },
+        {
+          "label": "На что хватит сегодня?. Ситуация 1. Есть 100 учебных монет. На еду и уход нужно 40. Попробуй оставить хотя бы 30 на мечту.",
+          "bounds": "[35,321][325,456]"
+        }
+      ],
+      "scrollClippedTargets": [
+        "План можно изменить заранее. Ситуация 1. На нужное теперь потребуется 60 вместо 40. Измени учебный план до начала дня."
+      ]
+    },
+    {
+      "case": "catalog-360-100-end",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Вернуться в «Ещё»",
+          "bounds": "[18,42][201,90]"
+        },
+        {
+          "label": "На что хватит сегодня?. Ситуация 1. Есть 100 учебных монет. На еду и уход нужно 40. Попробуй оставить хотя бы 30 на мечту.",
+          "bounds": "[35,321][325,456]"
+        }
+      ],
+      "scrollClippedTargets": [
+        "План можно изменить заранее. Ситуация 1. На нужное теперь потребуется 60 вместо 40. Измени учебный план до начала дня."
+      ]
+    },
+    {
+      "case": "pet-360-119-top",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Назад",
+          "bounds": "[18,42][120,93]"
+        },
+        {
+          "label": "Круглые",
+          "bounds": "[35,434][168,490]"
+        },
+        {
+          "label": "✓ Острые",
+          "bounds": "[176,434][325,490]"
+        },
+        {
+          "label": "Мягкие",
+          "bounds": "[35,498][325,552]"
+        }
+      ],
+      "scrollClippedTargets": [
+        "✓ Без узора",
+        "Пятнышки"
+      ]
+    },
+    {
+      "case": "pet-360-119-end",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Круглые",
+          "bounds": "[35,103][168,159]"
+        },
+        {
+          "label": "✓ Острые",
+          "bounds": "[176,103][325,159]"
+        },
+        {
+          "label": "Мягкие",
+          "bounds": "[35,167][325,221]"
+        },
+        {
+          "label": "✓ Без узора",
+          "bounds": "[35,277][184,333]"
+        },
+        {
+          "label": "Пятнышки",
+          "bounds": "[192,277][325,333]"
+        },
+        {
+          "label": "Полоски",
+          "bounds": "[35,341][325,395]"
+        },
+        {
+          "label": "Игровое имя питомца",
+          "bounds": "[35,451][325,503]"
+        },
+        {
+          "label": "Готово",
+          "bounds": "[18,534][342,586]"
+        }
+      ],
+      "scrollClippedTargets": [
+        "Отмена"
+      ]
+    },
+    {
+      "case": "help-360-150-top",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Закрыть справку",
+          "bounds": "[18,42][259,102]"
+        }
+      ],
+      "scrollClippedTargets": []
+    },
+    {
+      "case": "help-360-150-end",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Вернуться туда, где я был",
+          "bounds": "[18,507][342,564]"
+        }
+      ],
+      "scrollClippedTargets": []
+    },
+    {
+      "case": "adult-360-200-top",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Назад",
+          "bounds": "[18,42][161,118]"
+        }
+      ],
+      "scrollClippedTargets": []
+    },
+    {
+      "case": "adult-360-200-end",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Удерживать для входа. Выполнено 0 процентов",
+          "bounds": "[18,336][342,451]"
+        }
+      ],
+      "scrollClippedTargets": [
+        "Доступный вариант без удержания",
+        "Вернуться"
+      ]
+    },
+    {
+      "case": "history-390-119-top",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Назад",
+          "bounds": "[18,42][120,93]"
+        }
+      ],
+      "scrollClippedTargets": []
+    },
+    {
+      "case": "history-390-119-end",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Открыть словарь",
+          "bounds": "[18,648][372,702]"
+        },
+        {
+          "label": "Вернуться",
+          "bounds": "[18,716][372,768]"
+        }
+      ],
+      "scrollClippedTargets": []
+    },
+    {
+      "case": "pet-390-150-top",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Назад",
+          "bounds": "[18,42][134,102]"
+        },
+        {
+          "label": "Круглые",
+          "bounds": "[35,465][175,524]"
+        },
+        {
+          "label": "✓ Острые",
+          "bounds": "[35,532][175,593]"
+        },
+        {
+          "label": "Мягкие",
+          "bounds": "[35,601][175,660]"
+        },
+        {
+          "label": "✓ Без узора",
+          "bounds": "[35,721][199,782]"
+        }
+      ],
+      "scrollClippedTargets": [
+        "Пятнышки"
+      ]
+    },
+    {
+      "case": "pet-390-150-end",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Круглые",
+          "bounds": "[35,36][175,95]"
+        },
+        {
+          "label": "✓ Острые",
+          "bounds": "[35,103][175,164]"
+        },
+        {
+          "label": "Мягкие",
+          "bounds": "[35,172][175,231]"
+        },
+        {
+          "label": "✓ Без узора",
+          "bounds": "[35,292][199,353]"
+        },
+        {
+          "label": "Пятнышки",
+          "bounds": "[35,361][199,420]"
+        },
+        {
+          "label": "Полоски",
+          "bounds": "[35,428][199,487]"
+        },
+        {
+          "label": "Игровое имя питомца",
+          "bounds": "[35,548][355,607]"
+        },
+        {
+          "label": "Готово",
+          "bounds": "[18,638][372,695]"
+        },
+        {
+          "label": "Отмена",
+          "bounds": "[18,709][372,768]"
+        }
+      ],
+      "scrollClippedTargets": []
+    },
+    {
+      "case": "LS-B01-390-2-top",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "К выбору занятий",
+          "bounds": "[18,42][338,118]"
+        }
+      ],
+      "scrollClippedTargets": []
+    },
+    {
+      "case": "LS-B01-390-2-control",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Нужное",
+          "bounds": "[35,698][355,769]"
+        }
+      ],
+      "scrollClippedTargets": [
+        "Желания"
+      ]
+    },
+    {
+      "case": "LS-B01-390-2-actions",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Желания",
+          "bounds": "[35,145][355,216]"
+        },
+        {
+          "label": "На мечту",
+          "bounds": "[35,275][355,346]"
+        },
+        {
+          "label": "Короткая справка",
+          "bounds": "[18,377][372,446]"
+        },
+        {
+          "label": "Подсказка L1",
+          "bounds": "[18,456][372,525]"
+        },
+        {
+          "label": "Показать пример L2",
+          "bounds": "[18,535][372,604]"
+        },
+        {
+          "label": "Проверить решение",
+          "bounds": "[18,618][372,685]"
+        },
+        {
+          "label": "К выбору занятий",
+          "bounds": "[18,699][372,768]"
+        }
+      ],
+      "scrollClippedTargets": [
+        "Нужное"
+      ]
+    },
+    {
+      "case": "help-412-100-top",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Закрыть справку",
+          "bounds": "[18,42][191,90]"
+        }
+      ],
+      "scrollClippedTargets": []
+    },
+    {
+      "case": "help-412-100-end",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Вернуться туда, где я был",
+          "bounds": "[18,787][394,839]"
+        }
+      ],
+      "scrollClippedTargets": []
+    },
+    {
+      "case": "LS-B03-412-1.19-top",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "К выбору занятий",
+          "bounds": "[18,42][232,93]"
+        },
+        {
+          "label": "☐ Лист бумаги · если докупать, 15",
+          "bounds": "[35,779][377,861]"
+        }
+      ],
+      "scrollClippedTargets": [
+        "☐ Карандаш · если докупать, 20"
+      ]
+    },
+    {
+      "case": "LS-B03-412-1.19-control",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "☐ Лист бумаги · если докупать, 15",
+          "bounds": "[35,288][377,370]"
+        },
+        {
+          "label": "☐ Карандаш · если докупать, 20",
+          "bounds": "[35,380][377,434]"
+        },
+        {
+          "label": "☐ Набор парус и мачта · если докупать, 10",
+          "bounds": "[35,444][377,526]"
+        },
+        {
+          "label": "○ Сделать",
+          "bounds": "[35,696][377,750]"
+        },
+        {
+          "label": "○ Купить готовый",
+          "bounds": "[35,760][377,814]"
+        }
+      ],
+      "scrollClippedTargets": [
+        "На нужное"
+      ]
+    },
+    {
+      "case": "LS-B03-412-1.19-actions",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "На нужное",
+          "bounds": "[35,98][377,150]"
+        },
+        {
+          "label": "На выбранный способ",
+          "bounds": "[35,194][377,246]"
+        },
+        {
+          "label": "На мечту",
+          "bounds": "[35,290][377,342]"
+        },
+        {
+          "label": "Короткая справка",
+          "bounds": "[18,523][394,577]"
+        },
+        {
+          "label": "Подсказка L1",
+          "bounds": "[18,587][394,641]"
+        },
+        {
+          "label": "Показать пример L2",
+          "bounds": "[18,651][394,705]"
+        },
+        {
+          "label": "Проверить решение",
+          "bounds": "[18,719][394,771]"
+        },
+        {
+          "label": "К выбору занятий",
+          "bounds": "[18,785][394,839]"
+        }
+      ],
+      "scrollClippedTargets": [
+        "○ Купить готовый"
+      ]
+    },
+    {
+      "case": "LS-P03-412-1.5-top",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "К выбору занятий",
+          "bounds": "[18,42][268,102]"
+        }
+      ],
+      "scrollClippedTargets": []
+    },
+    {
+      "case": "LS-P03-412-1.5-control",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "☐ Еда · 1 × 30",
+          "bounds": "[35,138][377,199]"
+        },
+        {
+          "label": "☐ Уход · 1 × 10",
+          "bounds": "[35,209][377,270]"
+        },
+        {
+          "label": "☐ Мяч · 1 × 20",
+          "bounds": "[35,280][377,341]"
+        },
+        {
+          "label": "☐ Мяч · 1 × 20",
+          "bounds": "[35,351][377,412]"
+        },
+        {
+          "label": "Исправленный итог",
+          "bounds": "[35,541][377,600]"
+        },
+        {
+          "label": "Ожидаемая сдача",
+          "bounds": "[35,649][377,708]"
+        },
+        {
+          "label": "Короткая справка",
+          "bounds": "[18,739][394,798]"
+        }
+      ],
+      "scrollClippedTargets": [
+        "Подсказка L1",
+        "Показать пример L2"
+      ]
+    },
+    {
+      "case": "LS-P03-412-1.5-actions",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "☐ Мяч · 1 × 20",
+          "bounds": "[35,39][377,100]"
+        },
+        {
+          "label": "☐ Мяч · 1 × 20",
+          "bounds": "[35,110][377,171]"
+        },
+        {
+          "label": "Исправленный итог",
+          "bounds": "[35,300][377,359]"
+        },
+        {
+          "label": "Ожидаемая сдача",
+          "bounds": "[35,408][377,467]"
+        },
+        {
+          "label": "Короткая справка",
+          "bounds": "[18,498][394,557]"
+        },
+        {
+          "label": "Подсказка L1",
+          "bounds": "[18,567][394,626]"
+        },
+        {
+          "label": "Показать пример L2",
+          "bounds": "[18,636][394,695]"
+        },
+        {
+          "label": "Проверить решение",
+          "bounds": "[18,709][394,766]"
+        },
+        {
+          "label": "К выбору занятий",
+          "bounds": "[18,780][394,839]"
+        }
+      ],
+      "scrollClippedTargets": [
+        "☐ Уход · 1 × 10"
+      ]
+    },
+    {
+      "case": "LS-S02-412-2-top",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "К выбору занятий",
+          "bounds": "[18,42][338,118]"
+        }
+      ],
+      "scrollClippedTargets": []
+    },
+    {
+      "case": "LS-S02-412-2-control",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Снять из копилки (от 0 до 60)",
+          "bounds": "[35,92][377,163]"
+        },
+        {
+          "label": "Купить занятие за 20",
+          "bounds": "[35,299][377,406]"
+        },
+        {
+          "label": "Оставить покупку на потом",
+          "bounds": "[35,416][377,523]"
+        },
+        {
+          "label": "Короткая справка",
+          "bounds": "[18,794][394,863]"
+        }
+      ],
+      "scrollClippedTargets": [
+        "Подсказка L1"
+      ]
+    },
+    {
+      "case": "LS-S02-412-2-actions",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Оставить покупку на потом",
+          "bounds": "[35,70][377,177]"
+        },
+        {
+          "label": "Короткая справка",
+          "bounds": "[18,448][394,517]"
+        },
+        {
+          "label": "Подсказка L1",
+          "bounds": "[18,527][394,596]"
+        },
+        {
+          "label": "Показать пример L2",
+          "bounds": "[18,606][394,675]"
+        },
+        {
+          "label": "Проверить решение",
+          "bounds": "[18,689][394,756]"
+        },
+        {
+          "label": "К выбору занятий",
+          "bounds": "[18,770][394,839]"
+        }
+      ],
+      "scrollClippedTargets": [
+        "Купить занятие за 20"
+      ]
+    },
+    {
+      "case": "LS-P01-360-2-top",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "К выбору занятий",
+          "bounds": "[18,42][338,118]"
+        }
+      ],
+      "scrollClippedTargets": []
+    },
+    {
+      "case": "LS-P01-360-2-control",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Открыть сведения",
+          "bounds": "[35,90][325,208]"
+        },
+        {
+          "label": "Убрать food_30",
+          "bounds": "[47,391][99,468]"
+        },
+        {
+          "label": "Добавить food_30",
+          "bounds": "[206,391][258,468]"
+        }
+      ],
+      "scrollClippedTargets": []
+    },
+    {
+      "case": "LS-P01-360-2-actions",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Сколько останется",
+          "bounds": "[35,113][325,184]"
+        },
+        {
+          "label": "Короткая справка",
+          "bounds": "[18,215][342,284]"
+        },
+        {
+          "label": "Подсказка L1",
+          "bounds": "[18,294][342,363]"
+        },
+        {
+          "label": "Показать пример L2",
+          "bounds": "[18,373][342,480]"
+        }
+      ],
+      "scrollClippedTargets": [
+        "Итог по чеку",
+        "Проверить решение",
+        "К выбору занятий"
+      ]
+    },
+    {
+      "case": "LS-P03-360-2-top",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "К выбору занятий",
+          "bounds": "[18,42][338,118]"
+        }
+      ],
+      "scrollClippedTargets": []
+    },
+    {
+      "case": "LS-P03-360-2-control",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "☐ Мяч · 1 × 20",
+          "bounds": "[35,52][325,124]"
+        },
+        {
+          "label": "☐ Мяч · 1 × 20",
+          "bounds": "[35,134][325,206]"
+        },
+        {
+          "label": "Исправленный итог",
+          "bounds": "[35,451][325,522]"
+        }
+      ],
+      "scrollClippedTargets": [
+        "☐ Уход · 1 × 10",
+        "Ожидаемая сдача"
+      ]
+    },
+    {
+      "case": "LS-P03-360-2-actions",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Короткая справка",
+          "bounds": "[18,97][342,166]"
+        },
+        {
+          "label": "Подсказка L1",
+          "bounds": "[18,176][342,245]"
+        },
+        {
+          "label": "Показать пример L2",
+          "bounds": "[18,255][342,362]"
+        },
+        {
+          "label": "Проверить решение",
+          "bounds": "[18,376][342,481]"
+        },
+        {
+          "label": "К выбору занятий",
+          "bounds": "[18,495][342,564]"
+        }
+      ],
+      "scrollClippedTargets": [
+        "Ожидаемая сдача"
+      ]
+    },
+    {
+      "case": "LS-B03-360-2-top",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "К выбору занятий",
+          "bounds": "[18,42][338,118]"
+        }
+      ],
+      "scrollClippedTargets": []
+    },
+    {
+      "case": "LS-B03-360-2-control",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "○ Сделать",
+          "bounds": "[35,475][325,547]"
+        }
+      ],
+      "scrollClippedTargets": [
+        "☐ Набор парус и мачта · если докупать, 10",
+        "○ Купить готовый"
+      ]
+    },
+    {
+      "case": "LS-B03-360-2-actions",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Короткая справка",
+          "bounds": "[18,235][342,304]"
+        },
+        {
+          "label": "Подсказка L1",
+          "bounds": "[18,314][342,383]"
+        },
+        {
+          "label": "Показать пример L2",
+          "bounds": "[18,393][342,500]"
+        }
+      ],
+      "scrollClippedTargets": [
+        "Проверить решение",
+        "К выбору занятий"
+      ]
+    },
+    {
+      "case": "pet-360-200-top",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Назад",
+          "bounds": "[18,42][161,118]"
+        }
+      ],
+      "scrollClippedTargets": [
+        "Круглые"
+      ]
+    },
+    {
+      "case": "pet-360-200-end",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Пятнышки",
+          "bounds": "[35,57][244,126]"
+        },
+        {
+          "label": "Полоски",
+          "bounds": "[35,134][244,203]"
+        },
+        {
+          "label": "Игровое имя питомца",
+          "bounds": "[35,312][325,383]"
+        },
+        {
+          "label": "Готово",
+          "bounds": "[18,414][342,481]"
+        },
+        {
+          "label": "Отмена",
+          "bounds": "[18,495][342,564]"
+        }
+      ],
+      "scrollClippedTargets": [
+        "✓ Без узора"
+      ]
+    },
+    {
+      "case": "help-360-200-top",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Закрыть справку",
+          "bounds": "[18,42][325,118]"
+        }
+      ],
+      "scrollClippedTargets": []
+    },
+    {
+      "case": "help-360-200-end",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Вернуться туда, где я был",
+          "bounds": "[18,459][342,564]"
+        }
+      ],
+      "scrollClippedTargets": []
+    },
+    {
+      "case": "history-360-200-top",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Назад",
+          "bounds": "[18,42][161,118]"
+        }
+      ],
+      "scrollClippedTargets": []
+    },
+    {
+      "case": "history-360-200-end",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Открыть словарь",
+          "bounds": "[18,414][342,483]"
+        },
+        {
+          "label": "Вернуться",
+          "bounds": "[18,497][342,564]"
+        }
+      ],
+      "scrollClippedTargets": []
+    },
+    {
+      "case": "catalog-360-200-top",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Вернуться в «Ещё»",
+          "bounds": "[18,42][342,142]"
+        }
+      ],
+      "scrollClippedTargets": []
+    },
+    {
+      "case": "catalog-360-200-end",
+      "pass": true,
+      "fullyVisibleTargets": [
+        {
+          "label": "Вернуться в «Ещё»",
+          "bounds": "[18,42][342,142]"
+        }
+      ],
+      "scrollClippedTargets": []
+    }
+  ],
+  "screens": [
+    {
+      "name": "root-final-home",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "root-final-plan",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "root-final-shop",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "root-final-savings",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "root-final-more",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "catalog-final",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "history-final",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "pet-final",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "help-final",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "adult-final",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "catalog-360-100-top",
+      "width": 360,
+      "height": 640,
+      "fontScale": 1
+    },
+    {
+      "name": "catalog-360-100-end",
+      "width": 360,
+      "height": 640,
+      "fontScale": 1
+    },
+    {
+      "name": "pet-360-119-top",
+      "width": 360,
+      "height": 640,
+      "fontScale": 1.19
+    },
+    {
+      "name": "pet-360-119-end",
+      "width": 360,
+      "height": 640,
+      "fontScale": 1.19
+    },
+    {
+      "name": "help-360-150-top",
+      "width": 360,
+      "height": 640,
+      "fontScale": 1.5
+    },
+    {
+      "name": "help-360-150-end",
+      "width": 360,
+      "height": 640,
+      "fontScale": 1.5
+    },
+    {
+      "name": "adult-360-200-top",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "adult-360-200-end",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "history-390-119-top",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1.19
+    },
+    {
+      "name": "history-390-119-end",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1.19
+    },
+    {
+      "name": "pet-390-150-top",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1.5
+    },
+    {
+      "name": "pet-390-150-end",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1.5
+    },
+    {
+      "name": "LS-B01-390-2-top",
+      "width": 390,
+      "height": 844,
+      "fontScale": 2
+    },
+    {
+      "name": "LS-B01-390-2-control",
+      "width": 390,
+      "height": 844,
+      "fontScale": 2
+    },
+    {
+      "name": "LS-B01-390-2-actions",
+      "width": 390,
+      "height": 844,
+      "fontScale": 2
+    },
+    {
+      "name": "help-412-100-top",
+      "width": 412,
+      "height": 915,
+      "fontScale": 1
+    },
+    {
+      "name": "help-412-100-end",
+      "width": 412,
+      "height": 915,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-B03-412-1.19-top",
+      "width": 412,
+      "height": 915,
+      "fontScale": 1.19
+    },
+    {
+      "name": "LS-B03-412-1.19-control",
+      "width": 412,
+      "height": 915,
+      "fontScale": 1.19
+    },
+    {
+      "name": "LS-B03-412-1.19-actions",
+      "width": 412,
+      "height": 915,
+      "fontScale": 1.19
+    },
+    {
+      "name": "LS-P03-412-1.5-top",
+      "width": 412,
+      "height": 915,
+      "fontScale": 1.5
+    },
+    {
+      "name": "LS-P03-412-1.5-control",
+      "width": 412,
+      "height": 915,
+      "fontScale": 1.5
+    },
+    {
+      "name": "LS-P03-412-1.5-actions",
+      "width": 412,
+      "height": 915,
+      "fontScale": 1.5
+    },
+    {
+      "name": "LS-S02-412-2-top",
+      "width": 412,
+      "height": 915,
+      "fontScale": 2
+    },
+    {
+      "name": "LS-S02-412-2-control",
+      "width": 412,
+      "height": 915,
+      "fontScale": 2
+    },
+    {
+      "name": "LS-S02-412-2-actions",
+      "width": 412,
+      "height": 915,
+      "fontScale": 2
+    },
+    {
+      "name": "LS-P01-360-2-top",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "LS-P01-360-2-control",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "LS-P01-360-2-actions",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "LS-P03-360-2-top",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "LS-P03-360-2-control",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "LS-P03-360-2-actions",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "LS-B03-360-2-top",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "LS-B03-360-2-control",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "LS-B03-360-2-actions",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "pet-360-200-top",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "pet-360-200-end",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "help-360-200-top",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "help-360-200-end",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "history-360-200-top",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "history-360-200-end",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "catalog-360-200-top",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "catalog-360-200-end",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    }
+  ]
+}

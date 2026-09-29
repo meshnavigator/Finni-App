@@ -1,0 +1,12 @@
+{
+  "accepted_master_sha256": "8b2932caa23b99ae0d6575105940cda70858619f32333d564847d9b0dcdb6cc0",
+  "accepted_master_hash_unchanged": true,
+  "canvas": [
+    941,
+    1672
+  ],
+  "neutral_visible_pixel_differences": 0,
+  "new_candidate_generated": false,
+  "imagegen_status": "BLOCKED: two attempts failed before generation: fs sandbox helper setup refresh had errors",
+  "runtime_changed": false
+}

@@ -1,0 +1,241 @@
+{
+  "sourceSize": [
+    941,
+    1672
+  ],
+  "canvas": [
+    941,
+    1672
+  ],
+  "markCount": 12,
+  "placements": [
+    {
+      "part": "rear-left",
+      "sourceBox": [
+        302,
+        1135,
+        336,
+        1173
+      ],
+      "sourceOpaqueArea": 352,
+      "targetCenter": [
+        313,
+        1128
+      ],
+      "size": [
+        13,
+        15
+      ],
+      "transform": "crop, uniform downscale, translation; no pixel painting/recoloring"
+    },
+    {
+      "part": "rear-left",
+      "sourceBox": [
+        318,
+        1166,
+        348,
+        1201
+      ],
+      "sourceOpaqueArea": 249,
+      "targetCenter": [
+        321,
+        1150
+      ],
+      "size": [
+        13,
+        15
+      ],
+      "transform": "crop, uniform downscale, translation; no pixel painting/recoloring"
+    },
+    {
+      "part": "rear-left",
+      "sourceBox": [
+        307,
+        1196,
+        339,
+        1230
+      ],
+      "sourceOpaqueArea": 273,
+      "targetCenter": [
+        314,
+        1171
+      ],
+      "size": [
+        13,
+        14
+      ],
+      "transform": "crop, uniform downscale, translation; no pixel painting/recoloring"
+    },
+    {
+      "part": "foreleg-left",
+      "sourceBox": [
+        371,
+        1110,
+        405,
+        1150
+      ],
+      "sourceOpaqueArea": 383,
+      "targetCenter": [
+        371,
+        1117
+      ],
+      "size": [
+        13,
+        15
+      ],
+      "transform": "crop, uniform downscale, translation; no pixel painting/recoloring"
+    },
+    {
+      "part": "foreleg-left",
+      "sourceBox": [
+        387,
+        1148,
+        420,
+        1183
+      ],
+      "sourceOpaqueArea": 298,
+      "targetCenter": [
+        381,
+        1138
+      ],
+      "size": [
+        13,
+        14
+      ],
+      "transform": "crop, uniform downscale, translation; no pixel painting/recoloring"
+    },
+    {
+      "part": "foreleg-left",
+      "sourceBox": [
+        400,
+        1182,
+        433,
+        1217
+      ],
+      "sourceOpaqueArea": 294,
+      "targetCenter": [
+        388,
+        1160
+      ],
+      "size": [
+        13,
+        14
+      ],
+      "transform": "crop, uniform downscale, translation; no pixel painting/recoloring"
+    },
+    {
+      "part": "foreleg-right",
+      "sourceBox": [
+        517,
+        1115,
+        551,
+        1152
+      ],
+      "sourceOpaqueArea": 343,
+      "targetCenter": [
+        485,
+        1116
+      ],
+      "size": [
+        13,
+        14
+      ],
+      "transform": "crop, uniform downscale, translation; no pixel painting/recoloring"
+    },
+    {
+      "part": "foreleg-right",
+      "sourceBox": [
+        505,
+        1149,
+        537,
+        1185
+      ],
+      "sourceOpaqueArea": 309,
+      "targetCenter": [
+        476,
+        1138
+      ],
+      "size": [
+        13,
+        15
+      ],
+      "transform": "crop, uniform downscale, translation; no pixel painting/recoloring"
+    },
+    {
+      "part": "foreleg-right",
+      "sourceBox": [
+        492,
+        1181,
+        526,
+        1217
+      ],
+      "sourceOpaqueArea": 322,
+      "targetCenter": [
+        468,
+        1159
+      ],
+      "size": [
+        13,
+        14
+      ],
+      "transform": "crop, uniform downscale, translation; no pixel painting/recoloring"
+    },
+    {
+      "part": "rear-right",
+      "sourceBox": [
+        597,
+        1136,
+        628,
+        1172
+      ],
+      "sourceOpaqueArea": 302,
+      "targetCenter": [
+        546,
+        1127
+      ],
+      "size": [
+        13,
+        15
+      ],
+      "transform": "crop, uniform downscale, translation; no pixel painting/recoloring"
+    },
+    {
+      "part": "rear-right",
+      "sourceBox": [
+        612,
+        1164,
+        643,
+        1200
+      ],
+      "sourceOpaqueArea": 263,
+      "targetCenter": [
+        554,
+        1148
+      ],
+      "size": [
+        13,
+        15
+      ],
+      "transform": "crop, uniform downscale, translation; no pixel painting/recoloring"
+    },
+    {
+      "part": "rear-right",
+      "sourceBox": [
+        601,
+        1196,
+        632,
+        1230
+      ],
+      "sourceOpaqueArea": 266,
+      "targetCenter": [
+        550,
+        1170
+      ],
+      "size": [
+        13,
+        14
+      ],
+      "transform": "crop, uniform downscale, translation; no pixel painting/recoloring"
+    }
+  ]
+}

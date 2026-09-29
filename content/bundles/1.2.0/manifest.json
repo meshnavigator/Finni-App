@@ -1,0 +1,35 @@
+{
+  "schemaVersion":3,
+  "contentVersion":"1.2.0",
+  "economyVersion":"economy-v2",
+  "lessonIds":["LS-B01","LS-B02","LS-P01","LS-P02","LS-S01","LS-S02","LS-P03","LS-B03"],
+  "familyActivityIds":["OFF-01","OFF-02","OFF-03"],
+  "lessons":{
+    "LS-B01":"lessons/LS-B01.json",
+    "LS-B02":"lessons/LS-B02.json",
+    "LS-P01":"lessons/LS-P01.json",
+    "LS-P02":"lessons/LS-P02.json",
+    "LS-S01":"lessons/LS-S01.json",
+    "LS-S02":"lessons/LS-S02.json",
+    "LS-P03":"lessons/LS-P03.json",
+    "LS-B03":"lessons/LS-B03.json"
+  },
+  "competencyCatalogPath":"catalogs/competencies.json",
+  "familyActivitiesPath":"catalogs/family-activities.json",
+  "goalsPath":"catalogs/goals.json",
+  "assetsPath":"catalogs/assets.json",
+  "files":[
+    {"path":"catalogs/assets.json","sha256":"6b321f5f67e98e41d396eb8f9ff0a3dd88d332a94f99cceb4a4f33842fd3efcf","kind":"assets","dependsOn":[]},
+    {"path":"catalogs/competencies.json","sha256":"b232744a61002e5dc70c0f072a44cad028bc2a5383151160d660bb6fee854d57","kind":"competencies","dependsOn":[]},
+    {"path":"catalogs/family-activities.json","sha256":"50e6f9468d39c64f45da7a91c22ad0ccd8aca8a7ae0ac29084c1c9bec7dec53a","kind":"family_activities","dependsOn":["catalogs/competencies.json"]},
+    {"path":"catalogs/goals.json","sha256":"cd7a63698d0dfc12c71f156518e734ad2daad3cd5847836c3174ee05890d4bb4","kind":"goals","dependsOn":[]},
+    {"path":"lessons/LS-B01.json","sha256":"39499d6354d700b815d19f79ea8cec0d6b00571c84c39c0eddad5ea0d0b0dcbf","kind":"lesson","dependsOn":["catalogs/competencies.json","catalogs/goals.json"]},
+    {"path":"lessons/LS-B02.json","sha256":"b1df5f9e5ff5fa50dd4d9388c92e3c7a62bbbfa14a56b199328eb98dd95c239f","kind":"lesson","dependsOn":["catalogs/competencies.json","catalogs/goals.json"]},
+    {"path":"lessons/LS-B03.json","sha256":"ee95b060e43705c9148247c450e8b4cd39330a2e462ee2d6461de4f4ea7408d6","kind":"lesson","dependsOn":["catalogs/competencies.json","catalogs/goals.json"]},
+    {"path":"lessons/LS-P01.json","sha256":"7bdfd37eec47fca7e606cbd9b5b6f3971308e6a885e9fc115446aadcac1b0d58","kind":"lesson","dependsOn":["catalogs/competencies.json"]},
+    {"path":"lessons/LS-P02.json","sha256":"6470ccaabddbf85cc59bd28d3de918e5e118fe99ccc7e5db21b5f3bd74dbe4e6","kind":"lesson","dependsOn":["catalogs/competencies.json"]},
+    {"path":"lessons/LS-P03.json","sha256":"4bec1226c020548be23da9d0e4739c6374b9c6dbca1108f7e08271bb561dc5a8","kind":"lesson","dependsOn":["catalogs/competencies.json"]},
+    {"path":"lessons/LS-S01.json","sha256":"31cefa55f0d83697a8eb22bd044a6da0fc30bb0efb11c427a413c7b859492745","kind":"lesson","dependsOn":["catalogs/competencies.json","catalogs/goals.json"]},
+    {"path":"lessons/LS-S02.json","sha256":"c98fb066571b512e1a6b3a0158322dbee8997de3dba23b20b419639007b23e3e","kind":"lesson","dependsOn":["catalogs/competencies.json","catalogs/goals.json"]}
+  ]
+}

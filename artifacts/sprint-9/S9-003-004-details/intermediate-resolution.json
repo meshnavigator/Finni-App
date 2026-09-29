@@ -1,0 +1,5 @@
+{
+  "supersededErrorCheck": "XML contained an offscreen zero/negative-height text node; screenshot disproved visibility. Final test requires positive full bounds in viewport.",
+  "onboardingHarness": "Profile created successfully; at fontScale 2 root uses Menu rather than root-navigation. Assertion corrected to actual large-navigation IDs.",
+  "apkSha256": "5a5b70e814d8d1bc1147f65d7e330835a833fb78eae7914f05bd2a0975d6a3ec"
+}

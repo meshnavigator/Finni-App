@@ -1,0 +1,16 @@
+{
+  "method": "sRGB source-over compositing of 78% warm material on black (conservative darkest backdrop); opaque foreground. Text AA threshold 4.5:1, icon 3:1. This is not a TalkBack test.",
+  "material": "rgba(255,248,235,.78)",
+  "worstBackdropRGB": [
+    199,
+    193,
+    183
+  ],
+  "contrast": {
+    "primaryInk": 7.676247028010505,
+    "secondaryInk": 5.220500663160343,
+    "lineIcons": 3.670184692811763,
+    "primaryAction": 5.584937764918315,
+    "disabledAction": 4.7118611785992
+  }
+}

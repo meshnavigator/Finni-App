@@ -1,0 +1,7 @@
+interface:
+  display_name: "Direct Model Routing"
+  short_description: "Assign one model outside adaptive routing"
+  default_prompt: "Use $direct-model-routing to run this task on exactly one model I name."
+
+policy:
+  allow_implicit_invocation: true

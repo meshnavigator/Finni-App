@@ -1,0 +1,24 @@
+{
+  "tool": "image_gen.imagegen",
+  "date": "2026-09-25",
+  "reference": "user reattached accepted original in parent conversation",
+  "masterUnchanged": true,
+  "transports": "num_last_images_to_include 1/2/3; exact prompts in imagegen-prompts.json",
+  "artworkSource": "generated round ears, floppy ears, striped coat; no procedural pigment drawing",
+  "operations": "mechanical ear extraction/translation; original partition; stripe affine registration and anatomical transfer; assembly",
+  "ownerAcceptance": "pointy/plain and pointy/spots previously accepted; seven new appearances await owner visual review",
+  "inputs": [
+    {
+      "path": "input\\floppy-donor.png",
+      "sha256": "25292b71e794568b8420e95776818af0ad0d6b0e3190f0948486d779e0383728"
+    },
+    {
+      "path": "input\\round-donor.png",
+      "sha256": "962f37ded83aa358d81cd9dca7722ea1e5ea45595398c77114f5a394faf13704"
+    },
+    {
+      "path": "input\\stripes-donor.png",
+      "sha256": "4e2eaabf2fda9fca133966e0fb7e851f7acc28bb89d5bc4634a86fad158b482b"
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "canvas": [
+    941,
+    1672
+  ],
+  "origin": [
+    0,
+    0
+  ],
+  "feetAnchor": [
+    470,
+    1272
+  ],
+  "stageScales": [
+    0.86,
+    1,
+    1.12
+  ],
+  "status": "owner-accepted",
+  "stripeRegistration": {
+    "source": [
+      191,
+      514,
+      828,
+      1339
+    ],
+    "target": [
+      280,
+      724,
+      694,
+      1261
+    ],
+    "scale": [
+      0.6499215070643642,
+      0.6509090909090909
+    ],
+    "translation": [
+      155.86499215070643,
+      389.4327272727273
+    ]
+  },
+  "variants": [
+    {
+      "id": "pointy-plain",
+      "shapeId": "pointy",
+      "patternId": "plain",
+      "neutralSha256": "1e9fecd57e73284c9d2b978a6f9dc60705697a6df2c3d63b88e2e92793491178",
+      "blinkSha256": "62d4d961aecabbc64897570fbdbaf97f0be3e3cc7371f8ea2ece40728dae9bde",
+      "oraSha256": "9904297faf5557efd57d38ff83939ae4d6efef2be9553e1c79a98982f7b4f0f5",
+      "artStatus": "owner-accepted"
+    },
+    {
+      "id": "pointy-spots",
+      "shapeId": "pointy",
+      "patternId": "spots",
+      "neutralSha256": "807b6dcb362b6b18037cfad6f115764287ca8453b44fb98ee79dcef242b78d61",
+      "blinkSha256": "f85c4044cec4ed0b53ed5c9210d6fbacbed67edbf61c5758ea74f6ca06c53355",
+      "oraSha256": "eb0d493fe3c3668a2f9bffb9539f4e2bda780c453219c7237da3134c2c05ba9f",
+      "artStatus": "owner-accepted"
+    },
+    {
+      "id": "pointy-stripes",
+      "shapeId": "pointy",
+      "patternId": "stripes",
+      "neutralSha256": "069c4ba20660d06b27c9ddbf8ed4eb9bb016a262fc1e5d460f6f32bb15b93a23",
+      "blinkSha256": "2a10058f53a168037e8d027f8c06179579cf5aba0982881ed042f8b3303e6865",
+      "oraSha256": "c3e08e9284820cf4ecad709e782adba97d72c5e93982311ed05635f6d873831b",
+      "artStatus": "owner-accepted"
+    },
+    {
+      "id": "round-plain",
+      "shapeId": "round",
+      "patternId": "plain",
+      "neutralSha256": "d5fcbaa49d4869ad18930e1cd73245afa768df1e4a7d00cc5185e135cd4010a9",
+      "blinkSha256": "6a8353688a5a071ae7b733fa2e02df0f94e20f6fad97bc80318a961aa13cb5c5",
+      "oraSha256": "a842440f507ad526143bc18d7b321fdd321d9b7983f47bf31a271bbee318010c",
+      "artStatus": "owner-accepted"
+    },
+    {
+      "id": "round-spots",
+      "shapeId": "round",
+      "patternId": "spots",
+      "neutralSha256": "0a8b0f19f4a57f7bf5189803547993c60d745a8350ac50d6b64dc3fe99dea69f",
+      "blinkSha256": "0e8ae1b29130678eacb6631ac6dcece0801bc8ec4bafd2b1f48c6ddffaf6dbe5",
+      "oraSha256": "3fbe086ce5cd08e919b3d3b878dfd255657fab4f08133a880bc5e382357baef5",
+      "artStatus": "owner-accepted"
+    },
+    {
+      "id": "round-stripes",
+      "shapeId": "round",
+      "patternId": "stripes",
+      "neutralSha256": "978ecf5fda90f1b42d6cf5ed1a1fec9e19eff1739df35809d8d644988801f12b",
+      "blinkSha256": "8a9e19bce64d54c52d650352c1c7bd67e37eebece9a26039a80320c7067d77b1",
+      "oraSha256": "4c02a1ead31ae18bb953a86b1b27898d56da3a474e65b410da854ec217a8b780",
+      "artStatus": "owner-accepted"
+    },
+    {
+      "id": "floppy-plain",
+      "shapeId": "floppy",
+      "patternId": "plain",
+      "neutralSha256": "2108dd8827569cdc599928b429e77cefec0ec4fe8215525ff2eca7d127003522",
+      "blinkSha256": "6af05329170d66669f7c2dbe7dfb11bdcf1f52af30d61ffd6be926939647ceba",
+      "oraSha256": "3a2f8407179b334a4d0817564e9623fbe4d474e9ffc6eabfc4ac08fb4f7a8c68",
+      "artStatus": "owner-accepted"
+    },
+    {
+      "id": "floppy-spots",
+      "shapeId": "floppy",
+      "patternId": "spots",
+      "neutralSha256": "4ac666178c3eb4e2af0bd5d0a8ad40ce05477f39ebfd886d37b0fd0be274fa2d",
+      "blinkSha256": "741dc9d7922f416058a7cac0394a83ce91c03c83ac3c16a09e2e04c0549df559",
+      "oraSha256": "13ebe29273d3d9d7f6d44e78b8139493aeb04b8aa23907cbb5e29c256acb00f2",
+      "artStatus": "owner-accepted"
+    },
+    {
+      "id": "floppy-stripes",
+      "shapeId": "floppy",
+      "patternId": "stripes",
+      "neutralSha256": "9caf7d1ace1d02cc9e3f207c09f8d2741ce2fe71917cd6f00dd71bde1eeb3d99",
+      "blinkSha256": "5a68366764f25970031241c09f28722c44db0122e5ef6adfa38c94dbe5f9d52c",
+      "oraSha256": "75f60888bf765ea5c1b2f5288675b77cd0f565b32a9180ba93654ce412826e0f",
+      "artStatus": "owner-accepted"
+    }
+  ],
+  "artStatus": "owner-accepted",
+  "artAcceptance": {
+    "date": "2026-09-25",
+    "revision": "ear-seams-v3",
+    "record": "artifacts/sprint-8/S8-001-matrix-v3/acceptance.json",
+    "scope": "nine shape/pattern appearances and corrected round/floppy joins; existing neutral/blink assets"
+  }
+}

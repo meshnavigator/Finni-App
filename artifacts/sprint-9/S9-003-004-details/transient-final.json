@@ -1,0 +1,44 @@
+{
+  "apkSha256": "42d1a247ef6f7a8220d993f89b84a89a0f87dc3ab20d1a7e0f2b8da551e4d0d9",
+  "checks": [
+    {
+      "case": "boot-error-retry-visible-200",
+      "pass": true,
+      "systemUiVisibility": "0x3710"
+    },
+    {
+      "case": "failed-retry-remains-recoverable",
+      "pass": true
+    },
+    {
+      "case": "final-binary-normal-start-after-qa-fixture-repair",
+      "pass": true
+    }
+  ],
+  "screens": [
+    {
+      "name": "system-bars-error-200",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "system-bars-error-200-actions",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "system-bars-error-after-retry",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "latest-delivery-home",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    }
+  ]
+}

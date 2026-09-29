@@ -1,0 +1,2351 @@
+{
+  "contrast": [
+    {
+      "pair": "body/surface",
+      "ratio": 7.03,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "pair": "body/background",
+      "ratio": 6.35,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "pair": "body/notice",
+      "ratio": 5.76,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "pair": "title/surface",
+      "ratio": 11.75,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "pair": "accent/surface",
+      "ratio": 5.45,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "pair": "primary",
+      "ratio": 5.58,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "pair": "error",
+      "ratio": 5.61,
+      "minimum": 4.5,
+      "pass": true
+    },
+    {
+      "pair": "input-boundary",
+      "ratio": 3.04,
+      "minimum": 3,
+      "pass": true
+    }
+  ],
+  "geometry": [
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-B01-intro",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 3,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-B01-solution",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 8,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-B01-evaluated",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 6,
+      "scrollClippedControls": 2,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-B01-explanation",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 6,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-B01-completed",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 4,
+      "scrollClippedControls": 2,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-B01-history",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 2,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-B02-intro",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 2,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-B02-solution",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 8,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-B02-evaluated",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 6,
+      "scrollClippedControls": 2,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-B02-explanation",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 6,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-B02-completed",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 4,
+      "scrollClippedControls": 2,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-B02-history",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 2,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-B03-intro",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 3,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-B03-selected",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 7,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-B03-solution",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 9,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-B03-evaluated",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 8,
+      "scrollClippedControls": 2,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-B03-explanation",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 7,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-B03-completed",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 3,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-B03-history",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 2,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-P01-intro",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 4,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-P01-intro",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 4,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-P01-solution",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 10,
+      "scrollClippedControls": 2,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-P01-evaluated",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 9,
+      "scrollClippedControls": 2,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-P01-explanation",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 7,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-P01-completed",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 4,
+      "scrollClippedControls": 2,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-P01-history",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 2,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-P02-intro",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 4,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-P02-solution",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 11,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-P02-evaluated",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 9,
+      "scrollClippedControls": 2,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-P02-explanation",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 7,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-P02-completed",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 4,
+      "scrollClippedControls": 2,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-P02-history",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 2,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-P03-intro",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 2,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-P03-selected",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 6,
+      "scrollClippedControls": 2,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-P03-solution",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 6,
+      "scrollClippedControls": 2,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-P03-evaluated",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 8,
+      "scrollClippedControls": 3,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-P03-explanation",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 6,
+      "scrollClippedControls": 2,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-P03-completed",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 4,
+      "scrollClippedControls": 2,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-P03-history",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 2,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-S01-intro",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 4,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-S01-solution",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 4,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-S01-evaluated",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 6,
+      "scrollClippedControls": 2,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-S01-explanation",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 5,
+      "scrollClippedControls": 2,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-S01-completed",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 3,
+      "scrollClippedControls": 2,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-S01-history",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 2,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-S02-intro",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 3,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-S02-solution",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 7,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-S02-evaluated",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 6,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-S02-explanation",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 5,
+      "scrollClippedControls": 2,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-S02-completed",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 3,
+      "scrollClippedControls": 2,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-S02-history",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 2,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "lessons.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "lessons-wallet",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 9,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "root-final-home",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 9,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "root-final-plan",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 5,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "root-final-shop",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 8,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "root-final-savings",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 9,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "root-final-more",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 10,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "catalog-final",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 3,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "history-final",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "pet-final",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 8,
+      "scrollClippedControls": 2,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "help-final",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "adult-final",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 4,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "catalog-360-100-top",
+      "profile": [
+        360,
+        640,
+        1
+      ],
+      "fullControls": 2,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "catalog-360-100-end",
+      "profile": [
+        360,
+        640,
+        1
+      ],
+      "fullControls": 2,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "pet-360-119-top",
+      "profile": [
+        360,
+        640,
+        1.19
+      ],
+      "fullControls": 4,
+      "scrollClippedControls": 2,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "pet-360-119-end",
+      "profile": [
+        360,
+        640,
+        1.19
+      ],
+      "fullControls": 8,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "help-360-150-top",
+      "profile": [
+        360,
+        640,
+        1.5
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "help-360-150-end",
+      "profile": [
+        360,
+        640,
+        1.5
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "adult-360-200-top",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "adult-360-200-end",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 2,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "history-390-119-top",
+      "profile": [
+        390,
+        844,
+        1.19
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "history-390-119-end",
+      "profile": [
+        390,
+        844,
+        1.19
+      ],
+      "fullControls": 2,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "pet-390-150-top",
+      "profile": [
+        390,
+        844,
+        1.5
+      ],
+      "fullControls": 5,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "pet-390-150-end",
+      "profile": [
+        390,
+        844,
+        1.5
+      ],
+      "fullControls": 9,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-B01-390-2-top",
+      "profile": [
+        390,
+        844,
+        2
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-B01-390-2-control",
+      "profile": [
+        390,
+        844,
+        2
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-B01-390-2-actions",
+      "profile": [
+        390,
+        844,
+        2
+      ],
+      "fullControls": 7,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "help-412-100-top",
+      "profile": [
+        412,
+        915,
+        1
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "help-412-100-end",
+      "profile": [
+        412,
+        915,
+        1
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-B03-412-1.19-top",
+      "profile": [
+        412,
+        915,
+        1.19
+      ],
+      "fullControls": 2,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-B03-412-1.19-control",
+      "profile": [
+        412,
+        915,
+        1.19
+      ],
+      "fullControls": 5,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-B03-412-1.19-actions",
+      "profile": [
+        412,
+        915,
+        1.19
+      ],
+      "fullControls": 8,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-P03-412-1.5-top",
+      "profile": [
+        412,
+        915,
+        1.5
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-P03-412-1.5-control",
+      "profile": [
+        412,
+        915,
+        1.5
+      ],
+      "fullControls": 7,
+      "scrollClippedControls": 2,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-P03-412-1.5-actions",
+      "profile": [
+        412,
+        915,
+        1.5
+      ],
+      "fullControls": 9,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-S02-412-2-top",
+      "profile": [
+        412,
+        915,
+        2
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-S02-412-2-control",
+      "profile": [
+        412,
+        915,
+        2
+      ],
+      "fullControls": 4,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-S02-412-2-actions",
+      "profile": [
+        412,
+        915,
+        2
+      ],
+      "fullControls": 6,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-P01-360-2-top",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-P01-360-2-control",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 3,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-P01-360-2-actions",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 4,
+      "scrollClippedControls": 3,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-P03-360-2-top",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-P03-360-2-control",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 3,
+      "scrollClippedControls": 2,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-P03-360-2-actions",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 5,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-B03-360-2-top",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-B03-360-2-control",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 2,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "LS-B03-360-2-actions",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 3,
+      "scrollClippedControls": 2,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "pet-360-200-top",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "pet-360-200-end",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 5,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "help-360-200-top",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "help-360-200-end",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "history-360-200-top",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "history-360-200-end",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 2,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "catalog-360-200-top",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "matrix.json",
+      "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+      "qaOnly": false,
+      "shot": "catalog-360-200-end",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "states.json",
+      "apkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+      "qaOnly": false,
+      "shot": "catalog-storage-error-200",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "states.json",
+      "apkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+      "qaOnly": false,
+      "shot": "error-wallet",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 5,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "states.json",
+      "apkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+      "qaOnly": false,
+      "shot": "boot-error-200",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "states.json",
+      "apkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+      "qaOnly": false,
+      "shot": "boot-error-200-actions",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "states.json",
+      "apkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+      "qaOnly": false,
+      "shot": "onboarding-412",
+      "profile": [
+        412,
+        915,
+        1
+      ],
+      "fullControls": 3,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "states.json",
+      "apkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+      "qaOnly": false,
+      "shot": "onboarding-200",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 0,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "states.json",
+      "apkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+      "qaOnly": false,
+      "shot": "pet-create-200",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "states.json",
+      "apkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+      "qaOnly": false,
+      "shot": "profile-created-200",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 5,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "states.json",
+      "apkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+      "qaOnly": false,
+      "shot": "draft-plan-200",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 3,
+      "pass": true
+    },
+    {
+      "report": "states.json",
+      "apkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+      "qaOnly": false,
+      "shot": "draft-warning-200",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 7,
+      "scrollClippedControls": 2,
+      "pass": true
+    },
+    {
+      "report": "states.json",
+      "apkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+      "qaOnly": false,
+      "shot": "draft-confirmed-200",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "states.json",
+      "apkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+      "qaOnly": false,
+      "shot": "savings-empty-goal",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 9,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "states.json",
+      "apkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+      "qaOnly": false,
+      "shot": "savings-transfer-error",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 9,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "extras.json",
+      "apkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+      "qaOnly": false,
+      "shot": "adult-hold-unlocked",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "extras.json",
+      "apkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+      "qaOnly": false,
+      "shot": "adult-motion-switched",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 3,
+      "scrollClippedControls": 2,
+      "pass": true
+    },
+    {
+      "report": "extras.json",
+      "apkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+      "qaOnly": false,
+      "shot": "adult-sound-switched",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 3,
+      "scrollClippedControls": 2,
+      "pass": true
+    },
+    {
+      "report": "extras.json",
+      "apkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+      "qaOnly": false,
+      "shot": "adult-delete-confirm",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 2,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "extras.json",
+      "apkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+      "qaOnly": false,
+      "shot": "adult-cancel-wallet",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 9,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "extras.json",
+      "apkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+      "qaOnly": false,
+      "shot": "adult-background-relocked",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 4,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "extras.json",
+      "apkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+      "qaOnly": false,
+      "shot": "adult-arithmetic-invalid-200",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 3,
+      "scrollClippedControls": 2,
+      "pass": true
+    },
+    {
+      "report": "extras.json",
+      "apkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+      "qaOnly": false,
+      "shot": "adult-controls-200-top",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "extras.json",
+      "apkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+      "qaOnly": false,
+      "shot": "adult-controls-200-end",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 4,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "extras.json",
+      "apkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+      "qaOnly": false,
+      "shot": "system-night-shop",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 8,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "extras.json",
+      "apkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+      "qaOnly": false,
+      "shot": "system-night-confirm",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 2,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "final-smoke.json",
+      "apkSha256": "42d1a247ef6f7a8220d993f89b84a89a0f87dc3ab20d1a7e0f2b8da551e4d0d9",
+      "qaOnly": false,
+      "shot": "final-delivery-home",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 9,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "final-smoke.json",
+      "apkSha256": "42d1a247ef6f7a8220d993f89b84a89a0f87dc3ab20d1a7e0f2b8da551e4d0d9",
+      "qaOnly": false,
+      "shot": "final-root-home",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 9,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "final-smoke.json",
+      "apkSha256": "42d1a247ef6f7a8220d993f89b84a89a0f87dc3ab20d1a7e0f2b8da551e4d0d9",
+      "qaOnly": false,
+      "shot": "final-root-plan",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 5,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "final-smoke.json",
+      "apkSha256": "42d1a247ef6f7a8220d993f89b84a89a0f87dc3ab20d1a7e0f2b8da551e4d0d9",
+      "qaOnly": false,
+      "shot": "final-root-shop",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 8,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "final-smoke.json",
+      "apkSha256": "42d1a247ef6f7a8220d993f89b84a89a0f87dc3ab20d1a7e0f2b8da551e4d0d9",
+      "qaOnly": false,
+      "shot": "final-root-savings",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 9,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "final-smoke.json",
+      "apkSha256": "42d1a247ef6f7a8220d993f89b84a89a0f87dc3ab20d1a7e0f2b8da551e4d0d9",
+      "qaOnly": false,
+      "shot": "final-root-more",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 10,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "final-smoke.json",
+      "apkSha256": "42d1a247ef6f7a8220d993f89b84a89a0f87dc3ab20d1a7e0f2b8da551e4d0d9",
+      "qaOnly": false,
+      "shot": "final-delivery-catalog",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 3,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "final-smoke.json",
+      "apkSha256": "42d1a247ef6f7a8220d993f89b84a89a0f87dc3ab20d1a7e0f2b8da551e4d0d9",
+      "qaOnly": false,
+      "shot": "final-delivery-pet",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 8,
+      "scrollClippedControls": 2,
+      "pass": true
+    },
+    {
+      "report": "final-smoke.json",
+      "apkSha256": "42d1a247ef6f7a8220d993f89b84a89a0f87dc3ab20d1a7e0f2b8da551e4d0d9",
+      "qaOnly": false,
+      "shot": "final-delivery-history",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "final-smoke.json",
+      "apkSha256": "42d1a247ef6f7a8220d993f89b84a89a0f87dc3ab20d1a7e0f2b8da551e4d0d9",
+      "qaOnly": false,
+      "shot": "final-delivery-help",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "final-smoke.json",
+      "apkSha256": "42d1a247ef6f7a8220d993f89b84a89a0f87dc3ab20d1a7e0f2b8da551e4d0d9",
+      "qaOnly": false,
+      "shot": "final-delivery-adult",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 4,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "final-smoke.json",
+      "apkSha256": "42d1a247ef6f7a8220d993f89b84a89a0f87dc3ab20d1a7e0f2b8da551e4d0d9",
+      "qaOnly": false,
+      "shot": "final-LS-B01",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 3,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "final-smoke.json",
+      "apkSha256": "42d1a247ef6f7a8220d993f89b84a89a0f87dc3ab20d1a7e0f2b8da551e4d0d9",
+      "qaOnly": false,
+      "shot": "final-LS-P01",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 4,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "final-smoke.json",
+      "apkSha256": "42d1a247ef6f7a8220d993f89b84a89a0f87dc3ab20d1a7e0f2b8da551e4d0d9",
+      "qaOnly": false,
+      "shot": "final-LS-B03",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 3,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "final-smoke.json",
+      "apkSha256": "42d1a247ef6f7a8220d993f89b84a89a0f87dc3ab20d1a7e0f2b8da551e4d0d9",
+      "qaOnly": false,
+      "shot": "final-LS-P03",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 2,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "final-smoke.json",
+      "apkSha256": "42d1a247ef6f7a8220d993f89b84a89a0f87dc3ab20d1a7e0f2b8da551e4d0d9",
+      "qaOnly": false,
+      "shot": "final-LS-S01",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 4,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "final-smoke.json",
+      "apkSha256": "42d1a247ef6f7a8220d993f89b84a89a0f87dc3ab20d1a7e0f2b8da551e4d0d9",
+      "qaOnly": false,
+      "shot": "final-LS-S02",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 3,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "resource-qa.json",
+      "apkSha256": "686ffe78899798917d6081b3ac14e39d8b2b63385bad0e7b1366ab098c1577d5",
+      "qaOnly": true,
+      "shot": "fallback-missing",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 8,
+      "scrollClippedControls": 2,
+      "pass": true
+    },
+    {
+      "report": "resource-qa.json",
+      "apkSha256": "686ffe78899798917d6081b3ac14e39d8b2b63385bad0e7b1366ab098c1577d5",
+      "qaOnly": true,
+      "shot": "fallback-corrupt-200",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "resource-qa.json",
+      "apkSha256": "686ffe78899798917d6081b3ac14e39d8b2b63385bad0e7b1366ab098c1577d5",
+      "qaOnly": true,
+      "shot": "loading-qa-1",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 0,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "resource-qa.json",
+      "apkSha256": "686ffe78899798917d6081b3ac14e39d8b2b63385bad0e7b1366ab098c1577d5",
+      "qaOnly": true,
+      "shot": "loading-qa-2",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 0,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "children.json",
+      "apkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+      "qaOnly": false,
+      "shot": "additional-income-form",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 15,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "children.json",
+      "apkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+      "qaOnly": false,
+      "shot": "additional-income-cancel",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 6,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "children.json",
+      "apkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+      "qaOnly": false,
+      "shot": "additional-income-committed",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 15,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "children.json",
+      "apkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+      "qaOnly": false,
+      "shot": "additional-income-wallet",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 9,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "children.json",
+      "apkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+      "qaOnly": false,
+      "shot": "goal-claim-cancel-dialog",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 2,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "children.json",
+      "apkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+      "qaOnly": false,
+      "shot": "goal-cancel-wallet",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 9,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "children.json",
+      "apkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+      "qaOnly": false,
+      "shot": "withdraw-confirm-dialog",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 2,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "children.json",
+      "apkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+      "qaOnly": false,
+      "shot": "withdraw-committed",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 9,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "children.json",
+      "apkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+      "qaOnly": false,
+      "shot": "goal-claim-confirm-dialog",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 2,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "children.json",
+      "apkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+      "qaOnly": false,
+      "shot": "goal-claimed-home",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 9,
+      "scrollClippedControls": 0,
+      "pass": true
+    },
+    {
+      "report": "transient-final.json",
+      "apkSha256": "42d1a247ef6f7a8220d993f89b84a89a0f87dc3ab20d1a7e0f2b8da551e4d0d9",
+      "qaOnly": false,
+      "shot": "system-bars-error-200",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "transient-final.json",
+      "apkSha256": "42d1a247ef6f7a8220d993f89b84a89a0f87dc3ab20d1a7e0f2b8da551e4d0d9",
+      "qaOnly": false,
+      "shot": "system-bars-error-200-actions",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "transient-final.json",
+      "apkSha256": "42d1a247ef6f7a8220d993f89b84a89a0f87dc3ab20d1a7e0f2b8da551e4d0d9",
+      "qaOnly": false,
+      "shot": "system-bars-error-after-retry",
+      "profile": [
+        360,
+        640,
+        2
+      ],
+      "fullControls": 1,
+      "scrollClippedControls": 1,
+      "pass": true
+    },
+    {
+      "report": "transient-final.json",
+      "apkSha256": "42d1a247ef6f7a8220d993f89b84a89a0f87dc3ab20d1a7e0f2b8da551e4d0d9",
+      "qaOnly": false,
+      "shot": "latest-delivery-home",
+      "profile": [
+        390,
+        844,
+        1
+      ],
+      "fullControls": 9,
+      "scrollClippedControls": 0,
+      "pass": true
+    }
+  ],
+  "note": "Only fully visible targets are measured; scroll-clipped elements are explicitly excluded, not counted as passed targets. TalkBack tree is not spoken TalkBack."
+}

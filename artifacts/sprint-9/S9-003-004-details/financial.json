@@ -1,0 +1,33 @@
+{
+  "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+  "results": [
+    {
+      "case": "purchase-cancel-isolated",
+      "pass": true
+    },
+    {
+      "case": "purchase-confirmed",
+      "pass": true
+    },
+    {
+      "case": "care-confirmed",
+      "pass": true
+    },
+    {
+      "case": "transfer-cancel-isolated",
+      "pass": true
+    },
+    {
+      "case": "transfer-confirmed",
+      "pass": true
+    },
+    {
+      "case": "close-cancel-isolated",
+      "pass": true
+    },
+    {
+      "case": "close-confirmed",
+      "pass": true
+    }
+  ]
+}

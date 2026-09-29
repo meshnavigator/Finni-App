@@ -1,0 +1,116 @@
+{
+  "canvas": [
+    941,
+    1672
+  ],
+  "origin": [
+    0,
+    0
+  ],
+  "feetAnchor": [
+    470,
+    1272
+  ],
+  "stageScales": [
+    0.86,
+    1,
+    1.12
+  ],
+  "status": "art-review-candidate",
+  "stripeRegistration": {
+    "source": [
+      191,
+      514,
+      828,
+      1339
+    ],
+    "target": [
+      280,
+      724,
+      694,
+      1261
+    ],
+    "scale": [
+      0.6499215070643642,
+      0.6509090909090909
+    ],
+    "translation": [
+      155.86499215070643,
+      389.4327272727273
+    ]
+  },
+  "variants": [
+    {
+      "id": "pointy-plain",
+      "shapeId": "pointy",
+      "patternId": "plain",
+      "neutralSha256": "1e9fecd57e73284c9d2b978a6f9dc60705697a6df2c3d63b88e2e92793491178",
+      "blinkSha256": "62d4d961aecabbc64897570fbdbaf97f0be3e3cc7371f8ea2ece40728dae9bde",
+      "oraSha256": "9904297faf5557efd57d38ff83939ae4d6efef2be9553e1c79a98982f7b4f0f5"
+    },
+    {
+      "id": "pointy-spots",
+      "shapeId": "pointy",
+      "patternId": "spots",
+      "neutralSha256": "807b6dcb362b6b18037cfad6f115764287ca8453b44fb98ee79dcef242b78d61",
+      "blinkSha256": "f85c4044cec4ed0b53ed5c9210d6fbacbed67edbf61c5758ea74f6ca06c53355",
+      "oraSha256": "eb0d493fe3c3668a2f9bffb9539f4e2bda780c453219c7237da3134c2c05ba9f"
+    },
+    {
+      "id": "pointy-stripes",
+      "shapeId": "pointy",
+      "patternId": "stripes",
+      "neutralSha256": "069c4ba20660d06b27c9ddbf8ed4eb9bb016a262fc1e5d460f6f32bb15b93a23",
+      "blinkSha256": "2a10058f53a168037e8d027f8c06179579cf5aba0982881ed042f8b3303e6865",
+      "oraSha256": "c3e08e9284820cf4ecad709e782adba97d72c5e93982311ed05635f6d873831b"
+    },
+    {
+      "id": "round-plain",
+      "shapeId": "round",
+      "patternId": "plain",
+      "neutralSha256": "02037c130edd3a3c8058211f88c561f4b1b69b2f72b46b4a46eeb231e55d247a",
+      "blinkSha256": "0db108df0b759f04d5050f878111f15fb6168f25f1366885f15a19b968bc5e9f",
+      "oraSha256": "693798aa28d4ca06bd9d01036aba2c37c94402392450c1e6b9fa7e640dd4da89"
+    },
+    {
+      "id": "round-spots",
+      "shapeId": "round",
+      "patternId": "spots",
+      "neutralSha256": "d6c63e4b7eec3acbd207914633b0566b556c257b7b4e7b8dff286f1db05bb892",
+      "blinkSha256": "35d61021b9e56703a62d754c24aee6158981777b82c763b21fccf3e5bda0d8d8",
+      "oraSha256": "978e57afffb3317a8b1bb21b87eca1a371da3cd2357c48687c3e995b556a7586"
+    },
+    {
+      "id": "round-stripes",
+      "shapeId": "round",
+      "patternId": "stripes",
+      "neutralSha256": "577c4d6ae4d014576259e5d232af81ef3de52f01d2ce9db2f87a478993a0be92",
+      "blinkSha256": "71c5e411c74ad3ec22468754708ec0f869ac097c7ae44dc8cfa6a836f6c9aabc",
+      "oraSha256": "45631ee0dfafae757d1a2465bdb611b628c5aa4c099df7d0c642d41a80fef759"
+    },
+    {
+      "id": "floppy-plain",
+      "shapeId": "floppy",
+      "patternId": "plain",
+      "neutralSha256": "f5e8f0ed3e589070a6336ef999b381e54de52f76d1a85ee266ae986f4e274c9b",
+      "blinkSha256": "24eb59a609a46f002267272be2c101d1828986f91cf364a3d31159e30032da2a",
+      "oraSha256": "8b84ae0083a714569f0993eba90206ef2f0938110c5b9159dbedb72146c63844"
+    },
+    {
+      "id": "floppy-spots",
+      "shapeId": "floppy",
+      "patternId": "spots",
+      "neutralSha256": "97cd8fe542a79ba55c5f0a8df3d17fa373de74813212e5637b581addda764774",
+      "blinkSha256": "3d42b3ef81b4ab781613292628734c28dfae5d68561927047c61d1e068ff3c32",
+      "oraSha256": "638b32c7aceed521a8cdec3d8d50cfe07939211087aad0d5198dc1613fc61d7c"
+    },
+    {
+      "id": "floppy-stripes",
+      "shapeId": "floppy",
+      "patternId": "stripes",
+      "neutralSha256": "35fa3c4b3d7df230b3893cda26c8e1e66b8d95e56f5ea8ea63c92afea7035592",
+      "blinkSha256": "2a63502b1ef612fac43237c5dc67c7f06f380cf0ecffc82decb82b2757333324",
+      "oraSha256": "8f1ee1162093c198b8eade8529d77e0b43747ad59767b546d6c5af34ad90c93e"
+    }
+  ]
+}

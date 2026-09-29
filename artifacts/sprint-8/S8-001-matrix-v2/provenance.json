@@ -1,0 +1,51 @@
+{
+  "date": "2026-09-25",
+  "newImageGenCalls": 0,
+  "sourcePrompts": "../S8-001-matrix-v1/imagegen-prompts.json",
+  "sourceDonors": [
+    {
+      "path": "input/floppy-donor.png",
+      "sha256": "25292b71e794568b8420e95776818af0ad0d6b0e3190f0948486d779e0383728",
+      "sameAsV1": true
+    },
+    {
+      "path": "input/round-donor.png",
+      "sha256": "962f37ded83aa358d81cd9dca7722ea1e5ea45595398c77114f5a394faf13704",
+      "sameAsV1": true
+    },
+    {
+      "path": "input/stripes-donor.png",
+      "sha256": "4e2eaabf2fda9fca133966e0fb7e851f7acc28bb89d5bc4634a86fad158b482b",
+      "sameAsV1": true
+    }
+  ],
+  "changes": "mechanical registration, exact ear-fold masks, source root-fur backing, correct alpha occlusion; no pigment or facial painting",
+  "earTranslations": {
+    "round": [
+      [
+        -6,
+        -4
+      ],
+      [
+        -10,
+        -4
+      ]
+    ],
+    "floppy": [
+      [
+        -3,
+        -10
+      ],
+      [
+        -12,
+        -7
+      ]
+    ]
+  },
+  "rootBacking": "accepted original ear pixels within 30px of face; y780..1010",
+  "artAcceptance": {
+    "pointyAll": "owner-accepted",
+    "allBodyPatterns": "owner-accepted",
+    "roundFloppyEarFitV2": "pending-owner-review"
+  }
+}

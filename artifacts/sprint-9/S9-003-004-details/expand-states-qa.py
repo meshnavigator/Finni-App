@@ -1,0 +1,4 @@
+from pathlib import Path
+p=Path('artifacts/sprint-9/S9-003-004-details/states.py');s=p.read_text(encoding='utf-8');s=s.replace("n.start(360,640,2);n.detail('Все занятия');n.lesson('LS-B01');nodes=n.capture('catalog-storage-error-200',True)","n.start(360,640,2);n.detail('Все занятия');n.lesson('LS-B01');n.top();n.scrollfind(n.CURRENT,'Занятие не открылось. Монеты твоего дня не изменились.');nodes=n.capture('catalog-storage-error-200',True)")
+s=s.replace("buttons=[x for x in nodes if x.get('clickable')=='true' and x.get('package')==n.q.PKG]\nn.tap(buttons[0]);nodes=n.capture('pet-create-412',True);n.go('Готово');nodes=n.capture('profile-created-412',True)","n.start(360,640,2);n.capture('onboarding-200',True);n.go('Познакомиться с Финни');nodes=n.capture('pet-create-200',True);n.go('Готово');nodes=n.capture('profile-created-200',True)")
+p.write_text(s,encoding='utf-8')

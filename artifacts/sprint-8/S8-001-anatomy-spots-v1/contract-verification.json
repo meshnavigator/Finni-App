@@ -1,0 +1,47 @@
+{
+  "status": "PASS",
+  "neutralDifference": 0,
+  "protectedExportByteHashes": {
+    "room-base": true,
+    "pet-back": true,
+    "pet-pattern": true,
+    "pet-ear-shape": true,
+    "pet-face": true,
+    "pet-expression": true,
+    "pet-accessory": true,
+    "room-foreground": true
+  },
+  "outsideAllowedChangedPixels": 0,
+  "clippedRegisteredPatternPixels": 0,
+  "patternPixelsPerLimb": {
+    "rear-left": 479,
+    "rear-right": 486,
+    "foreleg-left": 452,
+    "foreleg-right": 456
+  },
+  "neutralOra": {
+    "zipCrc": "PASS",
+    "rootLayerCount": 9,
+    "bodyGroups": 6,
+    "bodyDifference": 0,
+    "mergedDifference": 0
+  },
+  "spotsOra": {
+    "zipCrc": "PASS",
+    "rootLayerCount": 9,
+    "bodyGroups": 6,
+    "bodyDifference": 0,
+    "mergedDifference": 0
+  },
+  "exportCount": 9,
+  "canvas": [
+    941,
+    1672
+  ],
+  "origin": [
+    0,
+    0
+  ],
+  "masterSha256": "8b2932caa23b99ae0d6575105940cda70858619f32333d564847d9b0dcdb6cc0",
+  "artStatus": "candidate for owner review, not production; static neutral only"
+}

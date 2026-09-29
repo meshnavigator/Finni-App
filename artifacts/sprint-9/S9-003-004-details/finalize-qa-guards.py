@@ -1,0 +1,4 @@
+from pathlib import Path
+r=Path('artifacts/sprint-9/S9-003-004-details')
+p=r/'resource-qa.py';s=p.read_text(encoding='utf-8-sig');s=s.replace("&& chmod 644 /data/data/{n.q.PKG}/files/finni-qa-resource.png", "&& chown 10080:10080 /data/data/{n.q.PKG}/files/finni-qa-resource.png && chmod 600 /data/data/{n.q.PKG}/files/finni-qa-resource.png && restorecon -F /data/data/{n.q.PKG}/files/finni-qa-resource.png");p.write_text(s,encoding='utf-8')
+p=r/'restore.py';s=p.read_text(encoding='utf-8');s=s.replace("'appStoppedAfterRestore':True", "'nightMode':adb('shell','cmd','uimode','night').decode().strip(),'appStoppedAfterRestore':adb('shell',f'pidof {P} || true').decode().strip()==''");s=s.replace("assert all(checks.values())", "assert all(checks.values())\nassert result['nightMode']=='Night mode: no' and result['appStoppedAfterRestore']");p.write_text(s,encoding='utf-8')

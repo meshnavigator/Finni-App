@@ -1,0 +1,68 @@
+{
+  "status": "art-review-candidate-not-production",
+  "sourceSha256": "8b2932caa23b99ae0d6575105940cda70858619f32333d564847d9b0dcdb6cc0",
+  "donorSha256": "1cda8c5eacedf4800a7fb8cd4aedfdf633b955a4be5ff4dec1a55d85c5369b19",
+  "registration": {
+    "sourceAlpha128Box": [
+      241,
+      651,
+      775,
+      1332
+    ],
+    "targetAlpha128Box": [
+      280,
+      724,
+      694,
+      1261
+    ],
+    "scale": [
+      0.7752808988764045,
+      0.788546255506608
+    ],
+    "translation": [
+      93.15730337078651,
+      210.65638766519817
+    ],
+    "method": "global affine registration, original anatomical mattes and original alpha retained"
+  },
+  "neutralDifference": 0,
+  "changedVisiblePixels": 31013,
+  "changedOutsideCoatMatte": 0,
+  "silhouetteAlphaDifferences": 0,
+  "chestAndTorsoOriginal": true,
+  "changedPixelsPerPart": {
+    "rear-left": 3797,
+    "rear-right": 5042,
+    "torso": 0,
+    "chest": 0,
+    "foreleg-left": 10912,
+    "foreleg-right": 11262
+  },
+  "protectedExportByteHashesEqual": {
+    "room-base": true,
+    "pet-back": true,
+    "pet-pattern": true,
+    "pet-ear-shape": true,
+    "pet-face": true,
+    "pet-expression": true,
+    "pet-accessory": true,
+    "room-foreground": true
+  },
+  "canvas": [
+    941,
+    1672
+  ],
+  "origin": [
+    0,
+    0
+  ],
+  "sourceBodyGroups": [
+    "rear-left",
+    "rear-right",
+    "torso",
+    "chest",
+    "foreleg-left",
+    "foreleg-right"
+  ],
+  "exportLayerCount": 9
+}

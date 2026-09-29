@@ -1,0 +1,5 @@
+{
+  "beforeApkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+  "change": "Only LoadingScreen and ErrorScreen now render StatusBar dark; normal routes and layouts unchanged",
+  "evidence": "Real boot-error and QA loading screenshots showed white system icons on warm light background"
+}

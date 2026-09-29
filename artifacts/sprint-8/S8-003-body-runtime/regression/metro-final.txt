@@ -1,0 +1,134 @@
+Starting project at C:\00.MIDAS\PROJECTS\28. HackApp. 2026\Finni App
+Starting Metro Bundler
+
+Waiting on http://localhost:8081
+
+An update for expo is available: 57.0.23 → ~57.0.25
+1 other package may need updating. Run npx expo install --check for details.
+Logs for your project will appear below.
+| (node:51276) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+Android Bundled 2291ms index.ts (709 modules)
+ INFO  QA_SESSION_START
+ INFO  QA_PLAY {"id":1,"clip":"AN-006"}
+ INFO  QA_TERMINAL {"id":1,"kind":"finish"}
+ INFO  QA_PLAY {"id":2,"clip":"AN-006"}
+ INFO  QA_PLAY {"id":3,"clip":"AN-009"}
+ INFO  QA_TERMINAL {"id":2,"kind":"cancel"}
+ INFO  QA_TERMINAL {"id":3,"kind":"finish"}
+ INFO  QA_PLAY {"id":4,"clip":"AN-009"}
+ INFO  QA_TERMINAL {"id":4,"kind":"finish"}
+ INFO  QA_PLAY {"id":5,"clip":"AN-013"}
+ INFO  QA_TERMINAL {"id":5,"kind":"cancel"}
+ INFO  QA_PLAY {"id":6,"clip":"AN-013"}
+ INFO  QA_TERMINAL {"id":6,"kind":"cancel"}
+ INFO  QA_PLAY {"id":7,"clip":"AN-013"}
+ INFO  QA_PLAY {"id":8,"clip":"AN-014"}
+ INFO  QA_TERMINAL {"id":7,"kind":"cancel"}
+ INFO  QA_TERMINAL {"id":8,"kind":"finish"}
+ INFO  QA_PLAY {"id":9,"clip":"AN-009"}
+ INFO  QA_TERMINAL {"id":9,"kind":"finish"}
+ INFO  QA_PLAY {"id":10,"clip":"AN-010"}
+ INFO  QA_TERMINAL {"id":10,"kind":"finish"}
+ INFO  QA_PLAY {"id":11,"clip":"AN-013"}
+ INFO  QA_TERMINAL {"id":11,"kind":"finish"}
+ INFO  QA_PLAY {"id":12,"clip":"AN-014"}
+ INFO  QA_TERMINAL {"id":12,"kind":"finish"}
+ INFO  QA_PLAY {"id":13,"clip":"AN-003"}
+ INFO  QA_TERMINAL {"id":13,"kind":"finish"}
+ INFO  QA_PLAY {"id":14,"clip":"AN-004"}
+ INFO  QA_TERMINAL {"id":14,"kind":"finish"}
+ INFO  QA_PLAY {"id":15,"clip":"AN-005"}
+ INFO  QA_TERMINAL {"id":15,"kind":"finish"}
+ INFO  QA_PLAY {"id":16,"clip":"AN-006"}
+ INFO  QA_TERMINAL {"id":16,"kind":"finish"}
+ INFO  QA_PLAY {"id":17,"clip":"AN-007"}
+ INFO  QA_TERMINAL {"id":17,"kind":"finish"}
+ INFO  QA_PLAY {"id":18,"clip":"AN-008"}
+ INFO  QA_TERMINAL {"id":18,"kind":"finish"}
+ INFO  QA_PLAY {"id":19,"clip":"AN-009"}
+ INFO  QA_TERMINAL {"id":19,"kind":"finish"}
+ INFO  QA_PLAY {"id":20,"clip":"AN-010"}
+ INFO  QA_TERMINAL {"id":20,"kind":"finish"}
+ INFO  QA_PLAY {"id":21,"clip":"AN-011"}
+ INFO  QA_TERMINAL {"id":21,"kind":"finish"}
+ INFO  QA_PLAY {"id":22,"clip":"AN-012"}
+ INFO  QA_TERMINAL {"id":22,"kind":"finish"}
+ INFO  QA_PLAY {"id":23,"clip":"AN-013"}
+ INFO  QA_TERMINAL {"id":23,"kind":"finish"}
+ INFO  QA_PLAY {"id":24,"clip":"AN-014"}
+ INFO  QA_TERMINAL {"id":24,"kind":"finish"}
+ INFO  QA_PLAY {"id":25,"clip":"AN-006"}
+ INFO  QA_TERMINAL {"id":25,"kind":"finish"}
+ INFO  QA_PLAY {"id":26,"clip":"AN-009"}
+ INFO  QA_TERMINAL {"id":26,"kind":"finish"}
+ INFO  QA_PLAY {"id":27,"clip":"AN-010"}
+ INFO  QA_TERMINAL {"id":27,"kind":"finish"}
+ INFO  QA_PLAY {"id":28,"clip":"AN-014"}
+ INFO  QA_TERMINAL {"id":28,"kind":"finish"}
+ INFO  QA_PLAY {"id":29,"clip":"AN-006"}
+ INFO  QA_TERMINAL {"id":29,"kind":"finish"}
+ INFO  QA_PLAY {"id":30,"clip":"AN-009"}
+ INFO  QA_TERMINAL {"id":30,"kind":"finish"}
+ INFO  QA_PLAY {"id":31,"clip":"AN-010"}
+ INFO  QA_TERMINAL {"id":31,"kind":"finish"}
+ INFO  QA_PLAY {"id":32,"clip":"AN-014"}
+ INFO  QA_TERMINAL {"id":32,"kind":"finish"}
+ INFO  QA_PLAY {"id":33,"clip":"AN-006"}
+ INFO  QA_TERMINAL {"id":33,"kind":"finish"}
+ INFO  QA_PLAY {"id":34,"clip":"AN-009"}
+ INFO  QA_TERMINAL {"id":34,"kind":"finish"}
+ INFO  QA_PLAY {"id":35,"clip":"AN-010"}
+ INFO  QA_TERMINAL {"id":35,"kind":"finish"}
+ INFO  QA_PLAY {"id":36,"clip":"AN-014"}
+ INFO  QA_TERMINAL {"id":36,"kind":"finish"}
+ INFO  QA_PLAY {"id":37,"clip":"AN-006"}
+ INFO  QA_TERMINAL {"id":37,"kind":"finish"}
+ INFO  QA_PLAY {"id":38,"clip":"AN-009"}
+ INFO  QA_TERMINAL {"id":38,"kind":"finish"}
+ INFO  QA_PLAY {"id":39,"clip":"AN-010"}
+ INFO  QA_TERMINAL {"id":39,"kind":"finish"}
+ INFO  QA_PLAY {"id":40,"clip":"AN-014"}
+ INFO  QA_TERMINAL {"id":40,"kind":"finish"}
+ INFO  QA_PLAY {"id":41,"clip":"AN-006"}
+ INFO  QA_TERMINAL {"id":41,"kind":"finish"}
+ INFO  QA_PLAY {"id":42,"clip":"AN-009"}
+ INFO  QA_TERMINAL {"id":42,"kind":"finish"}
+ INFO  QA_PLAY {"id":43,"clip":"AN-010"}
+ INFO  QA_TERMINAL {"id":43,"kind":"finish"}
+ INFO  QA_PLAY {"id":44,"clip":"AN-014"}
+ INFO  QA_TERMINAL {"id":44,"kind":"finish"}
+ INFO  QA_PLAY {"id":45,"clip":"AN-006"}
+ INFO  QA_TERMINAL {"id":45,"kind":"finish"}
+ INFO  QA_PLAY {"id":46,"clip":"AN-009"}
+ INFO  QA_TERMINAL {"id":46,"kind":"finish"}
+ INFO  QA_PLAY {"id":47,"clip":"AN-010"}
+ INFO  QA_TERMINAL {"id":47,"kind":"finish"}
+ INFO  QA_PLAY {"id":48,"clip":"AN-014"}
+ INFO  QA_TERMINAL {"id":48,"kind":"finish"}
+Android Bundled 211ms index.ts (1 module)
+ INFO  QA_SESSION_START
+ INFO  QA_PLAY {"id":1,"clip":"AN-006"}
+ INFO  QA_TERMINAL {"id":1,"kind":"finish"}
+ INFO  QA_PLAY {"id":2,"clip":"AN-009"}
+ INFO  QA_TERMINAL {"id":2,"kind":"finish"}
+ INFO  QA_PLAY {"id":3,"clip":"AN-014"}
+ INFO  QA_TERMINAL {"id":3,"kind":"finish"}
+ INFO  QA_PLAY {"id":4,"clip":"AN-006"}
+ INFO  QA_TERMINAL {"id":4,"kind":"finish"}
+ INFO  QA_PLAY {"id":5,"clip":"AN-009"}
+ INFO  QA_TERMINAL {"id":5,"kind":"finish"}
+ INFO  QA_PLAY {"id":6,"clip":"AN-014"}
+ INFO  QA_TERMINAL {"id":6,"kind":"finish"}
+ INFO  QA_PLAY {"id":7,"clip":"AN-006"}
+ INFO  QA_TERMINAL {"id":7,"kind":"finish"}
+ INFO  QA_PLAY {"id":8,"clip":"AN-009"}
+ INFO  QA_TERMINAL {"id":8,"kind":"finish"}
+ INFO  QA_PLAY {"id":9,"clip":"AN-014"}
+ INFO  QA_TERMINAL {"id":9,"kind":"finish"}
+ INFO  QA_PLAY {"id":10,"clip":"AN-006"}
+ INFO  QA_TERMINAL {"id":10,"kind":"finish"}
+ INFO  QA_PLAY {"id":11,"clip":"AN-009"}
+ INFO  QA_TERMINAL {"id":11,"kind":"finish"}
+ INFO  QA_PLAY {"id":12,"clip":"AN-014"}
+ INFO  QA_TERMINAL {"id":12,"kind":"finish"}

@@ -1,0 +1,56 @@
+TAP version 13
+# (node:50336) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/00.MIDAS/PROJECTS/28.%20HackApp.%202026/Finni%20App/src/ui/finni-animation-set.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to C:\\00.MIDAS\\PROJECTS\\28. HackApp. 2026\\Finni App\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: AN-001–014 have bounded recipes, static poses and skippable milestones
+ok 1 - AN-001–014 have bounded recipes, static poses and skippable milestones
+  ---
+  duration_ms: 7.458
+  type: 'test'
+  ...
+# Subtest: result replaces optional reaction; background cannot interrupt result
+ok 2 - result replaces optional reaction; background cannot interrupt result
+  ---
+  duration_ms: 0.8506
+  type: 'test'
+  ...
+# Subtest: rapid taps keep at most one optional reaction and stale completion cannot end replacement
+ok 3 - rapid taps keep at most one optional reaction and stale completion cannot end replacement
+  ---
+  duration_ms: 0.7102
+  type: 'test'
+  ...
+# Subtest: goal and stage skip display committed presentation and invalidate old timer
+ok 4 - goal and stage skip display committed presentation and invalidate old timer
+  ---
+  duration_ms: 0.4511
+  type: 'test'
+  ...
+# Subtest: modal, leave and profile change cancel effects without mutating committed presentation
+ok 5 - modal, leave and profile change cancel effects without mutating committed presentation
+  ---
+  duration_ms: 0.4746
+  type: 'test'
+  ...
+# Subtest: motion, system preference and sound are independent of committed state
+ok 6 - motion, system preference and sound are independent of committed state
+  ---
+  duration_ms: 0.3421
+  type: 'test'
+  ...
+# Subtest: reaction completion excludes cleanup after finish and stale timers after cancel
+ok 7 - reaction completion excludes cleanup after finish and stale timers after cancel
+  ---
+  duration_ms: 0.4999
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 414.2698

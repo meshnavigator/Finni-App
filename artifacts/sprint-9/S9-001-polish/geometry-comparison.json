@@ -1,0 +1,202 @@
+{
+  "ordinary": {
+    "before": {
+      "finances": {
+        "x": 12,
+        "y": 36,
+        "width": 366,
+        "height": 133
+      },
+      "lesson": {
+        "x": 12,
+        "y": 208,
+        "width": 271,
+        "height": 54
+      },
+      "petTarget": {
+        "x": 16,
+        "y": 270,
+        "width": 274,
+        "height": 314
+      },
+      "stage2ProtectedSilhouette": {
+        "width": 230.2,
+        "height": 252.1
+      }
+    },
+    "after": {
+      "finances": {
+        "x": 12,
+        "y": 36,
+        "width": 366,
+        "height": 119
+      },
+      "lesson": {
+        "x": 13,
+        "y": 190,
+        "width": 278,
+        "height": 49
+      },
+      "petTarget": {
+        "x": 16,
+        "y": 248,
+        "width": 274,
+        "height": 324
+      },
+      "stage2ProtectedSilhouette": {
+        "width": 230.2,
+        "height": 252.1
+      }
+    }
+  },
+  "small": {
+    "before": {
+      "finances": {
+        "x": 12,
+        "y": 36,
+        "width": 336,
+        "height": 133
+      },
+      "lesson": {
+        "x": 12,
+        "y": 225,
+        "width": 249,
+        "height": 54
+      },
+      "petTarget": {
+        "x": 82,
+        "y": 287,
+        "width": 188,
+        "height": 161
+      },
+      "stage2ProtectedSilhouette": {
+        "width": 114.9,
+        "height": 125.8
+      }
+    },
+    "after": {
+      "finances": {
+        "x": 10,
+        "y": 34,
+        "width": 340,
+        "height": 119
+      },
+      "lesson": {
+        "x": 11,
+        "y": 186,
+        "width": 258,
+        "height": 49
+      },
+      "petTarget": {
+        "x": 94,
+        "y": 244,
+        "width": 172,
+        "height": 214
+      },
+      "stage2ProtectedSilhouette": {
+        "width": 141.9,
+        "height": 155.4
+      }
+    }
+  },
+  "large": {
+    "before": {
+      "finances": {
+        "x": 10,
+        "y": 34,
+        "width": 340,
+        "height": 196
+      },
+      "lesson": {
+        "x": 10,
+        "y": 354,
+        "width": 340,
+        "height": 77
+      },
+      "petTarget": {
+        "x": 10,
+        "y": 238,
+        "width": 104,
+        "height": 108
+      },
+      "stage2ProtectedSilhouette": {
+        "width": 76.1,
+        "height": 83.3
+      }
+    },
+    "after": {
+      "finances": {
+        "x": 10,
+        "y": 34,
+        "width": 340,
+        "height": 198
+      },
+      "lesson": {
+        "x": 10,
+        "y": 356,
+        "width": 340,
+        "height": 77
+      },
+      "petTarget": {
+        "x": 10,
+        "y": 240,
+        "width": 104,
+        "height": 108
+      },
+      "stage2ProtectedSilhouette": {
+        "width": 76.1,
+        "height": 83.3
+      }
+    }
+  },
+  "large-stress": {
+    "before": {
+      "finances": {
+        "x": 10,
+        "y": 34,
+        "width": 340,
+        "height": 196
+      },
+      "lesson": {
+        "x": 10,
+        "y": 354,
+        "width": 340,
+        "height": 110
+      },
+      "petTarget": {
+        "x": 10,
+        "y": 238,
+        "width": 104,
+        "height": 108
+      },
+      "stage2ProtectedSilhouette": {
+        "width": 76.1,
+        "height": 83.3
+      }
+    },
+    "after": {
+      "finances": {
+        "x": 10,
+        "y": 34,
+        "width": 340,
+        "height": 198
+      },
+      "lesson": {
+        "x": 10,
+        "y": 356,
+        "width": 340,
+        "height": 110
+      },
+      "petTarget": {
+        "x": 10,
+        "y": 240,
+        "width": 104,
+        "height": 108
+      },
+      "stage2ProtectedSilhouette": {
+        "width": 76.1,
+        "height": 83.3
+      }
+    }
+  }
+}

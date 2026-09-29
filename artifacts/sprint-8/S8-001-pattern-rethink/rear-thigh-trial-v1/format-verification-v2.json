@@ -1,0 +1,16 @@
+{
+  "file": "finni-rear-thigh-flecks-v2.png",
+  "width": 941,
+  "height": 1672,
+  "pixelFormat": "Format32bppArgb",
+  "transparentPixels": 1302403,
+  "partialAlphaPixels": 270901,
+  "opaquePixels": 48,
+  "alpha128Bounds": [
+    242,
+    648,
+    774,
+    1331
+  ],
+  "sha256": "FA1AF2287E01B1BEBE8BDDFD98703D4F9F784A0D04C395D5E843E47FE7E58E23"
+}

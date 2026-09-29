@@ -1,0 +1,15 @@
+{
+  "files": [
+    "src/ui/AppRoot.tsx",
+    "src/ui/HomeScreen.tsx",
+    "src/ui/BudgetPlanScreen.tsx",
+    "src/ui/ShopScreen.tsx",
+    "src/ui/SavingsScreen.tsx",
+    "src/ui/RootNavigation.tsx",
+    "src/ui/root-navigation.ts",
+    "tests/profile-ui.test.mjs",
+    "tests/finni-home-scene.test.mjs",
+    "tests/root-navigation.test.mjs"
+  ],
+  "issues": []
+}

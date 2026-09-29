@@ -1,0 +1,17 @@
+{
+  "apkSha256": "3c9595dc3f109e9487de640c04e9a21da320ac02b903a05f4cabd841385d17bf",
+  "checks": [
+    {
+      "case": "ordinary",
+      "pass": true
+    },
+    {
+      "case": "large",
+      "pass": true
+    },
+    {
+      "case": "empty-delivery",
+      "pass": true
+    }
+  ]
+}

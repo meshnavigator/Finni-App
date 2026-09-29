@@ -1,0 +1,151 @@
+{
+  "apkSha256": "42d1a247ef6f7a8220d993f89b84a89a0f87dc3ab20d1a7e0f2b8da551e4d0d9",
+  "checks": [
+    {
+      "case": "install-over-preserves-eight-files",
+      "pass": true,
+      "fileHashesUnchanged": {
+        "files/BridgelessReactNativeDevBundle.js": true,
+        "files/SQLite/finni-control.db": true,
+        "files/SQLite/finni-control.db-shm": true,
+        "files/SQLite/finni-control.db-wal": true,
+        "files/SQLite/finni-main.db": true,
+        "shared_prefs/com.meshnavigator.finni_preferences.xml": true,
+        "shared_prefs/expo.modules.kotlin.PersistentDataManager.xml": true,
+        "shared_prefs/WebViewChromiumPrefs.xml": true
+      }
+    },
+    {
+      "case": "installed-delivery-apk-exact-sha256",
+      "pass": true
+    },
+    {
+      "case": "final-root-home",
+      "pass": true
+    },
+    {
+      "case": "final-root-plan",
+      "pass": true
+    },
+    {
+      "case": "final-root-shop",
+      "pass": true
+    },
+    {
+      "case": "final-root-savings",
+      "pass": true
+    },
+    {
+      "case": "final-root-more",
+      "pass": true
+    },
+    {
+      "case": "final-delivery-back-catalog",
+      "pass": true
+    },
+    {
+      "case": "final-delivery-back-pet",
+      "pass": true
+    },
+    {
+      "case": "final-delivery-back-history",
+      "pass": true
+    },
+    {
+      "case": "final-delivery-back-help",
+      "pass": true
+    },
+    {
+      "case": "final-delivery-back-adult",
+      "pass": true
+    },
+    {
+      "case": "final-renderer-LS-B01",
+      "pass": true
+    },
+    {
+      "case": "final-renderer-LS-P01",
+      "pass": true
+    }
+  ],
+  "screens": [
+    {
+      "name": "final-delivery-home",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "final-root-home",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "final-root-plan",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "final-root-shop",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "final-root-savings",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "final-root-more",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "final-delivery-catalog",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "final-delivery-pet",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "final-delivery-history",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "final-delivery-help",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "final-delivery-adult",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "final-LS-B01",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "final-LS-P01",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    }
+  ]
+}

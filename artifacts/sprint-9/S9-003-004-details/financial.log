@@ -1,0 +1,8 @@
+purchase-cancel-isolated PASS
+purchase-confirmed PASS
+care-confirmed PASS
+transfer-cancel-isolated PASS
+transfer-confirmed PASS
+close-cancel-isolated PASS
+close-confirmed PASS
+PASS 7 native route/financial checks

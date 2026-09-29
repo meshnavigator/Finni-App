@@ -1,0 +1,10 @@
+{
+  "deliveryChecks": 8,
+  "nativeMatrixChecks": 32,
+  "unitTests": 136,
+  "sourceMatchesDelivery": true,
+  "whitespace": true,
+  "restoredFiles": 8,
+  "directModel": "gpt-6-astra",
+  "reasoning": "xhigh"
+}

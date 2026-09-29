@@ -1,0 +1,16 @@
+{
+  "sessions": [
+    {
+      "plays": 48,
+      "terminals": 48,
+      "allExactlyOnce": true
+    },
+    {
+      "plays": 12,
+      "terminals": 12,
+      "allExactlyOnce": true
+    }
+  ],
+  "metroErrorLines": [],
+  "nativeFatalLines": []
+}

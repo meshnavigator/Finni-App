@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "project_name": "ЛЦТ 2026",
+  "language": "ru",
+  "code_root": ".",
+  "docs_root": "docs",
+  "tasks_root": "tasks",
+  "repository": "meshnavigator/Finni-App",
+  "main_branch": "main",
+  "integration_branch": "dev",
+  "task_id_pattern": "S{N}-{NNN}",
+  "model_routing": {
+    "policy_file": ".project-kit/model-routing.json",
+    "default_mode": "adaptive"
+  },
+  "belief_map": {
+    "enabled": true,
+    "tool_root": "",
+    "skip_dirs": [
+      "worktrees",
+      "codex-worktrees",
+      "node_modules",
+      "dist",
+      "coverage"
+    ]
+  },
+  "verify": {
+    "backend": [],
+    "frontend": [
+      "npm run lint",
+      "npm run typecheck",
+      "npm run test",
+      "npm run content",
+      "npm run fixtures"
+    ],
+    "integration": [],
+    "docs": [],
+    "whitespace": []
+  }
+}

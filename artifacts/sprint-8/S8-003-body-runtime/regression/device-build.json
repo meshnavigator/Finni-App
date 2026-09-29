@@ -1,0 +1,8 @@
+{
+  "device": "Android SDK built for x86_64",
+  "api": "26",
+  "apk": "/data/app/com.meshnavigator.finni-kFhZbwBle1OUeakFE4SGGA==/base.apk",
+  "apkSha256": "8eae6f27cbaf8e0618a4877d8c6548031a21224d4c76fa9e92122c094431b67a  /data/app/com.meshnavigator.finni-kFhZbwBle1OUeakFE4SGGA==/base.apk",
+  "gitHead": "e1e350d580526cba33de974b104fad1893d383fc",
+  "sourceState": "uncommitted working tree; source hashes in runtime-result.json"
+}

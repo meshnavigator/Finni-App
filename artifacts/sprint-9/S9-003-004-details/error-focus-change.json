@@ -1,0 +1,5 @@
+{
+  "beforeApkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+  "change": "Catalog scrollTo(0) on visible error; no geometry, content, domain, data or navigation route changes",
+  "reproduction": "Open LS-S02 from bottom of catalog at 360x640/200%; SQLite trigger rejects attempt INSERT; message outside viewport before fix"
+}

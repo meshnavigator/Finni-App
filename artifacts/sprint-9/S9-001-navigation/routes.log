@@ -1,0 +1,33 @@
+root-plan-1 PASS
+root-shop-1 PASS
+root-savings-1 PASS
+root-more-1 PASS
+root-home-1 PASS
+detail-back-Все занятия-1 PASS
+detail-back-Прогресс-1 PASS
+detail-back-Имя и внешность-1 PASS
+detail-back-Как играть-1 PASS
+detail-back-Для взрослого-1 PASS
+root-plan-1.19 PASS
+root-shop-1.19 PASS
+root-savings-1.19 PASS
+root-more-1.19 PASS
+root-home-1.19 PASS
+detail-back-Все занятия-1.19 PASS
+detail-back-Прогресс-1.19 PASS
+detail-back-Имя и внешность-1.19 PASS
+detail-back-Как играть-1.19 PASS
+detail-back-Для взрослого-1.19 PASS
+large-root-menu-plan PASS
+large-root-menu-shop PASS
+large-root-menu-savings PASS
+large-root-menu-more PASS
+large-root-menu-home PASS
+reached-goal-confirm-cancel PASS
+purchase-cancel-isolated PASS
+Traceback (most recent call last):
+  File "C:\00.MIDAS\PROJECTS\28. HackApp. 2026\Finni App\artifacts\sprint-9\S9-001-navigation\routes.py", line 74, in <module>
+    tap(find(nodes,'root-tab-shop'));shop=capture('purchase-again');tap(find(shop,'Посмотреть и купить'));dialog=capture('purchase-commit-confirm');tap(find(dialog,'Купить') or find(dialog,'Потратить сверх плана'));nodes=capture('purchase-committed');money(nodes,70,0);ok('purchase-confirmed')
+  File "C:\00.MIDAS\PROJECTS\28. HackApp. 2026\Finni App\artifacts\sprint-9\S9-001-navigation\routes.py", line 40, in money
+    assert f'Доступно: {a} монет' in labels and f'Копилка: {s} монет' in labels,labels
+AssertionError: ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'Посмотреть и купить', '', '', '', '', '', 'Посмотреть и купить', '', '', '', '', '', 'Посмотреть и купить', '', '', '', '', '', 'Посмотреть и купить', '', '', '', '', '', '', '', 'Домик', '', '', 'План', '', '', 'Покупки', '', '', 'Копилка', '', '', 'Ещё', '', '', '']

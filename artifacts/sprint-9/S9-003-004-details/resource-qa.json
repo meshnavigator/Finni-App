@@ -1,0 +1,50 @@
+{
+  "apkSha256": "686ffe78899798917d6081b3ac14e39d8b2b63385bad0e7b1366ab098c1577d5",
+  "qaOnly": true,
+  "checks": [
+    {
+      "case": "real-image-onerror-missing",
+      "pass": true
+    },
+    {
+      "case": "real-image-onerror-corrupt-200",
+      "pass": true
+    },
+    {
+      "case": "loading-presentation-1",
+      "pass": true,
+      "systemUiVisibility": "0x3710"
+    },
+    {
+      "case": "loading-presentation-2",
+      "pass": true,
+      "systemUiVisibility": "0x3710"
+    }
+  ],
+  "screens": [
+    {
+      "name": "fallback-missing",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "fallback-corrupt-200",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "loading-qa-1",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "loading-qa-2",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    }
+  ]
+}

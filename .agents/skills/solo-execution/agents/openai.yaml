@@ -1,0 +1,7 @@
+interface:
+  display_name: "Solo Execution"
+  short_description: "Keep all work in the current Codex task"
+  default_prompt: "Use $solo-execution to complete this task without subagents or delegation."
+
+policy:
+  allow_implicit_invocation: true

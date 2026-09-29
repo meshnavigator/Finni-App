@@ -1,0 +1,56 @@
+[
+  {
+    "width": 360,
+    "height": 640,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "width": 360,
+    "height": 640,
+    "scale": 1.5,
+    "issues": []
+  },
+  {
+    "width": 360,
+    "height": 640,
+    "scale": 2,
+    "issues": []
+  },
+  {
+    "width": 390,
+    "height": 844,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "width": 390,
+    "height": 844,
+    "scale": 1.5,
+    "issues": []
+  },
+  {
+    "width": 390,
+    "height": 844,
+    "scale": 2,
+    "issues": []
+  },
+  {
+    "width": 412,
+    "height": 915,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "width": 412,
+    "height": 915,
+    "scale": 1.5,
+    "issues": []
+  },
+  {
+    "width": 412,
+    "height": 915,
+    "scale": 2,
+    "issues": []
+  }
+]

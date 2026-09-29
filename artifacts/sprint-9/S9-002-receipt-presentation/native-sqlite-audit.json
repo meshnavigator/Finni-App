@@ -1,0 +1,33 @@
+{
+  "schema_versions": [
+    2,
+    6,
+    6,
+    6
+  ],
+  "integrity": "ok on all four snapshots",
+  "legacy_profile_wallet_period_receipt": "equal before/after migration",
+  "wallets": [
+    [
+      100,
+      0
+    ],
+    [
+      100,
+      0
+    ],
+    [
+      70,
+      0
+    ],
+    [
+      90,
+      0
+    ]
+  ],
+  "confirm_purchase_receipts": 1,
+  "purchase_rows": 1,
+  "complete_lesson_receipts": 1,
+  "lesson_reward_rows": 1,
+  "lesson_reward_amount": 20
+}

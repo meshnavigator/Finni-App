@@ -1,0 +1,67 @@
+{
+  "apkSha256": "5a5b70e814d8d1bc1147f65d7e330835a833fb78eae7914f05bd2a0975d6a3ec",
+  "checks": [
+    {
+      "case": "catalog-storage-error-visible",
+      "pass": true
+    },
+    {
+      "case": "catalog-storage-failure-money-unchanged",
+      "pass": true
+    },
+    {
+      "case": "actual-corrupt-database-error-scrollable",
+      "pass": true
+    }
+  ],
+  "screens": [
+    {
+      "name": "catalog-storage-error-200",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "error-wallet",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "boot-error-200",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "boot-error-200-actions",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "onboarding-412",
+      "width": 412,
+      "height": 915,
+      "fontScale": 1
+    },
+    {
+      "name": "onboarding-200",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "pet-create-200",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "profile-created-200",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    }
+  ]
+}

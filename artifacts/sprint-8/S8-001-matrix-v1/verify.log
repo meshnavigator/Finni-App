@@ -1,0 +1,91 @@
+{
+  "status": "PASS",
+  "variants": [
+    {
+      "id": "pointy-plain",
+      "frames": 2,
+      "layersPerFrame": 9,
+      "ora": "PASS",
+      "identityCore": "unchanged",
+      "feetTail": "unchanged",
+      "pixelReassembly": "exact"
+    },
+    {
+      "id": "pointy-spots",
+      "frames": 2,
+      "layersPerFrame": 9,
+      "ora": "PASS",
+      "identityCore": "unchanged",
+      "feetTail": "unchanged",
+      "pixelReassembly": "exact"
+    },
+    {
+      "id": "pointy-stripes",
+      "frames": 2,
+      "layersPerFrame": 9,
+      "ora": "PASS",
+      "identityCore": "unchanged",
+      "feetTail": "unchanged",
+      "pixelReassembly": "exact"
+    },
+    {
+      "id": "round-plain",
+      "frames": 2,
+      "layersPerFrame": 9,
+      "ora": "PASS",
+      "identityCore": "unchanged",
+      "feetTail": "unchanged",
+      "pixelReassembly": "exact"
+    },
+    {
+      "id": "round-spots",
+      "frames": 2,
+      "layersPerFrame": 9,
+      "ora": "PASS",
+      "identityCore": "unchanged",
+      "feetTail": "unchanged",
+      "pixelReassembly": "exact"
+    },
+    {
+      "id": "round-stripes",
+      "frames": 2,
+      "layersPerFrame": 9,
+      "ora": "PASS",
+      "identityCore": "unchanged",
+      "feetTail": "unchanged",
+      "pixelReassembly": "exact"
+    },
+    {
+      "id": "floppy-plain",
+      "frames": 2,
+      "layersPerFrame": 9,
+      "ora": "PASS",
+      "identityCore": "unchanged",
+      "feetTail": "unchanged",
+      "pixelReassembly": "exact"
+    },
+    {
+      "id": "floppy-spots",
+      "frames": 2,
+      "layersPerFrame": 9,
+      "ora": "PASS",
+      "identityCore": "unchanged",
+      "feetTail": "unchanged",
+      "pixelReassembly": "exact"
+    },
+    {
+      "id": "floppy-stripes",
+      "frames": 2,
+      "layersPerFrame": 9,
+      "ora": "PASS",
+      "identityCore": "unchanged",
+      "feetTail": "unchanged",
+      "pixelReassembly": "exact"
+    }
+  ],
+  "uniqueNeutralRenders": 9,
+  "frameCount": 18,
+  "layerPngCount": 162,
+  "oraCount": 9,
+  "scope": "pixel/contract proof; visual assessment required separately"
+}

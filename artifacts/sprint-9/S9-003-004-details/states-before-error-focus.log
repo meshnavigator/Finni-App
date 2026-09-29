@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "C:\00.MIDAS\PROJECTS\28. HackApp. 2026\Finni App\artifacts\sprint-9\S9-003-004-details\states.py", line 17, in <module>
+    assert n.match(nodes,'Занятие не открылось. Монеты твоего дня не изменились.')
+AssertionError

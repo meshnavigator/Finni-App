@@ -1,0 +1,14 @@
+LS-B01-complete PASS
+LS-B01-history-reopen PASS
+LS-B02-complete PASS
+LS-B02-history-reopen PASS
+LS-B03-complete PASS
+LS-B03-history-reopen PASS
+Traceback (most recent call last):
+  File "C:\00.MIDAS\PROJECTS\28. HackApp. 2026\Finni App\artifacts\sprint-9\S9-003-004-details\lessons.py", line 17, in <module>
+    for _ in range(count):n.go('Добавить '+key)
+  File "C:\00.MIDAS\PROJECTS\28. HackApp. 2026\Finni App\artifacts\sprint-9\S9-003-004-details\native.py", line 45, in go
+    nodes=nodes or capture('current');tap(scrollfind(nodes,label));return capture('current')
+  File "C:\00.MIDAS\PROJECTS\28. HackApp. 2026\Finni App\artifacts\sprint-9\S9-003-004-details\native.py", line 43, in scrollfind
+    raise AssertionError('Scroll target: '+label)
+AssertionError: Scroll target: Добавить care_10

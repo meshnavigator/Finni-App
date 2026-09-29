@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 3,
+  "activities": [
+    {"id":"OFF-01","title":"Домашний магазин без покупок","linkedLessonIds":["LS-P01","LS-P02"],"competencyIds":["EDU-09"]},
+    {"id":"OFF-02","title":"Что у нас уже есть?","linkedLessonIds":["LS-B03"],"competencyIds":["EDU-12"]},
+    {"id":"OFF-03","title":"Мечта в трёх шагах","linkedLessonIds":["LS-S01","LS-S02"],"competencyIds":["EDU-05","EDU-13"]}
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "schemaVersion":3,
+  "id":"LS-P03",
+  "title":"Дело о чеке",
+  "contentVersion":"1.2.0",
+  "topic":"purchases",
+  "format":"detective",
+  "level":3,
+  "observableAction":"Сопоставить мультимножество строк корзины и чека, затем пересчитать итог и сдачу.",
+  "explanation":"Ошибка не предполагается заранее: правильный чек допускает пустой список отмеченных строк.",
+  "unlockPeriod":5,
+  "competencyIds":["EDU-10","EDU-11"],
+  "sourceRefs":["SRS §13.8","TC-177","FR-64"],
+  "defaultVariantId":"duplicate-line",
+  "returnTarget":"history",
+  "mechanic":"receipt_audit",
+  "mode":"duplicate_line",
+  "rendererId":"receipt_audit",
+  "variants":[
+    {
+      "id":"duplicate-line",
+      "params":{
+        "originalBasket":[
+          {"id":"basket-food","itemId":"food","quantity":1,"unitPrice":30},
+          {"id":"basket-care","itemId":"care","quantity":1,"unitPrice":10},
+          {"id":"basket-ball","itemId":"ball","quantity":1,"unitPrice":20}
+        ],
+        "receiptLines":[
+          {"id":"receipt-food","itemId":"food","quantity":1,"unitPrice":30},
+          {"id":"receipt-care","itemId":"care","quantity":1,"unitPrice":10},
+          {"id":"receipt-ball-a","itemId":"ball","quantity":1,"unitPrice":20},
+          {"id":"receipt-ball-b","itemId":"ball","quantity":1,"unitPrice":20}
+        ],
+        "tendered":100,"reportedTotal":80,"reportedChange":20
+      },
+      "copy":{"intro":"Сравним учебный чек с корзиной. Всё ли совпадает?","hints":["Сверь количество каждой вещи в корзине и чеке.","Размести соответствующие строки рядом и только потом считай."],"feedback":{"meets_goal":"Мы проверили чек: {comparisonSummary}. Итог {total}, сдача {change}.","valid_alternative":"Один из двух одинаковых повторов можно отметить как лишний.","needs_review":"Проверь, какая строка повторяется, и пересчитай сдачу.","invalid_input":"Отмечена строка, которой нет в чеке, или введена недопустимая сумма."}},
+      "evidence":[{"id":"basket","text":"В корзине по одной еде, уходу и мячу."}],
+      "fixtures":[
+        {"solution":{"flaggedLineIds":["receipt-ball-b"],"correctedTotal":60,"expectedChange":40,"sellerResponse":"neutral_question"},"expectedOutcome":"meets_goal"},
+        {"solution":{"flaggedLineIds":["receipt-care"],"correctedTotal":70,"expectedChange":30},"expectedOutcome":"needs_review"},
+        {"solution":{"flaggedLineIds":["missing-line"],"correctedTotal":60,"expectedChange":40},"expectedOutcome":"invalid_input"}
+      ]
+    },
+    {
+      "id":"correct-receipt",
+      "params":{
+        "originalBasket":[
+          {"id":"basket-food","itemId":"food","quantity":1,"unitPrice":30},
+          {"id":"basket-care","itemId":"care","quantity":1,"unitPrice":10},
+          {"id":"basket-ball","itemId":"ball","quantity":1,"unitPrice":20}
+        ],
+        "receiptLines":[
+          {"id":"receipt-food","itemId":"food","quantity":1,"unitPrice":30},
+          {"id":"receipt-care","itemId":"care","quantity":1,"unitPrice":10},
+          {"id":"receipt-ball","itemId":"ball","quantity":1,"unitPrice":20}
+        ],
+        "tendered":100,"reportedTotal":60,"reportedChange":40
+      },
+      "copy":{"intro":"Проверь чек, даже если в нём может не быть ошибки.","hints":["Сверь количество каждой вещи в корзине и чеке.","Если строки совпали, проверь итог и сдачу."],"feedback":{"meets_goal":"Все строки совпали. Итог {total}, сдача {change}.","valid_alternative":"Проверка выполнена другим допустимым способом.","needs_review":"Пересчитай итог и сдачу, не придумывая ошибку.","invalid_input":"Нельзя отметить отсутствующую строку."}},
+      "evidence":[{"id":"basket","text":"В корзине по одной еде, уходу и мячу."}],
+      "fixtures":[
+        {"solution":{"flaggedLineIds":[],"correctedTotal":60,"expectedChange":40},"expectedOutcome":"meets_goal"},
+        {"solution":{"flaggedLineIds":[],"correctedTotal":60,"expectedChange":20},"expectedOutcome":"needs_review"},
+        {"solution":{"flaggedLineIds":["missing-line"],"correctedTotal":60,"expectedChange":40},"expectedOutcome":"invalid_input"}
+      ]
+    }
+  ]
+}

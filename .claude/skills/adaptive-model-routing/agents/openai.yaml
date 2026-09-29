@@ -1,0 +1,7 @@
+interface:
+  display_name: "Adaptive Model Routing"
+  short_description: "Route work across GPT-6 Astra, Sol and Luna"
+  default_prompt: "Use $adaptive-model-routing to choose the right model for each work package."
+
+policy:
+  allow_implicit_invocation: true

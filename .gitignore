@@ -1,0 +1,86 @@
+# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
+
+# dependencies
+node_modules/
+
+# Expo
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# Native
+.kotlin/
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# Metro
+.metro-health-check*
+
+# debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
+*.pem
+
+# local env files and release-signing material
+.env
+.env.*
+!.env.example
+*.keystore
+
+# typescript
+*.tsbuildinfo
+
+# Local belief-map generated artifacts
+.belief_map.sexp
+.belief_map_cache.json
+
+# iOS remains generated. Android is intentionally tracked after the initial prebuild.
+/ios
+
+# Android build outputs
+/android/.gradle
+/android/build
+/android/app/build
+/android/local.properties
+
+# Submission APK is kept locally and attached to the delivery separately.
+/artifacts/release/*.apk
+
+# Local caches, temporary files, and generated reports
+.cache/
+.eslintcache
+.gradle/
+.cxx/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+coverage/
+*.log
+*.tmp
+*.temp
+*.swp
+*~
+Thumbs.db
+
+# Project management files live outside this Git repository.
+/tasks/
+/AGENTS.md
+/TASKS.md
+/CONTRIBUTING.md
+
+# Verification logs under artifacts are project evidence.
+!/artifacts/**/*.log
+
+# Project documentation is stored alongside this repository.
+/docs/

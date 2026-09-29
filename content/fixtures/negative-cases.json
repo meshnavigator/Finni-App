@@ -1,0 +1,9 @@
+[
+  {"id":"wrong-schema-version","target":"lesson","lessonId":"LS-B01","mutation":{"path":"schemaVersion","value":2},"expected":"schemaVersion"},
+  {"id":"unknown-field","target":"lesson","lessonId":"LS-B01","mutation":{"path":"unexpected","value":true},"expected":"unknown field"},
+  {"id":"unknown-placeholder","target":"lesson","lessonId":"LS-B01","mutation":{"path":"variants.0.copy.intro","value":"Баланс {walletBalance}"},"expected":"unknown placeholder"},
+  {"id":"fixture-contradiction","target":"lesson","lessonId":"LS-B01","mutation":{"path":"variants.0.fixtures.0.expectedOutcome","value":"needs_review"},"expected":"fixture contradiction"},
+  {"id":"broken-manifest-link","target":"manifest","mutation":{"path":"lessons.LS-B01","value":"lessons/missing.json"},"expected":"broken link"},
+  {"id":"manifest-cycle","target":"manifest-cycle","expected":"dependency cycle"},
+  {"id":"invalid-hash","target":"hash","file":"lessons/LS-B01.json","expected":"hash mismatch"}
+]

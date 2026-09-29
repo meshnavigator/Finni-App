@@ -1,0 +1,49 @@
+[
+  {
+    "case": "happy",
+    "pass": true
+  },
+  {
+    "case": "thoughtful",
+    "pass": true
+  },
+  {
+    "case": "inspired",
+    "pass": true
+  },
+  {
+    "case": "reduced",
+    "pass": true
+  },
+  {
+    "case": "system-reduced",
+    "pass": true
+  },
+  {
+    "case": "skip",
+    "pass": true
+  },
+  {
+    "case": "background-cancel",
+    "pass": true
+  },
+  {
+    "case": "modal-pause-back",
+    "pass": true
+  },
+  {
+    "case": "QA-missing",
+    "pass": true,
+    "recoverOnRemount": true
+  },
+  {
+    "case": "QA-corrupt",
+    "pass": true,
+    "recoverOnRemount": true
+  },
+  {
+    "case": "QA-goal",
+    "pass": true,
+    "recoverOnRemount": false
+  }
+]

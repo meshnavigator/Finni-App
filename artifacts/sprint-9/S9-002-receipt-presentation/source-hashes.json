@@ -1,0 +1,10 @@
+{
+  "src/application/app-runtime.ts": "23b7891ac32cf303d3250c5c15ea33723cb29651ec6916588f2216b473c3bae8",
+  "src/application/receipt-presentation.ts": "fa113eeac7540bee02f7a9f7455e2f29a248ac532ed27f9776adc13429c0a4bd",
+  "src/ui/AppRoot.tsx": "e5653ac0b7c2e429ab0d5574c4b1f32ccb05d6291faf37c19fb01cd889c095dc",
+  "src/ui/LessonShell.tsx": "e6a2cf275511beedd7a4c657a4df11081f6b91f64c8ca7ec3e3528e8b52ce313",
+  "tests/receipt-presentation.test.mjs": "5d3ba62a142b14b12747abf41b26d6ea5c700f321175c79a9f1b89cbd40c0a4d",
+  "tests/savings-commerce.test.mjs": "2cb8da8e7052fb242be293a934c3e17edafc0a281e93d11c52f6811666659dff",
+  "tests/period-close.test.mjs": "6cd2faf5b79a17bdcfe0541a1c9207c723a7328772b2d163208cf319ed095a88",
+  "artifacts/sprint-9/S9-002-receipt-presentation/finni-s9-002-api26-qa.apk": "4e1d7b5f2ac2bf54349758ecda2d2d83b9dca2b333903f0e59bb7134a4e40651"
+}

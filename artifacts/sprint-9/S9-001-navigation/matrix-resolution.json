@@ -1,0 +1,5268 @@
+{
+  "initialMatrixApk": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c",
+  "deliveryApk": "30127ed7cb5a891d92b1322e730c3d2b6954df95631dd35945e83db70fd15795",
+  "reason": "Android float32 120% boundary repaired; exact delivery rechecks both boundary cases plus 100/119/200% and direct-lesson Back. Other geometry and assets unchanged.",
+  "resolvedProfiles": [
+    {
+      "case": "normal-360-1",
+      "width": 360,
+      "height": 640,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          360,
+          525
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          157
+        ],
+        "home-goal": [
+          20,
+          90,
+          340,
+          145
+        ],
+        "home-scene-space": [
+          10,
+          163,
+          350,
+          397
+        ],
+        "home-care": [
+          10,
+          357,
+          350,
+          397
+        ],
+        "home-pet-target": [
+          34,
+          219,
+          326,
+          359
+        ],
+        "home-lesson": [
+          10,
+          403,
+          350,
+          461
+        ],
+        "home-primary": [
+          10,
+          467,
+          350,
+          515
+        ],
+        "home-footer": [
+          10,
+          467,
+          350,
+          515
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 145.77,
+        "floorAnchorY": 351
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "normal-360-1.5",
+      "width": 360,
+      "height": 640,
+      "scale": 1.5,
+      "issues": [],
+      "boxes": {
+        "home-large-summary": [
+          0,
+          24,
+          360,
+          592
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          201
+        ],
+        "home-goal": [
+          20,
+          106,
+          340,
+          189
+        ],
+        "home-scene-space": [
+          10,
+          209,
+          350,
+          329
+        ],
+        "home-pet-target": [
+          10,
+          209,
+          130,
+          329
+        ],
+        "home-care": [
+          140,
+          209,
+          350,
+          329
+        ],
+        "home-lesson": [
+          10,
+          337,
+          350,
+          407
+        ],
+        "home-footer": [
+          10,
+          526,
+          350,
+          582
+        ],
+        "home-sections": [
+          10,
+          526,
+          96,
+          582
+        ],
+        "home-primary": [
+          104,
+          526,
+          350,
+          582
+        ]
+      },
+      "geometry": {},
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "normal-360-2",
+      "width": 360,
+      "height": 640,
+      "scale": 2,
+      "issues": [],
+      "boxes": {
+        "home-large-summary": [
+          0,
+          24,
+          360,
+          592
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          241
+        ],
+        "home-goal": [
+          20,
+          124,
+          340,
+          229
+        ],
+        "home-scene-space": [
+          10,
+          249,
+          350,
+          369
+        ],
+        "home-pet-target": [
+          10,
+          249,
+          130,
+          369
+        ],
+        "home-care": [
+          140,
+          249,
+          350,
+          369
+        ],
+        "home-lesson": [
+          10,
+          377,
+          350,
+          462
+        ],
+        "home-footer": [
+          10,
+          526,
+          350,
+          582
+        ],
+        "home-sections": [
+          10,
+          526,
+          96,
+          582
+        ],
+        "home-primary": [
+          104,
+          526,
+          350,
+          582
+        ]
+      },
+      "geometry": {},
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "normal-390-1",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          390,
+          729
+        ],
+        "home-finances": [
+          12,
+          36,
+          378,
+          192
+        ],
+        "home-goal": [
+          26,
+          105,
+          364,
+          180
+        ],
+        "home-scene-space": [
+          12,
+          202,
+          378,
+          579
+        ],
+        "home-pet-target": [
+          36,
+          260,
+          354,
+          529
+        ],
+        "home-care": [
+          12,
+          539,
+          378,
+          579
+        ],
+        "home-lesson": [
+          12,
+          589,
+          378,
+          657
+        ],
+        "home-primary": [
+          12,
+          667,
+          378,
+          717
+        ],
+        "home-footer": [
+          12,
+          667,
+          378,
+          717
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 243.83,
+        "floorAnchorY": 529
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "normal-390-1.5",
+      "width": 390,
+      "height": 844,
+      "scale": 1.5,
+      "issues": [],
+      "boxes": {
+        "home-large-summary": [
+          0,
+          24,
+          390,
+          796
+        ],
+        "home-finances": [
+          10,
+          34,
+          380,
+          201
+        ],
+        "home-goal": [
+          20,
+          106,
+          370,
+          189
+        ],
+        "home-scene-space": [
+          10,
+          209,
+          380,
+          361
+        ],
+        "home-pet-target": [
+          10,
+          209,
+          162,
+          361
+        ],
+        "home-care": [
+          172,
+          209,
+          380,
+          361
+        ],
+        "home-lesson": [
+          10,
+          369,
+          380,
+          439
+        ],
+        "home-footer": [
+          10,
+          730,
+          380,
+          786
+        ],
+        "home-sections": [
+          10,
+          730,
+          96,
+          786
+        ],
+        "home-primary": [
+          104,
+          730,
+          380,
+          786
+        ]
+      },
+      "geometry": {},
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "normal-390-2",
+      "width": 390,
+      "height": 844,
+      "scale": 2,
+      "issues": [],
+      "boxes": {
+        "home-large-summary": [
+          0,
+          24,
+          390,
+          796
+        ],
+        "home-finances": [
+          10,
+          34,
+          380,
+          241
+        ],
+        "home-goal": [
+          20,
+          124,
+          370,
+          229
+        ],
+        "home-scene-space": [
+          10,
+          249,
+          380,
+          401
+        ],
+        "home-pet-target": [
+          10,
+          249,
+          162,
+          401
+        ],
+        "home-care": [
+          172,
+          249,
+          380,
+          401
+        ],
+        "home-lesson": [
+          10,
+          409,
+          380,
+          494
+        ],
+        "home-footer": [
+          10,
+          730,
+          380,
+          786
+        ],
+        "home-sections": [
+          10,
+          730,
+          96,
+          786
+        ],
+        "home-primary": [
+          104,
+          730,
+          380,
+          786
+        ]
+      },
+      "geometry": {},
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "normal-412-1",
+      "width": 412,
+      "height": 915,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          412,
+          800
+        ],
+        "home-finances": [
+          12,
+          36,
+          400,
+          192
+        ],
+        "home-goal": [
+          26,
+          105,
+          386,
+          180
+        ],
+        "home-scene-space": [
+          12,
+          202,
+          400,
+          650
+        ],
+        "home-pet-target": [
+          36,
+          260,
+          376,
+          600
+        ],
+        "home-care": [
+          12,
+          610,
+          400,
+          650
+        ],
+        "home-lesson": [
+          12,
+          660,
+          400,
+          728
+        ],
+        "home-primary": [
+          12,
+          738,
+          400,
+          788
+        ],
+        "home-footer": [
+          12,
+          738,
+          400,
+          788
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 305.43,
+        "floorAnchorY": 600
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "normal-412-1.5",
+      "width": 412,
+      "height": 915,
+      "scale": 1.5,
+      "issues": [],
+      "boxes": {
+        "home-large-summary": [
+          0,
+          24,
+          412,
+          867
+        ],
+        "home-finances": [
+          10,
+          34,
+          402,
+          201
+        ],
+        "home-goal": [
+          20,
+          106,
+          392,
+          189
+        ],
+        "home-scene-space": [
+          10,
+          209,
+          402,
+          361
+        ],
+        "home-pet-target": [
+          10,
+          209,
+          162,
+          361
+        ],
+        "home-care": [
+          172,
+          209,
+          402,
+          361
+        ],
+        "home-lesson": [
+          10,
+          369,
+          402,
+          439
+        ],
+        "home-footer": [
+          10,
+          801,
+          402,
+          857
+        ],
+        "home-sections": [
+          10,
+          801,
+          96,
+          857
+        ],
+        "home-primary": [
+          104,
+          801,
+          402,
+          857
+        ]
+      },
+      "geometry": {},
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "normal-412-2",
+      "width": 412,
+      "height": 915,
+      "scale": 2,
+      "issues": [],
+      "boxes": {
+        "home-large-summary": [
+          0,
+          24,
+          412,
+          867
+        ],
+        "home-finances": [
+          10,
+          34,
+          402,
+          241
+        ],
+        "home-goal": [
+          20,
+          124,
+          392,
+          229
+        ],
+        "home-scene-space": [
+          10,
+          249,
+          402,
+          401
+        ],
+        "home-pet-target": [
+          10,
+          249,
+          162,
+          401
+        ],
+        "home-care": [
+          172,
+          249,
+          402,
+          401
+        ],
+        "home-lesson": [
+          10,
+          409,
+          402,
+          494
+        ],
+        "home-footer": [
+          10,
+          801,
+          402,
+          857
+        ],
+        "home-sections": [
+          10,
+          801,
+          96,
+          857
+        ],
+        "home-primary": [
+          104,
+          801,
+          402,
+          857
+        ]
+      },
+      "geometry": {},
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "stress-360-1",
+      "width": 360,
+      "height": 640,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          360,
+          525
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          173
+        ],
+        "home-goal": [
+          20,
+          90,
+          340,
+          161
+        ],
+        "home-scene-space": [
+          10,
+          179,
+          350,
+          381
+        ],
+        "home-care": [
+          10,
+          341,
+          350,
+          381
+        ],
+        "home-pet-target": [
+          34,
+          235,
+          326,
+          343
+        ],
+        "home-lesson": [
+          10,
+          387,
+          350,
+          461
+        ],
+        "home-primary": [
+          10,
+          467,
+          350,
+          515
+        ],
+        "home-footer": [
+          10,
+          467,
+          350,
+          515
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 118.01,
+        "floorAnchorY": 335
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "stress-360-1.5",
+      "width": 360,
+      "height": 640,
+      "scale": 1.5,
+      "issues": [],
+      "boxes": {
+        "home-large-summary": [
+          0,
+          24,
+          360,
+          592
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          201
+        ],
+        "home-goal": [
+          20,
+          106,
+          340,
+          189
+        ],
+        "home-scene-space": [
+          10,
+          209,
+          350,
+          329
+        ],
+        "home-pet-target": [
+          10,
+          209,
+          130,
+          329
+        ],
+        "home-care": [
+          140,
+          209,
+          350,
+          329
+        ],
+        "home-lesson": [
+          10,
+          337,
+          350,
+          431
+        ],
+        "home-footer": [
+          10,
+          526,
+          350,
+          582
+        ],
+        "home-sections": [
+          10,
+          526,
+          96,
+          582
+        ],
+        "home-primary": [
+          104,
+          526,
+          350,
+          582
+        ]
+      },
+      "geometry": {},
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "stress-360-2",
+      "width": 360,
+      "height": 640,
+      "scale": 2,
+      "issues": [],
+      "boxes": {
+        "home-large-summary": [
+          0,
+          24,
+          360,
+          592
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          241
+        ],
+        "home-goal": [
+          20,
+          124,
+          340,
+          229
+        ],
+        "home-scene-space": [
+          10,
+          249,
+          350,
+          369
+        ],
+        "home-pet-target": [
+          10,
+          249,
+          130,
+          369
+        ],
+        "home-care": [
+          140,
+          249,
+          350,
+          369
+        ],
+        "home-lesson": [
+          10,
+          377,
+          350,
+          494
+        ],
+        "home-footer": [
+          10,
+          526,
+          350,
+          582
+        ],
+        "home-sections": [
+          10,
+          526,
+          96,
+          582
+        ],
+        "home-primary": [
+          104,
+          526,
+          350,
+          582
+        ]
+      },
+      "geometry": {},
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "stress-390-1",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          390,
+          729
+        ],
+        "home-finances": [
+          12,
+          36,
+          378,
+          192
+        ],
+        "home-goal": [
+          26,
+          105,
+          364,
+          180
+        ],
+        "home-scene-space": [
+          12,
+          202,
+          378,
+          565
+        ],
+        "home-pet-target": [
+          36,
+          260,
+          354,
+          515
+        ],
+        "home-care": [
+          12,
+          525,
+          378,
+          565
+        ],
+        "home-lesson": [
+          12,
+          575,
+          378,
+          657
+        ],
+        "home-primary": [
+          12,
+          667,
+          378,
+          717
+        ],
+        "home-footer": [
+          12,
+          667,
+          378,
+          717
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 231.68,
+        "floorAnchorY": 515
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "stress-390-1.5",
+      "width": 390,
+      "height": 844,
+      "scale": 1.5,
+      "issues": [],
+      "boxes": {
+        "home-large-summary": [
+          0,
+          24,
+          390,
+          796
+        ],
+        "home-finances": [
+          10,
+          34,
+          380,
+          201
+        ],
+        "home-goal": [
+          20,
+          106,
+          370,
+          189
+        ],
+        "home-scene-space": [
+          10,
+          209,
+          380,
+          361
+        ],
+        "home-pet-target": [
+          10,
+          209,
+          162,
+          361
+        ],
+        "home-care": [
+          172,
+          209,
+          380,
+          361
+        ],
+        "home-lesson": [
+          10,
+          369,
+          380,
+          463
+        ],
+        "home-footer": [
+          10,
+          730,
+          380,
+          786
+        ],
+        "home-sections": [
+          10,
+          730,
+          96,
+          786
+        ],
+        "home-primary": [
+          104,
+          730,
+          380,
+          786
+        ]
+      },
+      "geometry": {},
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "stress-390-2",
+      "width": 390,
+      "height": 844,
+      "scale": 2,
+      "issues": [],
+      "boxes": {
+        "home-large-summary": [
+          0,
+          24,
+          390,
+          796
+        ],
+        "home-finances": [
+          10,
+          34,
+          380,
+          241
+        ],
+        "home-goal": [
+          20,
+          124,
+          370,
+          229
+        ],
+        "home-scene-space": [
+          10,
+          249,
+          380,
+          401
+        ],
+        "home-pet-target": [
+          10,
+          249,
+          162,
+          401
+        ],
+        "home-care": [
+          172,
+          249,
+          380,
+          401
+        ],
+        "home-lesson": [
+          10,
+          409,
+          380,
+          526
+        ],
+        "home-footer": [
+          10,
+          730,
+          380,
+          786
+        ],
+        "home-sections": [
+          10,
+          730,
+          96,
+          786
+        ],
+        "home-primary": [
+          104,
+          730,
+          380,
+          786
+        ]
+      },
+      "geometry": {},
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "stress-412-1",
+      "width": 412,
+      "height": 915,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          412,
+          800
+        ],
+        "home-finances": [
+          12,
+          36,
+          400,
+          192
+        ],
+        "home-goal": [
+          26,
+          105,
+          386,
+          180
+        ],
+        "home-scene-space": [
+          12,
+          202,
+          400,
+          636
+        ],
+        "home-pet-target": [
+          36,
+          260,
+          376,
+          586
+        ],
+        "home-care": [
+          12,
+          596,
+          400,
+          636
+        ],
+        "home-lesson": [
+          12,
+          646,
+          400,
+          728
+        ],
+        "home-primary": [
+          12,
+          738,
+          400,
+          788
+        ],
+        "home-footer": [
+          12,
+          738,
+          400,
+          788
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 293.28,
+        "floorAnchorY": 586
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "stress-412-1.5",
+      "width": 412,
+      "height": 915,
+      "scale": 1.5,
+      "issues": [],
+      "boxes": {
+        "home-large-summary": [
+          0,
+          24,
+          412,
+          867
+        ],
+        "home-finances": [
+          10,
+          34,
+          402,
+          201
+        ],
+        "home-goal": [
+          20,
+          106,
+          392,
+          189
+        ],
+        "home-scene-space": [
+          10,
+          209,
+          402,
+          361
+        ],
+        "home-pet-target": [
+          10,
+          209,
+          162,
+          361
+        ],
+        "home-care": [
+          172,
+          209,
+          402,
+          361
+        ],
+        "home-lesson": [
+          10,
+          369,
+          402,
+          463
+        ],
+        "home-footer": [
+          10,
+          801,
+          402,
+          857
+        ],
+        "home-sections": [
+          10,
+          801,
+          96,
+          857
+        ],
+        "home-primary": [
+          104,
+          801,
+          402,
+          857
+        ]
+      },
+      "geometry": {},
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "stress-412-2",
+      "width": 412,
+      "height": 915,
+      "scale": 2,
+      "issues": [],
+      "boxes": {
+        "home-large-summary": [
+          0,
+          24,
+          412,
+          867
+        ],
+        "home-finances": [
+          10,
+          34,
+          402,
+          241
+        ],
+        "home-goal": [
+          20,
+          124,
+          392,
+          229
+        ],
+        "home-scene-space": [
+          10,
+          249,
+          402,
+          401
+        ],
+        "home-pet-target": [
+          10,
+          249,
+          162,
+          401
+        ],
+        "home-care": [
+          172,
+          249,
+          402,
+          401
+        ],
+        "home-lesson": [
+          10,
+          409,
+          402,
+          526
+        ],
+        "home-footer": [
+          10,
+          801,
+          402,
+          857
+        ],
+        "home-sections": [
+          10,
+          801,
+          96,
+          857
+        ],
+        "home-primary": [
+          104,
+          801,
+          402,
+          857
+        ]
+      },
+      "geometry": {},
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "DRAFT-360-1",
+      "width": 360,
+      "height": 640,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          360,
+          525
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          173
+        ],
+        "home-goal": [
+          20,
+          90,
+          340,
+          161
+        ],
+        "home-scene-space": [
+          10,
+          179,
+          350,
+          381
+        ],
+        "home-care": [
+          10,
+          341,
+          350,
+          381
+        ],
+        "home-pet-target": [
+          34,
+          235,
+          326,
+          343
+        ],
+        "home-lesson": [
+          10,
+          387,
+          350,
+          461
+        ],
+        "home-primary": [
+          10,
+          467,
+          350,
+          515
+        ],
+        "home-footer": [
+          10,
+          467,
+          350,
+          515
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 118.01,
+        "floorAnchorY": 335
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "DRAFT-360-1.5",
+      "width": 360,
+      "height": 640,
+      "scale": 1.5,
+      "issues": [],
+      "boxes": {
+        "home-large-summary": [
+          0,
+          24,
+          360,
+          592
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          201
+        ],
+        "home-goal": [
+          20,
+          106,
+          340,
+          189
+        ],
+        "home-scene-space": [
+          10,
+          209,
+          350,
+          329
+        ],
+        "home-pet-target": [
+          10,
+          209,
+          130,
+          329
+        ],
+        "home-care": [
+          140,
+          209,
+          350,
+          329
+        ],
+        "home-lesson": [
+          10,
+          337,
+          350,
+          431
+        ],
+        "home-footer": [
+          10,
+          526,
+          350,
+          582
+        ],
+        "home-sections": [
+          10,
+          526,
+          96,
+          582
+        ],
+        "home-primary": [
+          104,
+          526,
+          350,
+          582
+        ]
+      },
+      "geometry": {},
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "DRAFT-360-2",
+      "width": 360,
+      "height": 640,
+      "scale": 2,
+      "issues": [],
+      "boxes": {
+        "home-large-summary": [
+          0,
+          24,
+          360,
+          592
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          241
+        ],
+        "home-goal": [
+          20,
+          124,
+          340,
+          229
+        ],
+        "home-scene-space": [
+          10,
+          249,
+          350,
+          369
+        ],
+        "home-pet-target": [
+          10,
+          249,
+          130,
+          369
+        ],
+        "home-care": [
+          140,
+          249,
+          350,
+          369
+        ],
+        "home-lesson": [
+          10,
+          377,
+          350,
+          494
+        ],
+        "home-footer": [
+          10,
+          526,
+          350,
+          582
+        ],
+        "home-sections": [
+          10,
+          526,
+          96,
+          582
+        ],
+        "home-primary": [
+          104,
+          526,
+          350,
+          582
+        ]
+      },
+      "geometry": {},
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "READY-360-1",
+      "width": 360,
+      "height": 640,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          360,
+          525
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          173
+        ],
+        "home-goal": [
+          20,
+          90,
+          340,
+          161
+        ],
+        "home-scene-space": [
+          10,
+          179,
+          350,
+          381
+        ],
+        "home-care": [
+          10,
+          341,
+          350,
+          381
+        ],
+        "home-pet-target": [
+          34,
+          235,
+          326,
+          343
+        ],
+        "home-lesson": [
+          10,
+          387,
+          350,
+          461
+        ],
+        "home-primary": [
+          10,
+          467,
+          350,
+          515
+        ],
+        "home-footer": [
+          10,
+          467,
+          350,
+          515
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 118.01,
+        "floorAnchorY": 335
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "READY-360-1.5",
+      "width": 360,
+      "height": 640,
+      "scale": 1.5,
+      "issues": [],
+      "boxes": {
+        "home-large-summary": [
+          0,
+          24,
+          360,
+          592
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          201
+        ],
+        "home-goal": [
+          20,
+          106,
+          340,
+          189
+        ],
+        "home-scene-space": [
+          10,
+          209,
+          350,
+          329
+        ],
+        "home-pet-target": [
+          10,
+          209,
+          130,
+          329
+        ],
+        "home-care": [
+          140,
+          209,
+          350,
+          329
+        ],
+        "home-lesson": [
+          10,
+          337,
+          350,
+          431
+        ],
+        "home-footer": [
+          10,
+          526,
+          350,
+          582
+        ],
+        "home-sections": [
+          10,
+          526,
+          96,
+          582
+        ],
+        "home-primary": [
+          104,
+          526,
+          350,
+          582
+        ]
+      },
+      "geometry": {},
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "READY-360-2",
+      "width": 360,
+      "height": 640,
+      "scale": 2,
+      "issues": [],
+      "boxes": {
+        "home-large-summary": [
+          0,
+          24,
+          360,
+          592
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          241
+        ],
+        "home-goal": [
+          20,
+          124,
+          340,
+          229
+        ],
+        "home-scene-space": [
+          10,
+          249,
+          350,
+          369
+        ],
+        "home-pet-target": [
+          10,
+          249,
+          130,
+          369
+        ],
+        "home-care": [
+          140,
+          249,
+          350,
+          369
+        ],
+        "home-lesson": [
+          10,
+          377,
+          350,
+          494
+        ],
+        "home-footer": [
+          10,
+          526,
+          350,
+          582
+        ],
+        "home-sections": [
+          10,
+          526,
+          96,
+          582
+        ],
+        "home-primary": [
+          104,
+          526,
+          350,
+          582
+        ]
+      },
+      "geometry": {},
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "WAITING-360-1",
+      "width": 360,
+      "height": 640,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          360,
+          525
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          173
+        ],
+        "home-goal": [
+          20,
+          90,
+          340,
+          161
+        ],
+        "home-scene-space": [
+          10,
+          179,
+          350,
+          381
+        ],
+        "home-care": [
+          10,
+          341,
+          350,
+          381
+        ],
+        "home-pet-target": [
+          34,
+          235,
+          326,
+          343
+        ],
+        "home-lesson": [
+          10,
+          387,
+          350,
+          461
+        ],
+        "home-primary": [
+          10,
+          467,
+          350,
+          515
+        ],
+        "home-footer": [
+          10,
+          467,
+          350,
+          515
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 118.01,
+        "floorAnchorY": 335
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "WAITING-360-1.5",
+      "width": 360,
+      "height": 640,
+      "scale": 1.5,
+      "issues": [],
+      "boxes": {
+        "home-large-summary": [
+          0,
+          24,
+          360,
+          592
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          201
+        ],
+        "home-goal": [
+          20,
+          106,
+          340,
+          189
+        ],
+        "home-scene-space": [
+          10,
+          209,
+          350,
+          329
+        ],
+        "home-pet-target": [
+          10,
+          209,
+          130,
+          329
+        ],
+        "home-care": [
+          140,
+          209,
+          350,
+          329
+        ],
+        "home-lesson": [
+          10,
+          337,
+          350,
+          431
+        ],
+        "home-footer": [
+          10,
+          526,
+          350,
+          582
+        ],
+        "home-sections": [
+          10,
+          526,
+          96,
+          582
+        ],
+        "home-primary": [
+          104,
+          526,
+          350,
+          582
+        ]
+      },
+      "geometry": {},
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "WAITING-360-2",
+      "width": 360,
+      "height": 640,
+      "scale": 2,
+      "issues": [],
+      "boxes": {
+        "home-large-summary": [
+          0,
+          24,
+          360,
+          592
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          241
+        ],
+        "home-goal": [
+          20,
+          124,
+          340,
+          229
+        ],
+        "home-scene-space": [
+          10,
+          249,
+          350,
+          369
+        ],
+        "home-pet-target": [
+          10,
+          249,
+          130,
+          369
+        ],
+        "home-care": [
+          140,
+          249,
+          350,
+          369
+        ],
+        "home-lesson": [
+          10,
+          377,
+          350,
+          494
+        ],
+        "home-footer": [
+          10,
+          526,
+          350,
+          582
+        ],
+        "home-sections": [
+          10,
+          526,
+          96,
+          582
+        ],
+        "home-primary": [
+          104,
+          526,
+          350,
+          582
+        ]
+      },
+      "geometry": {},
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "empty-1",
+      "width": 360,
+      "height": 640,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          360,
+          525
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          156
+        ],
+        "home-goal": [
+          20,
+          90,
+          340,
+          144
+        ],
+        "home-scene-space": [
+          10,
+          162,
+          350,
+          397
+        ],
+        "home-care": [
+          10,
+          357,
+          350,
+          397
+        ],
+        "home-pet-target": [
+          34,
+          218,
+          326,
+          359
+        ],
+        "home-lesson": [
+          10,
+          403,
+          350,
+          461
+        ],
+        "home-primary": [
+          10,
+          467,
+          350,
+          515
+        ],
+        "home-footer": [
+          10,
+          467,
+          350,
+          515
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 146.64,
+        "floorAnchorY": 351
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "empty-1.5",
+      "width": 360,
+      "height": 640,
+      "scale": 1.5,
+      "issues": [],
+      "boxes": {
+        "home-large-summary": [
+          0,
+          24,
+          360,
+          592
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          175
+        ],
+        "home-goal": [
+          20,
+          106,
+          340,
+          163
+        ],
+        "home-scene-space": [
+          10,
+          183,
+          350,
+          303
+        ],
+        "home-pet-target": [
+          10,
+          183,
+          130,
+          303
+        ],
+        "home-care": [
+          140,
+          183,
+          350,
+          303
+        ],
+        "home-lesson": [
+          10,
+          311,
+          350,
+          381
+        ],
+        "home-footer": [
+          10,
+          526,
+          350,
+          582
+        ],
+        "home-sections": [
+          10,
+          526,
+          96,
+          582
+        ],
+        "home-primary": [
+          104,
+          526,
+          350,
+          582
+        ]
+      },
+      "geometry": {},
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "empty-2",
+      "width": 360,
+      "height": 640,
+      "scale": 2,
+      "issues": [],
+      "boxes": {
+        "home-large-summary": [
+          0,
+          24,
+          360,
+          592
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          208
+        ],
+        "home-goal": [
+          20,
+          124,
+          340,
+          196
+        ],
+        "home-scene-space": [
+          10,
+          216,
+          350,
+          336
+        ],
+        "home-pet-target": [
+          10,
+          216,
+          130,
+          336
+        ],
+        "home-care": [
+          140,
+          216,
+          350,
+          336
+        ],
+        "home-lesson": [
+          10,
+          344,
+          350,
+          429
+        ],
+        "home-footer": [
+          10,
+          526,
+          350,
+          582
+        ],
+        "home-sections": [
+          10,
+          526,
+          96,
+          582
+        ],
+        "home-primary": [
+          104,
+          526,
+          350,
+          582
+        ]
+      },
+      "geometry": {},
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "boundary-1.19-False",
+      "width": 360,
+      "height": 640,
+      "scale": 1.19,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          360,
+          522
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          170
+        ],
+        "home-goal": [
+          20,
+          98,
+          340,
+          158
+        ],
+        "home-scene-space": [
+          10,
+          176,
+          350,
+          391
+        ],
+        "home-care": [
+          10,
+          351,
+          350,
+          391
+        ],
+        "home-pet-target": [
+          34,
+          232,
+          326,
+          353
+        ],
+        "home-lesson": [
+          10,
+          397,
+          350,
+          458
+        ],
+        "home-primary": [
+          10,
+          464,
+          350,
+          512
+        ],
+        "home-footer": [
+          10,
+          464,
+          350,
+          512
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 129.29,
+        "floorAnchorY": 345
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "boundary-1.2-False",
+      "width": 360,
+      "height": 640,
+      "scale": 1.2,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          360,
+          522
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          170
+        ],
+        "home-goal": [
+          20,
+          98,
+          340,
+          158
+        ],
+        "home-scene-space": [
+          10,
+          176,
+          350,
+          391
+        ],
+        "home-care": [
+          10,
+          351,
+          350,
+          391
+        ],
+        "home-pet-target": [
+          34,
+          232,
+          326,
+          353
+        ],
+        "home-lesson": [
+          10,
+          397,
+          350,
+          458
+        ],
+        "home-primary": [
+          10,
+          464,
+          350,
+          512
+        ],
+        "home-footer": [
+          10,
+          464,
+          350,
+          512
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 129.29,
+        "floorAnchorY": 345
+      },
+      "evidenceApkSha256": "30127ed7cb5a891d92b1322e730c3d2b6954df95631dd35945e83db70fd15795"
+    },
+    {
+      "case": "boundary-1.19-True",
+      "width": 360,
+      "height": 640,
+      "scale": 1.19,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          360,
+          522
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          191
+        ],
+        "home-goal": [
+          20,
+          98,
+          340,
+          179
+        ],
+        "home-scene-space": [
+          10,
+          197,
+          350,
+          367
+        ],
+        "home-care": [
+          10,
+          327,
+          350,
+          367
+        ],
+        "home-pet-target": [
+          34,
+          253,
+          326,
+          329
+        ],
+        "home-lesson": [
+          10,
+          373,
+          350,
+          458
+        ],
+        "home-primary": [
+          10,
+          464,
+          350,
+          512
+        ],
+        "home-footer": [
+          10,
+          464,
+          350,
+          512
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 90.24,
+        "floorAnchorY": 321
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "boundary-1.2-True",
+      "width": 360,
+      "height": 640,
+      "scale": 1.2,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          360,
+          522
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          191
+        ],
+        "home-goal": [
+          20,
+          98,
+          340,
+          179
+        ],
+        "home-scene-space": [
+          10,
+          197,
+          350,
+          367
+        ],
+        "home-care": [
+          10,
+          327,
+          350,
+          367
+        ],
+        "home-pet-target": [
+          34,
+          253,
+          326,
+          329
+        ],
+        "home-lesson": [
+          10,
+          373,
+          350,
+          458
+        ],
+        "home-primary": [
+          10,
+          464,
+          350,
+          512
+        ],
+        "home-footer": [
+          10,
+          464,
+          350,
+          512
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 90.24,
+        "floorAnchorY": 321
+      },
+      "evidenceApkSha256": "30127ed7cb5a891d92b1322e730c3d2b6954df95631dd35945e83db70fd15795"
+    },
+    {
+      "case": "appearance-pointy-plain-1",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          390,
+          729
+        ],
+        "home-finances": [
+          12,
+          36,
+          378,
+          192
+        ],
+        "home-goal": [
+          26,
+          105,
+          364,
+          180
+        ],
+        "home-scene-space": [
+          12,
+          202,
+          378,
+          579
+        ],
+        "home-pet-target": [
+          36,
+          260,
+          354,
+          529
+        ],
+        "home-care": [
+          12,
+          539,
+          378,
+          579
+        ],
+        "home-lesson": [
+          12,
+          589,
+          378,
+          657
+        ],
+        "home-primary": [
+          12,
+          667,
+          378,
+          717
+        ],
+        "home-footer": [
+          12,
+          667,
+          378,
+          717
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 243.83,
+        "floorAnchorY": 529
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "appearance-pointy-plain-2",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          390,
+          729
+        ],
+        "home-finances": [
+          12,
+          36,
+          378,
+          192
+        ],
+        "home-goal": [
+          26,
+          105,
+          364,
+          180
+        ],
+        "home-scene-space": [
+          12,
+          202,
+          378,
+          579
+        ],
+        "home-pet-target": [
+          36,
+          260,
+          354,
+          529
+        ],
+        "home-care": [
+          12,
+          539,
+          378,
+          579
+        ],
+        "home-lesson": [
+          12,
+          589,
+          378,
+          657
+        ],
+        "home-primary": [
+          12,
+          667,
+          378,
+          717
+        ],
+        "home-footer": [
+          12,
+          667,
+          378,
+          717
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 243.83,
+        "floorAnchorY": 529
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "appearance-pointy-plain-3",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          390,
+          729
+        ],
+        "home-finances": [
+          12,
+          36,
+          378,
+          192
+        ],
+        "home-goal": [
+          26,
+          105,
+          364,
+          180
+        ],
+        "home-scene-space": [
+          12,
+          202,
+          378,
+          579
+        ],
+        "home-pet-target": [
+          36,
+          260,
+          354,
+          529
+        ],
+        "home-care": [
+          12,
+          539,
+          378,
+          579
+        ],
+        "home-lesson": [
+          12,
+          589,
+          378,
+          657
+        ],
+        "home-primary": [
+          12,
+          667,
+          378,
+          717
+        ],
+        "home-footer": [
+          12,
+          667,
+          378,
+          717
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 243.83,
+        "floorAnchorY": 529
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "portrait-pointy-plain",
+      "width": 360,
+      "height": 640,
+      "scale": 2,
+      "issues": [],
+      "boxes": {
+        "home-large-summary": [
+          0,
+          24,
+          360,
+          592
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          241
+        ],
+        "home-goal": [
+          20,
+          124,
+          340,
+          229
+        ],
+        "home-scene-space": [
+          10,
+          249,
+          350,
+          369
+        ],
+        "home-pet-target": [
+          10,
+          249,
+          130,
+          369
+        ],
+        "home-care": [
+          140,
+          249,
+          350,
+          369
+        ],
+        "home-lesson": [
+          10,
+          377,
+          350,
+          462
+        ],
+        "home-footer": [
+          10,
+          526,
+          350,
+          582
+        ],
+        "home-sections": [
+          10,
+          526,
+          96,
+          582
+        ],
+        "home-primary": [
+          104,
+          526,
+          350,
+          582
+        ]
+      },
+      "geometry": {},
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "appearance-pointy-spots-1",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          390,
+          729
+        ],
+        "home-finances": [
+          12,
+          36,
+          378,
+          192
+        ],
+        "home-goal": [
+          26,
+          105,
+          364,
+          180
+        ],
+        "home-scene-space": [
+          12,
+          202,
+          378,
+          579
+        ],
+        "home-pet-target": [
+          36,
+          260,
+          354,
+          529
+        ],
+        "home-care": [
+          12,
+          539,
+          378,
+          579
+        ],
+        "home-lesson": [
+          12,
+          589,
+          378,
+          657
+        ],
+        "home-primary": [
+          12,
+          667,
+          378,
+          717
+        ],
+        "home-footer": [
+          12,
+          667,
+          378,
+          717
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 243.83,
+        "floorAnchorY": 529
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "appearance-pointy-spots-2",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          390,
+          729
+        ],
+        "home-finances": [
+          12,
+          36,
+          378,
+          192
+        ],
+        "home-goal": [
+          26,
+          105,
+          364,
+          180
+        ],
+        "home-scene-space": [
+          12,
+          202,
+          378,
+          579
+        ],
+        "home-pet-target": [
+          36,
+          260,
+          354,
+          529
+        ],
+        "home-care": [
+          12,
+          539,
+          378,
+          579
+        ],
+        "home-lesson": [
+          12,
+          589,
+          378,
+          657
+        ],
+        "home-primary": [
+          12,
+          667,
+          378,
+          717
+        ],
+        "home-footer": [
+          12,
+          667,
+          378,
+          717
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 243.83,
+        "floorAnchorY": 529
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "appearance-pointy-spots-3",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          390,
+          729
+        ],
+        "home-finances": [
+          12,
+          36,
+          378,
+          192
+        ],
+        "home-goal": [
+          26,
+          105,
+          364,
+          180
+        ],
+        "home-scene-space": [
+          12,
+          202,
+          378,
+          579
+        ],
+        "home-pet-target": [
+          36,
+          260,
+          354,
+          529
+        ],
+        "home-care": [
+          12,
+          539,
+          378,
+          579
+        ],
+        "home-lesson": [
+          12,
+          589,
+          378,
+          657
+        ],
+        "home-primary": [
+          12,
+          667,
+          378,
+          717
+        ],
+        "home-footer": [
+          12,
+          667,
+          378,
+          717
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 243.83,
+        "floorAnchorY": 529
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "portrait-pointy-spots",
+      "width": 360,
+      "height": 640,
+      "scale": 2,
+      "issues": [],
+      "boxes": {
+        "home-large-summary": [
+          0,
+          24,
+          360,
+          592
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          241
+        ],
+        "home-goal": [
+          20,
+          124,
+          340,
+          229
+        ],
+        "home-scene-space": [
+          10,
+          249,
+          350,
+          369
+        ],
+        "home-pet-target": [
+          10,
+          249,
+          130,
+          369
+        ],
+        "home-care": [
+          140,
+          249,
+          350,
+          369
+        ],
+        "home-lesson": [
+          10,
+          377,
+          350,
+          462
+        ],
+        "home-footer": [
+          10,
+          526,
+          350,
+          582
+        ],
+        "home-sections": [
+          10,
+          526,
+          96,
+          582
+        ],
+        "home-primary": [
+          104,
+          526,
+          350,
+          582
+        ]
+      },
+      "geometry": {},
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "appearance-pointy-stripes-1",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          390,
+          729
+        ],
+        "home-finances": [
+          12,
+          36,
+          378,
+          192
+        ],
+        "home-goal": [
+          26,
+          105,
+          364,
+          180
+        ],
+        "home-scene-space": [
+          12,
+          202,
+          378,
+          579
+        ],
+        "home-pet-target": [
+          36,
+          260,
+          354,
+          529
+        ],
+        "home-care": [
+          12,
+          539,
+          378,
+          579
+        ],
+        "home-lesson": [
+          12,
+          589,
+          378,
+          657
+        ],
+        "home-primary": [
+          12,
+          667,
+          378,
+          717
+        ],
+        "home-footer": [
+          12,
+          667,
+          378,
+          717
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 243.83,
+        "floorAnchorY": 529
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "appearance-pointy-stripes-2",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          390,
+          729
+        ],
+        "home-finances": [
+          12,
+          36,
+          378,
+          192
+        ],
+        "home-goal": [
+          26,
+          105,
+          364,
+          180
+        ],
+        "home-scene-space": [
+          12,
+          202,
+          378,
+          579
+        ],
+        "home-pet-target": [
+          36,
+          260,
+          354,
+          529
+        ],
+        "home-care": [
+          12,
+          539,
+          378,
+          579
+        ],
+        "home-lesson": [
+          12,
+          589,
+          378,
+          657
+        ],
+        "home-primary": [
+          12,
+          667,
+          378,
+          717
+        ],
+        "home-footer": [
+          12,
+          667,
+          378,
+          717
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 243.83,
+        "floorAnchorY": 529
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "appearance-pointy-stripes-3",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          390,
+          729
+        ],
+        "home-finances": [
+          12,
+          36,
+          378,
+          192
+        ],
+        "home-goal": [
+          26,
+          105,
+          364,
+          180
+        ],
+        "home-scene-space": [
+          12,
+          202,
+          378,
+          579
+        ],
+        "home-pet-target": [
+          36,
+          260,
+          354,
+          529
+        ],
+        "home-care": [
+          12,
+          539,
+          378,
+          579
+        ],
+        "home-lesson": [
+          12,
+          589,
+          378,
+          657
+        ],
+        "home-primary": [
+          12,
+          667,
+          378,
+          717
+        ],
+        "home-footer": [
+          12,
+          667,
+          378,
+          717
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 243.83,
+        "floorAnchorY": 529
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "portrait-pointy-stripes",
+      "width": 360,
+      "height": 640,
+      "scale": 2,
+      "issues": [],
+      "boxes": {
+        "home-large-summary": [
+          0,
+          24,
+          360,
+          592
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          241
+        ],
+        "home-goal": [
+          20,
+          124,
+          340,
+          229
+        ],
+        "home-scene-space": [
+          10,
+          249,
+          350,
+          369
+        ],
+        "home-pet-target": [
+          10,
+          249,
+          130,
+          369
+        ],
+        "home-care": [
+          140,
+          249,
+          350,
+          369
+        ],
+        "home-lesson": [
+          10,
+          377,
+          350,
+          462
+        ],
+        "home-footer": [
+          10,
+          526,
+          350,
+          582
+        ],
+        "home-sections": [
+          10,
+          526,
+          96,
+          582
+        ],
+        "home-primary": [
+          104,
+          526,
+          350,
+          582
+        ]
+      },
+      "geometry": {},
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "appearance-round-plain-1",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          390,
+          729
+        ],
+        "home-finances": [
+          12,
+          36,
+          378,
+          192
+        ],
+        "home-goal": [
+          26,
+          105,
+          364,
+          180
+        ],
+        "home-scene-space": [
+          12,
+          202,
+          378,
+          579
+        ],
+        "home-pet-target": [
+          36,
+          260,
+          354,
+          529
+        ],
+        "home-care": [
+          12,
+          539,
+          378,
+          579
+        ],
+        "home-lesson": [
+          12,
+          589,
+          378,
+          657
+        ],
+        "home-primary": [
+          12,
+          667,
+          378,
+          717
+        ],
+        "home-footer": [
+          12,
+          667,
+          378,
+          717
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 243.83,
+        "floorAnchorY": 529
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "appearance-round-plain-2",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          390,
+          729
+        ],
+        "home-finances": [
+          12,
+          36,
+          378,
+          192
+        ],
+        "home-goal": [
+          26,
+          105,
+          364,
+          180
+        ],
+        "home-scene-space": [
+          12,
+          202,
+          378,
+          579
+        ],
+        "home-pet-target": [
+          36,
+          260,
+          354,
+          529
+        ],
+        "home-care": [
+          12,
+          539,
+          378,
+          579
+        ],
+        "home-lesson": [
+          12,
+          589,
+          378,
+          657
+        ],
+        "home-primary": [
+          12,
+          667,
+          378,
+          717
+        ],
+        "home-footer": [
+          12,
+          667,
+          378,
+          717
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 243.83,
+        "floorAnchorY": 529
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "appearance-round-plain-3",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          390,
+          729
+        ],
+        "home-finances": [
+          12,
+          36,
+          378,
+          192
+        ],
+        "home-goal": [
+          26,
+          105,
+          364,
+          180
+        ],
+        "home-scene-space": [
+          12,
+          202,
+          378,
+          579
+        ],
+        "home-pet-target": [
+          36,
+          260,
+          354,
+          529
+        ],
+        "home-care": [
+          12,
+          539,
+          378,
+          579
+        ],
+        "home-lesson": [
+          12,
+          589,
+          378,
+          657
+        ],
+        "home-primary": [
+          12,
+          667,
+          378,
+          717
+        ],
+        "home-footer": [
+          12,
+          667,
+          378,
+          717
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 243.83,
+        "floorAnchorY": 529
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "portrait-round-plain",
+      "width": 360,
+      "height": 640,
+      "scale": 2,
+      "issues": [],
+      "boxes": {
+        "home-large-summary": [
+          0,
+          24,
+          360,
+          592
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          241
+        ],
+        "home-goal": [
+          20,
+          124,
+          340,
+          229
+        ],
+        "home-scene-space": [
+          10,
+          249,
+          350,
+          369
+        ],
+        "home-pet-target": [
+          10,
+          249,
+          130,
+          369
+        ],
+        "home-care": [
+          140,
+          249,
+          350,
+          369
+        ],
+        "home-lesson": [
+          10,
+          377,
+          350,
+          462
+        ],
+        "home-footer": [
+          10,
+          526,
+          350,
+          582
+        ],
+        "home-sections": [
+          10,
+          526,
+          96,
+          582
+        ],
+        "home-primary": [
+          104,
+          526,
+          350,
+          582
+        ]
+      },
+      "geometry": {},
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "appearance-round-spots-1",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          390,
+          729
+        ],
+        "home-finances": [
+          12,
+          36,
+          378,
+          192
+        ],
+        "home-goal": [
+          26,
+          105,
+          364,
+          180
+        ],
+        "home-scene-space": [
+          12,
+          202,
+          378,
+          579
+        ],
+        "home-pet-target": [
+          36,
+          260,
+          354,
+          529
+        ],
+        "home-care": [
+          12,
+          539,
+          378,
+          579
+        ],
+        "home-lesson": [
+          12,
+          589,
+          378,
+          657
+        ],
+        "home-primary": [
+          12,
+          667,
+          378,
+          717
+        ],
+        "home-footer": [
+          12,
+          667,
+          378,
+          717
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 243.83,
+        "floorAnchorY": 529
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "appearance-round-spots-2",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          390,
+          729
+        ],
+        "home-finances": [
+          12,
+          36,
+          378,
+          192
+        ],
+        "home-goal": [
+          26,
+          105,
+          364,
+          180
+        ],
+        "home-scene-space": [
+          12,
+          202,
+          378,
+          579
+        ],
+        "home-pet-target": [
+          36,
+          260,
+          354,
+          529
+        ],
+        "home-care": [
+          12,
+          539,
+          378,
+          579
+        ],
+        "home-lesson": [
+          12,
+          589,
+          378,
+          657
+        ],
+        "home-primary": [
+          12,
+          667,
+          378,
+          717
+        ],
+        "home-footer": [
+          12,
+          667,
+          378,
+          717
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 243.83,
+        "floorAnchorY": 529
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "appearance-round-spots-3",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          390,
+          729
+        ],
+        "home-finances": [
+          12,
+          36,
+          378,
+          192
+        ],
+        "home-goal": [
+          26,
+          105,
+          364,
+          180
+        ],
+        "home-scene-space": [
+          12,
+          202,
+          378,
+          579
+        ],
+        "home-pet-target": [
+          36,
+          260,
+          354,
+          529
+        ],
+        "home-care": [
+          12,
+          539,
+          378,
+          579
+        ],
+        "home-lesson": [
+          12,
+          589,
+          378,
+          657
+        ],
+        "home-primary": [
+          12,
+          667,
+          378,
+          717
+        ],
+        "home-footer": [
+          12,
+          667,
+          378,
+          717
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 243.83,
+        "floorAnchorY": 529
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "portrait-round-spots",
+      "width": 360,
+      "height": 640,
+      "scale": 2,
+      "issues": [],
+      "boxes": {
+        "home-large-summary": [
+          0,
+          24,
+          360,
+          592
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          241
+        ],
+        "home-goal": [
+          20,
+          124,
+          340,
+          229
+        ],
+        "home-scene-space": [
+          10,
+          249,
+          350,
+          369
+        ],
+        "home-pet-target": [
+          10,
+          249,
+          130,
+          369
+        ],
+        "home-care": [
+          140,
+          249,
+          350,
+          369
+        ],
+        "home-lesson": [
+          10,
+          377,
+          350,
+          462
+        ],
+        "home-footer": [
+          10,
+          526,
+          350,
+          582
+        ],
+        "home-sections": [
+          10,
+          526,
+          96,
+          582
+        ],
+        "home-primary": [
+          104,
+          526,
+          350,
+          582
+        ]
+      },
+      "geometry": {},
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "appearance-round-stripes-1",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          390,
+          729
+        ],
+        "home-finances": [
+          12,
+          36,
+          378,
+          192
+        ],
+        "home-goal": [
+          26,
+          105,
+          364,
+          180
+        ],
+        "home-scene-space": [
+          12,
+          202,
+          378,
+          579
+        ],
+        "home-pet-target": [
+          36,
+          260,
+          354,
+          529
+        ],
+        "home-care": [
+          12,
+          539,
+          378,
+          579
+        ],
+        "home-lesson": [
+          12,
+          589,
+          378,
+          657
+        ],
+        "home-primary": [
+          12,
+          667,
+          378,
+          717
+        ],
+        "home-footer": [
+          12,
+          667,
+          378,
+          717
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 243.83,
+        "floorAnchorY": 529
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "appearance-round-stripes-2",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          390,
+          729
+        ],
+        "home-finances": [
+          12,
+          36,
+          378,
+          192
+        ],
+        "home-goal": [
+          26,
+          105,
+          364,
+          180
+        ],
+        "home-scene-space": [
+          12,
+          202,
+          378,
+          579
+        ],
+        "home-pet-target": [
+          36,
+          260,
+          354,
+          529
+        ],
+        "home-care": [
+          12,
+          539,
+          378,
+          579
+        ],
+        "home-lesson": [
+          12,
+          589,
+          378,
+          657
+        ],
+        "home-primary": [
+          12,
+          667,
+          378,
+          717
+        ],
+        "home-footer": [
+          12,
+          667,
+          378,
+          717
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 243.83,
+        "floorAnchorY": 529
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "appearance-round-stripes-3",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          390,
+          729
+        ],
+        "home-finances": [
+          12,
+          36,
+          378,
+          192
+        ],
+        "home-goal": [
+          26,
+          105,
+          364,
+          180
+        ],
+        "home-scene-space": [
+          12,
+          202,
+          378,
+          579
+        ],
+        "home-pet-target": [
+          36,
+          260,
+          354,
+          529
+        ],
+        "home-care": [
+          12,
+          539,
+          378,
+          579
+        ],
+        "home-lesson": [
+          12,
+          589,
+          378,
+          657
+        ],
+        "home-primary": [
+          12,
+          667,
+          378,
+          717
+        ],
+        "home-footer": [
+          12,
+          667,
+          378,
+          717
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 243.83,
+        "floorAnchorY": 529
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "portrait-round-stripes",
+      "width": 360,
+      "height": 640,
+      "scale": 2,
+      "issues": [],
+      "boxes": {
+        "home-large-summary": [
+          0,
+          24,
+          360,
+          592
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          241
+        ],
+        "home-goal": [
+          20,
+          124,
+          340,
+          229
+        ],
+        "home-scene-space": [
+          10,
+          249,
+          350,
+          369
+        ],
+        "home-pet-target": [
+          10,
+          249,
+          130,
+          369
+        ],
+        "home-care": [
+          140,
+          249,
+          350,
+          369
+        ],
+        "home-lesson": [
+          10,
+          377,
+          350,
+          462
+        ],
+        "home-footer": [
+          10,
+          526,
+          350,
+          582
+        ],
+        "home-sections": [
+          10,
+          526,
+          96,
+          582
+        ],
+        "home-primary": [
+          104,
+          526,
+          350,
+          582
+        ]
+      },
+      "geometry": {},
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "appearance-floppy-plain-1",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          390,
+          729
+        ],
+        "home-finances": [
+          12,
+          36,
+          378,
+          192
+        ],
+        "home-goal": [
+          26,
+          105,
+          364,
+          180
+        ],
+        "home-scene-space": [
+          12,
+          202,
+          378,
+          579
+        ],
+        "home-pet-target": [
+          36,
+          260,
+          354,
+          529
+        ],
+        "home-care": [
+          12,
+          539,
+          378,
+          579
+        ],
+        "home-lesson": [
+          12,
+          589,
+          378,
+          657
+        ],
+        "home-primary": [
+          12,
+          667,
+          378,
+          717
+        ],
+        "home-footer": [
+          12,
+          667,
+          378,
+          717
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 243.83,
+        "floorAnchorY": 529
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "appearance-floppy-plain-2",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          390,
+          729
+        ],
+        "home-finances": [
+          12,
+          36,
+          378,
+          192
+        ],
+        "home-goal": [
+          26,
+          105,
+          364,
+          180
+        ],
+        "home-scene-space": [
+          12,
+          202,
+          378,
+          579
+        ],
+        "home-pet-target": [
+          36,
+          260,
+          354,
+          529
+        ],
+        "home-care": [
+          12,
+          539,
+          378,
+          579
+        ],
+        "home-lesson": [
+          12,
+          589,
+          378,
+          657
+        ],
+        "home-primary": [
+          12,
+          667,
+          378,
+          717
+        ],
+        "home-footer": [
+          12,
+          667,
+          378,
+          717
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 243.83,
+        "floorAnchorY": 529
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "appearance-floppy-plain-3",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          390,
+          729
+        ],
+        "home-finances": [
+          12,
+          36,
+          378,
+          192
+        ],
+        "home-goal": [
+          26,
+          105,
+          364,
+          180
+        ],
+        "home-scene-space": [
+          12,
+          202,
+          378,
+          579
+        ],
+        "home-pet-target": [
+          36,
+          260,
+          354,
+          529
+        ],
+        "home-care": [
+          12,
+          539,
+          378,
+          579
+        ],
+        "home-lesson": [
+          12,
+          589,
+          378,
+          657
+        ],
+        "home-primary": [
+          12,
+          667,
+          378,
+          717
+        ],
+        "home-footer": [
+          12,
+          667,
+          378,
+          717
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 243.83,
+        "floorAnchorY": 529
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "portrait-floppy-plain",
+      "width": 360,
+      "height": 640,
+      "scale": 2,
+      "issues": [],
+      "boxes": {
+        "home-large-summary": [
+          0,
+          24,
+          360,
+          592
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          241
+        ],
+        "home-goal": [
+          20,
+          124,
+          340,
+          229
+        ],
+        "home-scene-space": [
+          10,
+          249,
+          350,
+          369
+        ],
+        "home-pet-target": [
+          10,
+          249,
+          130,
+          369
+        ],
+        "home-care": [
+          140,
+          249,
+          350,
+          369
+        ],
+        "home-lesson": [
+          10,
+          377,
+          350,
+          462
+        ],
+        "home-footer": [
+          10,
+          526,
+          350,
+          582
+        ],
+        "home-sections": [
+          10,
+          526,
+          96,
+          582
+        ],
+        "home-primary": [
+          104,
+          526,
+          350,
+          582
+        ]
+      },
+      "geometry": {},
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "appearance-floppy-spots-1",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          390,
+          729
+        ],
+        "home-finances": [
+          12,
+          36,
+          378,
+          192
+        ],
+        "home-goal": [
+          26,
+          105,
+          364,
+          180
+        ],
+        "home-scene-space": [
+          12,
+          202,
+          378,
+          579
+        ],
+        "home-pet-target": [
+          36,
+          260,
+          354,
+          529
+        ],
+        "home-care": [
+          12,
+          539,
+          378,
+          579
+        ],
+        "home-lesson": [
+          12,
+          589,
+          378,
+          657
+        ],
+        "home-primary": [
+          12,
+          667,
+          378,
+          717
+        ],
+        "home-footer": [
+          12,
+          667,
+          378,
+          717
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 243.83,
+        "floorAnchorY": 529
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "appearance-floppy-spots-2",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          390,
+          729
+        ],
+        "home-finances": [
+          12,
+          36,
+          378,
+          192
+        ],
+        "home-goal": [
+          26,
+          105,
+          364,
+          180
+        ],
+        "home-scene-space": [
+          12,
+          202,
+          378,
+          579
+        ],
+        "home-pet-target": [
+          36,
+          260,
+          354,
+          529
+        ],
+        "home-care": [
+          12,
+          539,
+          378,
+          579
+        ],
+        "home-lesson": [
+          12,
+          589,
+          378,
+          657
+        ],
+        "home-primary": [
+          12,
+          667,
+          378,
+          717
+        ],
+        "home-footer": [
+          12,
+          667,
+          378,
+          717
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 243.83,
+        "floorAnchorY": 529
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "appearance-floppy-spots-3",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          390,
+          729
+        ],
+        "home-finances": [
+          12,
+          36,
+          378,
+          192
+        ],
+        "home-goal": [
+          26,
+          105,
+          364,
+          180
+        ],
+        "home-scene-space": [
+          12,
+          202,
+          378,
+          579
+        ],
+        "home-pet-target": [
+          36,
+          260,
+          354,
+          529
+        ],
+        "home-care": [
+          12,
+          539,
+          378,
+          579
+        ],
+        "home-lesson": [
+          12,
+          589,
+          378,
+          657
+        ],
+        "home-primary": [
+          12,
+          667,
+          378,
+          717
+        ],
+        "home-footer": [
+          12,
+          667,
+          378,
+          717
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 243.83,
+        "floorAnchorY": 529
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "portrait-floppy-spots",
+      "width": 360,
+      "height": 640,
+      "scale": 2,
+      "issues": [],
+      "boxes": {
+        "home-large-summary": [
+          0,
+          24,
+          360,
+          592
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          241
+        ],
+        "home-goal": [
+          20,
+          124,
+          340,
+          229
+        ],
+        "home-scene-space": [
+          10,
+          249,
+          350,
+          369
+        ],
+        "home-pet-target": [
+          10,
+          249,
+          130,
+          369
+        ],
+        "home-care": [
+          140,
+          249,
+          350,
+          369
+        ],
+        "home-lesson": [
+          10,
+          377,
+          350,
+          462
+        ],
+        "home-footer": [
+          10,
+          526,
+          350,
+          582
+        ],
+        "home-sections": [
+          10,
+          526,
+          96,
+          582
+        ],
+        "home-primary": [
+          104,
+          526,
+          350,
+          582
+        ]
+      },
+      "geometry": {},
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "appearance-floppy-stripes-1",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          390,
+          729
+        ],
+        "home-finances": [
+          12,
+          36,
+          378,
+          192
+        ],
+        "home-goal": [
+          26,
+          105,
+          364,
+          180
+        ],
+        "home-scene-space": [
+          12,
+          202,
+          378,
+          579
+        ],
+        "home-pet-target": [
+          36,
+          260,
+          354,
+          529
+        ],
+        "home-care": [
+          12,
+          539,
+          378,
+          579
+        ],
+        "home-lesson": [
+          12,
+          589,
+          378,
+          657
+        ],
+        "home-primary": [
+          12,
+          667,
+          378,
+          717
+        ],
+        "home-footer": [
+          12,
+          667,
+          378,
+          717
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 243.83,
+        "floorAnchorY": 529
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "appearance-floppy-stripes-2",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          390,
+          729
+        ],
+        "home-finances": [
+          12,
+          36,
+          378,
+          192
+        ],
+        "home-goal": [
+          26,
+          105,
+          364,
+          180
+        ],
+        "home-scene-space": [
+          12,
+          202,
+          378,
+          579
+        ],
+        "home-pet-target": [
+          36,
+          260,
+          354,
+          529
+        ],
+        "home-care": [
+          12,
+          539,
+          378,
+          579
+        ],
+        "home-lesson": [
+          12,
+          589,
+          378,
+          657
+        ],
+        "home-primary": [
+          12,
+          667,
+          378,
+          717
+        ],
+        "home-footer": [
+          12,
+          667,
+          378,
+          717
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 243.83,
+        "floorAnchorY": 529
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "appearance-floppy-stripes-3",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          390,
+          729
+        ],
+        "home-finances": [
+          12,
+          36,
+          378,
+          192
+        ],
+        "home-goal": [
+          26,
+          105,
+          364,
+          180
+        ],
+        "home-scene-space": [
+          12,
+          202,
+          378,
+          579
+        ],
+        "home-pet-target": [
+          36,
+          260,
+          354,
+          529
+        ],
+        "home-care": [
+          12,
+          539,
+          378,
+          579
+        ],
+        "home-lesson": [
+          12,
+          589,
+          378,
+          657
+        ],
+        "home-primary": [
+          12,
+          667,
+          378,
+          717
+        ],
+        "home-footer": [
+          12,
+          667,
+          378,
+          717
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 243.83,
+        "floorAnchorY": 529
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "portrait-floppy-stripes",
+      "width": 360,
+      "height": 640,
+      "scale": 2,
+      "issues": [],
+      "boxes": {
+        "home-large-summary": [
+          0,
+          24,
+          360,
+          592
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          241
+        ],
+        "home-goal": [
+          20,
+          124,
+          340,
+          229
+        ],
+        "home-scene-space": [
+          10,
+          249,
+          350,
+          369
+        ],
+        "home-pet-target": [
+          10,
+          249,
+          130,
+          369
+        ],
+        "home-care": [
+          140,
+          249,
+          350,
+          369
+        ],
+        "home-lesson": [
+          10,
+          377,
+          350,
+          462
+        ],
+        "home-footer": [
+          10,
+          526,
+          350,
+          582
+        ],
+        "home-sections": [
+          10,
+          526,
+          96,
+          582
+        ],
+        "home-primary": [
+          104,
+          526,
+          350,
+          582
+        ]
+      },
+      "geometry": {},
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "short-stage1",
+      "width": 360,
+      "height": 640,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          360,
+          525
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          157
+        ],
+        "home-goal": [
+          20,
+          90,
+          340,
+          145
+        ],
+        "home-scene-space": [
+          10,
+          163,
+          350,
+          397
+        ],
+        "home-care": [
+          10,
+          357,
+          350,
+          397
+        ],
+        "home-pet-target": [
+          34,
+          219,
+          326,
+          359
+        ],
+        "home-lesson": [
+          10,
+          403,
+          350,
+          461
+        ],
+        "home-primary": [
+          10,
+          467,
+          350,
+          515
+        ],
+        "home-footer": [
+          10,
+          467,
+          350,
+          515
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 145.77,
+        "floorAnchorY": 351
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "short-stage3",
+      "width": 360,
+      "height": 640,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          360,
+          525
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          157
+        ],
+        "home-goal": [
+          20,
+          90,
+          340,
+          145
+        ],
+        "home-scene-space": [
+          10,
+          163,
+          350,
+          397
+        ],
+        "home-care": [
+          10,
+          357,
+          350,
+          397
+        ],
+        "home-pet-target": [
+          34,
+          219,
+          326,
+          359
+        ],
+        "home-lesson": [
+          10,
+          403,
+          350,
+          461
+        ],
+        "home-primary": [
+          10,
+          467,
+          350,
+          515
+        ],
+        "home-footer": [
+          10,
+          467,
+          350,
+          515
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 145.77,
+        "floorAnchorY": 351
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "goal-GL-01-1",
+      "width": 360,
+      "height": 640,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          360,
+          525
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          157
+        ],
+        "home-goal": [
+          20,
+          90,
+          340,
+          145
+        ],
+        "home-scene-space": [
+          10,
+          163,
+          350,
+          397
+        ],
+        "home-care": [
+          10,
+          357,
+          350,
+          397
+        ],
+        "home-pet-target": [
+          34,
+          219,
+          326,
+          359
+        ],
+        "home-lesson": [
+          10,
+          403,
+          350,
+          461
+        ],
+        "home-primary": [
+          10,
+          467,
+          350,
+          515
+        ],
+        "home-footer": [
+          10,
+          467,
+          350,
+          515
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 145.77,
+        "floorAnchorY": 351
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "goal-GL-01-2",
+      "width": 360,
+      "height": 640,
+      "scale": 2,
+      "issues": [],
+      "boxes": {
+        "home-large-summary": [
+          0,
+          24,
+          360,
+          592
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          241
+        ],
+        "home-goal": [
+          20,
+          124,
+          340,
+          229
+        ],
+        "home-scene-space": [
+          10,
+          249,
+          350,
+          369
+        ],
+        "home-pet-target": [
+          10,
+          249,
+          130,
+          369
+        ],
+        "home-care": [
+          140,
+          249,
+          350,
+          369
+        ],
+        "home-lesson": [
+          10,
+          377,
+          350,
+          462
+        ],
+        "home-footer": [
+          10,
+          526,
+          350,
+          582
+        ],
+        "home-sections": [
+          10,
+          526,
+          96,
+          582
+        ],
+        "home-primary": [
+          104,
+          526,
+          350,
+          582
+        ]
+      },
+      "geometry": {},
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "goal-GL-02-1",
+      "width": 360,
+      "height": 640,
+      "scale": 1,
+      "issues": [],
+      "boxes": {
+        "home-v42": [
+          0,
+          24,
+          360,
+          525
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          157
+        ],
+        "home-goal": [
+          20,
+          90,
+          340,
+          145
+        ],
+        "home-scene-space": [
+          10,
+          163,
+          350,
+          397
+        ],
+        "home-care": [
+          10,
+          357,
+          350,
+          397
+        ],
+        "home-pet-target": [
+          34,
+          219,
+          326,
+          359
+        ],
+        "home-lesson": [
+          10,
+          403,
+          350,
+          461
+        ],
+        "home-primary": [
+          10,
+          467,
+          350,
+          515
+        ],
+        "home-footer": [
+          10,
+          467,
+          350,
+          515
+        ]
+      },
+      "geometry": {
+        "stage2SilhouetteHeight": 145.77,
+        "floorAnchorY": 351
+      },
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    },
+    {
+      "case": "goal-GL-02-2",
+      "width": 360,
+      "height": 640,
+      "scale": 2,
+      "issues": [],
+      "boxes": {
+        "home-large-summary": [
+          0,
+          24,
+          360,
+          592
+        ],
+        "home-finances": [
+          10,
+          34,
+          350,
+          241
+        ],
+        "home-goal": [
+          20,
+          124,
+          340,
+          229
+        ],
+        "home-scene-space": [
+          10,
+          249,
+          350,
+          369
+        ],
+        "home-pet-target": [
+          10,
+          249,
+          130,
+          369
+        ],
+        "home-care": [
+          140,
+          249,
+          350,
+          369
+        ],
+        "home-lesson": [
+          10,
+          377,
+          350,
+          462
+        ],
+        "home-footer": [
+          10,
+          526,
+          350,
+          582
+        ],
+        "home-sections": [
+          10,
+          526,
+          96,
+          582
+        ],
+        "home-primary": [
+          104,
+          526,
+          350,
+          582
+        ]
+      },
+      "geometry": {},
+      "evidenceApkSha256": "65538dacfde22f3049e9827e0a6cdf14c22afe85fbfa186fd5569acebe0d5e3c"
+    }
+  ]
+}

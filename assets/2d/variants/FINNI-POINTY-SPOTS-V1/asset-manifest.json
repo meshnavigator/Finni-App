@@ -1,0 +1,160 @@
+{
+  "packageId": "FINNI-POINTY-SPOTS-V1",
+  "artStatus": "owner-accepted-2026-09-25",
+  "integrationScope": "pointy/spots only; other seven unapproved combinations not covered",
+  "appearance": {
+    "shapeId": "pointy",
+    "patternId": "spots"
+  },
+  "canvas": [
+    941,
+    1672
+  ],
+  "origin": [
+    0,
+    0
+  ],
+  "feetAnchor": [
+    470,
+    1272
+  ],
+  "stageScales": [
+    0.86,
+    1,
+    1.12
+  ],
+  "runtimeFrames": [
+    "neutral",
+    "blink"
+  ],
+  "neutralExportLayerOrder": [
+    "room-base",
+    "pet-back",
+    "pet-body",
+    "pet-pattern",
+    "pet-ear-shape",
+    "pet-face",
+    "pet-expression",
+    "pet-accessory",
+    "room-foreground"
+  ],
+  "source": {
+    "approvedCandidate": "S8-001-anatomy-spots-v2",
+    "approvedNeutralSha256": "807b6dcb362b6b18037cfad6f115764287ca8453b44fb98ee79dcef242b78d61",
+    "originalNeutralSha256": "8b2932caa23b99ae0d6575105940cda70858619f32333d564847d9b0dcdb6cc0",
+    "originalBlinkSha256": "2797ab29e3d6b91d4342f80a71c892a574751513833c569c53e7f8c077b51905",
+    "oraSha256": "ab3ce346bc3a827807089539f3594d04592fd65a443ce683a1c260cb6947d2d4"
+  },
+  "verification": {
+    "neutralDifferenceFromApproved": 0,
+    "blinkDifferenceOutsideCoat": 0,
+    "blinkAlphaDifference": 0,
+    "changedCoatPixelCount": 31013
+  },
+  "assets": [
+    {
+      "path": "neutral.png",
+      "sha256": "807b6dcb362b6b18037cfad6f115764287ca8453b44fb98ee79dcef242b78d61",
+      "dimensions": [
+        941,
+        1672
+      ]
+    },
+    {
+      "path": "blink.png",
+      "sha256": "f85c4044cec4ed0b53ed5c9210d6fbacbed67edbf61c5758ea74f6ca06c53355",
+      "dimensions": [
+        941,
+        1672
+      ]
+    },
+    {
+      "path": "preview.png",
+      "sha256": "a94ce2a05e444a298ca249c3bfc4f629e6fcf92d0175c15843899c15e264df6c",
+      "dimensions": [
+        490,
+        620
+      ]
+    },
+    {
+      "path": "plain-preview.png",
+      "sha256": "3d061824b7d3f1df2dffbb80151c45349ef7c7195dd82770ad850452c65460c2",
+      "dimensions": [
+        490,
+        620
+      ]
+    },
+    {
+      "path": "layers/room-base.png",
+      "sha256": "4037569a92819890a5e68619a54f6c3b27129e72ebbe0fa67c9464f0b8651c1f",
+      "dimensions": [
+        941,
+        1672
+      ]
+    },
+    {
+      "path": "layers/pet-back.png",
+      "sha256": "cb95c50d18b76aad697e10eebe456cb89f4b87ab9bb2ed47d99ca58e84c25d47",
+      "dimensions": [
+        941,
+        1672
+      ]
+    },
+    {
+      "path": "layers/pet-body.png",
+      "sha256": "37bd359611f9a1f25e5b72fdd059b2182a1c4237a9952d54f8361af81e694e97",
+      "dimensions": [
+        941,
+        1672
+      ]
+    },
+    {
+      "path": "layers/pet-pattern.png",
+      "sha256": "89adcfa598ebed0b1f435cad625c162267ef54431ef1fe4fd21a9aa26e31f083",
+      "dimensions": [
+        941,
+        1672
+      ]
+    },
+    {
+      "path": "layers/pet-ear-shape.png",
+      "sha256": "39afce606b66b70fc388758892e36fd704560431b5c744f4e1bf6069a95309c6",
+      "dimensions": [
+        941,
+        1672
+      ]
+    },
+    {
+      "path": "layers/pet-face.png",
+      "sha256": "9495265c165c66ece83c415c63490b404d9f8280b386549a1dc21f7562a0ca88",
+      "dimensions": [
+        941,
+        1672
+      ]
+    },
+    {
+      "path": "layers/pet-expression.png",
+      "sha256": "89adcfa598ebed0b1f435cad625c162267ef54431ef1fe4fd21a9aa26e31f083",
+      "dimensions": [
+        941,
+        1672
+      ]
+    },
+    {
+      "path": "layers/pet-accessory.png",
+      "sha256": "6fd4d6d0ec71993f33daf64a925a43b103c2825a6fd6e95133d5a3911fd3f88a",
+      "dimensions": [
+        941,
+        1672
+      ]
+    },
+    {
+      "path": "layers/room-foreground.png",
+      "sha256": "89adcfa598ebed0b1f435cad625c162267ef54431ef1fe4fd21a9aa26e31f083",
+      "dimensions": [
+        941,
+        1672
+      ]
+    }
+  ]
+}

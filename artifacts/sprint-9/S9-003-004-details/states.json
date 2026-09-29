@@ -1,0 +1,109 @@
+{
+  "apkSha256": "a2341a9a00b75b99c7150c6d6cf9d1149c807a8382d29346d0df908e542deee0",
+  "checks": [
+    {
+      "case": "catalog-storage-error-visible",
+      "pass": true
+    },
+    {
+      "case": "catalog-storage-failure-money-unchanged",
+      "pass": true
+    },
+    {
+      "case": "actual-corrupt-database-error-scrollable",
+      "pass": true
+    },
+    {
+      "case": "onboarding-create-profile",
+      "pass": true
+    },
+    {
+      "case": "draft-plan-warning-explicit-confirmation",
+      "pass": true
+    },
+    {
+      "case": "savings-invalid-transfer-visible",
+      "pass": true
+    }
+  ],
+  "screens": [
+    {
+      "name": "catalog-storage-error-200",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "error-wallet",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "boot-error-200",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "boot-error-200-actions",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "onboarding-412",
+      "width": 412,
+      "height": 915,
+      "fontScale": 1
+    },
+    {
+      "name": "onboarding-200",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "pet-create-200",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "profile-created-200",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "draft-plan-200",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "draft-warning-200",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "draft-confirmed-200",
+      "width": 360,
+      "height": 640,
+      "fontScale": 2
+    },
+    {
+      "name": "savings-empty-goal",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "savings-transfer-error",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    }
+  ]
+}

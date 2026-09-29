@@ -1,0 +1,319 @@
+{
+  "status": "PASS",
+  "appearances": 9,
+  "expressions": 3,
+  "appearanceStageCombinations": 27,
+  "renderChecks": 81,
+  "exportLayers": 243,
+  "editableOra": 9,
+  "happyInspiredDistinctness": [
+    {
+      "appearance": "pointy-plain",
+      "faceMeanDifference": 30.51
+    },
+    {
+      "appearance": "pointy-spots",
+      "faceMeanDifference": 30.51
+    },
+    {
+      "appearance": "pointy-stripes",
+      "faceMeanDifference": 30.51
+    },
+    {
+      "appearance": "round-plain",
+      "faceMeanDifference": 30.81
+    },
+    {
+      "appearance": "round-spots",
+      "faceMeanDifference": 30.81
+    },
+    {
+      "appearance": "round-stripes",
+      "faceMeanDifference": 30.81
+    },
+    {
+      "appearance": "floppy-plain",
+      "faceMeanDifference": 30.51
+    },
+    {
+      "appearance": "floppy-spots",
+      "faceMeanDifference": 30.51
+    },
+    {
+      "appearance": "floppy-stripes",
+      "faceMeanDifference": 30.51
+    }
+  ],
+  "frames": [
+    {
+      "appearance": "pointy-plain",
+      "expression": "happy",
+      "changedBounds": [
+        384,
+        917,
+        523,
+        1020
+      ]
+    },
+    {
+      "appearance": "pointy-plain",
+      "expression": "thoughtful",
+      "changedBounds": [
+        337,
+        822,
+        566,
+        1020
+      ]
+    },
+    {
+      "appearance": "pointy-plain",
+      "expression": "inspired",
+      "changedBounds": [
+        337,
+        822,
+        566,
+        1020
+      ]
+    },
+    {
+      "appearance": "pointy-spots",
+      "expression": "happy",
+      "changedBounds": [
+        384,
+        917,
+        523,
+        1020
+      ]
+    },
+    {
+      "appearance": "pointy-spots",
+      "expression": "thoughtful",
+      "changedBounds": [
+        337,
+        822,
+        566,
+        1020
+      ]
+    },
+    {
+      "appearance": "pointy-spots",
+      "expression": "inspired",
+      "changedBounds": [
+        337,
+        822,
+        566,
+        1020
+      ]
+    },
+    {
+      "appearance": "pointy-stripes",
+      "expression": "happy",
+      "changedBounds": [
+        384,
+        917,
+        523,
+        1020
+      ]
+    },
+    {
+      "appearance": "pointy-stripes",
+      "expression": "thoughtful",
+      "changedBounds": [
+        337,
+        822,
+        566,
+        1020
+      ]
+    },
+    {
+      "appearance": "pointy-stripes",
+      "expression": "inspired",
+      "changedBounds": [
+        337,
+        822,
+        566,
+        1020
+      ]
+    },
+    {
+      "appearance": "round-plain",
+      "expression": "happy",
+      "changedBounds": [
+        384,
+        917,
+        523,
+        1020
+      ]
+    },
+    {
+      "appearance": "round-plain",
+      "expression": "thoughtful",
+      "changedBounds": [
+        341,
+        822,
+        563,
+        1020
+      ]
+    },
+    {
+      "appearance": "round-plain",
+      "expression": "inspired",
+      "changedBounds": [
+        341,
+        822,
+        563,
+        1020
+      ]
+    },
+    {
+      "appearance": "round-spots",
+      "expression": "happy",
+      "changedBounds": [
+        384,
+        917,
+        523,
+        1020
+      ]
+    },
+    {
+      "appearance": "round-spots",
+      "expression": "thoughtful",
+      "changedBounds": [
+        341,
+        822,
+        563,
+        1020
+      ]
+    },
+    {
+      "appearance": "round-spots",
+      "expression": "inspired",
+      "changedBounds": [
+        341,
+        822,
+        563,
+        1020
+      ]
+    },
+    {
+      "appearance": "round-stripes",
+      "expression": "happy",
+      "changedBounds": [
+        384,
+        917,
+        523,
+        1020
+      ]
+    },
+    {
+      "appearance": "round-stripes",
+      "expression": "thoughtful",
+      "changedBounds": [
+        341,
+        822,
+        563,
+        1020
+      ]
+    },
+    {
+      "appearance": "round-stripes",
+      "expression": "inspired",
+      "changedBounds": [
+        341,
+        822,
+        563,
+        1020
+      ]
+    },
+    {
+      "appearance": "floppy-plain",
+      "expression": "happy",
+      "changedBounds": [
+        384,
+        917,
+        523,
+        1020
+      ]
+    },
+    {
+      "appearance": "floppy-plain",
+      "expression": "thoughtful",
+      "changedBounds": [
+        337,
+        822,
+        566,
+        1020
+      ]
+    },
+    {
+      "appearance": "floppy-plain",
+      "expression": "inspired",
+      "changedBounds": [
+        337,
+        822,
+        566,
+        1020
+      ]
+    },
+    {
+      "appearance": "floppy-spots",
+      "expression": "happy",
+      "changedBounds": [
+        384,
+        917,
+        523,
+        1020
+      ]
+    },
+    {
+      "appearance": "floppy-spots",
+      "expression": "thoughtful",
+      "changedBounds": [
+        337,
+        822,
+        566,
+        1020
+      ]
+    },
+    {
+      "appearance": "floppy-spots",
+      "expression": "inspired",
+      "changedBounds": [
+        337,
+        822,
+        566,
+        1020
+      ]
+    },
+    {
+      "appearance": "floppy-stripes",
+      "expression": "happy",
+      "changedBounds": [
+        384,
+        917,
+        523,
+        1020
+      ]
+    },
+    {
+      "appearance": "floppy-stripes",
+      "expression": "thoughtful",
+      "changedBounds": [
+        337,
+        822,
+        566,
+        1020
+      ]
+    },
+    {
+      "appearance": "floppy-stripes",
+      "expression": "inspired",
+      "changedBounds": [
+        337,
+        822,
+        566,
+        1020
+      ]
+    }
+  ]
+}

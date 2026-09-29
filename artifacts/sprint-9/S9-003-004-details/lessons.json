@@ -1,0 +1,387 @@
+{
+  "apkSha256": "9aa0c24ee61a72ac9fe3075ef8baa19757eda64c61f653f38eb41979aa910187",
+  "checks": [
+    {
+      "case": "LS-B01-complete",
+      "pass": true
+    },
+    {
+      "case": "LS-B01-history-reopen",
+      "pass": true
+    },
+    {
+      "case": "LS-B02-complete",
+      "pass": true
+    },
+    {
+      "case": "LS-B02-history-reopen",
+      "pass": true
+    },
+    {
+      "case": "LS-B03-complete",
+      "pass": true
+    },
+    {
+      "case": "LS-B03-history-reopen",
+      "pass": true
+    },
+    {
+      "case": "LS-P01-complete",
+      "pass": true
+    },
+    {
+      "case": "LS-P01-history-reopen",
+      "pass": true
+    },
+    {
+      "case": "LS-P02-complete",
+      "pass": true
+    },
+    {
+      "case": "LS-P02-history-reopen",
+      "pass": true
+    },
+    {
+      "case": "LS-P03-complete",
+      "pass": true
+    },
+    {
+      "case": "LS-P03-history-reopen",
+      "pass": true
+    },
+    {
+      "case": "LS-S01-complete",
+      "pass": true
+    },
+    {
+      "case": "LS-S01-history-reopen",
+      "pass": true
+    },
+    {
+      "case": "LS-S02-complete",
+      "pass": true
+    },
+    {
+      "case": "LS-S02-history-reopen",
+      "pass": true
+    },
+    {
+      "case": "eight-completions-only-one-reward-wallet120",
+      "pass": true
+    }
+  ],
+  "screens": [
+    {
+      "name": "LS-B01-intro",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-B01-solution",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-B01-evaluated",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-B01-explanation",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-B01-completed",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-B01-history",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-B02-intro",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-B02-solution",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-B02-evaluated",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-B02-explanation",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-B02-completed",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-B02-history",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-B03-intro",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-B03-selected",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-B03-solution",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-B03-evaluated",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-B03-explanation",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-B03-completed",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-B03-history",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-P01-intro",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-P01-intro",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-P01-solution",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-P01-evaluated",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-P01-explanation",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-P01-completed",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-P01-history",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-P02-intro",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-P02-solution",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-P02-evaluated",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-P02-explanation",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-P02-completed",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-P02-history",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-P03-intro",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-P03-selected",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-P03-solution",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-P03-evaluated",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-P03-explanation",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-P03-completed",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-P03-history",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-S01-intro",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-S01-solution",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-S01-evaluated",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-S01-explanation",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-S01-completed",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-S01-history",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-S02-intro",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-S02-solution",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-S02-evaluated",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-S02-explanation",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-S02-completed",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "LS-S02-history",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    },
+    {
+      "name": "lessons-wallet",
+      "width": 390,
+      "height": 844,
+      "fontScale": 1
+    }
+  ]
+}

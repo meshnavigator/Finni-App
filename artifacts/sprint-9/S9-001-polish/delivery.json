@@ -1,0 +1,39 @@
+{
+  "apkSha256": "ef3e6f6fb07268627ad328946504666056153930bdd4664f134d88c75971fc35",
+  "homeSourceSha256": "2045fa6e3e2889dbc863626b79506be35cb28305abee8dbc8b9377dd3268ca29",
+  "checks": [
+    {
+      "case": "ordinary",
+      "pass": true
+    },
+    {
+      "case": "small",
+      "pass": true
+    },
+    {
+      "case": "large",
+      "pass": true
+    },
+    {
+      "case": "large-stress",
+      "pass": true
+    },
+    {
+      "case": "empty",
+      "pass": true
+    },
+    {
+      "case": "empty-small",
+      "pass": true
+    },
+    {
+      "case": "short-119",
+      "pass": true
+    },
+    {
+      "case": "short-119-stress",
+      "pass": true
+    }
+  ],
+  "bundledJavascript": true
+}

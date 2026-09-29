@@ -1,0 +1,204 @@
+{
+  "apkSha256": "a10676b064c50173cc10f16bb4c28f63eb025fcd324fcdb50e035773730bd804",
+  "results": [
+    {
+      "case": "ordinary",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "issues": []
+    },
+    {
+      "case": "small",
+      "width": 360,
+      "height": 640,
+      "scale": 1,
+      "issues": []
+    },
+    {
+      "case": "large",
+      "width": 360,
+      "height": 640,
+      "scale": 2,
+      "issues": []
+    },
+    {
+      "case": "large-stress",
+      "width": 360,
+      "height": 640,
+      "scale": 2,
+      "issues": []
+    },
+    {
+      "case": "stress-360-1",
+      "width": 360,
+      "height": 640,
+      "scale": 1,
+      "issues": []
+    },
+    {
+      "case": "stress-360-1.5",
+      "width": 360,
+      "height": 640,
+      "scale": 1.5,
+      "issues": []
+    },
+    {
+      "case": "stress-360-2",
+      "width": 360,
+      "height": 640,
+      "scale": 2,
+      "issues": []
+    },
+    {
+      "case": "stress-390-1",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "issues": []
+    },
+    {
+      "case": "stress-390-1.5",
+      "width": 390,
+      "height": 844,
+      "scale": 1.5,
+      "issues": []
+    },
+    {
+      "case": "stress-390-2",
+      "width": 390,
+      "height": 844,
+      "scale": 2,
+      "issues": []
+    },
+    {
+      "case": "stress-412-1",
+      "width": 412,
+      "height": 915,
+      "scale": 1,
+      "issues": []
+    },
+    {
+      "case": "stress-412-1.5",
+      "width": 412,
+      "height": 915,
+      "scale": 1.5,
+      "issues": []
+    },
+    {
+      "case": "stress-412-2",
+      "width": 412,
+      "height": 915,
+      "scale": 2,
+      "issues": []
+    },
+    {
+      "case": "DRAFT",
+      "width": 360,
+      "height": 640,
+      "scale": 2,
+      "issues": []
+    },
+    {
+      "case": "READY",
+      "width": 360,
+      "height": 640,
+      "scale": 2,
+      "issues": []
+    },
+    {
+      "case": "WAITING",
+      "width": 360,
+      "height": 640,
+      "scale": 2,
+      "issues": []
+    },
+    {
+      "case": "empty",
+      "width": 360,
+      "height": 640,
+      "scale": 2,
+      "issues": []
+    },
+    {
+      "case": "empty-small",
+      "width": 360,
+      "height": 640,
+      "scale": 1,
+      "issues": []
+    },
+    {
+      "case": "small-stage1",
+      "width": 360,
+      "height": 640,
+      "scale": 1,
+      "issues": []
+    },
+    {
+      "case": "small-stage3",
+      "width": 360,
+      "height": 640,
+      "scale": 1,
+      "issues": []
+    },
+    {
+      "case": "ordinary-stage3",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "issues": []
+    },
+    {
+      "case": "large-stage3",
+      "width": 360,
+      "height": 640,
+      "scale": 2,
+      "issues": []
+    },
+    {
+      "case": "smoke-home",
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "issues": []
+    },
+    {
+      "case": "route-room-object-OBJ-PLANNER",
+      "issues": []
+    },
+    {
+      "case": "route-room-object-OBJ-CARE",
+      "issues": []
+    },
+    {
+      "case": "route-room-object-OBJ-CHEST",
+      "issues": []
+    },
+    {
+      "case": "route-home-goal",
+      "issues": []
+    },
+    {
+      "case": "route-Прогресс",
+      "issues": []
+    },
+    {
+      "case": "route-Для\nвзрослого",
+      "issues": []
+    },
+    {
+      "case": "route-Как играть",
+      "issues": []
+    },
+    {
+      "case": "navigation-keeps-visible-wallet",
+      "available": 100,
+      "savings": 0,
+      "issues": []
+    },
+    {
+      "case": "modal-back-isolation",
+      "issues": []
+    }
+  ]
+}

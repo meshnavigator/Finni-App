@@ -1,0 +1,12 @@
+{
+  "src\\ui\\AppRoot.tsx": "fdd0f4096de85ef623381119f613611a3698a9dffebe4a695dfe945c9213ac06",
+  "src\\ui\\HomeScreen.tsx": "146b6027cab0df92c0764096d343cc5a9189dcf5e491be139b6681964a671f7f",
+  "src\\ui\\BudgetPlanScreen.tsx": "fc1fb157ef849c598a6f59b4c574b1c7a10ec934dcc339b96f1083775eff999e",
+  "src\\ui\\ShopScreen.tsx": "ff30abe281d54b7b82a81cee2ff49827ee93aa00383910f1b5823cea6343913b",
+  "src\\ui\\SavingsScreen.tsx": "a812f8a4461b7f6a5553ae24a0d1fcd061bbd04863213cac3ed09cbae95bede4",
+  "tests\\profile-ui.test.mjs": "904679ef5653c5be11b631082911b624c05ddbe9e5922d0ab6d03975df02daa7",
+  "tests\\finni-home-scene.test.mjs": "479cd05fb0a4c43022f9f4eacab7d7f54022502088e75a09b48ea23996c48621",
+  "src\\ui\\root-navigation.ts": "69ede0195c0b108c4582e4601041a74921450b6cdde0763c9aaca2e90fcf7f12",
+  "src\\ui\\RootNavigation.tsx": "5478b7194d396fe1924b689ed2e719c9877de40eb01f8a521991f6b7039213f0",
+  "tests\\root-navigation.test.mjs": "f7723faad8346b28179679a77e5522fccf4cff29479bd14c7091cd952cf262dd"
+}

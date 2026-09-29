@@ -1,0 +1,126 @@
+{
+  "packageId": "S8-001-NEUTRAL-LAYER-PROTOTYPE",
+  "status": "art-review-prototype-not-runtime",
+  "sourcePackage": "FINNI-2D-MASTER-V1",
+  "sourceHashes": {
+    "pet_neutral_canvas_v1.png": "8b2932caa23b99ae0d6575105940cda70858619f32333d564847d9b0dcdb6cc0",
+    "room_clean_v1.png": "2c76a1e29090e61de615c5e228bf309d34016f89aa74cac9ea1b990821ac6140"
+  },
+  "canvas": [
+    941,
+    1672
+  ],
+  "feetAnchor": [
+    470,
+    1272
+  ],
+  "provisionalAppearance": "pointy/plain",
+  "expression": "neutral",
+  "layerOrderBackToFront": [
+    "room-base",
+    "pet-back",
+    "pet-body",
+    "pet-pattern",
+    "pet-ear-shape",
+    "pet-face",
+    "pet-expression",
+    "pet-accessory",
+    "room-foreground"
+  ],
+  "visiblePixelDifferencesFromAcceptedNeutral": 0,
+  "emptyLayers": [
+    "pet-pattern",
+    "pet-expression",
+    "room-foreground"
+  ],
+  "ora": {
+    "path": "source/finni_neutral_layers_prototype.ora",
+    "sha256": "f5d1a37c85842896b9de6793126067ffff36f82e04e124e094e6807590cb226d"
+  },
+  "layers": [
+    {
+      "name": "room-base",
+      "path": "layers/room-base.png",
+      "sha256": "4037569a92819890a5e68619a54f6c3b27129e72ebbe0fa67c9464f0b8651c1f",
+      "alphaBounds": [
+        0,
+        0,
+        941,
+        1672
+      ]
+    },
+    {
+      "name": "pet-back",
+      "path": "layers/pet-back.png",
+      "sha256": "cb95c50d18b76aad697e10eebe456cb89f4b87ab9bb2ed47d99ca58e84c25d47",
+      "alphaBounds": [
+        541,
+        1007,
+        703,
+        1237
+      ]
+    },
+    {
+      "name": "pet-body",
+      "path": "layers/pet-body.png",
+      "sha256": "47ab300ef219d8a537c14c0a004421bb12d1d073719006dbb19bc99db9f07405",
+      "alphaBounds": [
+        210,
+        954,
+        620,
+        1264
+      ]
+    },
+    {
+      "name": "pet-pattern",
+      "path": "layers/pet-pattern.png",
+      "sha256": "89adcfa598ebed0b1f435cad625c162267ef54431ef1fe4fd21a9aa26e31f083",
+      "alphaBounds": null
+    },
+    {
+      "name": "pet-ear-shape",
+      "path": "layers/pet-ear-shape.png",
+      "sha256": "39afce606b66b70fc388758892e36fd704560431b5c744f4e1bf6069a95309c6",
+      "alphaBounds": [
+        298,
+        720,
+        641,
+        941
+      ]
+    },
+    {
+      "name": "pet-face",
+      "path": "layers/pet-face.png",
+      "sha256": "9495265c165c66ece83c415c63490b404d9f8280b386549a1dc21f7562a0ca88",
+      "alphaBounds": [
+        272,
+        720,
+        714,
+        1030
+      ]
+    },
+    {
+      "name": "pet-expression",
+      "path": "layers/pet-expression.png",
+      "sha256": "89adcfa598ebed0b1f435cad625c162267ef54431ef1fe4fd21a9aa26e31f083",
+      "alphaBounds": null
+    },
+    {
+      "name": "pet-accessory",
+      "path": "layers/pet-accessory.png",
+      "sha256": "6fd4d6d0ec71993f33daf64a925a43b103c2825a6fd6e95133d5a3911fd3f88a",
+      "alphaBounds": [
+        357,
+        1007,
+        519,
+        1093
+      ]
+    },
+    {
+      "name": "room-foreground",
+      "path": "layers/room-foreground.png",
+      "sha256": "89adcfa598ebed0b1f435cad625c162267ef54431ef1fe4fd21a9aa26e31f083",
+      "alphaBounds": null
+    }
+  ]
+}

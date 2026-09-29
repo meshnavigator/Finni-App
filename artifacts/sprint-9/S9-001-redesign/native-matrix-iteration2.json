@@ -1,0 +1,151 @@
+[
+  {
+    "case": "stress-360-1",
+    "width": 360,
+    "height": 640,
+    "scale": 1,
+    "issues": [
+      {
+        "overlap": [
+          "Занятие, Что изменится, если взять из копилки?",
+          "Суперфинни-12345, стадия 2. Спокойно. Изменить питомца"
+        ]
+      },
+      {
+        "overlap": [
+          "Как играть",
+          "Копилка"
+        ]
+      }
+    ]
+  },
+  {
+    "case": "stress-360-1.5",
+    "width": 360,
+    "height": 640,
+    "scale": 1.5,
+    "issues": []
+  },
+  {
+    "case": "stress-360-2",
+    "width": 360,
+    "height": 640,
+    "scale": 2,
+    "issues": []
+  },
+  {
+    "case": "stress-390-1",
+    "width": 390,
+    "height": 844,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "case": "stress-390-1.5",
+    "width": 390,
+    "height": 844,
+    "scale": 1.5,
+    "issues": []
+  },
+  {
+    "case": "stress-390-2",
+    "width": 390,
+    "height": 844,
+    "scale": 2,
+    "issues": []
+  },
+  {
+    "case": "stress-412-1",
+    "width": 412,
+    "height": 915,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "case": "stress-412-1.5",
+    "width": 412,
+    "height": 915,
+    "scale": 1.5,
+    "issues": []
+  },
+  {
+    "case": "stress-412-2",
+    "width": 412,
+    "height": 915,
+    "scale": 2,
+    "issues": []
+  },
+  {
+    "case": "DRAFT",
+    "width": 360,
+    "height": 640,
+    "scale": 2,
+    "issues": []
+  },
+  {
+    "case": "READY",
+    "width": 360,
+    "height": 640,
+    "scale": 2,
+    "issues": []
+  },
+  {
+    "case": "WAITING",
+    "width": 360,
+    "height": 640,
+    "scale": 2,
+    "issues": []
+  },
+  {
+    "case": "empty",
+    "width": 360,
+    "height": 640,
+    "scale": 2,
+    "issues": []
+  },
+  {
+    "case": "smoke-home",
+    "width": 390,
+    "height": 844,
+    "scale": 1,
+    "issues": []
+  },
+  {
+    "case": "route-room-object-OBJ-PLANNER",
+    "issues": []
+  },
+  {
+    "case": "route-room-object-OBJ-CARE",
+    "issues": []
+  },
+  {
+    "case": "route-room-object-OBJ-CHEST",
+    "issues": []
+  },
+  {
+    "case": "route-Прогресс",
+    "issues": []
+  },
+  {
+    "case": "route-Для\nвзрослого",
+    "issues": []
+  },
+  {
+    "case": "route-Как играть",
+    "issues": []
+  },
+  {
+    "case": "modal-back-isolation",
+    "issues": []
+  },
+  {
+    "case": "navigation-keeps-wallet",
+    "wallet": [
+      [
+        100,
+        0
+      ]
+    ],
+    "issues": []
+  }
+]

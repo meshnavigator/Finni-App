@@ -1,0 +1,954 @@
+
+> finni@0.1.0 verify
+> npm run lint && npm run typecheck && npm run test && npm run content && npm run fixtures
+
+
+> finni@0.1.0 lint
+> eslint . --max-warnings=0
+
+
+> finni@0.1.0 typecheck
+> tsc --noEmit
+
+
+> finni@0.1.0 test
+> node --test tests/*.test.mjs
+
+TAP version 13
+# (node:47576) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/00.MIDAS/PROJECTS/28.%20HackApp.%202026/Finni%20App/src/application/index.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to C:\\00.MIDAS\\PROJECTS\\28. HackApp. 2026\\Finni App\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:47576) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# Subtest: TC-071/169 adult access is memory-only, deliberate and relocks on idle/background
+ok 1 - TC-071/169 adult access is memory-only, deliberate and relocks on idle/background
+  ---
+  duration_ms: 3.038
+  type: 'test'
+  ...
+# Subtest: TC-173 control database serializes CAS and survives file-backed restart
+ok 2 - TC-173 control database serializes CAS and survives file-backed restart
+  ---
+  duration_ms: 41.7986
+  type: 'test'
+  ...
+# Subtest: History and Help expose factual child-safe content and return contract
+ok 3 - History and Help expose factual child-safe content and return contract
+  ---
+  duration_ms: 2.8401
+  type: 'test'
+  ...
+# Subtest: Adult UI and AppRoot enforce gate, relock and coordinator-only runtime actions
+ok 4 - Adult UI and AppRoot enforce gate, relock and coordinator-only runtime actions
+  ---
+  duration_ms: 1.9424
+  type: 'test'
+  ...
+# Subtest: Production adapters use dedicated control DB and known-name idempotent delete semantics
+ok 5 - Production adapters use dedicated control DB and known-name idempotent delete semantics
+  ---
+  duration_ms: 1.3392
+  type: 'test'
+  ...
+# Subtest: Android release contract targets package and portrait orientation
+ok 6 - Android release contract targets package and portrait orientation
+  ---
+  duration_ms: 1.8447
+  type: 'test'
+  ...
+# Subtest: API 26 is declared through expo-build-properties
+ok 7 - API 26 is declared through expo-build-properties
+  ---
+  duration_ms: 0.6592
+  type: 'test'
+  ...
+# Subtest: release build requires external signing and has no debug fallback
+ok 8 - release build requires external signing and has no debug fallback
+  ---
+  duration_ms: 0.4207
+  type: 'test'
+  ...
+# Subtest: Babel config uses only the Expo preset and no superseded native renderer plugin
+ok 9 - Babel config uses only the Expo preset and no superseded native renderer plugin
+  ---
+  duration_ms: 0.4192
+  type: 'test'
+  ...
+# Subtest: release build clears only the generated app CMake cache before Gradle clean
+ok 10 - release build clears only the generated app CMake cache before Gradle clean
+  ---
+  duration_ms: 0.4681
+  type: 'test'
+  ...
+# Subtest: budget plan component wires draft, confirmation and additional-income states
+ok 11 - budget plan component wires draft, confirmation and additional-income states
+  ---
+  duration_ms: 5.2583
+  type: 'test'
+  ...
+# (node:47528) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/00.MIDAS/PROJECTS/28.%20HackApp.%202026/Finni%20App/src/application/budget-plan-model.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to C:\\00.MIDAS\\PROJECTS\\28. HackApp. 2026\\Finni App\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:47528) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# Subtest: plan draft and additional-income component models validate exact integer input
+ok 12 - plan draft and additional-income component models validate exact integer input
+  ---
+  duration_ms: 3.6551
+  type: 'test'
+  ...
+# Subtest: confirm and additions are atomic, idempotent and survive a file-backed restart
+ok 13 - confirm and additions are atomic, idempotent and survive a file-backed restart
+  ---
+  duration_ms: 684.4137
+  type: 'test'
+  ...
+# (node:14712) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/00.MIDAS/PROJECTS/28.%20HackApp.%202026/Finni%20App/src/lessons/budget-purchase-lessons.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to C:\\00.MIDAS\\PROJECTS\\28. HackApp. 2026\\Finni App\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: B01 and B02 use the schema-v3 allocation parameters
+ok 14 - B01 and B02 use the schema-v3 allocation parameters
+  ---
+  duration_ms: 2.9067
+  type: 'test'
+  ...
+# Subtest: P01 accepts canonical package counts and never performs a wallet write
+ok 15 - P01 accepts canonical package counts and never performs a wallet write
+  ---
+  duration_ms: 7.5486
+  type: 'test'
+  ...
+# Subtest: P02 detects invalid competing offers and a more expensive equal coverage alternative
+ok 16 - P02 detects invalid competing offers and a more expensive equal coverage alternative
+  ---
+  duration_ms: 0.9923
+  type: 'test'
+  ...
+# Subtest: B02 starts from the visible 40/40/20 draft and accepts only an edited plan
+ok 17 - B02 starts from the visible 40/40/20 draft and accepts only an edited plan
+  ---
+  duration_ms: 1.06
+  type: 'test'
+  ...
+# Subtest: P02 explains exact prices, quantities and leftovers in both pencil variants
+ok 18 - P02 explains exact prices, quantities and leftovers in both pencil variants
+  ---
+  duration_ms: 2.0748
+  type: 'test'
+  ...
+# Subtest: allocation and basket renderers expose canonical editable learning actions
+ok 19 - allocation and basket renderers expose canonical editable learning actions
+  ---
+  duration_ms: 2.2631
+  type: 'test'
+  ...
+# Subtest: pinned content definitions route all eight demo lessons through LessonShell
+ok 20 - pinned content definitions route all eight demo lessons through LessonShell
+  ---
+  duration_ms: 0.4989
+  type: 'test'
+  ...
+# (node:52904) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/00.MIDAS/PROJECTS/28.%20HackApp.%202026/Finni%20App/src/domain/index.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to C:\\00.MIDAS\\PROJECTS\\28. HackApp. 2026\\Finni App\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:52904) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# Subtest: catalog purchase previews funds and persists one immutable receipt/ledger row
+ok 21 - catalog purchase previews funds and persists one immutable receipt/ledger row
+  ---
+  duration_ms: 269.6029
+  type: 'test'
+  ...
+# Subtest: insufficient purchase changes neither projection nor history
+ok 22 - insufficient purchase changes neither projection nor history
+  ---
+  duration_ms: 180.4357
+  type: 'test'
+  ...
+# (node:50132) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/00.MIDAS/PROJECTS/28.%20HackApp.%202026/Finni%20App/src/domain/lesson.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to C:\\00.MIDAS\\PROJECTS\\28. HackApp. 2026\\Finni App\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: actual lesson evaluator registry matches every canonical fixture for the eight runnable lessons
+ok 23 - actual lesson evaluator registry matches every canonical fixture for the eight runnable lessons
+  ---
+  duration_ms: 155.9688
+  type: 'test'
+  ...
+# (node:52960) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/00.MIDAS/PROJECTS/28.%20HackApp.%202026/Finni%20App/src/content/loader.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to C:\\00.MIDAS\\PROJECTS\\28. HackApp. 2026\\Finni App\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: canonical manifest loads exactly eight strict schema-v3 lessons
+ok 24 - canonical manifest loads exactly eight strict schema-v3 lessons
+  ---
+  duration_ms: 212.4262
+  type: 'test'
+  ...
+# Subtest: attempt definition is an immutable version/variant snapshot
+ok 25 - attempt definition is an immutable version/variant snapshot
+  ---
+  duration_ms: 543.4468
+  type: 'test'
+  ...
+# Subtest: manifest rejects broken links and dependency cycles
+ok 26 - manifest rejects broken links and dependency cycles
+  ---
+  duration_ms: 910.2973
+  type: 'test'
+  ...
+# Subtest: lesson schema rejects non-canonical semver, URLs, unknown fields and fixture contradictions
+ok 27 - lesson schema rejects non-canonical semver, URLs, unknown fields and fixture contradictions
+  ---
+  duration_ms: 19.1036
+  type: 'test'
+  ...
+# Subtest: basket minimum excludes impossible simultaneous alternative-group offers
+ok 28 - basket minimum excludes impossible simultaneous alternative-group offers
+  ---
+  duration_ms: 15.6335
+  type: 'test'
+  ...
+# Subtest: demo variants pin P02, P03 and B03 without increasing the eight-topic manifest
+ok 29 - demo variants pin P02, P03 and B03 without increasing the eight-topic manifest
+  ---
+  duration_ms: 116.5664
+  type: 'test'
+  ...
+# (node:49180) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/00.MIDAS/PROJECTS/28.%20HackApp.%202026/Finni%20App/src/domain/index.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to C:\\00.MIDAS\\PROJECTS\\28. HackApp. 2026\\Finni App\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:49180) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# Subtest: file-backed crash boundaries rollback before/after receipt and replay after lost COMMIT response
+ok 30 - file-backed crash boundaries rollback before/after receipt and replay after lost COMMIT response
+  ---
+  duration_ms: 413.796
+  type: 'test'
+  ...
+# Subtest: v4 fixture survives injected v5 migration failure and unsupported newer schema is never reset
+ok 31 - v4 fixture survives injected v5 migration failure and unsupported newer schema is never reset
+  ---
+  duration_ms: 1195.7888
+  type: 'test'
+  ...
+# Subtest: real S2 commands reconcile the complete ledger and projections after close and restart
+ok 32 - real S2 commands reconcile the complete ledger and projections after close and restart
+  ---
+  duration_ms: 110.1812
+  type: 'test'
+  ...
+# (node:43192) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/00.MIDAS/PROJECTS/28.%20HackApp.%202026/Finni%20App/src/domain/index.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to C:\\00.MIDAS\\PROJECTS\\28. HackApp. 2026\\Finni App\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: SRS 19.1 fixture reaches B40/S30, growth 13 and stage three
+ok 33 - SRS 19.1 fixture reaches B40/S30, growth 13 and stage three
+  ---
+  duration_ms: 5.5993
+  type: 'test'
+  ...
+# Subtest: SRS 19.7 fixture keeps the audited counterexamples explicit
+ok 34 - SRS 19.7 fixture keeps the audited counterexamples explicit
+  ---
+  duration_ms: 0.4013
+  type: 'test'
+  ...
+# (node:49020) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/00.MIDAS/PROJECTS/28.%20HackApp.%202026/Finni%20App/src/domain/index.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to C:\\00.MIDAS\\PROJECTS\\28. HackApp. 2026\\Finni App\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Amount projection overflow rejects the whole calculation as NUMERIC_LIMIT
+ok 35 - Amount projection overflow rejects the whole calculation as NUMERIC_LIMIT
+  ---
+  duration_ms: 3.9058
+  type: 'test'
+  ...
+# (node:32108) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/00.MIDAS/PROJECTS/28.%20HackApp.%202026/Finni%20App/src/domain/index.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to C:\\00.MIDAS\\PROJECTS\\28. HackApp. 2026\\Finni App\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: numeric contracts enforce Amount, Delta, Counter and NetFlow boundaries
+ok 36 - numeric contracts enforce Amount, Delta, Counter and NetFlow boundaries
+  ---
+  duration_ms: 7.7032
+  type: 'test'
+  ...
+# Subtest: TC-005/006: period income is exactly 100 and repeated decisions are deterministic
+ok 37 - TC-005/006: period income is exactly 100 and repeated decisions are deterministic
+  ---
+  duration_ms: 1.7993
+  type: 'test'
+  ...
+# Subtest: TC-007–013: plan validation, immutability and reward separation
+ok 38 - TC-007–013: plan validation, immutability and reward separation
+  ---
+  duration_ms: 2.4498
+  type: 'test'
+  ...
+# Subtest: balance formula preserves B+S and rejects insufficient projections
+ok 39 - balance formula preserves B+S and rejects insufficient projections
+  ---
+  duration_ms: 2.5179
+  type: 'test'
+  ...
+# Subtest: TC-153–158: additions use reward quota, preserve overruns and preconditions
+ok 40 - TC-153–158: additions use reward quota, preserve overruns and preconditions
+  ---
+  duration_ms: 3.0174
+  type: 'test'
+  ...
+# Subtest: TC-157 boundary: canonical identity is stable across restart metadata
+ok 41 - TC-157 boundary: canonical identity is stable across restart metadata
+  ---
+  duration_ms: 1.094
+  type: 'test'
+  ...
+# Subtest: TC-159–164: high-water blocks repeated savings credit and allows signed flow
+ok 42 - TC-159–164: high-water blocks repeated savings credit and allows signed flow
+  ---
+  duration_ms: 1.5223
+  type: 'test'
+  ...
+# Subtest: domain source imports neither React nor SQLite
+ok 43 - domain source imports neither React nor SQLite
+  ---
+  duration_ms: 5.4218
+  type: 'test'
+  ...
+# (node:35928) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/00.MIDAS/PROJECTS/28.%20HackApp.%202026/Finni%20App/src/ui/finni-animation-set.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to C:\\00.MIDAS\\PROJECTS\\28. HackApp. 2026\\Finni App\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: AN-001–014 have bounded recipes, static poses and skippable milestones
+ok 44 - AN-001–014 have bounded recipes, static poses and skippable milestones
+  ---
+  duration_ms: 4.2959
+  type: 'test'
+  ...
+# Subtest: result replaces optional reaction; background cannot interrupt result
+ok 45 - result replaces optional reaction; background cannot interrupt result
+  ---
+  duration_ms: 1.0262
+  type: 'test'
+  ...
+# Subtest: rapid taps keep at most one optional reaction and stale completion cannot end replacement
+ok 46 - rapid taps keep at most one optional reaction and stale completion cannot end replacement
+  ---
+  duration_ms: 2.7045
+  type: 'test'
+  ...
+# Subtest: goal and stage skip display committed presentation and invalidate old timer
+ok 47 - goal and stage skip display committed presentation and invalidate old timer
+  ---
+  duration_ms: 0.5705
+  type: 'test'
+  ...
+# Subtest: modal, leave and profile change cancel effects without mutating committed presentation
+ok 48 - modal, leave and profile change cancel effects without mutating committed presentation
+  ---
+  duration_ms: 0.6726
+  type: 'test'
+  ...
+# Subtest: motion, system preference and sound are independent of committed state
+ok 49 - motion, system preference and sound are independent of committed state
+  ---
+  duration_ms: 0.4812
+  type: 'test'
+  ...
+# (node:44796) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/00.MIDAS/PROJECTS/28.%20HackApp.%202026/Finni%20App/src/domain/pet-profile.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to C:\\00.MIDAS\\PROJECTS\\28. HackApp. 2026\\Finni App\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: only the two accepted pointy combinations resolve to final artwork
+ok 50 - only the two accepted pointy combinations resolve to final artwork
+  ---
+  duration_ms: 4.1131
+  type: 'test'
+  ...
+# Subtest: selected spots never resolves to plain and shape changes never borrow spots art
+ok 51 - selected spots never resolves to plain and shape changes never borrow spots art
+  ---
+  duration_ms: 1.1172
+  type: 'test'
+  ...
+# Subtest: accepted spotted frames and nine source layers have verified local PNG hashes
+ok 52 - accepted spotted frames and nine source layers have verified local PNG hashes
+  ---
+  duration_ms: 104.9266
+  type: 'test'
+  ...
+# (node:49828) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/00.MIDAS/PROJECTS/28.%20HackApp.%202026/Finni%20App/src/ui/finni-layer-contract.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to C:\\00.MIDAS\\PROJECTS\\28. HackApp. 2026\\Finni App\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: default app has one production root and no 3D diagnostic route
+ok 53 - default app has one production root and no 3D diagnostic route
+  ---
+  duration_ms: 2.357
+  type: 'test'
+  ...
+# Subtest: production master copies match accepted S7-004 hashes
+ok 54 - production master copies match accepted S7-004 hashes
+  ---
+  duration_ms: 72.4091
+  type: 'test'
+  ...
+# Subtest: Home scene is local, lifecycle-aware, reduced-motion safe and bounded
+ok 55 - Home scene is local, lifecycle-aware, reduced-motion safe and bounded
+  ---
+  duration_ms: 0.9577
+  type: 'test'
+  ...
+# Subtest: three stage frames preserve the same room floor contact
+ok 56 - three stage frames preserve the same room floor contact
+  ---
+  duration_ms: 2.3387
+  type: 'test'
+  ...
+# (node:46428) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/00.MIDAS/PROJECTS/28.%20HackApp.%202026/Finni%20App/src/persistence/app-control-sqlite.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to C:\\00.MIDAS\\PROJECTS\\28. HackApp. 2026\\Finni App\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:46428) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# Subtest: AN-016 motion and sound choices persist independently across restart
+ok 57 - AN-016 motion and sound choices persist independently across restart
+  ---
+  duration_ms: 179.1887
+  type: 'test'
+  ...
+# (node:45772) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/00.MIDAS/PROJECTS/28.%20HackApp.%202026/Finni%20App/src/ui/lesson-return.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to C:\\00.MIDAS\\PROJECTS\\28. HackApp. 2026\\Finni App\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: all eight lessons return to the right day section without triggering an operation
+ok 58 - all eight lessons return to the right day section without triggering an operation
+  ---
+  duration_ms: 3.4728
+  type: 'test'
+  ...
+# Subtest: discovery copy reports saved choices for all mechanics without claiming mastery
+ok 59 - discovery copy reports saved choices for all mechanics without claiming mastery
+  ---
+  duration_ms: 3.4852
+  type: 'test'
+  ...
+# Subtest: repeat cycles through variants of one lesson and does not create a ninth topic
+ok 60 - repeat cycles through variants of one lesson and does not create a ninth topic
+  ---
+  duration_ms: 0.8133
+  type: 'test'
+  ...
+# (node:48444) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/00.MIDAS/PROJECTS/28.%20HackApp.%202026/Finni%20App/src/domain/lesson.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to C:\\00.MIDAS\\PROJECTS\\28. HackApp. 2026\\Finni App\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: registry is extensible by mechanic and rejects accidental replacement
+ok 61 - registry is extensible by mechanic and rejects accidental replacement
+  ---
+  duration_ms: 3.2217
+  type: 'test'
+  ...
+# Subtest: hints do not change the answer, revision or confirm an attempt
+ok 62 - hints do not change the answer, revision or confirm an attempt
+  ---
+  duration_ms: 3.3704
+  type: 'test'
+  ...
+# Subtest: action flows through consequence, explanation and next step before completion
+ok 63 - action flows through consequence, explanation and next step before completion
+  ---
+  duration_ms: 3.3639
+  type: 'test'
+  ...
+# Subtest: reviewed unsuccessful outcome completes, invalid input never does
+ok 64 - reviewed unsuccessful outcome completes, invalid input never does
+  ---
+  duration_ms: 0.7834
+  type: 'test'
+  ...
+# Subtest: editing after evaluation invalidates both evaluation and explanation binding
+ok 65 - editing after evaluation invalidates both evaluation and explanation binding
+  ---
+  duration_ms: 16.0878
+  type: 'test'
+  ...
+# Subtest: reward eligibility is captured at start and cannot be upgraded later
+ok 66 - reward eligibility is captured at start and cannot be upgraded later
+  ---
+  duration_ms: 0.6514
+  type: 'test'
+  ...
+# Subtest: new variant starts with hidden hints even after the previous variant used L2
+ok 67 - new variant starts with hidden hints even after the previous variant used L2
+  ---
+  duration_ms: 0.9592
+  type: 'test'
+  ...
+# (node:24528) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/00.MIDAS/PROJECTS/28.%20HackApp.%202026/Finni%20App/src/application/learning-service.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to C:\\00.MIDAS\\PROJECTS\\28. HackApp. 2026\\Finni App\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:24528) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# Subtest: restart preserves current evaluation/explanation and replay returns one completion/reward
+ok 68 - restart preserves current evaluation/explanation and replay returns one completion/reward
+  ---
+  duration_ms: 619.6112
+  type: 'test'
+  ...
+# Subtest: concurrent completions persist both outcomes but grant exactly one reward
+ok 69 - concurrent completions persist both outcomes but grant exactly one reward
+  ---
+  duration_ms: 104.125
+  type: 'test'
+  ...
+# Subtest: draft-start remains training after activation and active-start gets no reward after close
+ok 70 - draft-start remains training after activation and active-start gets no reward after close
+  ---
+  duration_ms: 144.1732
+  type: 'test'
+  ...
+# Subtest: waiting attempts are persisted as training and reviewed outcomes are explicit
+ok 71 - waiting attempts are persisted as training and reviewed outcomes are explicit
+  ---
+  duration_ms: 50.4151
+  type: 'test'
+  ...
+# Subtest: invalid input and stale evaluation cannot create completion or reward
+ok 72 - invalid input and stale evaluation cannot create completion or reward
+  ---
+  duration_ms: 53.2325
+  type: 'test'
+  ...
+# Subtest: completed discovery reloads pinned attempt and evaluation after restart without a new reward
+ok 73 - completed discovery reloads pinned attempt and evaluation after restart without a new reward
+  ---
+  duration_ms: 59.4052
+  type: 'test'
+  ...
+# (node:14824) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/00.MIDAS/PROJECTS/28.%20HackApp.%202026/Finni%20App/src/ui/lesson-renderer-registry.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to C:\\00.MIDAS\\PROJECTS\\28. HackApp. 2026\\Finni App\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: renderer registry extends mechanics without changing LessonShell navigation
+ok 74 - renderer registry extends mechanics without changing LessonShell navigation
+  ---
+  duration_ms: 44.7135
+  type: 'test'
+  ...
+# Subtest: LessonShell exposes hints and the full action-to-next-step contract
+ok 75 - LessonShell exposes hints and the full action-to-next-step contract
+  ---
+  duration_ms: 1.6363
+  type: 'test'
+  ...
+# Subtest: needs-review result explicitly invites the child to edit and check again
+ok 76 - needs-review result explicitly invites the child to edit and check again
+  ---
+  duration_ms: 0.9278
+  type: 'test'
+  ...
+# Subtest: P03 offers the neutral seller line only after a checked receipt discrepancy
+ok 77 - P03 offers the neutral seller line only after a checked receipt discrepancy
+  ---
+  duration_ms: 1.0531
+  type: 'test'
+  ...
+# (node:53228) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/00.MIDAS/PROJECTS/28.%20HackApp.%202026/Finni%20App/src/application/learning-service.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to C:\\00.MIDAS\\PROJECTS\\28. HackApp. 2026\\Finni App\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:53228) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# Subtest: eight distinct lesson definitions share one period reward quota
+ok 78 - eight distinct lesson definitions share one period reward quota
+  ---
+  duration_ms: 495.0391
+  type: 'test'
+  ...
+# Subtest: draft solution, hints and pinned parameters survive restart without completion
+ok 79 - draft solution, hints and pinned parameters survive restart without completion
+  ---
+  duration_ms: 86.3537
+  type: 'test'
+  ...
+# Subtest: old evaluation and injected completion failure leave no partial reward state
+ok 80 - old evaluation and injected completion failure leave no partial reward state
+  ---
+  duration_ms: 78.0538
+  type: 'test'
+  ...
+# (node:48728) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/00.MIDAS/PROJECTS/28.%20HackApp.%202026/Finni%20App/src/application/index.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to C:\\00.MIDAS\\PROJECTS\\28. HackApp. 2026\\Finni App\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: mode switches invalidate queued and round-trip sessions by monotonic epoch
+ok 81 - mode switches invalidate queued and round-trip sessions by monotonic epoch
+  ---
+  duration_ms: 82.2566
+  type: 'test'
+  ...
+# Subtest: pending admin intent deterministically resumes after interruption at every phase
+    # Subtest: resume after PREPARED
+    ok 1 - resume after PREPARED
+      ---
+      duration_ms: 293.23
+      type: 'test'
+      ...
+    # Subtest: resume after QUEUE_STOPPED
+    ok 2 - resume after QUEUE_STOPPED
+      ---
+      duration_ms: 82.2418
+      type: 'test'
+      ...
+    # Subtest: resume after CONNECTION_CLOSED
+    ok 3 - resume after CONNECTION_CLOSED
+      ---
+      duration_ms: 72.5786
+      type: 'test'
+      ...
+    # Subtest: resume after DATA_REMOVED
+    ok 4 - resume after DATA_REMOVED
+      ---
+      duration_ms: 85.9981
+      type: 'test'
+      ...
+    # Subtest: resume after UI_CLEARED
+    ok 5 - resume after UI_CLEARED
+      ---
+      duration_ms: 59.3197
+      type: 'test'
+      ...
+    # Subtest: resume after VERIFIED
+    ok 6 - resume after VERIFIED
+      ---
+      duration_ms: 58.1449
+      type: 'test'
+      ...
+    1..6
+ok 82 - pending admin intent deterministically resumes after interruption at every phase
+  ---
+  duration_ms: 657.3763
+  type: 'test'
+  ...
+# (node:52592) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/00.MIDAS/PROJECTS/28.%20HackApp.%202026/Finni%20App/src/domain/index.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to C:\\00.MIDAS\\PROJECTS\\28. HackApp. 2026\\Finni App\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:52592) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# Subtest: NormalClock/VirtualClock and projected state use calendar rules
+ok 83 - NormalClock/VirtualClock and projected state use calendar rules
+  ---
+  duration_ms: 72.945
+  type: 'test'
+  ...
+# Subtest: schema v1 migrates to lifecycle v2 without losing period clock/rule data
+ok 84 - schema v1 migrates to lifecycle v2 without losing period clock/rule data
+  ---
+  duration_ms: 127.6743
+  type: 'test'
+  ...
+# Subtest: OpenPeriod rolls back period, income, revision and receipt together
+ok 85 - OpenPeriod rolls back period, income, revision and receipt together
+  ---
+  duration_ms: 79.4732
+  type: 'test'
+  ...
+# Subtest: normal restart, clock rollback and large forward jump never duplicate income
+ok 86 - normal restart, clock rollback and large forward jump never duplicate income
+  ---
+  duration_ms: 116.5508
+  type: 'test'
+  ...
+# Subtest: five demo periods run without waiting and survive restart without touching normal
+ok 87 - five demo periods run without waiting and survive restart without touching normal
+  ---
+  duration_ms: 199.9056
+  type: 'test'
+  ...
+# Subtest: adult clock correction changes generation without income and blocks immediate reopening
+ok 88 - adult clock correction changes generation without income and blocks immediate reopening
+  ---
+  duration_ms: 66.0978
+  type: 'test'
+  ...
+# (node:46400) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/00.MIDAS/PROJECTS/28.%20HackApp.%202026/Finni%20App/src/domain/index.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to C:\\00.MIDAS\\PROJECTS\\28. HackApp. 2026\\Finni App\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:46400) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# Subtest: schema v4 migrates sequentially to v6 and survives restart
+ok 89 - schema v4 migrates sequentially to v6 and survives restart
+  ---
+  duration_ms: 320.8016
+  type: 'test'
+  ...
+# Subtest: ClosePeriod is atomic, receipt-first idempotent, restart-safe and neutral for an empty day
+ok 90 - ClosePeriod is atomic, receipt-first idempotent, restart-safe and neutral for an empty day
+  ---
+  duration_ms: 111.5758
+  type: 'test'
+  ...
+# Subtest: five closed periods apply high-water rules and reach stages 1 → 2 → 3
+ok 91 - five closed periods apply high-water rules and reach stages 1 → 2 → 3
+  ---
+  duration_ms: 122.3238
+  type: 'test'
+  ...
+# Subtest: goal claim preserves committed saving and historical overrun blocks only the plan point
+ok 92 - goal claim preserves committed saving and historical overrun blocks only the plan point
+  ---
+  duration_ms: 60.7735
+  type: 'test'
+  ...
+# Subtest: shared executor serializes repository facades and closes the database exactly once
+ok 93 - shared executor serializes repository facades and closes the database exactly once
+  ---
+  duration_ms: 90.3627
+  type: 'test'
+  ...
+# Subtest: period result UI wires close confirmation, saved summary and accessibility
+ok 94 - period result UI wires close confirmation, saved summary and accessibility
+  ---
+  duration_ms: 2.1863
+  type: 'test'
+  ...
+# (node:50960) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/00.MIDAS/PROJECTS/28.%20HackApp.%202026/Finni%20App/src/persistence/index.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to C:\\00.MIDAS\\PROJECTS\\28. HackApp. 2026\\Finni App\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:50960) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# Subtest: schema rejects unsafe Counter values and the transaction rolls back fully
+ok 95 - schema rejects unsafe Counter values and the transaction rolls back fully
+  ---
+  duration_ms: 90.7856
+  type: 'test'
+  ...
+# (node:50404) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/00.MIDAS/PROJECTS/28.%20HackApp.%202026/Finni%20App/src/domain/index.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to C:\\00.MIDAS\\PROJECTS\\28. HackApp. 2026\\Finni App\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:50404) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# Subtest: current schema migrates a real file transactionally and enforces CHECK/UNIQUE/FK
+ok 96 - current schema migrates a real file transactionally and enforces CHECK/UNIQUE/FK
+  ---
+  duration_ms: 97.2718
+  type: 'test'
+  ...
+# Subtest: COMMIT, durable receipt replay, conflict, induced ROLLBACK and restart stay consistent
+ok 97 - COMMIT, durable receipt replay, conflict, induced ROLLBACK and restart stay consistent
+  ---
+  duration_ms: 91.6884
+  type: 'test'
+  ...
+# Subtest: database uniqueness is the final guard for income/reward and rolls back projections
+ok 98 - database uniqueness is the final guard for income/reward and rolls back projections
+  ---
+  duration_ms: 47.3604
+  type: 'test'
+  ...
+# Subtest: RepositoryExecutor serializes concurrent commands on one connection
+ok 99 - RepositoryExecutor serializes concurrent commands on one connection
+  ---
+  duration_ms: 50.4612
+  type: 'test'
+  ...
+# Subtest: normal/demo use distinct database files and reject cross-mode commands
+ok 100 - normal/demo use distinct database files and reject cross-mode commands
+  ---
+  duration_ms: 97.3362
+  type: 'test'
+  ...
+# (node:45732) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/00.MIDAS/PROJECTS/28.%20HackApp.%202026/Finni%20App/src/domain/pet-profile.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to C:\\00.MIDAS\\PROJECTS\\28. HackApp. 2026\\Finni App\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:45732) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# Subtest: onboarding exposes exactly nine distinct pet combinations
+ok 101 - onboarding exposes exactly nine distinct pet combinations
+  ---
+  duration_ms: 2.2417
+  type: 'test'
+  ...
+# Subtest: pet name normalization and validation share the 2–16 code point contract
+ok 102 - pet name normalization and validation share the 2–16 code point contract
+  ---
+  duration_ms: 1.4126
+  type: 'test'
+  ...
+# Subtest: loading, error and onboarding component models are finite and actionable
+ok 103 - loading, error and onboarding component models are finite and actionable
+  ---
+  duration_ms: 2.7188
+  type: 'test'
+  ...
+# Subtest: home component model shows all summary data and unlocks routes by state
+ok 104 - home component model shows all summary data and unlocks routes by state
+  ---
+  duration_ms: 1.043
+  type: 'test'
+  ...
+# Subtest: home responsive layout keeps money and CTA before the scene at enlarged text
+ok 105 - home responsive layout keeps money and CTA before the scene at enlarged text
+  ---
+  duration_ms: 0.5656
+  type: 'test'
+  ...
+# Subtest: profile creation is single, update keeps identity, and restart restores a second combination
+ok 106 - profile creation is single, update keeps identity, and restart restores a second combination
+  ---
+  duration_ms: 312.7933
+  type: 'test'
+  ...
+# Subtest: compact home source keeps safe-area padding, scroll fallback and 48 dp interaction targets
+ok 107 - compact home source keeps safe-area padding, scroll fallback and 48 dp interaction targets
+  ---
+  duration_ms: 1.9513
+  type: 'test'
+  ...
+# (node:47464) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/00.MIDAS/PROJECTS/28.%20HackApp.%202026/Finni%20App/src/application/learning-service.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to C:\\00.MIDAS\\PROJECTS\\28. HackApp. 2026\\Finni App\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:47464) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# Subtest: P03 detects either duplicate, accepts a correct receipt, and explains incorrect change
+ok 108 - P03 detects either duplicate, accepts a correct receipt, and explains incorrect change
+  ---
+  duration_ms: 5.3437
+  type: 'test'
+  ...
+# Subtest: B03 prices owned materials and common budget; handmade is not always cheaper
+ok 109 - B03 prices owned materials and common budget; handmade is not always cheaper
+  ---
+  duration_ms: 1.8127
+  type: 'test'
+  ...
+# Subtest: P03 and B03 training completions create no financial ledger entry
+ok 110 - P03 and B03 training completions create no financial ledger entry
+  ---
+  duration_ms: 135.1987
+  type: 'test'
+  ...
+# Subtest: P03 renderer offers independent basket, selectable receipt lines and editable total/change
+ok 111 - P03 renderer offers independent basket, selectable receipt lines and editable total/change
+  ---
+  duration_ms: 3.8822
+  type: 'test'
+  ...
+# Subtest: B03 renderer presents both costs, owned materials and common plan without commerce commands
+ok 112 - B03 renderer presents both costs, owned materials and common plan without commerce commands
+  ---
+  duration_ms: 0.6636
+  type: 'test'
+  ...
+# Subtest: room asset package covers the implemented purchase and goal IDs exactly
+ok 113 - room asset package covers the implemented purchase and goal IDs exactly
+  ---
+  duration_ms: 7.2048
+  type: 'test'
+  ...
+# Subtest: all local PNG bindings have matching hashes and valid PNG signatures
+ok 114 - all local PNG bindings have matching hashes and valid PNG signatures
+  ---
+  duration_ms: 196.141
+  type: 'test'
+  ...
+# Subtest: catalog thumbnails come from hashed imagegen masters with RGBA 192px exports
+ok 115 - catalog thumbnails come from hashed imagegen masters with RGBA 192px exports
+  ---
+  duration_ms: 173.8263
+  type: 'test'
+  ...
+# (node:50328) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/00.MIDAS/PROJECTS/28.%20HackApp.%202026/Finni%20App/src/domain/index.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to C:\\00.MIDAS\\PROJECTS\\28. HackApp. 2026\\Finni App\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# (node:50328) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# Subtest: deposit and confirmed withdrawal conserve funds and produce ordered history
+ok 116 - deposit and confirmed withdrawal conserve funds and produce ordered history
+  ---
+  duration_ms: 66.1145
+  type: 'test'
+  ...
+# Subtest: goal change preserves savings; claim keeps surplus and survives replay and restart
+ok 117 - goal change preserves savings; claim keeps surplus and survives replay and restart
+  ---
+  duration_ms: 62.7333
+  type: 'test'
+  ...
+# Subtest: concurrent transfers with one revision commit at most once
+ok 118 - concurrent transfers with one revision commit at most once
+  ---
+  duration_ms: 44.0986
+  type: 'test'
+  ...
+# Subtest: runtime boundary and accessible savings/history screens are wired
+ok 119 - runtime boundary and accessible savings/history screens are wired
+  ---
+  duration_ms: 2.6133
+  type: 'test'
+  ...
+# (node:50572) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/00.MIDAS/PROJECTS/28.%20HackApp.%202026/Finni%20App/src/domain/savings-lesson.ts is not specified and it doesn't parse as CommonJS.
+# Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+# To eliminate this warning, add "type": "module" to C:\\00.MIDAS\\PROJECTS\\28. HackApp. 2026\\Finni App\\package.json.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: S01 accepts flexible integer deposits and preserves an over-goal forecast
+ok 120 - S01 accepts flexible integer deposits and preserves an over-goal forecast
+  ---
+  duration_ms: 6.0408
+  type: 'test'
+  ...
+# Subtest: S01 shows the remaining amount and rejects invalid day deposits
+ok 121 - S01 shows the remaining amount and rejects invalid day deposits
+  ---
+  duration_ms: 0.6089
+  type: 'test'
+  ...
+# Subtest: S02 preview calculates purchase and postponement without a money command
+ok 122 - S02 preview calculates purchase and postponement without a money command
+  ---
+  duration_ms: 1.0973
+  type: 'test'
+  ...
+# Subtest: S02 blocks an unfunded purchase and malformed withdrawals
+ok 123 - S02 blocks an unfunded purchase and malformed withdrawals
+  ---
+  duration_ms: 0.4455
+  type: 'test'
+  ...
+# Subtest: savings renderer exposes both canonical SRS scenarios and a non-mutating preview
+ok 124 - savings renderer exposes both canonical SRS scenarios and a non-mutating preview
+  ---
+  duration_ms: 1.7423
+  type: 'test'
+  ...
+# Subtest: S02 requires an explicit choice before evaluating a withdrawal
+ok 125 - S02 requires an explicit choice before evaluating a withdrawal
+  ---
+  duration_ms: 0.4436
+  type: 'test'
+  ...
+1..125
+# tests 131
+# suites 0
+# pass 131
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3152.5578
+
+> finni@0.1.0 content
+> node scripts/check-content.mjs && node scripts/validate-content.mjs
+
+Контент bootstrap валиден.
+(node:16056) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/00.MIDAS/PROJECTS/28.%20HackApp.%202026/Finni%20App/src/content/validator.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to C:\00.MIDAS\PROJECTS\28. HackApp. 2026\Finni App\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Content 1.2.0: 8 lessons, 3 family activities, 7 negative fixtures — valid.
+
+> finni@0.1.0 fixtures
+> node scripts/check-fixtures.mjs
+
+Fixtures bootstrap, economy-v2 и demo lifecycle валидны.

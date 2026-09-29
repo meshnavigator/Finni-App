@@ -1,0 +1,908 @@
+--- src/ui/AppRoot.tsx (before this task)
++++ src/ui/AppRoot.tsx
+@@ -15,12 +15,17 @@
+   Text,
+   TextInput,
+   View,
++  useWindowDimensions,
+ } from 'react-native';
++import { SafeAreaView as RootSafeAreaView } from 'react-native-safe-area-context';
++import { RootNavigation, RootMenu, MoreScreen } from './RootNavigation.tsx';
++import { isRootRoute, usesLargeNavigation, type RootRoute } from './root-navigation.ts';
+ import { AdultAccessSession } from '../application/adult-access.ts';
+ import type { AppRuntime, AppSnapshot } from '../application/app-runtime.ts';
+ import { ProductionAppController } from '../application/production-app-controller.ts';
+ import {
+   errorScreenModel,
++  homeScreenModel,
+   loadingScreenModel,
+   onboardingScreenModel,
+ } from '../application/ui-model.ts';
+@@ -58,7 +63,7 @@
+ import type { LessonDiscovery } from '../persistence/lesson-repository.ts';
+ import type { PresentationPreferences } from '../persistence/app-control-sqlite.ts';
+ 
+-type Screen = 'intro' | 'pet' | 'home' | 'plan' | 'shop' | 'savings' | 'history' | 'result' | 'adult' | 'section' | 'lesson-catalog' | 'lesson';
++type Screen = 'intro' | 'pet' | 'more' | 'home' | 'plan' | 'shop' | 'savings' | 'history' | 'result' | 'adult' | 'section' | 'lesson-catalog' | 'lesson';
+ type Phase = 'loading' | 'ready' | 'error';
+ 
+ const EMPTY_SNAPSHOT: AppSnapshot = Object.freeze({
+@@ -373,6 +378,7 @@
+   lessons: readonly LocalLessonPresentation[];
+   onSelect: (lesson: LessonVariantPresentation) => void;
+   onBack: () => void;
++  backLabel: string;
+ }>) {
+   return (
+     <SafeAreaView style={styles.page} accessibilityLabel="Каталог учебных занятий">
+@@ -397,7 +403,7 @@
+             ))}
+           </View>
+         ))}
+-        <ActionButton label="Вернуться в домик" onPress={props.onBack} secondary />
++        <ActionButton label={props.backLabel} onPress={props.onBack} secondary />
+       </ScrollView>
+     </SafeAreaView>
+   );
+@@ -407,6 +413,10 @@
+   const controller = useRef<ProductionAppController | null>(null);
+   const adultAccess = useRef(new AdultAccessSession());
+   const returnScreen = useRef<Screen>('home');
++  const [detailOrigin, setDetailOrigin] = useState<RootRoute>('home');
++  const { fontScale } = useWindowDimensions();
++  const largeNavigation = usesLargeNavigation(fontScale);
++  const [rootMenuOpen, setRootMenuOpen] = useState(false);
+   const [phase, setPhase] = useState<Phase>('loading');
+   const [screen, setScreen] = useState<Screen>('intro');
+   const [snapshot, setSnapshot] = useState<AppSnapshot | null>(null);
+@@ -434,6 +444,15 @@
+   const [lessonDiscoveries, setLessonDiscoveries] = useState<readonly LessonDiscovery[]>([]);
+   const [helpOpen, setHelpOpen] = useState(false);
+   const [boot, setBoot] = useState(0);
++  const root = isRootRoute(screen);
++  const navigateRoot = (route: RootRoute) => {
++    if (busy) return;
++    setRootMenuOpen(false);
++    setMessage(null);
++    setScreen(route);
++  };
++  const editPet = (origin: RootRoute) => { setDetailOrigin(origin); setMessage(null); setScreen('pet'); };
++  const openCatalog = (origin: RootRoute) => { setDetailOrigin(origin); setMessage(null); setScreen('lesson-catalog'); };
+ 
+   const lockAdult = () => {
+     adultAccess.current.lock();
+@@ -474,6 +493,7 @@
+           if (!cancelled) {
+             setAdultUnlocked(false);
+             setHelpOpen(false);
++            setRootMenuOpen(false);
+             setSnapshot(null);
+             setScreen('intro');
+           }
+@@ -532,7 +552,7 @@
+         : await controller.current.runSnapshot((runtime) => runtime.createProfile(appearance));
+       setSnapshot(loaded);
+       setReaction(null);
+-      setScreen('home');
++      setScreen(snapshot?.profile ? detailOrigin : 'home');
+     } catch {
+       setMessage('Не получилось сохранить. Проверь данные и попробуй ещё раз.');
+     } finally {
+@@ -627,7 +647,7 @@
+   const leaveAdult = () => {
+     lockAdult();
+     setMessage(null);
+-    setScreen(snapshot?.profile ? 'home' : 'intro');
++    setScreen(snapshot?.profile ? returnScreen.current : 'intro');
+   };
+ 
+   const switchMode = async (target: Mode) => {
+@@ -784,13 +804,17 @@
+     const subscription = BackHandler.addEventListener('hardwareBackPress', () => {
+       if (busy) return true;
+       if (screen === 'home' || screen === 'intro') return false;
++      if (rootMenuOpen) { setRootMenuOpen(false); return true; }
+       if (screen === 'adult') { adultAccess.current.lock(); setAdultUnlocked(false); }
+       setMessage(null);
+-      setScreen(snapshot?.profile ? 'home' : 'intro');
++      if (screen === 'lesson') { leaveLesson(); return true; }
++      const back = screen === 'history' || screen === 'adult' ? returnScreen.current
++        : screen === 'pet' || screen === 'lesson-catalog' ? detailOrigin : 'home';
++      setScreen(snapshot?.profile ? back : 'intro');
+       return true;
+     });
+     return () => subscription.remove();
+-  }, [busy, screen, snapshot?.profile]);
++  });
+ 
+   if (phase === 'loading') return <LoadingScreen />;
+   if (phase === 'error') return (
+@@ -801,8 +825,11 @@
+   );
+ 
+   return (
+-    <>
++    <RootSafeAreaView style={{ flex: 1, backgroundColor: '#F6F0E6' }} edges={root ? ['top', 'right', 'bottom', 'left'] : []}>
+       <StatusBar style="dark" />
++      <View style={{ flex: 1 }} accessibilityElementsHidden={rootMenuOpen || helpOpen || (screen === 'home' && Boolean(message))}
++        importantForAccessibility={rootMenuOpen || helpOpen || (screen === 'home' && message) ? 'no-hide-descendants' : 'auto'}
++        pointerEvents={rootMenuOpen || helpOpen || (screen === 'home' && message) ? 'none' : 'auto'}>
+       {screen === 'intro' && <IntroScreen onAdult={openAdult} onContinue={() => setScreen('pet')} />}
+       {screen === 'pet' && (
+         <PetBuilder
+@@ -814,7 +841,7 @@
+           } : undefined}
+           busy={busy}
+           saveError={message}
+-          onCancel={() => setScreen(snapshot?.profile ? 'home' : 'intro')}
++          onCancel={() => setScreen(snapshot?.profile ? detailOrigin : 'intro')}
+           onSave={(appearance) => void savePet(appearance)}
+         />
+       )}
+@@ -827,19 +854,19 @@
+           onDismissNotice={() => setMessage(null)}
+           busy={busy}
+           notice={message}
+-          scenePaused={helpOpen}
++          scenePaused={helpOpen || rootMenuOpen}
+           motionEnabled={presentationPreferences.motionEnabled}
+           reaction={reaction}
+           onReactionFinished={clearReaction}
+           onReactionCancelled={clearReaction}
+-          onEditPet={() => { setMessage(null); setScreen('pet'); }}
+-          onHelp={() => setHelpOpen(true)}
++          onEditPet={() => editPet('home')}
++          onMenu={() => setRootMenuOpen(true)}
+           onLesson={() => {
++            setDetailOrigin('home');
+             const lesson = recommendHomeLesson(mode, snapshot.lifecycle!.periodIndex, snapshot.homeLessons ?? [], LOCAL_DEMO_LESSONS, HOME_LESSON_ORDER);
+             if (lesson) void openLesson(lesson);
+-            else { setMessage(null); setScreen('lesson-catalog'); }
++            else openCatalog('home');
+           }}
+-          onAllLessons={() => { setMessage(null); setScreen('lesson-catalog'); }}
+           onOpenDay={() => void openDay()}
+           onResults={() => { setMessage(null); setScreen('result'); }}
+           onSection={openSection}
+@@ -848,18 +875,17 @@
+       {screen === 'lesson-catalog' && (
+         <LessonCatalogScreen
+           lessons={LOCAL_DEMO_LESSONS}
+-          onBack={() => setScreen('home')}
++          backLabel={detailOrigin === 'more' ? 'Вернуться в «Ещё»' : 'Вернуться в домик'}
++          onBack={() => setScreen(detailOrigin)}
+           onSelect={(lesson) => void openLesson(lesson)}
+         />
+       )}
+-      {helpOpen && <HelpOverlay onClose={() => setHelpOpen(false)} />}
+       {screen === 'plan' && snapshot?.profile && snapshot.lifecycle && (
+         <BudgetPlanScreen
+           snapshot={snapshot}
+           busy={busy}
+           message={message}
+           onAllocate={(values) => void allocateIncome(values)}
+-          onBack={() => { setMessage(null); setScreen('home'); }}
+           onConfirm={(values, acknowledged) =>
+             void confirmBudgetPlan(values, acknowledged)}
+         />
+@@ -868,7 +894,6 @@
+         <ShopScreen
+           snapshot={snapshot}
+           busy={busy}
+-          onBack={() => setScreen('home')}
+           onPreview={(itemId) => controller.current!.submit((runtime) => runtime.previewPurchase(snapshot, itemId))}
+           onPurchase={(itemId, acknowledged) => {
+             void updateCommerce(
+@@ -884,7 +909,6 @@
+           snapshot={snapshot}
+           busy={busy}
+           message={message}
+-          onBack={() => { setMessage(null); setScreen('home'); }}
+           onClaim={(goalId) => void updateCommerce(
+             (runtime, current) => runtime.claimGoal(current, goalId),
+             'Цель не получена. Монеты не изменились.',
+@@ -977,7 +1001,17 @@
+         />
+       )}
+       {screen === 'section' && <SectionScreen title={sectionTitle} onBack={() => setScreen('home')} />}
+-    </>
++      {screen === 'more' && snapshot?.profile && snapshot.lifecycle && <MoreScreen
++        name={snapshot.profile.name} day={homeScreenModel(snapshot.profile, snapshot.lifecycle).dayLabel} demo={mode === 'demo'} busy={busy} notice={message}
++        onLessons={() => openCatalog('more')} onProgress={() => void openHistory('more')} onPet={() => editPet('more')}
++        onHelp={() => setHelpOpen(true)} onAdult={openAdult} />}
++      {root && !largeNavigation && <RootNavigation selected={screen} disabled={busy} onNavigate={navigateRoot} />}
++      {root && largeNavigation && screen !== 'home' && <Pressable accessibilityRole="button" accessibilityLabel="Меню"
++        onPress={() => setRootMenuOpen(true)} style={styles.rootMenuButton} testID="root-menu-button"><Text style={styles.rootMenuText}>Меню</Text></Pressable>}
++      </View>
++      {helpOpen && <HelpOverlay onClose={() => setHelpOpen(false)} />}
++      {root && <RootMenu visible={rootMenuOpen} selected={screen} onClose={() => setRootMenuOpen(false)} onNavigate={navigateRoot} />}
++    </RootSafeAreaView>
+   );
+ }
+ 
+@@ -993,6 +1027,8 @@
+ };
+ 
+ const styles = StyleSheet.create({
++  rootMenuButton: { minHeight: 56, margin: 10, padding: 10, borderRadius: 18, backgroundColor: '#FFFCF6', alignItems: 'center', justifyContent: 'center' },
++  rootMenuText: { color: '#3D352D', fontSize: 16, lineHeight: 22 },
+   flex: { flex: 1 },
+   page: { flex: 1, backgroundColor: colors.sky },
+   homePage: { paddingTop: Platform.OS === 'android' ? NativeStatusBar.currentHeight ?? 0 : 0 },
+--- src/ui/HomeScreen.tsx (before this task)
++++ src/ui/HomeScreen.tsx
+@@ -1,11 +1,11 @@
+ import { useState } from 'react';
+-import { Image, Modal, Pressable, ScrollView, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
+-import { SafeAreaView } from 'react-native-safe-area-context';
++import { Image, Modal, Pressable, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
+ import type { AppSnapshot } from '../application/app-runtime.ts';
+ import { homeScreenModel } from '../application/ui-model.ts';
+ import FinniHomeScene, { type HomeReaction } from './FinniHomeScene.tsx';
+ import { goalSource } from './room-assets.ts';
+ import { homeNextStep } from './home-next-step.ts';
++import { usesLargeNavigation } from './root-navigation.ts';
+ import type { SceneRect } from './home-scene-layout.ts';
+ 
+ export type HomeScreenProps = Readonly<{
+@@ -13,20 +13,14 @@
+   motionEnabled: boolean; reaction: HomeReaction | null; lessonTitle: string | null; demo: boolean;
+   onReactionFinished: (id: number) => void; onReactionCancelled: (id: number) => void;
+   onDismissNotice: () => void; onOpenDay: () => void; onResults: () => void; onEditPet: () => void;
+-  onHelp: () => void; onLesson: () => void; onAllLessons: () => void; onSection: (title: string) => void;
++  onMenu: () => void; onLesson: () => void; onSection: (title: string) => void;
+ }>;
+ 
+ const ICONS = {
+-  home: require('../../assets/ui/home-v2/home.png'), plan: require('../../assets/ui/home-v2/plan.png'),
+-  shop: require('../../assets/ui/home-v2/shop.png'), savings: require('../../assets/ui/home-v2/savings.png'),
+-  menu: require('../../assets/ui/home-v2/menu.png'), book: require('../../assets/ui/home-v2/book.png'),
++  book: require('../../assets/ui/home-v2/book.png'),
+   food: require('../../assets/ui/home-v2/food.png'), care: require('../../assets/ui/home-v2/care.png'),
+   mood: require('../../assets/ui/home-v2/mood.png'), arrow: require('../../assets/ui/home-v2/arrow.png'),
+ };
+-const ROUTES = [
+-  { label: 'Домик', icon: 'home' }, { label: 'План', icon: 'plan' },
+-  { label: 'Покупки', icon: 'shop' }, { label: 'Копилка', icon: 'savings' },
+-] as const;
+ function Icon({ name, size = 24 }: Readonly<{ name: keyof typeof ICONS; size?: number }>) {
+   return <Image accessible={false} source={ICONS[name]} style={{ width: size, height: size }} />;
+ }
+@@ -37,14 +31,13 @@
+ /** Presentation only: next steps open existing routes; money is confirmed there. */
+ export default function HomeScreen(props: HomeScreenProps) {
+   const viewport = useWindowDimensions();
+-  const large = viewport.fontScale > 1.2;
++  const large = usesLargeNavigation(viewport.fontScale);
+   const short = viewport.height < 720;
+   const profile = props.snapshot.profile!;
+   const life = props.snapshot.lifecycle!;
+   const model = homeScreenModel(profile, life);
+   const goal = props.snapshot.commerce?.selectedGoal;
+   const purchases = props.snapshot.commerce?.purchases ?? [];
+-  const [menu, setMenu] = useState(false);
+   const [skipReactionId, setSkipReactionId] = useState<number | null>(null);
+   const [failedGoal, setFailedGoal] = useState<string | null>(null);
+   const [sceneSize, setSceneSize] = useState({ width: viewport.width - 24, height: 260 });
+@@ -55,7 +48,7 @@
+   const food = hasFood ? 'Еда: есть' : closed ? 'Еда: нет' : 'Еда: выберем';
+   const care = hasCare ? 'Уход: есть' : closed ? 'Уход: нет' : 'Уход: выберем';
+   const mood = props.reaction?.expression === 'happy' ? 'Радостно' : props.reaction?.expression === 'thoughtful' ? 'Задумчиво'
+-    : props.reaction?.expression === 'inspired' ? 'Вдохновлённо' : 'Спокойно';
++    : props.reaction?.expression === 'inspired' ? 'Вдохновлён' : 'Спокойно';
+   const allGoals = (props.snapshot.commerce?.claimedGoalIds.length ?? 0) === 3;
+   const goalName = goal?.name ?? (allGoals ? 'Все мечты получены' : 'Выбери мечту');
+   const remaining = goal ? Math.max(0, goal.cost - life.savings) : null;
+@@ -68,7 +61,6 @@
+   };
+   const portraitSize = short ? 120 : 152;
+   const blocked = props.busy || !model.action.enabled;
+-  const navigate = (action: () => void) => { setMenu(false); action(); };
+   const petRegion: SceneRect = large
+     ? { x: 0, y: 0, width: portraitSize, height: portraitSize }
+     : { x: 24, y: short ? 8 : 34, width: Math.max(80, sceneSize.width - 48), height: Math.max(48, sceneSize.height - (short ? 46 : 84)) };
+@@ -76,29 +68,24 @@
+     style={({ pressed }) => [styles.primary, short && styles.shortPrimary, large && styles.largePrimary, blocked && styles.disabled, pressed && styles.pressed]} testID="home-primary">
+     <Text style={[styles.primaryText, large && styles.largePrimaryText]}>{props.busy ? 'Подождите…' : next.label}</Text>
+   </Pressable>;
+-  const menuButton = <Pressable accessibilityRole="button" accessibilityLabel={canSkip ? 'Пропустить анимацию' : 'Меню'} onPress={() => canSkip ? setSkipReactionId(props.reaction!.id) : setMenu(true)}
+-    style={({ pressed }) => [styles.menuButton, large && styles.largeMenuButton, pressed && styles.pressed]} testID="home-sections">
+-    {!large && <Icon name="menu" size={18} />}<Text style={styles.caption}>{canSkip ? 'Пропуск' : 'Меню'}</Text>
++  const menuButton = <Pressable accessibilityRole="button" accessibilityLabel="Меню" onPress={props.onMenu}
++    style={({ pressed }) => [styles.menuButton, styles.largeMenuButton, pressed && styles.pressed]} testID="home-sections">
++    <Text style={styles.caption}>Меню</Text>
+   </Pressable>;
+-  const state = <View style={[styles.state, large && [styles.largeState, { marginLeft: portraitSize + 10 }]]} testID="home-care">
++  const skipButton = canSkip && <Pressable accessibilityRole="button" accessibilityLabel="Пропустить анимацию" onPress={() => setSkipReactionId(props.reaction!.id)}
++    testID="home-skip-reaction" style={({ pressed }) => [styles.skipButton, pressed && styles.pressed]}><Text style={styles.caption}>Пропуск</Text></Pressable>;
++  const state = <View style={[styles.state, short && !large && styles.shortState, large && [styles.largeState, { marginLeft: portraitSize + 10 }]]} testID="home-care">
+     {([{ name: 'food', text: food }, { name: 'care', text: care }, { name: 'mood', text: mood }] as const).map((item) =>
+       <View key={item.name} style={[styles.stateItem, large && styles.largeStateItem]}>
+-        {!large && <Icon name={item.name} size={18} />}
++        {!large && !short && <Icon name={item.name} size={16} />}
+         <Text accessibilityLabel={item.name === 'mood' ? 'Настроение: ' + mood : undefined} style={[styles.caption, !large && styles.stateText]}>{item.text}</Text>
+       </View>)}
++    {large && skipButton}
+   </View>;
+-  const navigation = <View style={[styles.nav, short && !large && styles.shortNav, large && styles.menuNav]} accessibilityRole="tablist" testID="home-navigation">
+-    {ROUTES.map(({ label, icon }) => <Pressable key={label} accessibilityRole="tab" accessibilityState={{ selected: label === 'Домик' }}
+-      onPress={() => label === 'Домик' ? setMenu(false) : navigate(() => props.onSection(label))}
+-      style={({ pressed }) => [styles.navItem, short && !large && styles.shortNavItem, large && styles.menuNavItem, label === 'Домик' && styles.navSelected, pressed && styles.pressed]}>
+-      <Icon name={icon} /><Text style={[styles.navText, label === 'Домик' && styles.navSelectedText]}>{label}</Text>
+-    </Pressable>)}
+-  </View>;
+-
+-  return <SafeAreaView style={styles.safe}>
++  return <View style={styles.safe}>
+     <View style={[styles.home, short && styles.shortHome, large && styles.largeHome]} testID={large ? 'home-large-summary' : 'home-v42'}
+-      accessibilityElementsHidden={menu || Boolean(props.notice)} importantForAccessibility={menu || props.notice ? 'no-hide-descendants' : 'auto'}
+-      pointerEvents={menu || props.notice ? 'none' : 'auto'}>
++      accessibilityElementsHidden={Boolean(props.notice)} importantForAccessibility={props.notice ? 'no-hide-descendants' : 'auto'}
++      pointerEvents={props.notice ? 'none' : 'auto'}>
+       <View style={[styles.finances, short && !large && styles.shortFinances, large && styles.largeFinances]} testID="home-finances">
+         <View style={[styles.money, short && !large && styles.shortMoney, large && styles.largeMoney]}>
+           {([['Доступно', life.available], ['Копилка', life.savings]] as const).map(([label, value]) =>
+@@ -115,28 +102,28 @@
+           <View style={styles.goalCopy}>
+             <Text style={[styles.goalTitle, large && styles.largeGoalTitle]}>{large ? 'Цель: ' : 'Мечта · '}{goalName}</Text>
+             {goal ? <>
+-              <Text style={styles.caption}>{life.savings} из {goal.cost}{short && !large ? ' · ещё ' + remaining : ' монет'}</Text>
++              <Text style={styles.caption}>{life.savings} из {goal.cost}{short && !large ? (remaining === 0 ? '' : ' · ещё ' + remaining) : ' монет'}</Text>
+               {!large && <View accessibilityRole="progressbar" accessibilityValue={{ min: 0, max: goal.cost, now: Math.min(life.savings, goal.cost) }} style={styles.track}>
+                 <View style={[styles.fill, { width: `${Math.min(100, life.savings / goal.cost * 100)}%` }]} />
+               </View>}
+-              {(!short || large) && <Text style={styles.caption}>{remaining === 0 ? 'Можно получить мечту' : 'Осталось ' + remaining}</Text>}
++              {(!short || large || remaining === 0) && <Text style={styles.caption}>{remaining === 0 ? 'Можно получить мечту' : 'Осталось ' + remaining}</Text>}
+             </> : <Text style={styles.caption}>{allGoals ? 'Ты умеешь копить!' : 'На что будем копить?'}</Text>}
+           </View>
+-          {!large && <Icon name="arrow" size={18} />}
++          <View style={large && styles.goalChevron}><Icon name="arrow" size={large ? 14 : 18} /></View>
+         </Pressable>
+       </View>
+ 
+-      <View style={[styles.scene, short && styles.shortScene, large && [styles.largeScene, { height: portraitSize }]]} onLayout={({ nativeEvent: { layout } }) => setSceneSize(layout)} testID="home-scene-space">
++      <View style={[styles.scene, short && styles.shortScene, large && [styles.largeScene, { height: canSkip ? Math.max(144, portraitSize) : portraitSize }]]} onLayout={({ nativeEvent: { layout } }) => setSceneSize(layout)} testID="home-scene-space">
+         {!large && <>
+           <View pointerEvents="none" style={styles.roomArch} /><View pointerEvents="none" style={styles.roomLight} />
+           <View pointerEvents="none" style={styles.roomFloor} />
+           <View pointerEvents="none" style={[styles.rug, { top: petRegion.y + petRegion.height - 18 }]} />
+           {!short && <View style={styles.identity}><Text style={styles.petName}>{profile.name}</Text><Text style={styles.caption}>{model.dayLabel}{props.demo ? ' · Демо' : ''}</Text></View>}
+-          <View style={styles.sceneMenu}>{menuButton}</View>
++          {canSkip && <View style={styles.sceneMenu}>{skipButton}</View>}
+         </>}
+         <View pointerEvents="none" importantForAccessibility="no-hide-descendants" style={large ? [styles.portrait, { width: portraitSize, height: portraitSize }] : StyleSheet.absoluteFill}>
+           <FinniHomeScene key={profile.shapeId + '-' + profile.patternId} accessibilityLabel={profile.name + '. ' + food + '. ' + care + '. ' + mood}
+-            careLabel={food + '. ' + care} height={large ? portraitSize : sceneSize.height} paused={props.scenePaused || menu || Boolean(props.notice)}
++            careLabel={food + '. ' + care} height={large ? portraitSize : sceneSize.height} paused={props.scenePaused || Boolean(props.notice)}
+             motionEnabled={props.motionEnabled} stage={life.petStage} appearance={profile} reaction={props.reaction}
+             onReactionFinished={props.onReactionFinished} onReactionCancelled={props.onReactionCancelled}
+             showCaption={false} sceneStyle="quiet" portrait={large} fullscreen petRegion={petRegion} hideSkip skipReactionId={skipReactionId} />
+@@ -150,29 +137,15 @@
+         style={({ pressed }) => [styles.lesson, short && !large && styles.shortLesson, large && styles.largeLesson, pressed && styles.pressed]} testID="home-lesson">
+         {!large && <View style={styles.lessonIcon}><Icon name="book" size={26} /></View>}
+         <View style={styles.lessonCopy}><Text style={styles.caption}>Занятие</Text><Text style={[styles.lessonTitle, large && styles.largeLessonTitle]}>{props.lessonTitle ?? 'Выбери занятие'}</Text></View>
+-        {!large && <Icon name="arrow" size={20} />}
++        <View style={large && styles.lessonChevron}><Icon name="arrow" size={20} /></View>
+       </Pressable>
+       <View style={[styles.footer, large && styles.largeFooter]} testID="home-footer">{large && menuButton}{primary}</View>
+-      {!large && navigation}
+     </View>
+ 
+-    <Modal visible={menu} onRequestClose={() => setMenu(false)} animationType="none" accessibilityViewIsModal>
+-      <SafeAreaView style={styles.safe}><ScrollView contentContainerStyle={styles.menuContent}>
+-        <Text style={styles.menuTitle}>Домик {profile.name}</Text><Text style={styles.body}>{model.dayLabel}{props.demo ? ' · Демо' : ''}</Text>
+-        <MenuRow label="Закрыть меню" onPress={() => setMenu(false)} />
+-        {large && navigation}
+-        {canSkip && <MenuRow label="Пропустить анимацию" onPress={() => { setSkipReactionId(props.reaction!.id); setMenu(false); }} />}
+-        <MenuRow label="Все занятия" onPress={() => navigate(props.onAllLessons)} />
+-        <MenuRow label="Прогресс" onPress={() => navigate(() => props.onSection('Прогресс'))} />
+-        <MenuRow label="О питомце" onPress={() => navigate(props.onEditPet)} />
+-        <MenuRow label="Как играть" onPress={() => navigate(props.onHelp)} />
+-        <MenuRow label="Для взрослого" onPress={() => navigate(() => props.onSection('Для взрослого'))} />
+-      </ScrollView></SafeAreaView>
+-    </Modal>
+     <Modal visible={Boolean(props.notice)} transparent onRequestClose={props.onDismissNotice} accessibilityViewIsModal>
+       <View style={styles.noticeOverlay}><View style={styles.noticeCard}><Text accessibilityLiveRegion="polite" style={styles.body}>{props.notice}</Text><MenuRow label="Понятно" onPress={props.onDismissNotice} /></View></View>
+     </Modal>
+-  </SafeAreaView>;
++  </View>;
+ }
+ 
+ const styles = StyleSheet.create({
+@@ -190,6 +163,8 @@
+   largeAmount: { fontSize: 16, lineHeight: 18, fontWeight: '600' },
+   goal: { minHeight: 72, borderTopWidth: 1, borderTopColor: '#EAE0D1', paddingTop: 10, flexDirection: 'row', gap: 10, alignItems: 'center' },
+   largeGoal: { minHeight: 48, paddingTop: 6 },
++  goalChevron: { position: 'absolute', right: 0, bottom: 0 },
++  lessonChevron: { position: 'absolute', right: 10, top: 10 },
+   goalArt: { width: 62, height: 64, borderRadius: 17, backgroundColor: '#F4E8D0', alignItems: 'center', justifyContent: 'center' },
+   goalImage: { width: 58, height: 58 }, goalCopy: { flex: 1, gap: 3 },
+   goalTitle: { color: '#3D352D', includeFontPadding: false, fontSize: 14, lineHeight: 18, fontWeight: '600' },
+@@ -204,12 +179,14 @@
+   rug: { position: 'absolute', left: '12%', width: '76%', height: 42, borderRadius: '50%', backgroundColor: '#C1AB89', borderWidth: 5, borderColor: '#D3BC97' },
+   identity: { position: 'absolute', left: 16, top: 13 },
+   petName: { color: '#594737', fontSize: 18, lineHeight: 23, fontWeight: '600', includeFontPadding: false },
++  skipButton: { minWidth: 80, minHeight: 48, padding: 6, justifyContent: 'center', alignItems: 'center', borderRadius: 14, backgroundColor: '#FFFCF6' },
+   sceneMenu: { position: 'absolute', top: 6, right: 6, zIndex: 2 },
+   menuButton: { minWidth: 60, minHeight: 48, padding: 8, gap: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 16, backgroundColor: '#FFFCF6' },
+   largeMenuButton: { minWidth: 86, minHeight: 56, padding: 8 },
+   petTarget: { position: 'absolute', minWidth: 48, minHeight: 48 },
+   state: { position: 'absolute', bottom: 0, left: 0, right: 0, minHeight: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', padding: 7, gap: 5, backgroundColor: '#F9F2E7' },
+-  stateItem: { flexDirection: 'row', gap: 4, alignItems: 'center', flexShrink: 1 }, stateText: { fontSize: 11, lineHeight: 14, flexShrink: 1 },
++  shortState: { paddingHorizontal: 2, gap: 2 },
++  stateItem: { flexDirection: 'row', gap: 4, alignItems: 'center', flexShrink: 1 }, stateText: { fontSize: 13, lineHeight: 17, flexShrink: 1 },
+   largeScene: { flex: 0, minHeight: 112, height: 112, overflow: 'visible', backgroundColor: 'transparent', flexDirection: 'row', borderRadius: 0 },
+   portrait: { position: 'absolute', width: 112, height: 112, borderRadius: 28, overflow: 'hidden', backgroundColor: '#EBDDCA' },
+   portraitTarget: { position: 'absolute', left: 0, top: 0, width: 112, height: 112 },
+@@ -217,9 +194,9 @@
+   largeStateItem: { flexDirection: 'row', flexShrink: 0 },
+   lesson: { minHeight: 68, borderRadius: 22, backgroundColor: '#FFFCF6', padding: 12, flexDirection: 'row', alignItems: 'center', gap: 10 },
+   lessonIcon: { width: 42, height: 42, borderRadius: 14, backgroundColor: '#EEE7D5', alignItems: 'center', justifyContent: 'center' },
+-  shortLesson: { minHeight: 56, padding: 8 }, shortPrimary: { minHeight: 48 }, shortNav: { minHeight: 56 }, shortNavItem: { minHeight: 48 },
++  shortLesson: { minHeight: 56, padding: 8 }, shortPrimary: { minHeight: 48 },
+   lessonCopy: { flex: 1, gap: 3 },
+-  lessonTitle: { color: '#3D352D', includeFontPadding: false, fontSize: 15, lineHeight: 19, fontWeight: '600' },
++  lessonTitle: { color: '#3D352D', includeFontPadding: false, fontSize: 16, lineHeight: 20, fontWeight: '600' },
+   largeLesson: { minHeight: 48, padding: 10, borderRadius: 20 }, largeLessonTitle: { fontSize: 14, lineHeight: 16 },
+   footer: { flexShrink: 0 },
+   largeFooter: { marginTop: 'auto', flexDirection: 'row', gap: 8 },
+@@ -228,13 +205,8 @@
+   primaryText: { flexShrink: 1, color: '#FFFFFF', includeFontPadding: false, fontSize: 16, lineHeight: 21, fontWeight: '600' },
+   largePrimaryText: { fontSize: 14, lineHeight: 17, textAlign: 'center' },
+   disabled: { backgroundColor: '#806C5B' },
+-  nav: { minHeight: 60, padding: 4, borderRadius: 22, flexDirection: 'row', gap: 3, backgroundColor: '#FFFCF6' },
+-  navItem: { flex: 1, minHeight: 52, paddingVertical: 3, borderRadius: 17, alignItems: 'center', justifyContent: 'center', gap: 3 },
+-  navText: { color: '#665444', includeFontPadding: false, fontSize: 12, lineHeight: 15 }, navSelected: { backgroundColor: '#EEDFCA' }, navSelectedText: { color: '#603C24', fontWeight: '700' },
+   pressed: { transform: [{ scale: .96 }] },
+-  menuContent: { padding: 18, gap: 12 }, menuTitle: { color: '#3D352D', fontSize: 24, lineHeight: 30, fontWeight: '600' },
+   menuRow: { minHeight: 56, borderRadius: 18, padding: 14, backgroundColor: '#FFFCF6', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12 },
+-  menuNav: { flexWrap: 'wrap' }, menuNavItem: { flex: 0, width: '48%', minHeight: 80 },
+   noticeOverlay: { flex: 1, justifyContent: 'center', padding: 24, backgroundColor: '#00000066' },
+   noticeCard: { padding: 20, borderRadius: 24, backgroundColor: '#FFFCF6', gap: 16 },
+ });
+--- src/ui/BudgetPlanScreen.tsx (before this task)
++++ src/ui/BudgetPlanScreen.tsx
+@@ -122,7 +122,6 @@
+   snapshot: AppSnapshot;
+   busy: boolean;
+   message: string | null;
+-  onBack: () => void;
+   onConfirm: (values: Plan, acknowledgedLowNeed: boolean) => void;
+   onAllocate: (values: Plan) => void;
+ }>) {
+@@ -186,7 +185,6 @@
+             disabled={props.busy || !draft.confirmEnabled || !draft.values}
+             onPress={() => draft.values && props.onConfirm(draft.values, acknowledgedLowNeed)}
+           />
+-          <Button label="Вернуться в домик" onPress={props.onBack} secondary />
+         </ScrollView>
+       </SafeAreaView>
+     );
+@@ -243,51 +241,50 @@
+           </View>
+         )}
+         {props.message && <Text style={styles.error}>{props.message}</Text>}
+-        <Button label="Вернуться в домик" onPress={props.onBack} secondary />
+       </ScrollView>
+     </SafeAreaView>
+   );
+ }
+ 
+ const colors = {
+-  ink: '#14324A',
+-  muted: '#4B6878',
+-  sky: '#EAF6FB',
+-  teal: '#146B78',
+-  pale: '#F7FBFC',
+-  line: '#C7DEE5',
++  ink: '#3D352D',
++  muted: '#665444',
++  sky: '#F6F0E6',
++  teal: '#AE482A',
++  pale: '#FFFCF6',
++  line: '#E4D6C1',
+   coral: '#B54135',
+-  yellow: '#FFF3C7',
++  yellow: '#F1E5CB',
+ };
+ 
+ const styles = StyleSheet.create({
+   page: { flex: 1, backgroundColor: colors.sky },
+-  content: { gap: 12, padding: 18, paddingBottom: 36 },
+-  eyebrow: { color: colors.teal, fontSize: 13, fontWeight: '800', letterSpacing: 1.4 },
+-  title: { color: colors.ink, fontSize: 25, fontWeight: '800' },
++  content: { gap: 12, padding: 18, paddingBottom: 20 },
++  eyebrow: { color: colors.teal, fontSize: 13, fontWeight: '600', letterSpacing: 1.4 },
++  title: { color: colors.ink, fontSize: 25, fontWeight: '600' },
+   body: { color: colors.muted, fontSize: 16, lineHeight: 22 },
+   caption: { color: colors.muted, fontSize: 14, lineHeight: 19 },
+   editorList: { gap: 10 },
+-  categoryCard: { backgroundColor: '#FFFFFF', borderColor: colors.line, borderRadius: 14, borderWidth: 1, gap: 8, padding: 12 },
+-  categoryTitle: { color: colors.ink, fontSize: 17, fontWeight: '800' },
++  categoryCard: { backgroundColor: '#FFFCF6', borderColor: colors.line, borderRadius: 22, borderWidth: 1, gap: 8, padding: 12 },
++  categoryTitle: { color: colors.ink, fontSize: 17, fontWeight: '600' },
+   editorRow: { alignItems: 'center', flexDirection: 'row', gap: 8 },
+-  stepButton: { alignItems: 'center', borderColor: colors.teal, borderRadius: 12, borderWidth: 1, justifyContent: 'center', minHeight: 48, minWidth: 60 },
+-  stepText: { color: colors.teal, fontSize: 16, fontWeight: '800' },
+-  amountInput: { backgroundColor: colors.pale, borderColor: colors.line, borderRadius: 12, borderWidth: 1, color: colors.ink, flex: 1, fontSize: 19, fontWeight: '800', minHeight: 48, paddingHorizontal: 12, textAlign: 'center' },
+-  summary: { backgroundColor: colors.yellow, borderRadius: 14, gap: 4, padding: 12 },
+-  summaryText: { color: colors.ink, fontSize: 16, fontWeight: '800' },
+-  warning: { backgroundColor: colors.yellow, borderColor: '#D5A623', borderRadius: 12, borderWidth: 1, justifyContent: 'center', minHeight: 48, padding: 12 },
++  stepButton: { alignItems: 'center', borderColor: colors.teal, borderRadius: 18, borderWidth: 1, justifyContent: 'center', minHeight: 48, minWidth: 60 },
++  stepText: { color: colors.teal, fontSize: 16, fontWeight: '600' },
++  amountInput: { backgroundColor: colors.pale, borderColor: colors.line, borderRadius: 18, borderWidth: 1, color: colors.ink, flex: 1, fontSize: 19, fontWeight: '600', minHeight: 48, paddingVertical: 10, paddingHorizontal: 12, textAlign: 'center' },
++  summary: { backgroundColor: colors.yellow, borderRadius: 22, gap: 4, padding: 12 },
++  summaryText: { color: colors.ink, fontSize: 16, fontWeight: '600' },
++  warning: { backgroundColor: colors.yellow, borderColor: '#9B7847', borderRadius: 18, borderWidth: 1, justifyContent: 'center', minHeight: 48, padding: 12 },
+   warningText: { color: colors.ink, fontSize: 14, fontWeight: '700', lineHeight: 19 },
+   error: { color: colors.coral, fontSize: 14, fontWeight: '700' },
+-  button: { alignItems: 'center', backgroundColor: colors.teal, borderRadius: 14, justifyContent: 'center', minHeight: 48, paddingHorizontal: 16 },
++  button: { alignItems: 'center', backgroundColor: colors.teal, borderRadius: 22, justifyContent: 'center', minHeight: 48, paddingVertical: 10, paddingHorizontal: 16 },
+   buttonSecondary: { backgroundColor: 'transparent', borderColor: colors.teal, borderWidth: 1.5 },
+-  buttonText: { color: '#FFFFFF', fontSize: 16, fontWeight: '800' },
++  buttonText: { color: '#FFFFFF', fontSize: 16, fontWeight: '600' },
+   buttonSecondaryText: { color: colors.teal },
+   disabled: { opacity: 0.45 },
+-  pressed: { opacity: 0.72 },
+-  factCard: { backgroundColor: '#FFFFFF', borderColor: colors.line, borderRadius: 14, borderWidth: 1, gap: 3, padding: 12 },
++  pressed: { transform: [{ scale: .96 }] },
++  factCard: { backgroundColor: '#FFFCF6', borderColor: colors.line, borderRadius: 22, borderWidth: 1, gap: 3, padding: 12 },
+   factLine: { color: colors.muted, fontSize: 14 },
+-  factValue: { color: colors.ink, fontSize: 16, fontWeight: '800' },
++  factValue: { color: colors.ink, fontSize: 16, fontWeight: '600' },
+   historyLine: { color: colors.muted, fontSize: 14, lineHeight: 19 },
+-  additionPanel: { backgroundColor: colors.pale, borderColor: colors.line, borderRadius: 14, borderWidth: 1, gap: 10, padding: 12 },
++  additionPanel: { backgroundColor: colors.pale, borderColor: colors.line, borderRadius: 22, borderWidth: 1, gap: 10, padding: 12 },
+ });
+--- src/ui/ShopScreen.tsx (before this task)
++++ src/ui/ShopScreen.tsx
+@@ -1,5 +1,5 @@
+ import { useState } from 'react';
+-import { Alert, Image, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
++import { Alert, Image, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+ import type { AppSnapshot } from '../application/app-runtime.ts';
+ import { CATALOG } from '../domain/catalog.ts';
+ import { itemSource } from './room-assets.ts';
+@@ -9,11 +9,10 @@
+   busy: boolean;
+   onPreview: (itemId: string) => Promise<Readonly<{ after: { available: number } | null; missing: number | null; occupiedSlot: boolean; planOverrun: boolean }>>;
+   onPurchase: (itemId: string, acknowledgedPlanOverrun: boolean) => void;
+-  onBack: () => void;
+ }>;
+ 
+ function Button(props: Readonly<{ label: string; onPress: () => void; disabled?: boolean }>) {
+-  return <Text accessibilityRole="button" accessibilityState={{ disabled: Boolean(props.disabled) }} onPress={props.disabled ? undefined : props.onPress} style={[styles.button, props.disabled && styles.disabled]}>{props.label}</Text>;
++  return <Pressable accessibilityRole="button" accessibilityState={{ disabled: Boolean(props.disabled) }} disabled={props.disabled} onPress={props.onPress} style={({ pressed }) => [styles.button, props.disabled && styles.disabled, pressed && styles.pressed]}><Text style={styles.buttonText}>{props.label}</Text></Pressable>;
+ }
+ 
+ export default function ShopScreen(props: Props) {
+@@ -30,9 +29,8 @@
+   };
+   return <SafeAreaView style={styles.page}><ScrollView contentContainerStyle={styles.content}>
+     <Text style={styles.title}>Покупки</Text><Text accessibilityLiveRegion="polite" style={styles.notice}>{notice}</Text>
+-    {CATALOG.map((item) => <View key={item.id} style={styles.card}><View style={styles.cardHeader}>{itemSource(item.id) && <Image accessibilityIgnoresInvertColors source={itemSource(item.id)!} style={styles.thumbnail} />}<View style={styles.cardCopy}><Text style={styles.name}>{item.name} — {item.price} монет</Text><Text>{item.effect}</Text></View></View><Button disabled={props.busy} label={props.busy ? 'Проверяем…' : 'Посмотреть и купить'} onPress={() => void select(item.id)} /></View>)}
+-    <Button label="Вернуться в домик" onPress={props.onBack} />
++    {CATALOG.map((item) => <View key={item.id} style={styles.card}><View style={styles.cardHeader}>{itemSource(item.id) && <Image accessibilityIgnoresInvertColors source={itemSource(item.id)!} style={styles.thumbnail} />}<View style={styles.cardCopy}><Text style={styles.name}>{item.name} — {item.price} монет</Text><Text style={styles.effect}>{item.effect}</Text></View></View><Button disabled={props.busy} label={props.busy ? 'Проверяем…' : 'Посмотреть и купить'} onPress={() => void select(item.id)} /></View>)}
+   </ScrollView></SafeAreaView>;
+ }
+ 
+-const styles = StyleSheet.create({ page: { flex: 1, backgroundColor: '#EAF6FB' }, content: { gap: 12, padding: 18, paddingBottom: 32 }, title: { fontSize: 28, fontWeight: '700', color: '#14324A' }, notice: { color: '#4B6878' }, card: { gap: 6, borderWidth: 1, borderColor: '#C7DEE5', borderRadius: 12, padding: 12, backgroundColor: '#F7FBFC' }, cardHeader: { alignItems: 'center', flexDirection: 'row', gap: 10 }, cardCopy: { flex: 1, gap: 3 }, thumbnail: { height: 64, width: 64 }, name: { fontWeight: '700', color: '#14324A' }, button: { minHeight: 48, padding: 14, textAlign: 'center', backgroundColor: '#146B78', color: '#fff', borderRadius: 10, overflow: 'hidden' }, disabled: { opacity: 0.5 } });
++const styles = StyleSheet.create({ page: { flex: 1, backgroundColor: '#F6F0E6' }, content: { gap: 12, padding: 18, paddingBottom: 32 }, title: { fontSize: 28, fontWeight: '700', color: '#3D352D' }, notice: { color: '#665444', fontSize: 16, lineHeight: 22 }, card: { gap: 6, borderWidth: 1, borderColor: '#E4D6C1', borderRadius: 18, padding: 12, backgroundColor: '#FFFCF6' }, cardHeader: { alignItems: 'center', flexDirection: 'row', gap: 10 }, cardCopy: { flex: 1, gap: 3 }, thumbnail: { height: 64, width: 64 }, effect: { color: '#665444', fontSize: 14, lineHeight: 20 }, name: { fontSize: 16, fontWeight: '600', color: '#3D352D' }, button: { minHeight: 48, padding: 14, alignItems: 'center', justifyContent: 'center', backgroundColor: '#AE482A', borderRadius: 18 }, buttonText: { color: '#fff', fontSize: 16, fontWeight: '600', textAlign: 'center' }, pressed: { transform: [{ scale: .96 }] }, disabled: { opacity: 0.5 } });
+--- src/ui/SavingsScreen.tsx (before this task)
++++ src/ui/SavingsScreen.tsx
+@@ -29,7 +29,6 @@
+   onSelectGoal: (goalId: string | null) => void;
+   onClaim: (goalId: string) => void;
+   onHistory: () => void;
+-  onBack: () => void;
+ }>;
+ 
+ function Button(props: Readonly<{
+@@ -133,6 +132,13 @@
+         <Text style={styles.balance}>В кошельке: {lifecycle.available}</Text>
+         <Text accessibilityLiveRegion="polite" style={styles.notice}>{props.message ?? notice}</Text>
+ 
++        {selected && <View style={styles.goalCard}>
++          <Text style={styles.cardTitle}>Мечта · {selected.name}</Text>
++          {lifecycle.savings < selected.cost
++            ? <Text style={styles.caption}>Осталось накопить {selected.cost - lifecycle.savings}</Text>
++            : <Button disabled={props.busy} label="Получить цель" onPress={claim} />}
++        </View>}
++
+         <View style={styles.transferCard}>
+           <Text style={styles.cardTitle}>Перевести монеты</Text>
+           <TextInput
+@@ -171,47 +177,41 @@
+ 
+         {selected && (
+           <>
+-            <Button
+-              disabled={props.busy || lifecycle.savings < selected.cost}
+-              label={lifecycle.savings < selected.cost ? `Осталось накопить ${selected.cost - lifecycle.savings}` : 'Получить цель'}
+-              onPress={claim}
+-            />
+             <Button disabled={props.busy} label="Снять выбор цели" onPress={() => selectGoal(null)} secondary />
+           </>
+         )}
+         <Button label="История операций" onPress={props.onHistory} secondary />
+-        <Button label="Вернуться в домик" onPress={props.onBack} secondary />
+       </ScrollView>
+     </SafeAreaView>
+   );
+ }
+ 
+ const colors = {
+-  ink: '#14324A', muted: '#4B6878', sky: '#EAF6FB', teal: '#146B78', pale: '#F7FBFC', line: '#C7DEE5', yellow: '#FFF3C7',
++  ink: '#3D352D', muted: '#665444', sky: '#F6F0E6', teal: '#AE482A', pale: '#FFFCF6', line: '#E4D6C1', yellow: '#F1E5CB',
+ };
+ 
+ const styles = StyleSheet.create({
+   page: { flex: 1, backgroundColor: colors.sky },
+-  content: { gap: 12, padding: 18, paddingBottom: 36 },
+-  eyebrow: { color: colors.teal, fontSize: 13, fontWeight: '800', letterSpacing: 1.4 },
+-  title: { color: colors.ink, fontSize: 25, fontWeight: '800' },
++  content: { gap: 12, padding: 18, paddingBottom: 20 },
++  eyebrow: { color: colors.teal, fontSize: 13, fontWeight: '600', letterSpacing: 1.4 },
++  title: { color: colors.ink, fontSize: 25, fontWeight: '600' },
+   balance: { color: colors.ink, fontSize: 17, fontWeight: '700' },
+   notice: { color: colors.muted, fontSize: 14, lineHeight: 20 },
+-  transferCard: { backgroundColor: '#FFFFFF', borderColor: colors.line, borderRadius: 14, borderWidth: 1, gap: 10, padding: 12 },
+-  cardTitle: { color: colors.ink, fontSize: 18, fontWeight: '800' },
+-  input: { backgroundColor: colors.pale, borderColor: colors.line, borderRadius: 12, borderWidth: 1, color: colors.ink, fontSize: 18, fontWeight: '800', minHeight: 48, paddingHorizontal: 12 },
++  transferCard: { backgroundColor: '#FFFCF6', borderColor: colors.line, borderRadius: 22, borderWidth: 1, gap: 10, padding: 12 },
++  cardTitle: { color: colors.ink, fontSize: 18, fontWeight: '600' },
++  input: { backgroundColor: colors.pale, borderColor: colors.line, borderRadius: 18, borderWidth: 1, color: colors.ink, fontSize: 18, fontWeight: '600', minHeight: 48, paddingVertical: 10, paddingHorizontal: 12 },
+   row: { flexDirection: 'row', gap: 8 },
+   flex: { flex: 1 },
+-  goalCard: { backgroundColor: '#FFFFFF', borderColor: colors.line, borderRadius: 14, borderWidth: 1, gap: 7, padding: 12 },
+-  goalSelected: { backgroundColor: colors.yellow, borderColor: '#D5A623' },
++  goalCard: { backgroundColor: '#FFFCF6', borderColor: colors.line, borderRadius: 22, borderWidth: 1, gap: 7, padding: 12 },
++  goalSelected: { backgroundColor: colors.yellow, borderColor: '#9B7847' },
+   goalHeader: { alignItems: 'center', flexDirection: 'row', gap: 10 },
+   goalThumbnail: { height: 64, width: 64 },
+-  goalName: { flex: 1, color: colors.ink, fontSize: 16, fontWeight: '800' },
++  goalName: { flex: 1, color: colors.ink, fontSize: 16, fontWeight: '600' },
+   caption: { color: colors.muted, fontSize: 14, lineHeight: 19 },
+-  button: { alignItems: 'center', backgroundColor: colors.teal, borderRadius: 12, justifyContent: 'center', minHeight: 48, paddingHorizontal: 12 },
++  button: { alignItems: 'center', backgroundColor: colors.teal, borderRadius: 18, justifyContent: 'center', minHeight: 48, paddingVertical: 10, paddingHorizontal: 12 },
+   buttonSecondary: { backgroundColor: 'transparent', borderColor: colors.teal, borderWidth: 1.5 },
+-  buttonText: { color: '#FFFFFF', fontSize: 15, fontWeight: '800', textAlign: 'center' },
++  buttonText: { color: '#FFFFFF', fontSize: 15, fontWeight: '600', textAlign: 'center' },
+   buttonSecondaryText: { color: colors.teal },
+   disabled: { opacity: 0.45 },
+-  pressed: { opacity: 0.72 },
++  pressed: { transform: [{ scale: .96 }] },
+ });
+--- tests/profile-ui.test.mjs (before this task)
++++ tests/profile-ui.test.mjs
+@@ -163,13 +163,16 @@
+ 
+ test('Home keeps native modal/back isolation and complete financial labels', () => {
+   const source = readFileSync(new URL('../src/ui/HomeScreen.tsx', import.meta.url), 'utf8');
+-  assert.match(source, /react-native-safe-area-context/);
+-  assert.match(source, /onRequestClose=\{\(\) => setMenu\(false\)\}/);
+-  assert.match(source, /importantForAccessibility=\{menu \|\| props\.notice \? 'no-hide-descendants'/);
++  assert.match(source, /importantForAccessibility=\{props\.notice \? 'no-hide-descendants'/);
+   assert.match(source, /minHeight: 48/);
+-  for (const label of ['Доступно', 'Копилка', 'Цель', 'Занятие', 'Для взрослого']) assert.ok(source.includes(label));
++  for (const label of ['Доступно', 'Копилка', 'Цель', 'Занятие']) assert.ok(source.includes(label));
+   assert.doesNotMatch(source, /numberOfLines|maxFontSizeMultiplier|reviewConflict/);
+   const app = readFileSync(new URL('../src/ui/AppRoot.tsx', import.meta.url), 'utf8');
++  assert.match(app, /react-native-safe-area-context/);
++  assert.match(app, /importantForAccessibility=\{rootMenuOpen \|\| helpOpen/);
++  const navigation = readFileSync(new URL('../src/ui/RootNavigation.tsx', import.meta.url), 'utf8');
++  assert.match(navigation, /onRequestClose=\{onClose\}/);
++  assert.match(navigation, /Для взрослого/);
+   assert.match(app, /function HelpOverlay/);
+   assert.match(app, /onRequestClose=\{props\.onClose\}/);
+ });
+--- tests/finni-home-scene.test.mjs (before this task)
++++ tests/finni-home-scene.test.mjs
+@@ -24,7 +24,7 @@
+   assert.doesNotMatch(app, /HomeSceneSpike|FINNI_3D|Filament|Worklets/);
+   assert.match(appRoot, /<HomeScreen/);
+   assert.match(awaitHome, /<FinniHomeScene/);
+-  assert.match(appRoot, /scenePaused=\{helpOpen\}/);
++  assert.match(appRoot, /scenePaused=\{helpOpen \|\| rootMenuOpen\}/);
+ });
+ 
+ test('production master copies match accepted S7-004 hashes', async () => {
+--- /dev/null
++++ src/ui/root-navigation.ts
+@@ -0,0 +1,21 @@
++/** Root tabs are peers. Details keep their origin outside the tab bar. */
++export const ROOT_ROUTES = [
++  { id: 'home', label: 'Домик', icon: 'home' },
++  { id: 'plan', label: 'План', icon: 'plan' },
++  { id: 'shop', label: 'Покупки', icon: 'shop' },
++  { id: 'savings', label: 'Копилка', icon: 'savings' },
++  { id: 'more', label: 'Ещё', icon: 'menu' },
++] as const;
++
++export type RootRoute = typeof ROOT_ROUTES[number]['id'];
++
++export function isRootRoute(screen: string): screen is RootRoute {
++  return ROOT_ROUTES.some(({ id }) => id === screen);
++}
++
++/** Android reports float32 scales such as 1.2000000477 for the 120% setting.
++ * Normalize the layout decision only; text keeps its complete system scaling.
++ */
++export function usesLargeNavigation(fontScale: number): boolean {
++  return Math.round(fontScale * 100) > 120;
++}
+--- /dev/null
++++ src/ui/RootNavigation.tsx
+@@ -0,0 +1,72 @@
++import { Image, Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
++import { SafeAreaView } from 'react-native-safe-area-context';
++import { ROOT_ROUTES, type RootRoute } from './root-navigation.ts';
++
++const icons = {
++  home: require('../../assets/ui/home-v2/home.png'), plan: require('../../assets/ui/home-v2/plan.png'),
++  shop: require('../../assets/ui/home-v2/shop.png'), savings: require('../../assets/ui/home-v2/savings.png'),
++  menu: require('../../assets/ui/home-v2/menu.png'), arrow: require('../../assets/ui/home-v2/arrow.png'),
++};
++
++export function RootNavigation({ selected, onNavigate, list = false, disabled = false }: Readonly<{
++  selected: RootRoute; onNavigate: (route: RootRoute) => void; list?: boolean; disabled?: boolean;
++}>) {
++  return <View accessibilityRole="tablist" style={[styles.bar, list && styles.list]} testID="root-navigation">
++    {ROOT_ROUTES.map(({ id, label, icon }) => <Pressable key={id} accessibilityRole="tab" accessibilityLabel={label}
++      accessibilityState={{ selected: id === selected, disabled }} disabled={disabled} onPress={() => onNavigate(id)}
++      testID={'root-tab-' + id} style={({ pressed }) => [styles.tab, list && styles.listTab, id === selected && styles.selected, pressed && styles.pressed]}>
++      <Image accessible={false} source={icons[icon]} style={styles.icon} />
++      <Text style={[styles.label, list && styles.listLabel, id === selected && styles.selectedLabel]}>{label}</Text>
++    </Pressable>)}
++  </View>;
++}
++
++export function RootMenu({ visible, selected, onClose, onNavigate }: Readonly<{
++  visible: boolean; selected: RootRoute; onClose: () => void; onNavigate: (route: RootRoute) => void;
++}>) {
++  return <Modal visible={visible} onRequestClose={onClose} animationType="none" accessibilityViewIsModal>
++    <SafeAreaView style={styles.page}><ScrollView contentContainerStyle={styles.content}>
++      <Text accessibilityRole="header" style={styles.title}>Разделы</Text>
++      <Pressable accessibilityRole="button" onPress={onClose} style={styles.close} testID="root-menu-close"><Text style={styles.body}>Закрыть меню</Text></Pressable>
++      <RootNavigation selected={selected} onNavigate={onNavigate} list />
++    </ScrollView></SafeAreaView>
++  </Modal>;
++}
++
++export function MoreScreen({ name, day, demo, busy, notice, onLessons, onProgress, onPet, onHelp, onAdult }: Readonly<{
++  name: string; day: string; demo: boolean; busy: boolean; notice: string | null;
++  onLessons: () => void; onProgress: () => void; onPet: () => void; onHelp: () => void; onAdult: () => void;
++}>) {
++  return <ScrollView contentContainerStyle={styles.content} testID="more-screen">
++    <Text accessibilityRole="header" style={styles.title}>Ещё</Text>
++    <Text style={styles.body}>{name} · {day}{demo ? ' · Демо' : ''}</Text>
++    {notice && <Text accessibilityLiveRegion="polite" style={styles.body}>{notice}</Text>}
++    {[
++      { label: 'Все занятия', action: onLessons }, { label: 'Прогресс', action: onProgress },
++      { label: 'Имя и внешность', action: onPet }, { label: 'Как играть', action: onHelp },
++      { label: 'Для взрослого', action: onAdult },
++    ].map(({ label, action }) => <Pressable key={label} accessibilityRole="button" disabled={busy}
++      accessibilityState={{ disabled: busy }} onPress={action} style={({ pressed }) => [styles.row, pressed && styles.pressed]}>
++      <Text style={[styles.body, styles.rowText]}>{label}</Text><Image accessible={false} source={icons.arrow} style={styles.icon} />
++    </Pressable>)}
++  </ScrollView>;
++}
++
++const styles = StyleSheet.create({
++  page: { flex: 1, backgroundColor: '#F6F0E6' },
++  content: { padding: 18, paddingBottom: 28, gap: 14 },
++  title: { color: '#3D352D', fontSize: 26, fontWeight: '600' },
++  body: { color: '#665444', fontSize: 16, lineHeight: 22 },
++  row: { minHeight: 64, padding: 16, borderRadius: 22, backgroundColor: '#FFFCF6', flexDirection: 'row', alignItems: 'center', gap: 12 },
++  rowText: { flex: 1, color: '#3D352D' },
++  close: { minHeight: 56, alignSelf: 'flex-start', justifyContent: 'center', padding: 12, borderWidth: 1, borderColor: '#A78E72', borderRadius: 16 },
++  bar: { marginHorizontal: 10, marginBottom: 10, padding: 4, gap: 2, flexDirection: 'row', borderRadius: 22, backgroundColor: '#FFFCF6' },
++  tab: { flex: 1, minWidth: 48, minHeight: 48, paddingVertical: 4, gap: 2, alignItems: 'center', justifyContent: 'center', borderRadius: 17 },
++  icon: { width: 24, height: 24 },
++  label: { color: '#665444', fontSize: 12, lineHeight: 15, includeFontPadding: false },
++  selected: { backgroundColor: '#EEDFCA' }, selectedLabel: { color: '#603C24', fontWeight: '700' },
++  list: { margin: 0, marginHorizontal: 0, marginBottom: 0, padding: 0, flexDirection: 'column', gap: 10, backgroundColor: 'transparent' },
++  listTab: { flex: 0, padding: 16, gap: 16, minHeight: 64, flexDirection: 'row', justifyContent: 'flex-start', backgroundColor: '#FFFCF6' },
++  listLabel: { fontSize: 16, lineHeight: 22, flexShrink: 1 },
++  pressed: { transform: [{ scale: .96 }] },
++});
+--- /dev/null
++++ tests/root-navigation.test.mjs
+@@ -0,0 +1,97 @@
++import assert from 'node:assert/strict';
++import test from 'node:test';
++import { readFileSync } from 'node:fs';
++import { createRequire } from 'node:module';
++import vm from 'node:vm';
++import ts from 'typescript';
++import { ROOT_ROUTES, isRootRoute, usesLargeNavigation } from '../src/ui/root-navigation.ts';
++import { homeScreenModel } from '../src/application/ui-model.ts';
++import { homeNextStep } from '../src/ui/home-next-step.ts';
++const require = createRequire(import.meta.url);
++
++// Execute the real JSX with host primitives; layout is verified separately on Android.
++function component(file, dimensions = { width: 360, height: 640, fontScale: 1 }) {
++  const values = []; let cursor = 0;
++  const module = { exports: {} };
++  const source = ts.transpileModule(readFileSync(new URL('../src/ui/' + file, import.meta.url), 'utf8'), {
++    compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX },
++  }).outputText;
++  vm.runInNewContext(source, { module, exports: module.exports, require: (id) => {
++    if (id === 'react') return { useState: (initial) => { const index = cursor++; if (!(index in values)) values[index] = initial; return [values[index], (value) => { values[index] = value; }]; } };
++    if (id === 'react/jsx-runtime') return require(id);
++    if (id === 'react-native') return { ...Object.fromEntries(['View', 'Text', 'Pressable', 'Image', 'Modal', 'ScrollView'].map((x) => [x, x])), StyleSheet: { create: (x) => x, absoluteFill: {} }, useWindowDimensions: () => dimensions };
++    if (id === 'react-native-safe-area-context') return { SafeAreaView: 'SafeAreaView' };
++    if (id.endsWith('root-navigation.ts')) return { ROOT_ROUTES, usesLargeNavigation };
++    if (id.endsWith('ui-model.ts')) return { homeScreenModel };
++    if (id.endsWith('home-next-step.ts')) return { homeNextStep };
++    if (id.endsWith('room-assets.ts')) return { goalSource: () => null };
++    if (id.endsWith('FinniHomeScene.tsx')) return 'FinniHomeScene';
++    if (id.endsWith('.png')) return id;
++    throw new Error('Unexpected dependency: ' + id);
++  } });
++  return (name, props) => { cursor = 0; return module.exports[name](props); };
++}
++function nodes(tree) {
++  if (Array.isArray(tree)) return tree.flatMap(nodes);
++  if (!tree || typeof tree !== 'object') return [];
++  return [tree, ...nodes(tree.props?.children)];
++}
++function content(tree) {
++  if (Array.isArray(tree)) return tree.map(content).join('');
++  if (tree === null || tree === undefined || typeof tree === 'boolean') return '';
++  return typeof tree === 'object' ? content(tree.props?.children) : String(tree);
++}
++
++test('persistent tabs route to five peers and expose exactly the active screen', () => {
++  const render = component('RootNavigation.tsx');
++  for (const selected of ROOT_ROUTES) {
++    const calls = [];
++    const tree = render('RootNavigation', { selected: selected.id, onNavigate: (id) => calls.push(id) });
++    const tabs = nodes(tree).filter((n) => n.props.accessibilityRole === 'tab');
++    assert.equal(tabs.length, 5);
++    assert.deepEqual(tabs.filter((n) => n.props.accessibilityState.selected).map((n) => n.props.accessibilityLabel), [selected.label]);
++    tabs.forEach((n) => n.props.onPress());
++    assert.deepEqual(calls, ROOT_ROUTES.map(({ id }) => id));
++  }
++  for (const detail of ['pet', 'lesson', 'result', 'adult', 'history']) assert.equal(isRootRoute(detail), false);
++});
++
++test('More actions keep their intent; menu dismiss is a button without a forward arrow', () => {
++  const render = component('RootNavigation.tsx'); const calls = [];
++  const tree = render('MoreScreen', { name: 'Финни', day: 'День 1', demo: false, busy: false,
++    onLessons: () => calls.push('lessons'), onProgress: () => calls.push('progress'), onPet: () => calls.push('pet'), onHelp: () => calls.push('help'), onAdult: () => calls.push('adult') });
++  const actions = nodes(tree).filter((n) => n.type === 'Pressable');
++  assert.deepEqual(actions.map(content), ['Все занятия', 'Прогресс', 'Имя и внешность', 'Как играть', 'Для взрослого']);
++  actions.forEach((n) => n.props.onPress());
++  assert.deepEqual(calls, ['lessons', 'progress', 'pet', 'help', 'adult']);
++  let closed = 0;
++  const menu = render('RootMenu', { visible: true, selected: 'shop', onClose: () => closed++, onNavigate: () => {} });
++  const close = nodes(menu).find((n) => n.props.testID === 'root-menu-close');
++  assert.equal(nodes(close).filter((n) => n.type === 'Image').length, 0);
++  close.props.onPress(); menu.props.onRequestClose(); assert.equal(closed, 2);
++});
++
++test('enlarged Home menu remains navigation during a reaction; skip targets only that reaction', () => {
++  const render = component('HomeScreen.tsx', { width: 360, height: 640, fontScale: 2 });
++  const calls = [];
++  const props = { snapshot: { profile: { name: 'Финни', shapeId: 'pointy', patternId: 'plain' }, lifecycle: { state: 'ACTIVE', available: 100, savings: 300, petStage: 2 }, commerce: { selectedGoal: { id: 'GL-03', name: 'Домик для Финни', cost: 300 }, purchases: [], claimedGoalIds: [] } },
++    busy: false, notice: null, reaction: { id: 42, expression: 'inspired', skippable: true }, onMenu: () => calls.push('menu'), onSection: (id) => calls.push(id), onReactionFinished: () => {}, onReactionCancelled: () => {} };
++  let tree = render('default', props);
++  nodes(tree).find((n) => n.props.testID === 'home-sections').props.onPress();
++  assert.deepEqual(calls, ['menu']);
++  nodes(tree).find((n) => n.props.testID === 'home-skip-reaction').props.onPress();
++  tree = render('default', props);
++  assert.equal(nodes(tree).find((n) => n.type === 'FinniHomeScene').props.skipReactionId, 42);
++  assert.equal(nodes(tree).some((n) => n.props.testID === 'home-skip-reaction'), false);
++  assert.equal(nodes(tree).find((n) => n.props.testID === 'home-sections').props.accessibilityLabel, 'Меню');
++  assert.match(content(tree), /Можно получить мечту/);
++  assert.doesNotMatch(content(tree), /ещё 0/);
++  nodes(tree).find((n) => n.props.testID === 'home-goal').props.onPress();
++  assert.deepEqual(calls, ['menu', 'Копилка']);
++});
++
++
++test('Android float32 fontScale keeps the 120 percent setting in the ordinary layout', () => {
++  for (const scale of [1, 1.19, 1.2, Math.fround(1.2)]) assert.equal(usesLargeNavigation(scale), false);
++  for (const scale of [1.21, 1.5, 2]) assert.equal(usesLargeNavigation(scale), true);
++});

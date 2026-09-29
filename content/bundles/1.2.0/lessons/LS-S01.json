@@ -1,0 +1,39 @@
+{
+  "schemaVersion":3,
+  "id":"LS-S01",
+  "title":"Мечта за три шага",
+  "contentVersion":"1.2.0",
+  "topic":"savings",
+  "format":"standard",
+  "level":1,
+  "observableAction":"Составить три допустимых взноса и увидеть прогноз накоплений.",
+  "explanation":"К уже накопленному прибавляются три выбранных взноса; одинаковые взносы не обязательны.",
+  "unlockPeriod":4,
+  "competencyIds":["EDU-05","EDU-06"],
+  "sourceRefs":["SRS §13.6","TC-178","FR-64"],
+  "defaultVariantId":"three-steps",
+  "returnTarget":"savings",
+  "mechanic":"savings",
+  "mode":"schedule",
+  "rendererId":"savings",
+  "variants":[{
+    "id":"three-steps",
+    "params":{"initialSavings":30,"goalCost":90,"maxDeposits":[30,30,30]},
+    "copy":{
+      "intro":"Учебная мечта стоит 90. Уже отложено 30. Составь план трёх игровых дней.",
+      "hints":["К 30 прибавь все три взноса.","Каждый взнос может быть от 0 до 30."],
+      "feedback":{
+        "meets_goal":"По плану получится {total}; цель достигнута.",
+        "valid_alternative":"Цель достигнута другим допустимым планом.",
+        "needs_review":"До мечты ещё {remaining}. Можно увеличить один или несколько взносов.",
+        "invalid_input":"В этом задании ровно три взноса, каждый не больше 30."
+      }
+    },
+    "evidence":[],
+    "fixtures":[
+      {"solution":{"deposits":[20,20,20]},"expectedOutcome":"meets_goal"},
+      {"solution":{"deposits":[10,10,10]},"expectedOutcome":"needs_review"},
+      {"solution":{"deposits":[40,10,10]},"expectedOutcome":"invalid_input"}
+    ]
+  }]
+}

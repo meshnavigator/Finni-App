@@ -1,0 +1,2 @@
+from pathlib import Path
+p=Path('artifacts/sprint-9/S9-003-004-details/audit.py');s=p.read_text(encoding='utf-8');s=s.replace("['lessons.json','matrix.json','states.json','extras.json']","['lessons.json','matrix.json','states.json','extras.json','final-smoke.json','resource-qa.json']");s=s.replace("{'shot':shot['name'],'profile':", "{'report':report,'apkSha256':data['apkSha256'],'qaOnly':data.get('qaOnly',False),'shot':shot['name'],'profile':");p.write_text(s,encoding='utf-8')

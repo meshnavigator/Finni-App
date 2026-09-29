@@ -1,0 +1,9 @@
+{
+  "installedTalkBack": false,
+  "enabledAccessibilityServices": null,
+  "localApkFound": false,
+  "playPackage": "/system/app/LicenseChecker/LicenseChecker.apk, version1.8 (not Play Store)",
+  "officialRelease": "https://github.com/google/talkback/releases/tag/6.1.1",
+  "officialReleaseApkAssets": 0,
+  "result": "NOT RUN: no installed service or official installable APK available"
+}

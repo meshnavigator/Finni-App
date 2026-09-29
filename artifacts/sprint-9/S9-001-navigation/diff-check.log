@@ -1,0 +1,236 @@
+warning: in the working copy of 'assets/2d/room/S8-002/IMAGEGEN_PROVENANCE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'assets/2d/room/S8-002/README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'assets/2d/room/S8-002/build_assets.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'package-lock.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'package.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'artifacts/sprint-8/S8-001-layer-prototype/requirements.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'artifacts/sprint-8/S8-002-catalog-v3/QA.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'artifacts/sprint-8/S8-002-emulator-review/QA.md', LF will be replaced by CRLF the next time Git touches it
+tests/finni-home-scene.test.mjs:1: trailing whitespace.
++import assert from 'node:assert/strict';
+
+tests/finni-home-scene.test.mjs:2: trailing whitespace.
++import { createHash } from 'node:crypto';
+
+tests/finni-home-scene.test.mjs:3: trailing whitespace.
++import { readFile } from 'node:fs/promises';
+
+tests/finni-home-scene.test.mjs:4: trailing whitespace.
++import test from 'node:test';
+
+tests/finni-home-scene.test.mjs:5: trailing whitespace.
++import { FINNI_ANCHORS, FINNI_CANVAS, FINNI_STAGE_SCALE } from '../src/ui/finni-layer-contract.ts';
+
+tests/finni-home-scene.test.mjs:6: trailing whitespace.
++
+
+tests/finni-home-scene.test.mjs:7: trailing whitespace.
++const root = new URL('../', import.meta.url);
+
+tests/finni-home-scene.test.mjs:8: trailing whitespace.
++const app = await readFile(new URL('App.tsx', root), 'utf8');
+
+tests/finni-home-scene.test.mjs:9: trailing whitespace.
++const appRoot = await readFile(new URL('src/ui/AppRoot.tsx', root), 'utf8');
+
+tests/finni-home-scene.test.mjs:10: trailing whitespace.
++const awaitHome = await readFile(new URL('src/ui/HomeScreen.tsx', root), 'utf8');
+
+tests/finni-home-scene.test.mjs:11: trailing whitespace.
++const scene = await readFile(new URL('src/ui/FinniHomeScene.tsx', root), 'utf8');
+
+tests/finni-home-scene.test.mjs:12: trailing whitespace.
++const manifest = JSON.parse(
+
+tests/finni-home-scene.test.mjs:13: trailing whitespace.
++  await readFile(new URL('assets/2d/master/FINNI-2D-MASTER-V1/asset-manifest.json', root), 'utf8'),
+
+tests/finni-home-scene.test.mjs:14: trailing whitespace.
++);
+
+tests/finni-home-scene.test.mjs:15: trailing whitespace.
++
+
+tests/finni-home-scene.test.mjs:16: trailing whitespace.
++const expected = new Map([
+
+tests/finni-home-scene.test.mjs:17: trailing whitespace.
++  ['room_clean_v1.png', '2c76a1e29090e61de615c5e228bf309d34016f89aa74cac9ea1b990821ac6140'],
+
+tests/finni-home-scene.test.mjs:18: trailing whitespace.
++  ['pet_neutral_canvas_v1.png', '8b2932caa23b99ae0d6575105940cda70858619f32333d564847d9b0dcdb6cc0'],
+
+tests/finni-home-scene.test.mjs:19: trailing whitespace.
++  ['pet_blink_canvas_v1.png', '2797ab29e3d6b91d4342f80a71c892a574751513833c569c53e7f8c077b51905'],
+
+tests/finni-home-scene.test.mjs:20: trailing whitespace.
++]);
+
+tests/finni-home-scene.test.mjs:21: trailing whitespace.
++
+
+tests/finni-home-scene.test.mjs:22: trailing whitespace.
++test('default app has one production root and no 3D diagnostic route', () => {
+
+tests/finni-home-scene.test.mjs:23: trailing whitespace.
++  assert.match(app, /<SafeAreaProvider[^>]*><AppRoot \/><\/SafeAreaProvider>/);
+
+tests/finni-home-scene.test.mjs:24: trailing whitespace.
++  assert.doesNotMatch(app, /HomeSceneSpike|FINNI_3D|Filament|Worklets/);
+
+tests/finni-home-scene.test.mjs:25: trailing whitespace.
++  assert.match(appRoot, /<HomeScreen/);
+
+tests/finni-home-scene.test.mjs:26: trailing whitespace.
++  assert.match(awaitHome, /<FinniHomeScene/);
+
+tests/finni-home-scene.test.mjs:27: trailing whitespace.
++  assert.match(appRoot, /scenePaused=\{helpOpen \|\| rootMenuOpen\}/);
+
+tests/finni-home-scene.test.mjs:28: trailing whitespace.
++});
+
+tests/finni-home-scene.test.mjs:29: trailing whitespace.
++
+
+tests/finni-home-scene.test.mjs:30: trailing whitespace.
++test('production master copies match accepted S7-004 hashes', async () => {
+
+tests/finni-home-scene.test.mjs:31: trailing whitespace.
++  assert.equal(manifest.packageId, 'FINNI-2D-MASTER-V1');
+
+tests/finni-home-scene.test.mjs:32: trailing whitespace.
++  for (const asset of manifest.assets) {
+
+tests/finni-home-scene.test.mjs:33: trailing whitespace.
++    const bytes = await readFile(
+
+tests/finni-home-scene.test.mjs:34: trailing whitespace.
++      new URL(`assets/2d/master/FINNI-2D-MASTER-V1/${asset.path}`, root),
+
+tests/finni-home-scene.test.mjs:35: trailing whitespace.
++    );
+
+tests/finni-home-scene.test.mjs:36: trailing whitespace.
++    const hash = createHash('sha256').update(bytes).digest('hex');
+
+tests/finni-home-scene.test.mjs:37: trailing whitespace.
++    assert.equal(asset.sha256, expected.get(asset.path));
+
+tests/finni-home-scene.test.mjs:38: trailing whitespace.
++    assert.equal(hash, expected.get(asset.path));
+
+tests/finni-home-scene.test.mjs:39: trailing whitespace.
++  }
+
+tests/finni-home-scene.test.mjs:40: trailing whitespace.
++});
+
+tests/finni-home-scene.test.mjs:41: trailing whitespace.
++
+
+tests/finni-home-scene.test.mjs:42: trailing whitespace.
++test('Home scene is local, lifecycle-aware, reduced-motion safe and bounded', () => {
+
+tests/finni-home-scene.test.mjs:43: trailing whitespace.
++  assert.doesNotMatch(scene, /https?:|application\/|domain\/|persistence\//);
+
+tests/finni-home-scene.test.mjs:44: trailing whitespace.
++  assert.match(scene, /AppState\.addEventListener\('change', setAppState\)/);
+
+tests/finni-home-scene.test.mjs:45: trailing whitespace.
++  assert.match(scene, /AccessibilityInfo\.isReduceMotionEnabled\(\)/);
+
+tests/finni-home-scene.test.mjs:46: trailing whitespace.
++  assert.match(scene, /reduceMotionChanged/);
+
+tests/finni-home-scene.test.mjs:47: trailing whitespace.
++  assert.match(scene, /useNativeDriver: true/);
+
+tests/finni-home-scene.test.mjs:48: trailing whitespace.
++  assert.match(scene, /clearInterval\(blinkTimer\)/);
+
+tests/finni-home-scene.test.mjs:49: trailing whitespace.
++  assert.match(scene, /idle\.stop\(\)/);
+
+tests/finni-home-scene.test.mjs:50: trailing whitespace.
++  assert.match(scene, /props\.paused/);
+
+tests/finni-home-scene.test.mjs:51: trailing whitespace.
++  assert.match(scene, /onError=\{\(\) => setDecodeError\(true\)\}/);
+
+tests/finni-home-scene.test.mjs:52: trailing whitespace.
++  assert.match(scene, /testID="finni-home-scene-fallback"/);
+
+tests/finni-home-scene.test.mjs:53: trailing whitespace.
++});
+
+tests/finni-home-scene.test.mjs:54: trailing whitespace.
++
+
+tests/finni-home-scene.test.mjs:55: trailing whitespace.
++test('three stage frames preserve the same room floor contact', () => {
+
+tests/finni-home-scene.test.mjs:56: trailing whitespace.
++  const footY = FINNI_ANCHORS.feet.y / FINNI_CANVAS.height;
+
+tests/finni-home-scene.test.mjs:57: trailing whitespace.
++  const footX = FINNI_ANCHORS.feet.x / FINNI_CANVAS.width;
+
+tests/finni-home-scene.test.mjs:58: trailing whitespace.
++  for (const stage of [1, 2, 3]) {
+
+tests/finni-home-scene.test.mjs:59: trailing whitespace.
++    const scale = FINNI_STAGE_SCALE[stage];
+
+tests/finni-home-scene.test.mjs:60: trailing whitespace.
++    const left = (1 - scale) * footX;
+
+tests/finni-home-scene.test.mjs:61: trailing whitespace.
++    const top = (1 - scale) * footY;
+
+tests/finni-home-scene.test.mjs:62: trailing whitespace.
++    assert.ok(Math.abs(left + scale * footX - footX) < 1e-12);
+
+tests/finni-home-scene.test.mjs:63: trailing whitespace.
++    assert.ok(Math.abs(top + scale * footY - footY) < 1e-12);
+
+tests/finni-home-scene.test.mjs:64: trailing whitespace.
++  }
+
+tests/finni-home-scene.test.mjs:65: trailing whitespace.
++  assert.deepEqual(Object.keys(FINNI_STAGE_SCALE), ['1', '2', '3']);
+
+tests/finni-home-scene.test.mjs:66: trailing whitespace.
++});
+
+tests/finni-home-scene.test.mjs:67: trailing whitespace.
++
+
+tests/finni-home-scene.test.mjs:68: trailing whitespace.
++test('first blink waits for its decoded frame without swapping image sources', () => {
+
+tests/finni-home-scene.test.mjs:69: trailing whitespace.
++  assert.match(scene, /loadedBlinkAppearance === appearanceId/);
+
+tests/finni-home-scene.test.mjs:70: trailing whitespace.
++  assert.match(scene, /onLoad=\{\(\) => setLoadedBlinkAppearance\(appearanceId\)\}/);
+
+tests/finni-home-scene.test.mjs:71: trailing whitespace.
++  assert.match(scene, /source=\{sources\.neutral\}/);
+
+tests/finni-home-scene.test.mjs:72: trailing whitespace.
++  assert.match(scene, /source=\{sources\.blink\}/);
+
+tests/finni-home-scene.test.mjs:73: trailing whitespace.
++  assert.match(scene, /opacity: showBlink \? 0 : 1/);
+
+tests/finni-home-scene.test.mjs:74: trailing whitespace.
++  assert.match(scene, /opacity: showBlink \? 1 : 0/);
+
+tests/finni-home-scene.test.mjs:75: trailing whitespace.
++  assert.doesNotMatch(scene, /source=\{animationActive/);
+
+tests/finni-home-scene.test.mjs:76: trailing whitespace.
++});
+

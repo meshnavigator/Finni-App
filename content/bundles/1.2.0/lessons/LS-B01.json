@@ -1,0 +1,39 @@
+{
+  "schemaVersion":3,
+  "id":"LS-B01",
+  "title":"На что хватит сегодня?",
+  "contentVersion":"1.2.0",
+  "topic":"budget",
+  "format":"standard",
+  "level":1,
+  "observableAction":"Распределить учебные монеты между нужным, желаниями и мечтой.",
+  "explanation":"Сначала покрываем условие на нужное и проверяем, сколько остаётся на выбранные цели.",
+  "unlockPeriod":1,
+  "competencyIds":["EDU-01","EDU-02"],
+  "sourceRefs":["SRS §13.2","FR-23","FR-61"],
+  "defaultVariantId":"basic-100",
+  "returnTarget":"budget",
+  "mechanic":"allocation",
+  "mode":"basic",
+  "rendererId":"allocation",
+  "variants":[{
+    "id":"basic-100",
+    "params":{"budget":100,"needMinimum":40,"savingTarget":30},
+    "copy":{
+      "intro":"Есть 100 учебных монет. На еду и уход нужно 40. Попробуй оставить хотя бы 30 на мечту.",
+      "hints":["Сначала проверь сумму на нужное.","Сложи все три части и сравни со 100."],
+      "feedback":{
+        "meets_goal":"На нужное хватит, и на мечту предусмотрено {save}.",
+        "valid_alternative":"Условие выполнено другим допустимым способом.",
+        "needs_review":"Сравни нужное и мечту с условиями задания.",
+        "invalid_input":"Распределено больше доступной суммы. Проверь {total}."
+      }
+    },
+    "evidence":[],
+    "fixtures":[
+      {"solution":{"need":40,"want":20,"save":40},"expectedOutcome":"meets_goal"},
+      {"solution":{"need":20,"want":60,"save":20},"expectedOutcome":"needs_review"},
+      {"solution":{"need":50,"want":40,"save":30},"expectedOutcome":"invalid_input"}
+    ]
+  }]
+}

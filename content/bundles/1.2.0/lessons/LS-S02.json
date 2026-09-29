@@ -1,0 +1,39 @@
+{
+  "schemaVersion":3,
+  "id":"LS-S02",
+  "title":"Что изменится, если взять из копилки?",
+  "contentVersion":"1.2.0",
+  "topic":"savings",
+  "format":"standard",
+  "level":2,
+  "observableAction":"Выбрать учебное снятие и сравнить последствия покупки и отсрочки.",
+  "explanation":"Снятие увеличивает учебный кошелёк и на ту же сумму уменьшает копилку; выбор не меняет реальный журнал.",
+  "unlockPeriod":5,
+  "competencyIds":["EDU-05","EDU-06","EDU-07"],
+  "sourceRefs":["SRS §13.7","FR-61","FR-64"],
+  "defaultVariantId":"withdrawal-preview",
+  "returnTarget":"savings",
+  "mechanic":"savings",
+  "mode":"withdrawal_preview",
+  "rendererId":"savings",
+  "variants":[{
+    "id":"withdrawal-preview",
+    "params":{"available":10,"savings":60,"goalCost":90,"itemCost":20},
+    "copy":{
+      "intro":"В учебном кошельке 10, в копилке 60. Посмотри, что изменится после снятия.",
+      "hints":["После снятия кошелёк растёт, а копилка уменьшается.","Для покупки нужно 20 в учебном кошельке."],
+      "feedback":{
+        "meets_goal":"После выбора в кошельке {wallet}, в копилке {savings}.",
+        "valid_alternative":"Это другой допустимый выбор с понятными последствиями.",
+        "needs_review":"Сравни обе суммы после выбранного действия.",
+        "invalid_input":"Для покупки не хватает монет или снятие превышает копилку."
+      }
+    },
+    "evidence":[],
+    "fixtures":[
+      {"solution":{"withdrawal":10,"action":"buy"},"expectedOutcome":"meets_goal"},
+      {"solution":{"withdrawal":0,"action":"postpone"},"expectedOutcome":"meets_goal"},
+      {"solution":{"withdrawal":0,"action":"buy"},"expectedOutcome":"invalid_input"}
+    ]
+  }]
+}

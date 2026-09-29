@@ -1,0 +1,1 @@
+Home icons v2: original repo-native line drawings. One 24-unit grid, 1.8-unit stroke, ink #725741, 4x PNG. Reproducible source: artifacts/sprint-9/S9-001-structure/build-icons.py. No external or generated-art source.

@@ -1,0 +1,7 @@
+{
+  "deliverySourceSha256": "3b79e5085c0bdcb05e1ea7b36bd020b215863ed9d0e44463be341d21dd26d5a8",
+  "deliveryApkSha256": "42d1a247ef6f7a8220d993f89b84a89a0f87dc3ab20d1a7e0f2b8da551e4d0d9",
+  "purpose": "QA-only image URI onError and forced loading presentation; not delivery code or timing proof",
+  "qaApkSha256": "686ffe78899798917d6081b3ac14e39d8b2b63385bad0e7b1366ab098c1577d5",
+  "sourceRestored": true
+}

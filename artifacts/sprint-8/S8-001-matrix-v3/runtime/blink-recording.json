@@ -1,0 +1,19 @@
+{
+  "recorded": [
+    "round",
+    "floppy"
+  ],
+  "secondsEach": 8,
+  "sampleFps": 12,
+  "motionSettingRestored": "0",
+  "visualReview": "PASS: blink visible, no disappear/jump, stable ears",
+  "observedBlinkSampleIndexes": {
+    "floppy": [
+      51,
+      52
+    ],
+    "round": [
+      49
+    ]
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "apkSha256": "e80e5e6277e68df32f9d47e5414977bbe9686d5c5ab37699ef5c6d53d73c303d",
+  "results": [
+    {
+      "case": "purchase-cancel-isolated",
+      "pass": true
+    },
+    {
+      "case": "purchase-confirmed",
+      "pass": true
+    },
+    {
+      "case": "care-confirmed",
+      "pass": true
+    },
+    {
+      "case": "transfer-cancel-isolated",
+      "pass": true
+    },
+    {
+      "case": "transfer-confirmed",
+      "pass": true
+    },
+    {
+      "case": "close-cancel-isolated",
+      "pass": true
+    },
+    {
+      "case": "close-confirmed",
+      "pass": true,
+      "note": "Corrected harness expectation: actual WAITING label is Следующий день позже. Native XML confirms disabled action and unchanged 40/20 balances."
+    }
+  ]
+}
