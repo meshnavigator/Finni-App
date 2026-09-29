@@ -56,3 +56,31 @@ __pycache__/
 
 # Submission APK is kept locally and attached to the delivery separately.
 /artifacts/release/*.apk
+
+# Local caches, temporary files, and generated reports
+.cache/
+.eslintcache
+.gradle/
+.cxx/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+coverage/
+*.log
+*.tmp
+*.temp
+*.swp
+*~
+Thumbs.db
+
+# Project management files live outside this Git repository.
+/tasks/
+/AGENTS.md
+/TASKS.md
+/CONTRIBUTING.md
+
+# Verification logs under artifacts are project evidence.
+!/artifacts/**/*.log
+
+# Project documentation is stored alongside this repository.
+/docs/
