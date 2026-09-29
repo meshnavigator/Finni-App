@@ -78,6 +78,9 @@ Thumbs.db
 /AGENTS.md
 /TASKS.md
 /CONTRIBUTING.md
+/.agents/skills/
+/.claude/skills/
+/.project-kit/
 
 # Verification logs under artifacts are project evidence.
 !/artifacts/**/*.log
