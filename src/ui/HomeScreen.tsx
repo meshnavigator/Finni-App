@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Image, Modal, Pressable, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
+import { useCallback, useEffect, useState } from 'react';
+import { Image, Modal, Pressable, ScrollView, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import type { AppSnapshot } from '../application/app-runtime.ts';
 import { homeScreenModel } from '../application/ui-model.ts';
 import FinniHomeScene, { type HomeReaction } from './FinniHomeScene.tsx';
@@ -7,6 +7,7 @@ import { goalSource } from './room-assets.ts';
 import { homeNextStep } from './home-next-step.ts';
 import { usesLargeNavigation } from './root-navigation.ts';
 import type { SceneRect } from './home-scene-layout.ts';
+import { homeColors } from './home-colors.ts';
 
 export type HomeScreenProps = Readonly<{
   snapshot: AppSnapshot; busy: boolean; notice: string | null; scenePaused: boolean;
@@ -21,8 +22,14 @@ const ICONS = {
   food: require('../../assets/ui/home-v2/food.png'), care: require('../../assets/ui/home-v2/care.png'),
   mood: require('../../assets/ui/home-v2/mood.png'), arrow: require('../../assets/ui/home-v2/arrow.png'),
 };
-function Icon({ name, size = 24 }: Readonly<{ name: keyof typeof ICONS; size?: number }>) {
-  return <Image accessible={false} source={ICONS[name]} style={{ width: size, height: size }} />;
+const REACTION_CAPTIONS: Record<string, string> = {
+  'AN-006': 'Финни задумался о мечте', 'AN-007': 'Финни радуется!',
+  'AN-009': 'Финни ест и радуется!', 'AN-010': 'Финни ухаживает за шерстью!',
+  'AN-011': 'План сохранён. Финни его заметил!', 'AN-012': 'Финни следит за монетами',
+  'AN-013': 'Мечта получена!', 'AN-014': 'Финни вырос: новая стадия!',
+};
+function Icon({ name, size = 24, color }: Readonly<{ name: keyof typeof ICONS; size?: number; color?: string }>) {
+  return <Image accessible={false} source={ICONS[name]} style={{ width: size, height: size, tintColor: color }} />;
 }
 function MenuRow({ label, onPress }: Readonly<{ label: string; onPress: () => void }>) {
   return <Pressable accessibilityRole="button" onPress={onPress} style={({ pressed }) => [styles.menuRow, pressed && styles.pressed]}><Text style={styles.body}>{label}</Text><Icon name="arrow" /></Pressable>;
@@ -40,6 +47,8 @@ export default function HomeScreen(props: HomeScreenProps) {
   const purchases = props.snapshot.commerce?.purchases ?? [];
   const [skipReactionId, setSkipReactionId] = useState<number | null>(null);
   const [failedGoal, setFailedGoal] = useState<string | null>(null);
+  const [growthOpen, setGrowthOpen] = useState(false);
+  const [recentCaption, setRecentCaption] = useState<string | null>(null);
   const [sceneSize, setSceneSize] = useState({ width: viewport.width - 24, height: 260 });
   const canSkip = props.reaction?.skippable && skipReactionId !== props.reaction.id;
   const hasFood = purchases.some(({ item }) => item.slot === 'food');
@@ -49,6 +58,26 @@ export default function HomeScreen(props: HomeScreenProps) {
   const care = hasCare ? 'Уход: есть' : closed ? 'Уход: нет' : 'Уход: выберем';
   const mood = props.reaction?.expression === 'happy' ? 'Радостно' : props.reaction?.expression === 'thoughtful' ? 'Задумчиво'
     : props.reaction?.expression === 'inspired' ? 'Вдохновлён' : 'Спокойно';
+  const reactionCaption = props.reaction
+    ? REACTION_CAPTIONS[props.reaction.clip] ?? 'Финни заметил твой выбор!'
+    : recentCaption;
+  useEffect(() => {
+    if (!recentCaption) return;
+    const timer = setTimeout(() => setRecentCaption(null), 3000);
+    return () => clearTimeout(timer);
+  }, [recentCaption]);
+  const activeReactionId = props.reaction?.id;
+  const activeReactionClip = props.reaction?.clip;
+  const onReactionFinished = props.onReactionFinished;
+  const onReactionCancelled = props.onReactionCancelled;
+  const handleReactionFinished = useCallback((id: number) => {
+    if (activeReactionId === id && activeReactionClip) setRecentCaption(REACTION_CAPTIONS[activeReactionClip] ?? 'Финни заметил твой выбор!');
+    onReactionFinished(id);
+  }, [activeReactionId, activeReactionClip, onReactionFinished]);
+  const handleReactionCancelled = useCallback((id: number) => {
+    setRecentCaption(null);
+    onReactionCancelled(id);
+  }, [onReactionCancelled]);
   const allGoals = (props.snapshot.commerce?.claimedGoalIds.length ?? 0) === 3;
   const goalName = goal?.name ?? (allGoals ? 'Все мечты получены' : 'Выбери мечту');
   const remaining = goal ? Math.max(0, goal.cost - life.savings) : null;
@@ -75,17 +104,17 @@ export default function HomeScreen(props: HomeScreenProps) {
   const skipButton = canSkip && <Pressable accessibilityRole="button" accessibilityLabel="Пропустить анимацию" onPress={() => setSkipReactionId(props.reaction!.id)}
     testID="home-skip-reaction" style={({ pressed }) => [styles.skipButton, pressed && styles.pressed]}><Text style={styles.caption}>Пропуск</Text></Pressable>;
   const state = <View style={[styles.state, short && !large && styles.shortState, large && [styles.largeState, { marginLeft: portraitSize + 10 }]]} testID="home-care">
-    {([{ name: 'food', text: food }, { name: 'care', text: care }, { name: 'mood', text: mood }] as const).map((item) =>
+    {([{ name: 'food', text: food, color: homeColors.ochre.ink }, { name: 'care', text: care, color: homeColors.lilac.ink }, { name: 'mood', text: mood, color: homeColors.teal.ink }] as const).map((item) =>
       <View key={item.name} style={[styles.stateItem, large && styles.largeStateItem]}>
-        {!large && !short && <Icon name={item.name} size={16} />}
+        {!large && !short && <Icon name={item.name} size={16} color={item.color} />}
         <Text accessibilityLabel={item.name === 'mood' ? 'Настроение: ' + mood : undefined} style={[styles.caption, !large && styles.stateText]}>{item.text}</Text>
       </View>)}
     {large && skipButton}
   </View>;
   return <View style={styles.safe}>
     <View style={[styles.home, short && styles.shortHome, large && styles.largeHome]} testID={large ? 'home-large-summary' : 'home-v42'}
-      accessibilityElementsHidden={Boolean(props.notice)} importantForAccessibility={props.notice ? 'no-hide-descendants' : 'auto'}
-      pointerEvents={props.notice ? 'none' : 'auto'}>
+      accessibilityElementsHidden={Boolean(props.notice) || growthOpen} importantForAccessibility={props.notice || growthOpen ? 'no-hide-descendants' : 'auto'}
+      pointerEvents={props.notice || growthOpen ? 'none' : 'auto'}>
       <View style={[styles.finances, short && !large && styles.shortFinances, large && styles.largeFinances]} testID="home-finances">
         <View style={[styles.money, short && !large && styles.shortMoney, large && styles.largeMoney]}>
           {([['Доступно', life.available], ['Копилка', life.savings]] as const).map(([label, value]) =>
@@ -114,8 +143,12 @@ export default function HomeScreen(props: HomeScreenProps) {
       </View>
 
       <View style={[styles.scene, short && styles.shortScene, large && [styles.largeScene, { height: canSkip ? Math.max(144, portraitSize) : portraitSize }]]} onLayout={({ nativeEvent: { layout } }) => setSceneSize(layout)} testID="home-scene-space">
+        {reactionCaption && <Text pointerEvents="none" accessibilityLiveRegion="polite" style={[styles.reactionCaption, large && styles.largeReactionCaption]}>{reactionCaption}</Text>}
         {!large && <>
           <View pointerEvents="none" style={styles.roomArch} /><View pointerEvents="none" style={styles.roomLight} />
+          <View pointerEvents="none" accessible={false} importantForAccessibility="no-hide-descendants" style={styles.roomWindow}>
+            <View style={styles.windowVertical} /><View style={styles.windowHorizontal} />
+          </View>
           <View pointerEvents="none" style={styles.roomFloor} />
           <View pointerEvents="none" style={[styles.rug, { top: petRegion.y + petRegion.height - 18 }]} />
           {!short && <View style={styles.identity}><Text style={styles.petName}>{profile.name}</Text><Text style={styles.caption}>{model.dayLabel}{props.demo ? ' · Демо' : ''}</Text></View>}
@@ -123,13 +156,17 @@ export default function HomeScreen(props: HomeScreenProps) {
         </>}
         <View pointerEvents="none" importantForAccessibility="no-hide-descendants" style={large ? [styles.portrait, { width: portraitSize, height: portraitSize }] : StyleSheet.absoluteFill}>
           <FinniHomeScene key={profile.shapeId + '-' + profile.patternId} accessibilityLabel={profile.name + '. ' + food + '. ' + care + '. ' + mood}
-            careLabel={food + '. ' + care} height={large ? portraitSize : sceneSize.height} paused={props.scenePaused || Boolean(props.notice)}
+            careLabel={food + '. ' + care} height={large ? portraitSize : sceneSize.height} paused={props.scenePaused || Boolean(props.notice) || growthOpen}
             motionEnabled={props.motionEnabled} soundEnabled={props.soundEnabled} stage={life.petStage} appearance={profile} reaction={props.reaction}
-            onReactionFinished={props.onReactionFinished} onReactionCancelled={props.onReactionCancelled}
+            onReactionFinished={handleReactionFinished} onReactionCancelled={handleReactionCancelled}
             showCaption={false} sceneStyle="quiet" portrait={large} fullscreen petRegion={petRegion} hideSkip skipReactionId={skipReactionId} />
         </View>
         <Pressable accessibilityRole="button" accessibilityLabel={profile.name + ', стадия ' + life.petStage + '. ' + mood + '. Изменить питомца'} onPress={props.onEditPet}
           style={large ? [styles.portraitTarget, { width: portraitSize, height: portraitSize }] : [styles.petTarget, { left: petRegion.x, top: petRegion.y + (short ? 48 : 24), width: petRegion.width, height: Math.max(48, petRegion.height - (short ? 48 : 24)) }]} testID="home-pet-target" />
+        <Pressable accessibilityRole="button" accessibilityLabel="Как растёт Финни" onPress={() => setGrowthOpen(true)}
+          style={({ pressed }) => [styles.growthButton, large && styles.largeGrowthButton, pressed && styles.pressed]} testID="home-growth-help">
+          <Text style={styles.growthButtonText}>Как растёт?</Text>
+        </Pressable>
         {state}
       </View>
 
@@ -144,6 +181,16 @@ export default function HomeScreen(props: HomeScreenProps) {
 
     <Modal visible={Boolean(props.notice)} transparent onRequestClose={props.onDismissNotice} accessibilityViewIsModal>
       <View style={styles.noticeOverlay}><View style={styles.noticeCard}><Text accessibilityLiveRegion="polite" style={styles.body}>{props.notice}</Text><MenuRow label="Понятно" onPress={props.onDismissNotice} /></View></View>
+    </Modal>
+    <Modal visible={growthOpen} transparent onRequestClose={() => setGrowthOpen(false)} accessibilityViewIsModal>
+      <View style={styles.noticeOverlay}><ScrollView style={styles.growthCard} contentContainerStyle={styles.growthContent}>
+        <Text accessibilityRole="header" style={styles.growthTitle}>Как растёт Финни?</Text>
+        <Text style={styles.body}>Сейчас стадия {life.petStage} из 3: {life.petStage === 1 ? 'Малыш' : life.petStage === 2 ? 'Исследователь' : 'Мастер планов'}.</Text>
+        <Text style={styles.body}>Финни делает шаги роста после завершения дня. Помогают еда и уход, выполненный план и новые монеты в копилке. Покупка сама по себе не меняет стадию.</Text>
+        <Text style={styles.body}>Исследователем он станет после 2 завершённых дней и 6 шагов роста. Мастером планов — после 5 дней, 12 шагов и новых накоплений хотя бы в 3 днях.</Text>
+        <Text style={styles.body}>В итогах дня видно, сколько шагов он получил и почему.</Text>
+        <MenuRow label="Понятно" onPress={() => setGrowthOpen(false)} />
+      </ScrollView></View>
     </Modal>
   </View>;
 }
@@ -173,10 +220,18 @@ const styles = StyleSheet.create({
   fill: { height: 5, borderRadius: 3, backgroundColor: '#5F7754' },
   scene: { flex: 1, minHeight: 180, borderRadius: 28, backgroundColor: '#EDE2CD', overflow: 'hidden' },
   shortScene: { minHeight: 130 },
+  reactionCaption: { position: 'absolute', zIndex: 4, top: 6, left: 6, right: 6, overflow: 'hidden', borderRadius: 12, padding: 8, backgroundColor: '#FFFCF6', color: '#3D352D', textAlign: 'center', fontSize: 15, lineHeight: 20, fontWeight: '700' },
+  largeReactionCaption: { left: 158, right: 0, top: 0 },
+  growthButton: { position: 'absolute', zIndex: 3, right: 6, bottom: 46, minHeight: 40, justifyContent: 'center', borderRadius: 14, paddingHorizontal: 10, backgroundColor: '#FFFCF6' },
+  largeGrowthButton: { bottom: 0, right: 0 },
+  growthButtonText: { color: '#5C3C2E', fontSize: 14, fontWeight: '700' },
   roomArch: { position: 'absolute', width: '76%', height: '105%', top: '9%', left: '12%', borderTopLeftRadius: 160, borderTopRightRadius: 160, backgroundColor: '#F5ECDC' },
   roomLight: { position: 'absolute', top: -30, left: -24, width: 110, height: '110%', backgroundColor: '#FBF3E2', opacity: .55, transform: [{ rotate: '24deg' }] },
   roomFloor: { position: 'absolute', left: 0, right: 0, bottom: 0, height: '28%', backgroundColor: '#DDC9A8' },
-  rug: { position: 'absolute', left: '12%', width: '76%', height: 42, borderRadius: '50%', backgroundColor: '#C1AB89', borderWidth: 5, borderColor: '#D3BC97' },
+  rug: { position: 'absolute', left: '12%', width: '76%', height: 42, borderRadius: '50%', backgroundColor: homeColors.rug, borderWidth: 5, borderColor: homeColors.rugEdge },
+  roomWindow: { position: 'absolute', top: 16, right: 14, width: 64, height: 76, borderRadius: 20, borderWidth: 6, borderColor: homeColors.windowFrame, backgroundColor: homeColors.sky, overflow: 'hidden' },
+  windowVertical: { position: 'absolute', top: 0, bottom: 0, left: '50%', width: 3, marginLeft: -1.5, backgroundColor: homeColors.windowFrame },
+  windowHorizontal: { position: 'absolute', left: 0, right: 0, top: '50%', height: 3, marginTop: -1.5, backgroundColor: homeColors.windowFrame },
   identity: { position: 'absolute', left: 16, top: 13 },
   petName: { color: '#594737', fontSize: 18, lineHeight: 23, fontWeight: '600', includeFontPadding: false },
   skipButton: { minWidth: 80, minHeight: 48, padding: 6, justifyContent: 'center', alignItems: 'center', borderRadius: 14, backgroundColor: '#FFFCF6' },
@@ -209,4 +264,7 @@ const styles = StyleSheet.create({
   menuRow: { minHeight: 56, borderRadius: 18, padding: 14, backgroundColor: '#FFFCF6', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12 },
   noticeOverlay: { flex: 1, justifyContent: 'center', padding: 24, backgroundColor: '#00000066' },
   noticeCard: { padding: 20, borderRadius: 24, backgroundColor: '#FFFCF6', gap: 16 },
+  growthCard: { flexGrow: 0, maxHeight: '85%', borderRadius: 24, backgroundColor: '#FFFCF6' },
+  growthContent: { gap: 14, padding: 20 },
+  growthTitle: { color: '#3D352D', fontSize: 23, fontWeight: '700' },
 });

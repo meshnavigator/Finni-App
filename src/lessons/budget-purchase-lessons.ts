@@ -159,7 +159,7 @@ export const evaluateBasket: LessonEvaluator = (solution, rawParameters) => {
     }
     if (count > 0 && offer.alternativeGroup) {
       if (groups.has(offer.alternativeGroup)) {
-        return action('invalid_input', 'Выбраны одновременно два взаимоисключающих предложения.', 'Для одной покупки выбирают один вариант.', 'Исправь корзину.', {});
+        return action('invalid_input', 'Ты выбрал два варианта одной покупки.', 'Здесь можно выбрать только один.', 'Убери один вариант и проверь ещё раз.', {});
       }
       groups.add(offer.alternativeGroup);
     }
@@ -186,7 +186,7 @@ export const evaluateBasket: LessonEvaluator = (solution, rawParameters) => {
     ? 'Нужно ' + pencilCount + ' карандаша: отдельные по ' + pencilSingle.packPrice + ' стоят ' + (pencilCount * pencilSingle.packPrice) + ', набор из 3 стоит ' + pencilPack.packPrice + '. В выбранной корзине ' + (units.pencil ?? 0) + ' карандаша; ' + (extraUnits === 0 ? 'лишних нет' : 'на ' + extraUnits + ' больше нужного') + '. Остаток ' + (parameters.budget - total) + '.'
     : null;
   if (parameters.preferLowerCostForEqualCoverage && total > minimum) {
-    return action('valid_alternative', 'Список выполнен и денег хватило.', quantityExplanation ?? 'Этот вариант допустим. При одинаковом покрытии можно сравнить общую цену и выбрать более экономный набор.', 'Можно завершить занятие и сравнить итог с другим вариантом.', { total, remainder: parameters.budget - total, extraUnits, minimum });
+    return action('valid_alternative', 'Список выполнен и денег хватило.', quantityExplanation ?? 'Этот вариант подходит. Сравни цену разных наборов: возможно, есть дешевле.', 'Можно завершить занятие и сравнить итог с другим вариантом.', { total, remainder: parameters.budget - total, extraUnits, minimum });
   }
   return action('meets_goal', 'Список выполнен, а остаток совпадает с учебным чеком.', quantityExplanation ?? 'Сравнивают общую цену нужного количества и свойства товара. В этом примере деньги твоего дня не меняются.', 'Можно завершить занятие или посмотреть другой вариант.', { total, remainder: parameters.budget - total, extraUnits, minimum });
 };

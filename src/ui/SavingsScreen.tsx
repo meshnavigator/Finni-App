@@ -13,6 +13,7 @@ import {
 import type { AppSnapshot } from '../application/app-runtime.ts';
 import { GOALS } from '../domain/catalog.ts';
 import { goalSource } from './room-assets.ts';
+import { useKeyboardScrollInset } from './use-keyboard-scroll-inset.ts';
 
 type TransferKind = 'deposit' | 'withdraw';
 type SavingsPreview = Readonly<{
@@ -58,6 +59,7 @@ function Button(props: Readonly<{
 }
 
 export default function SavingsScreen(props: Props) {
+  const keyboardInset = useKeyboardScrollInset();
   const [value, setValue] = useState('');
   const [notice, setNotice] = useState('Перевод между кошельком и копилкой не меняет общую сумму.');
   const transfer = useMemo(() => {
@@ -126,7 +128,7 @@ export default function SavingsScreen(props: Props) {
 
   return (
     <SafeAreaView style={styles.page}>
-      <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={styles.content}>
+      <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={[styles.content, { paddingBottom: 20 + keyboardInset }]}>
         <Text style={styles.eyebrow}>КОПИЛКА</Text>
         <Text style={styles.title}>{lifecycle.savings} монет на мечту</Text>
         <Text style={styles.balance}>В кошельке: {lifecycle.available}</Text>

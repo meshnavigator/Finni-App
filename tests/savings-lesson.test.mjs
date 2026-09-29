@@ -64,7 +64,7 @@ test('S02 preview calculates purchase and postponement without a money command',
     action: 'buy',
     availableAfterAction: 0,
   });
-  assert.match(purchased.nextStep, /preview/);
+  assert.match(purchased.nextStep, /только пример/);
   const postponed = evaluateSavingsWithdrawalPreview(
     { withdrawal: 0, action: 'postpone' },
     withdrawal,
@@ -115,7 +115,7 @@ test('savings renderer exposes both canonical SRS scenarios and a non-mutating p
   assert.ok(source.includes('Math.max(0, goalCost'));
   assert.ok(!source.includes("? 'buy' : 'postpone'"));
   assert.match(source, /parameters\.mode/);
-  assert.match(source, /Это preview: монеты твоего игрового дня не меняются/);
+  assert.match(source, /Это только пример: монеты твоего дня не меняются/);
   assertSharedControlTargets(source);
   assert.doesNotMatch(source, /repository|ledger|TransferToSavings/);
 });

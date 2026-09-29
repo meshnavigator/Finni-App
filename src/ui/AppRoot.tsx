@@ -307,12 +307,19 @@ function PetBuilder(props: Readonly<{
   onSave: (appearance: PetAppearance) => void;
   onCancel: () => void;
 }>) {
-  const [name, setName] = useState(props.initial?.name ?? 'Финни');
+  const name = props.initial?.name ?? 'Финни';
+  const nameInput = useRef<TextInput>(null);
+  const [nameDraft, setNameDraft] = useState(name);
+  const [nameDialogOpen, setNameDialogOpen] = useState(false);
   const [shapeId, setShapeId] = useState<PetShapeId>(props.initial?.shapeId ?? 'round');
   const [patternId, setPatternId] = useState<PetPatternId>(props.initial?.patternId ?? 'plain');
   const validation = petNameError(name);
+  const draftValidation = petNameError(nameDraft);
   const { fontScale } = useWindowDimensions();
   const largeChoices = usesLargeNavigation(fontScale);
+  const closeNameDialog = () => {
+    if (!props.busy) setNameDialogOpen(false);
+  };
   return (
     <View style={styles.page}>
       <KeyboardAvoidingView
@@ -351,15 +358,16 @@ function PetBuilder(props: Readonly<{
             ))}
           </View>
           <Text style={styles.fieldLabel}>Придумай имя питомцу</Text>
-          <TextInput
-            accessibilityLabel="Игровое имя питомца"
-            autoCapitalize="sentences"
-            maxLength={32}
-            onChangeText={setName}
-            placeholder="Финни"
-            style={[styles.input, validation && styles.inputError]}
-            value={name}
-          />
+          <Pressable
+            accessibilityLabel={`Игровое имя питомца: ${name}. Изменить`}
+            accessibilityRole="button"
+            disabled={props.busy}
+            onPress={() => { setNameDraft(name); setNameDialogOpen(true); }}
+            style={[styles.input, styles.nameField]}
+          >
+            <Text style={styles.nameFieldText}>{name}</Text>
+            <Text style={styles.nameFieldAction}>Изменить</Text>
+          </Pressable>
           {validation && <Text accessibilityLiveRegion="polite" style={styles.validation}>{validation}</Text>}
           {props.saveError && <Text accessibilityLiveRegion="polite" style={styles.validation}>{props.saveError}</Text>}
           </View>
@@ -371,6 +379,50 @@ function PetBuilder(props: Readonly<{
           <ActionButton label="Отмена" onPress={props.onCancel} secondary />
         </ScrollView>
       </KeyboardAvoidingView>
+      <Modal
+        accessibilityViewIsModal
+        animationType="fade"
+        onRequestClose={closeNameDialog}
+        onShow={() => nameInput.current?.focus()}
+        transparent
+        visible={nameDialogOpen}
+      >
+        <RootSafeAreaView style={styles.nameDialogBackdrop}>
+          <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={styles.flex}
+          >
+            <ScrollView
+              contentContainerStyle={styles.nameDialogContent}
+              keyboardShouldPersistTaps="handled"
+            >
+              <View style={styles.nameDialogCard} testID="pet-name-dialog">
+                <Text accessibilityRole="header" style={styles.title}>Имя питомца</Text>
+                <Text style={styles.fieldLabel}>Новое имя</Text>
+                <TextInput
+                  accessibilityLabel="Новое имя питомца"
+                  autoCapitalize="sentences"
+                  maxLength={32}
+                  onChangeText={setNameDraft}
+                  placeholder="Финни"
+                  ref={nameInput}
+                  selectTextOnFocus
+                  style={[styles.input, draftValidation && styles.inputError]}
+                  value={nameDraft}
+                />
+                {draftValidation && <Text accessibilityLiveRegion="polite" style={styles.validation}>{draftValidation}</Text>}
+                {props.saveError && <Text accessibilityLiveRegion="polite" style={styles.validation}>{props.saveError}</Text>}
+                <ActionButton
+                  label={props.busy ? 'Сохраняем…' : 'Сохранить'}
+                  disabled={props.busy || Boolean(draftValidation)}
+                  onPress={() => props.onSave(petAppearance({ name: nameDraft, shapeId, patternId }))}
+                />
+                <ActionButton label="Отмена" disabled={props.busy} onPress={closeNameDialog} secondary />
+              </View>
+            </ScrollView>
+          </KeyboardAvoidingView>
+        </RootSafeAreaView>
+      </Modal>
     </View>
   );
 }
@@ -462,6 +514,9 @@ export default function AppRoot() {
   const [sectionTitle, setSectionTitle] = useState('');
   const [lessonAttempt, setLessonAttempt] = useState<LessonAttempt | null>(null);
   const [lessonEvaluation, setLessonEvaluation] = useState<LessonEvaluation | null>(null);
+  const lessonSaveQueue = useRef<Promise<void>>(Promise.resolve());
+  const lessonEditVersion = useRef(0);
+  const lessonSaveFailed = useRef(false);
   const [lessonPresentation, setLessonPresentation] = useState<LessonVariantPresentation | null>(null);
   const [revealedEvidenceIds, setRevealedEvidenceIds] = useState<readonly string[]>([]);
   const [lessonRewardReason, setLessonRewardReason] = useState<null | 'GRANTED' | 'TRAINING' | 'PERIOD_NOT_ACTIVE' | 'ALREADY_GRANTED'>(null);
@@ -638,8 +693,8 @@ export default function AppRoot() {
   const updateCommerce = async (
     action: (runtime: AppRuntime, current: AppSnapshot) => Promise<CommandReceipt>,
     errorMessage: string,
-  ) => {
-    if (!controller.current || !snapshot || commandBusy.current) return;
+  ): Promise<boolean> => {
+    if (!controller.current || !snapshot || commandBusy.current) return false;
     commandBusy.current = true;
     const currentController = controller.current;
     const captured = currentController.session();
@@ -654,8 +709,10 @@ export default function AppRoot() {
       setSnapshot(loaded);
       presentation.current.accept(receipt, captured, loaded.lifecycle?.revision ?? -1);
       if (screen === 'home') setReaction(homeReaction(presentation.current.next()));
+      return true;
     } catch {
       setMessage(committed ? 'Действие сохранено. Не удалось обновить экран — открой приложение снова.' : errorMessage);
+      return false;
     } finally {
       commandBusy.current = false;
       setBusy(false);
@@ -791,6 +848,9 @@ export default function AppRoot() {
     try {
       const attempt = await controller.current.submit((runtime) => runtime.startLesson(snapshot, presentation.definition));
       setLessonAttempt(attempt);
+      lessonSaveQueue.current = Promise.resolve();
+      lessonEditVersion.current += 1;
+      lessonSaveFailed.current = false;
       setLessonEvaluation(null);
       setLessonPresentation(presentation);
       setRevealedEvidenceIds([]);
@@ -804,11 +864,36 @@ export default function AppRoot() {
     }
   };
 
+  const saveLessonDraft = (solution: Readonly<Record<string, unknown>>) => {
+    if (!lessonAttempt || !controller.current) return;
+    const attemptId = lessonAttempt.attemptId;
+    const currentController = controller.current;
+    const version = ++lessonEditVersion.current;
+    lessonSaveFailed.current = false;
+    setLessonAttempt((current) => current?.attemptId === attemptId
+      ? { ...current, solution, phase: 'draft' } : current);
+    setLessonEvaluation(null);
+    lessonSaveQueue.current = lessonSaveQueue.current.then(async () => {
+      const saved = await currentController.submit((runtime) => runtime.saveLesson(attemptId, solution));
+      if (version === lessonEditVersion.current) {
+        setLessonAttempt((current) => current?.attemptId === attemptId ? saved : current);
+        setMessage(null);
+      }
+    }).catch(() => {
+      if (version === lessonEditVersion.current) {
+        lessonSaveFailed.current = true;
+        setMessage('Ответ не сохранился. Попробуй ввести его ещё раз.');
+      }
+    });
+  };
+
   const withLesson = async (work: (runtime: AppRuntime, attempt: LessonAttempt) => Promise<LessonAttempt | Readonly<{ attempt: LessonAttempt; evaluation?: LessonEvaluation }>>) => {
     if (!lessonAttempt || !controller.current) return;
     setBusy(true);
     setMessage(null);
     try {
+      await lessonSaveQueue.current;
+      if (lessonSaveFailed.current) throw new Error('Lesson draft was not saved');
       const result = await controller.current.submit((runtime) => work(runtime, lessonAttempt));
       const next = 'attempt' in result ? result.attempt : result;
       setLessonAttempt(next);
@@ -973,12 +1058,19 @@ export default function AppRoot() {
           snapshot={snapshot}
           busy={busy}
           onPreview={(itemId) => controller.current!.submit((runtime) => runtime.previewPurchase(snapshot, itemId))}
-          onPurchase={(itemId, acknowledged) => {
-            void updateCommerce(
+          onPurchase={async (itemId, acknowledged) => {
+            const purchased = await updateCommerce(
               (runtime, current) => runtime.purchaseReceipt(current, itemId, acknowledged),
               'Покупка не выполнена. Деньги не изменились.',
             );
+            if (purchased) {
+              setReaction(homeReaction(presentation.current.next()));
+              setScreen('home');
+            }
+            return purchased;
           }}
+          onPlan={() => setScreen('plan')}
+          onHome={() => setScreen('home')}
         />
       )}
       {screen === 'savings' && snapshot && (
@@ -1061,7 +1153,7 @@ export default function AppRoot() {
           rewardReason={lessonRewardReason}
           rewardEvent={lessonRewardEvent}
           message={message}
-          onSolutionChange={(solution) => void withLesson((runtime, attempt) => runtime.saveLesson(attempt.attemptId, solution))}
+          onSolutionChange={saveLessonDraft}
           revealedEvidenceIds={revealedEvidenceIds}
           onRevealEvidence={(evidenceId) => setRevealedEvidenceIds((current) => current.includes(evidenceId) ? current : [...current, evidenceId])}
           onRevealHint={(level: HintLevel) => void withLesson((runtime, attempt) => runtime.revealLessonHint(attempt.attemptId, level))}
@@ -1108,6 +1200,12 @@ const styles = StyleSheet.create({
   variantArrow: { color: palette.muted, fontSize: 26 },
   builderPreview: { alignSelf: 'center', padding: 12, borderRadius: 28, backgroundColor: palette.soft },
   profileForm: { ...ui.card, gap: 12 },
+  nameField: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', minHeight: 52 },
+  nameFieldText: { color: colors.ink, fontSize: 16, flexShrink: 1 },
+  nameFieldAction: { color: colors.teal, fontSize: 15, fontWeight: '600', marginLeft: 12 },
+  nameDialogBackdrop: { flex: 1, backgroundColor: 'rgba(35, 31, 28, 0.48)' },
+  nameDialogContent: { flexGrow: 1, justifyContent: 'center', padding: 18 },
+  nameDialogCard: { ...ui.card, alignSelf: 'center', gap: 12, maxWidth: 440, width: '100%' },
   choiceColumn: { flexDirection: 'column' },
   builderContent: { gap: 14, padding: 18, paddingBottom: 28 },
   homeContent: { gap: 8, minHeight: '100%', paddingHorizontal: 14, paddingBottom: 8 },

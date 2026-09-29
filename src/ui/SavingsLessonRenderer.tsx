@@ -126,7 +126,7 @@ function WithdrawalPreview(props: LessonRendererProps) {
         onPress={() => props.onChange({ withdrawal: parsed, action: 'postpone' })}
         selected={action === 'postpone'}
       />
-      <Text style={styles.note}>Выбери, купить сейчас или отложить. Это preview: монеты твоего игрового дня не меняются.</Text>
+      <Text style={styles.note}>Выбери, купить сейчас или отложить. Это только пример: монеты твоего дня не меняются.</Text>
     </View>
   );
 }

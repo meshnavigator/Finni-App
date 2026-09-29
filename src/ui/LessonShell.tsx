@@ -18,6 +18,7 @@ import {
   LessonRendererRegistry,
   type LessonRendererProps,
 } from './lesson-renderer-registry.ts';
+import { useKeyboardScrollInset } from './use-keyboard-scroll-inset.ts';
 
 type ShellCopy = Readonly<{
   title: string;
@@ -84,6 +85,7 @@ export default function LessonShell(props: Readonly<{
   returnLabel: string;
   onBack: () => void;
 }>) {
+  const keyboardInset = useKeyboardScrollInset();
   const evaluation = props.evaluation;
   const explanationVisible = Boolean(
     evaluation &&
@@ -99,7 +101,7 @@ export default function LessonShell(props: Readonly<{
 
   return (
     <View style={styles.page}>
-      <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={styles.content}>
+      <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={[styles.content, { paddingBottom: 28 + keyboardInset }]}>
         <DetailBack onPress={props.onBack} label={props.returnLabel} disabled={props.busy} />
         <Text style={styles.eyebrow}>ЗАНЯТИЕ</Text>
         <Text accessibilityRole="header" style={styles.title}>{props.copy.title}</Text>
@@ -128,7 +130,7 @@ export default function LessonShell(props: Readonly<{
         })}
 
         <View style={styles.hints}>
-          <ActionButton label="Короткая справка" onPress={props.onHelp} secondary />
+          <ActionButton label="Короткая подсказка" onPress={props.onHelp} secondary />
           {(['L1', 'L2'] as const).map((level, index) => {
             const shown = props.attempt.shownHints.includes(level);
             return shown ? (
@@ -138,7 +140,7 @@ export default function LessonShell(props: Readonly<{
             ) : (
               <ActionButton
                 key={level}
-                label={level === 'L1' ? 'Подсказка L1' : 'Показать пример L2'}
+                label={level === 'L1' ? 'Подсказка' : 'Показать пример'}
                 onPress={() => props.onRevealHint(level)}
                 disabled={props.busy || props.attempt.phase === 'completed'}
                 secondary
@@ -184,7 +186,7 @@ export default function LessonShell(props: Readonly<{
                 )}
                 {invalid ? (
                   <Text style={styles.error}>
-                    Исправь ответ: невалидный ввод нельзя завершить.
+                    Проверь числа в ответе и попробуй ещё раз.
                   </Text>
                 ) : props.attempt.phase !== 'completed' ? (
                   <ActionButton

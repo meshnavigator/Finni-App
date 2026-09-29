@@ -7,6 +7,7 @@ import { ReceiptPresentationController } from '../src/application/receipt-presen
 import { amount, counter } from '../src/domain/index.ts';
 import { CommerceRepository, migrateDatabase } from '../src/persistence/index.ts';
 import { SqliteFileAdapter } from './sqlite-file-adapter.mjs';
+import { finniAnimationFrame, initialFinniAnimationState, reduceFinniAnimation } from '../src/ui/finni-animation-set.ts';
 
 const directories = [];
 test.after(() => directories.forEach((directory) => rmSync(directory, { recursive: true, force: true })));
@@ -35,6 +36,41 @@ function transfer(commandId, revision, value) {
 }
 
 const normal = Object.freeze({ profileId: 'profile', mode: 'normal', sessionEpoch: 1 });
+
+test('withdrawal shows calm instead of the previous emotion and never replays a transfer', async (t) => {
+  const { database, commerce } = await setup();
+  t.after(() => commerce.close());
+  const presentation = new ReceiptPresentationController();
+  presentation.bind(normal);
+  const deposited = await commerce.transfer(transfer('before-withdrawal', 0, 30), '2026-09-26T00:00:01.000Z');
+  presentation.accept(deposited, normal, 1);
+  const previous = presentation.next();
+  const command = { ...transfer('withdraw-calm', 1, 10), type: 'WithdrawSavings' };
+  const withdrawn = await commerce.transfer(command, '2026-09-26T00:00:02.000Z');
+  assert.equal(withdrawn.result.feedback.petReaction, 'calm');
+  // A stale receipt cannot interrupt the current presentation.
+  assert.equal(presentation.accept(withdrawn, normal, 1), false);
+  assert.equal(presentation.next().id, previous.id);
+  assert.equal(presentation.accept(withdrawn, normal, 2), true);
+  const event = presentation.next();
+  assert.equal(event.commandType, 'WithdrawSavings');
+  assert.equal(event.expression, 'neutral');
+  // An old animation finishing after the replacement cannot remove the calm one.
+  assert.equal(presentation.complete(previous.id).id, event.id);
+  for (const motionEnabled of [true, false]) {
+    const displayed = { stage: 1, shapeId: 'round', patternId: 'plain', expression: event.expression };
+    const animation = initialFinniAnimationState(displayed,
+      { motionEnabled, soundEnabled: false, systemReduceMotion: false });
+    assert.equal(finniAnimationFrame(reduceFinniAnimation(animation,
+      { type: 'play', clip: event.clip, presentation: displayed })).expression, 'neutral');
+  }
+  assert.equal(presentation.complete(event.id), null);
+  const repeated = await commerce.transfer(command, '2026-09-26T00:00:03.000Z');
+  assert.deepEqual(repeated, withdrawn);
+  assert.equal(presentation.accept(repeated, normal, 2), false);
+  assert.deepEqual(await database.getFirstAsync('SELECT available, savings FROM wallet_projection WHERE profile_id = ?', 'profile'),
+    { available: 80, savings: 20 });
+});
 
 test('persisted savings receipt is shown once; replay and restart preserve exact money', async () => {
   const { database, commerce } = await setup();

@@ -134,7 +134,7 @@ export function evaluateSavingsWithdrawalPreview(
       consequence: 'Ты выбрал занятие сейчас. В учебном кошельке ' + availableAfterAction
         + ', в копилке ' + savingsAfterWithdrawal + '; до мечты ' + remaining + '.',
       explanation: 'Снятие не объявляется ошибкой: оно показывает выбор между занятием сейчас и большей суммой для мечты.',
-      nextStep: 'Это только preview. Можно изменить сумму снятия и снова проверить пример.',
+      nextStep: 'Это только пример. Можно изменить сумму и проверить ещё раз.',
       calculation: result,
     };
   }
@@ -158,5 +158,5 @@ export const evaluateSavings: LessonEvaluator = (solution, parameters) => {
   if (parameters.mode === SAVINGS_WITHDRAWAL_PREVIEW) {
     return evaluateSavingsWithdrawalPreview(solution, parameters);
   }
-  return invalid('Не удалось определить учебный сценарий накоплений.');
+  return invalid('Не удалось открыть задание про копилку. Попробуй ещё раз.');
 };
