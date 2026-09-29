@@ -28,7 +28,7 @@ const releaseScript = await readFile(
 test('Android release contract targets package and portrait orientation', () => {
   assert.equal(appConfig.name, 'Питомец Финни');
   assert.equal(appConfig.slug, 'finni');
-  assert.equal(appConfig.version, '0.1.0');
+  assert.equal(appConfig.version, '1.0.0');
   assert.equal(appConfig.orientation, 'portrait');
   assert.equal(appConfig.android.package, 'com.meshnavigator.finni');
 });

@@ -53,3 +53,6 @@ __pycache__/
 /android/build
 /android/app/build
 /android/local.properties
+
+# Submission APK is kept locally and attached to the delivery separately.
+/artifacts/release/*.apk

@@ -1,9 +1,15 @@
 # ЛЦТ 2026 — индекс документации
 
+**Актуальная точка входа для сдачи:**
+[паспорт финальной версии 1.0.0](RELEASE_HANDOFF_2026-09-29.md).
+Владелец заморозил объём разработки 2026-09-29; фактические результаты
+приёмочных проверок отделены от этого решения.
+
 ## Источники истины
 
 | Приоритет | Документ | Назначение |
 |---:|---|---|
+| 0 | [RELEASE_HANDOFF_2026-09-29.md](RELEASE_HANDOFF_2026-09-29.md) | Паспорт поставки 1.0.0, APK, SHA-256, Verify и открытые проверки |
 | 0 | [IMPLEMENTATION_DECISIONS.md](IMPLEMENTATION_DECISIONS.md) | Канонический реестр Accepted-решений и отклонений |
 | 0 | [DEC-2026-09-19-006_2d-cutout-target.md](DEC-2026-09-19-006_2d-cutout-target.md) | Развёрнутая запись принятого layered 2D cutout/2.5D rebaseline |
 | 0 | [DEC-2026-09-19-007_2d-runtime-technology.md](DEC-2026-09-19-007_2d-runtime-technology.md) | Accepted RN core Image/Animated runtime technology с physical-device gate S10 |
@@ -12,7 +18,7 @@
 | 3 | [Единая-рамка-ФГ(приложение)-2026.pdf](Единая-рамка-ФГ(приложение)-2026.pdf) | Нормативная образовательная основа; для продукта релевантны результаты для детей 7–11 лет |
 | 4 | [Finni_SRS_v1.3_2026-09-16.md](Finni_SRS_v1.3_2026-09-16.md) | Производная спецификация реализации v1.3: детализация требований и проектные решения |
 | 4 | [Finni_SRS_v1.3_2026-09-16.docx](Finni_SRS_v1.3_2026-09-16.docx) | DOCX-представление той же содержательной редакции SRS v1.3 |
-| 5 | [Finni_3D_Addendum_v1.0/Finni_3D_Visual_Animation_Addendum_v1.0.md](Finni_3D_Addendum_v1.0/Finni_3D_Visual_Animation_Addendum_v1.0.md) | Планировочное Markdown-дополнение по 3D-визуалу и анимациям v1.0; конфликт с SRS должен быть разрешён в S6-001 |
+| 5 | [Finni_3D_Addendum_v1.0/Finni_3D_Visual_Animation_Addendum_v1.0.md](Finni_3D_Addendum_v1.0/Finni_3D_Visual_Animation_Addendum_v1.0.md) | Историческое Markdown-дополнение по 3D-визуалу и анимациям v1.0; конфликт разрешён DEC-2026-09-19-006 |
 | 5 | [Finni_3D_Addendum_v1.0/Finni_3D_Visual_Animation_Addendum_v1.0.docx](Finni_3D_Addendum_v1.0/Finni_3D_Visual_Animation_Addendum_v1.0.docx) | DOCX-представление дополнения со встроенным художественным эталоном |
 | 6 | [mermaid/PROJECT_FLOW_MERMAID.md](mermaid/PROJECT_FLOW_MERMAID.md) | Текущий data/UI workflow и layered 2D presentation boundary |
 
@@ -52,10 +58,9 @@ comparative/diagnostic evidence, а не production asset.
 историческим evidence DEC-2026-09-18-002/Sprint 6–7 и не production target.
 R1–R4, дополнение, manifests и reviews сохраняются без переписывания.
 
-SRS v1.3 теперь доступна в текущем workspace, хотя её не было в исходном архиве,
-по которому готовилось дополнение. Поэтому Sprint 6 начинается с построчной
-сверки каталога, идентификаторов и конфликтов; данные с концепт-изображения
-нельзя переносить в приложение как фактические.
+SRS v1.3 отсутствовала в исходном архиве, по которому готовилось 3D-дополнение.
+В Sprint 6 каталог, идентификаторы и конфликты были сверены; данные с
+концепт-изображения не переносились в приложение как фактические.
 
 ## Навигация
 
