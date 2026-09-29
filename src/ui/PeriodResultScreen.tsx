@@ -2,6 +2,7 @@ import DetailBack from './DetailBack.tsx';
 import { palette, screenStyles as ui } from './screen-theme.ts';
 import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import type { AppSnapshot } from '../application/app-runtime.ts';
+import { petNarrativeText } from './pet-copy.ts';
 
 function Button(props: Readonly<{
   label: string;
@@ -44,6 +45,7 @@ export default function PeriodResultScreen(props: Readonly<{
   onBack: () => void;
 }>) {
   const lifecycle = props.snapshot.lifecycle!;
+  const petName = props.snapshot.profile?.name ?? 'питомец';
   const budget = props.snapshot.budget;
   const summary = lifecycle.latestSummary;
   const active = lifecycle.state === 'ACTIVE';
@@ -62,8 +64,8 @@ export default function PeriodResultScreen(props: Readonly<{
   const confirmClose = () => Alert.alert(
     'Завершить день?',
     food && care
-      ? 'Итог и развитие Финни сохранятся. Изменить решения этого дня после завершения нельзя.'
-      : 'Не все нужды выбраны сегодня. Финни не заболеет и ничего не потеряет — итог просто подскажет следующий шаг.',
+      ? `Итог и развитие питомца «${petName}» сохранятся. Изменить решения этого дня после завершения нельзя.`
+      : `Не все нужды выбраны сегодня. Питомец «${petName}» не заболеет и ничего не потеряет — итог просто подскажет следующий шаг.`,
     [
       { text: 'Вернуться', style: 'cancel' },
       { text: 'Завершить', onPress: props.onClosePeriod },
@@ -89,7 +91,7 @@ export default function PeriodResultScreen(props: Readonly<{
         )}
 
         <View style={styles.card}>
-          <Text accessibilityRole="header" style={styles.cardTitle}>Забота о Финни</Text>
+          <Text accessibilityRole="header" style={styles.cardTitle}>Забота о питомце «{petName}»</Text>
           <Text style={styles.caption}>Еда: {summary ? summary.facts.foodPurchased ? 'выбрана' : 'сегодня не выбрана' : food ? 'выбрана' : 'пока не выбрана'}</Text>
           <Text style={styles.caption}>Уход: {summary ? summary.facts.carePurchased ? 'выбран' : 'сегодня не выбран' : care ? 'выбран' : 'пока не выбран'}</Text>
         </View>
@@ -100,7 +102,7 @@ export default function PeriodResultScreen(props: Readonly<{
               <Text accessibilityRole="header" style={styles.cardTitle}>Что получилось</Text>
               <Text style={styles.growth}>+{summary.periodGrowth} шагов роста</Text>
               <Text style={styles.caption}>Стадия: {summary.stageAfter} из 3{summary.stageAfter > summary.stageBefore ? ' — новая стадия!' : ''}</Text>
-              <Text style={styles.body}>{summary.explanation}</Text>
+              <Text style={styles.body}>{petNarrativeText(summary.explanation, petName)}</Text>
             </View>
             <View style={styles.nextCard}>
               <Text accessibilityRole="header" style={styles.cardTitle}>Что можно попробовать дальше</Text>

@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { homeNextStep } from '../src/ui/home-next-step.ts';
 import { homePetPortraitFrame, HOME_PET_BOUNDS } from '../src/ui/home-scene-layout.ts';
-const base = { state: 'ACTIVE', hasFood: true, hasCare: true, hasGoal: true, allGoals: false, savings: 10, large: false };
+const base = { state: 'ACTIVE', hasFood: true, hasCare: true, hasGoal: true, allGoals: false, savings: 10, large: false, demo: false };
 test('Home next step matches its destination and never bypasses a financial confirmation', () => {
   for (const large of [false, true]) {
     for (const [state, route] of [['READY', 'open-day'], ['DRAFT', 'План'], ['CLOSED', 'results'], ['WAITING', 'waiting']]) {
@@ -16,6 +16,8 @@ test('Home next step matches its destination and never bypasses a financial conf
     assert.deepEqual(homeNextStep({ ...base, large }), { label: 'Проверить итоги', route: 'results' });
     assert.equal(homeNextStep({ ...base, hasGoal: false, allGoals: true, large }).route, 'results');
     assert.equal(homeNextStep({ ...base, state: 'WAITING', hasFood: false, large }).route, 'waiting');
+    assert.deepEqual(homeNextStep({ ...base, state: 'WAITING', demo: true, large }),
+      { label: 'Следующий демо-день', route: 'advance-demo-day' });
   }
 });
 test('large text portrait keeps ear-top clearance on the accepted canvas', () => {

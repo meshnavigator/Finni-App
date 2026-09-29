@@ -8,6 +8,8 @@ import { ROOT_ROUTES, isRootRoute, usesLargeNavigation } from '../src/ui/root-na
 import { homeScreenModel } from '../src/application/ui-model.ts';
 import { homeNextStep } from '../src/ui/home-next-step.ts';
 import { homeColors } from '../src/ui/home-colors.ts';
+import { homeReactionMessage } from '../src/ui/home-reaction-copy.ts';
+import { petCatalogText } from '../src/ui/pet-copy.ts';
 const require = createRequire(import.meta.url);
 
 // Execute the real JSX with host primitives; layout is verified separately on Android.
@@ -20,15 +22,18 @@ function component(file, dimensions = { width: 360, height: 640, fontScale: 1 })
   vm.runInNewContext(source, { module, exports: module.exports, require: (id) => {
     if (id === 'react') return {
       useState: (initial) => { const index = cursor++; if (!(index in values)) values[index] = initial; return [values[index], (value) => { values[index] = value; }]; },
-      useEffect: () => {}, useCallback: (callback) => callback,
+      useEffect: () => {}, useCallback: (callback) => callback, useMemo: (factory) => factory(),
     };
     if (id === 'react/jsx-runtime') return require(id);
-    if (id === 'react-native') return { ...Object.fromEntries(['View', 'Text', 'Pressable', 'Image', 'Modal', 'ScrollView'].map((x) => [x, x])), StyleSheet: { create: (x) => x, absoluteFill: {} }, useWindowDimensions: () => dimensions };
+    if (id === 'react-native') return { ...Object.fromEntries(['View', 'Text', 'Pressable', 'Image', 'Modal', 'ScrollView'].map((x) => [x, x])), Alert: { alert: (_title, _body, buttons) => buttons.at(-1)?.onPress?.() }, StyleSheet: { create: (x) => x, absoluteFill: {} }, useWindowDimensions: () => dimensions };
     if (id === 'react-native-safe-area-context') return { SafeAreaView: 'SafeAreaView' };
     if (id.endsWith('root-navigation.ts')) return { ROOT_ROUTES, usesLargeNavigation };
     if (id.endsWith('ui-model.ts')) return { homeScreenModel };
     if (id.endsWith('home-next-step.ts')) return { homeNextStep };
     if (id.endsWith('home-colors.ts')) return { homeColors };
+    if (id.endsWith('home-reaction-copy.ts')) return { homeReactionMessage };
+    if (id.endsWith('pet-copy.ts')) return { petCatalogText };
+    if (id.endsWith('HomeReactionBanner.tsx')) return 'HomeReactionBanner';
     if (id.endsWith('room-assets.ts')) return { goalSource: () => null };
     if (id.endsWith('FinniHomeScene.tsx')) return 'FinniHomeScene';
     if (id.endsWith('.png')) return id;
@@ -99,4 +104,46 @@ test('enlarged Home menu remains navigation during a reaction; skip targets only
 test('Android float32 fontScale keeps the 120 percent setting in the ordinary layout', () => {
   for (const scale of [1, 1.19, 1.2, Math.fround(1.2)]) assert.equal(usesLargeNavigation(scale), false);
   for (const scale of [1.21, 1.5, 2]) assert.equal(usesLargeNavigation(scale), true);
+});
+
+test('Home advances a closed demo day while normal mode still waits', () => {
+  const render = component('HomeScreen.tsx');
+  const snapshot = { profile: { name: 'Рекс', shapeId: 'pointy', patternId: 'plain' },
+    lifecycle: { state: 'WAITING', periodIndex: 2, available: 5, savings: 60, petStage: 1 },
+    commerce: { selectedGoal: null, purchases: [], claimedGoalIds: [] } };
+  let advanced = 0;
+  const props = { snapshot, busy: false, notice: null, reaction: null, demo: true,
+    onNextDemoDay: () => advanced++, onReactionFinished: () => {}, onReactionCancelled: () => {} };
+  const demo = nodes(render('default', props)).find((node) => node.props.testID === 'home-primary');
+  assert.equal(demo.props.accessibilityState.disabled, false);
+  assert.equal(content(demo), 'Следующий демо-день');
+  demo.props.onPress();
+  assert.equal(advanced, 1);
+
+  const normal = nodes(render('default', { ...props, demo: false })).find((node) => node.props.testID === 'home-primary');
+  assert.equal(normal.props.accessibilityState.disabled, true);
+  assert.equal(content(normal), 'Следующий день позже');
+
+  const tallRender = component('HomeScreen.tsx', { width: 360, height: 740, fontScale: 1 });
+  const ready = tallRender('default', { ...props, snapshot: { ...snapshot, lifecycle: { ...snapshot.lifecycle, state: 'READY' } } });
+  assert.match(content(ready), /День 3 готов · Демо/);
+  assert.equal(content(nodes(ready).find((node) => node.props.testID === 'home-primary')), 'Начать день');
+});
+
+test('Home uses adjective mood labels and explains whether its lesson is new or completed', () => {
+  const render = component('HomeScreen.tsx', { width: 360, height: 740, fontScale: 1 });
+  const props = { snapshot: { profile: { name: 'Рекс', shapeId: 'pointy', patternId: 'plain' },
+    lifecycle: { state: 'ACTIVE', periodIndex: 2, available: 5, savings: 60, petStage: 1 },
+    commerce: { selectedGoal: null, purchases: [], claimedGoalIds: [] } },
+  busy: false, notice: null, demo: true, lessonTitle: 'Дело о двух предложениях', lessonStatus: 'new',
+  onReactionFinished: () => {}, onReactionCancelled: () => {} };
+  for (const [expression, label] of [[null, 'Спокойный'], ['happy', 'Радостный'], ['thoughtful', 'Задумчивый'], ['inspired', 'Вдохновлённый']]) {
+    const reaction = expression ? { id: 1, expression, clip: 'AN-007', objectId: null, value: 0, skippable: false } : null;
+    const tree = render('default', { ...props, reaction });
+    assert.ok(nodes(tree).some((node) => node.props.accessibilityLabel === `Настроение: ${label}`));
+  }
+  const newLesson = render('default', { ...props, reaction: null });
+  assert.match(content(nodes(newLesson).find((node) => node.props.testID === 'home-lesson')), /Следующее занятие/);
+  const completedLesson = render('default', { ...props, reaction: null, lessonStatus: 'completed' });
+  assert.match(content(nodes(completedLesson).find((node) => node.props.testID === 'home-lesson')), /✓ Пройдено · повторить/);
 });

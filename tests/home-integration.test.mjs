@@ -3,7 +3,7 @@ import test from 'node:test';
 import { mkdtempSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { recommendHomeLesson } from '../src/application/home-lesson.ts';
+import { homeLessonStatus, recommendHomeLesson } from '../src/application/home-lesson.ts';
 import { homePetFrame, HOME_PET_BOUNDS } from '../src/ui/home-scene-layout.ts';
 import { FINNI_ANCHORS, FINNI_STAGE_SCALE } from '../src/ui/finni-layer-contract.ts';
 import { migrateDatabase } from '../src/persistence/migrations.ts';
@@ -15,13 +15,18 @@ const catalog = ['A', 'B', 'C'].map((id, i) => ({ definition: { lessonId: id }, 
 const order = ['B', 'A', 'C'];
 const entry = (lessonId, phase, sequence) => ({ lessonId, phase, sequence });
 test('Home recommendation obeys unlock, unfinished sequence, manifest order and circular practice', () => {
-  assert.equal(recommendHomeLesson('normal', null, [], catalog, order), null);
+  assert.equal(recommendHomeLesson('normal', null, [], catalog, order).title, 'A');
   assert.equal(recommendHomeLesson('normal', 1, [], catalog, order).title, 'A');
   assert.equal(recommendHomeLesson('demo', null, [], catalog, order).title, 'B');
   assert.equal(recommendHomeLesson('demo', 1, [entry('A', 'draft', 3), entry('C', 'evaluated', 4)], catalog, order).title, 'C');
   assert.equal(recommendHomeLesson('normal', 1, [entry('C', 'draft', 4)], catalog, order).title, 'A');
   assert.equal(recommendHomeLesson('demo', 1, [entry('B', 'completed', 1)], catalog, order).title, 'A');
   assert.equal(recommendHomeLesson('demo', 1, [entry('B', 'completed', 2), entry('A', 'completed', 3), entry('C', 'completed', 4)], catalog, order).title, 'B');
+  assert.equal(recommendHomeLesson('demo', 1, [entry('A', 'draft', 1), entry('B', 'completed', 2), entry('A', 'completed', 3)], catalog, order).title, 'C');
+  assert.equal(recommendHomeLesson('demo', 1, [entry('A', 'completed', 1), entry('B', 'completed', 2), entry('A', 'draft', 3)], catalog, order).title, 'A');
+  assert.equal(homeLessonStatus([entry('A', 'draft', 1), entry('A', 'completed', 3)], 'A'), 'completed');
+  assert.equal(homeLessonStatus([entry('A', 'completed', 1), entry('A', 'draft', 3)], 'A'), 'in-progress');
+  assert.equal(homeLessonStatus([], 'A'), 'new');
 });
 
 test('all stage silhouettes fit the smallest and ordinary reserves with invariant feet', () => {

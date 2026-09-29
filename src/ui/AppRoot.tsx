@@ -53,7 +53,7 @@ import SavingsScreen from './SavingsScreen.tsx';
 import ShopScreen from './ShopScreen.tsx';
 import { type HomeReaction } from './FinniHomeScene.tsx';
 import HomeScreen from './HomeScreen.tsx';
-import { recommendHomeLesson } from '../application/home-lesson.ts';
+import { homeLessonStatus, recommendHomeLesson } from '../application/home-lesson.ts';
 import { FINNI_APPEARANCE_ASSETS } from './finni-appearance-assets.ts';
 import { renderedFinniAppearance } from './finni-appearance-policy.ts';
 import LessonShell from './LessonShell.tsx';
@@ -440,6 +440,7 @@ function SectionScreen(props: Readonly<{ title: string; onBack: () => void }>) {
 
 function LessonCatalogScreen(props: Readonly<{
   lessons: readonly LocalLessonPresentation[];
+  completedLessonIds: ReadonlySet<string>;
   busy: boolean;
   message: string | null;
   onSelect: (lesson: LessonVariantPresentation) => void;
@@ -461,6 +462,7 @@ function LessonCatalogScreen(props: Readonly<{
         {props.lessons.map((lesson) => (
           <View key={lesson.definition.lessonId} style={styles.lessonCard}>
             <Text accessibilityRole="header" style={styles.catalogTitle}>{lesson.title}</Text>
+            {props.completedLessonIds.has(lesson.definition.lessonId) && <Text style={styles.completedBadge}>✓ Пройдено</Text>}
             {lesson.variants.map((variant, index) => (
               <Pressable
                 key={variant.definition.variantId}
@@ -772,17 +774,13 @@ export default function AppRoot() {
   };
 
   const advanceDemoDay = async () => {
-    if (!controller.current || !snapshot || mode !== 'demo' || busy || commandBusy.current) return;
-    if (!adultAccess.current.recordActivity(Date.now())) {
-      setAdultUnlocked(false);
-      return;
-    }
+    if (!controller.current || !snapshot || mode !== 'demo' || screen !== 'home' || snapshot.lifecycle?.state !== 'WAITING' || busy || commandBusy.current) return;
     commandBusy.current = true;
     setBusy(true);
     setMessage(null);
     try {
       setSnapshot(await controller.current.runSnapshot((runtime) => runtime.advanceDemoDay(snapshot)));
-      setMessage('Демо-дата переведена. Откройте следующий день в Домике.');
+      setMessage('Следующий демо-день готов. Нажмите «Начать день».');
     } catch {
       setMessage('Демо-дата не изменилась. Закройте текущий день и попробуйте ещё раз.');
     } finally {
@@ -984,6 +982,13 @@ export default function AppRoot() {
     />
   );
 
+  const homeRecommendation = snapshot?.lifecycle
+    ? recommendHomeLesson(mode, snapshot.lifecycle.periodIndex, snapshot.homeLessons ?? [], LOCAL_DEMO_LESSONS, HOME_LESSON_ORDER)
+    : null;
+  const homeRecommendationStatus = homeRecommendation
+    ? homeLessonStatus(snapshot?.homeLessons ?? [], homeRecommendation.definition.lessonId) : 'new';
+  const completedLessonIds = new Set((snapshot?.homeLessons ?? []).filter((row) => row.phase === 'completed').map((row) => row.lessonId));
+
   return (
     <RootSafeAreaView style={{ flex: 1, backgroundColor: '#F6F0E6' }} edges={['top', 'right', 'bottom', 'left']}>
       <StatusBar style="dark" />
@@ -1010,7 +1015,8 @@ export default function AppRoot() {
           key={`${mode}-${snapshot.profile.id}`}
           snapshot={snapshot}
           demo={mode === 'demo'}
-          lessonTitle={recommendHomeLesson(mode, snapshot.lifecycle.periodIndex, snapshot.homeLessons ?? [], LOCAL_DEMO_LESSONS, HOME_LESSON_ORDER)?.title ?? null}
+          lessonTitle={homeRecommendation?.title ?? null}
+          lessonStatus={homeRecommendationStatus}
           onDismissNotice={() => setMessage(null)}
           busy={busy}
           notice={message}
@@ -1024,11 +1030,11 @@ export default function AppRoot() {
           onMenu={() => setRootMenuOpen(true)}
           onLesson={() => {
             setDetailOrigin('home');
-            const lesson = recommendHomeLesson(mode, snapshot.lifecycle!.periodIndex, snapshot.homeLessons ?? [], LOCAL_DEMO_LESSONS, HOME_LESSON_ORDER);
-            if (lesson) void openLesson(lesson);
+            if (homeRecommendation) void openLesson(homeRecommendation);
             else openCatalog('home');
           }}
           onOpenDay={() => void openDay()}
+          onNextDemoDay={() => void advanceDemoDay()}
           onResults={() => { setMessage(null); setScreen('result'); }}
           onSection={openSection}
         />
@@ -1036,6 +1042,7 @@ export default function AppRoot() {
       {screen === 'lesson-catalog' && (
         <LessonCatalogScreen
           lessons={LOCAL_DEMO_LESSONS}
+          completedLessonIds={completedLessonIds}
           busy={busy}
           message={message}
           backLabel={detailOrigin === 'more' ? 'Вернуться в «Ещё»' : 'Вернуться в домик'}
@@ -1138,13 +1145,13 @@ export default function AppRoot() {
           }}
           onExit={leaveAdult}
           onSwitchMode={(target) => void switchMode(target)}
-          onNextDemoDay={() => void advanceDemoDay()}
           onResetDemo={() => void runAdmin('RESET_PROFILE')}
           onDeleteSelected={() => void runAdmin('DELETE_PROFILE')}
         />
       )}
       {screen === 'lesson' && lessonAttempt && lessonPresentation && (
         <LessonShell
+          petName={snapshot?.profile?.name ?? 'питомец'}
           attempt={lessonAttempt}
           evaluation={lessonEvaluation}
           copy={{ title: lessonPresentation.title, intro: lessonPresentation.intro, evidence: lessonPresentation.evidence }}
@@ -1196,6 +1203,7 @@ const styles = StyleSheet.create({
   introContent: { alignItems: 'center', gap: 16, padding: 20, paddingBottom: 28 },
   catalogContent: ui.content,
   catalogTitle: ui.cardTitle,
+  completedBadge: { alignSelf: 'flex-start', overflow: 'hidden', borderRadius: 10, backgroundColor: '#DCEDEC', color: '#286D70', fontSize: 14, fontWeight: '700', paddingHorizontal: 10, paddingVertical: 5 },
   variantHeading: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   variantArrow: { color: palette.muted, fontSize: 26 },
   builderPreview: { alignSelf: 'center', padding: 12, borderRadius: 28, backgroundColor: palette.soft },
